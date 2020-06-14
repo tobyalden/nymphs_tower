@@ -6,6 +6,9 @@ function Player:initialize(x, y)
     Entity.initialize(self, x, y)
     self.sprite = love.graphics.newImage("rena.png")
     self.velocity = Vector:new(0, 0)
+    self.width = 50
+    self.height = 50
+    self.type = "player"
 end
 
 function Player:update(dt)
@@ -15,11 +18,7 @@ function Player:update(dt)
     if love.keyboard.isDown("up") then self.velocity.y = -1
     elseif love.keyboard.isDown("down") then self.velocity.y = 1
     else self.velocity.y = 0 end
-    local goalX = self.x + Player.SPEED * self.velocity.x * dt
-    local goalY = self.y + Player.SPEED * self.velocity.y * dt
-    local actualX, actualY, cols, len = bumpWorld:move(self, goalX, goalY)
-    self.x = actualX
-    self.y = actualY
+    self:moveBy(Player.SPEED * self.velocity.x * dt, Player.SPEED * self.velocity.y * dt, {"enemy"})
 end
 
 function Player:draw()

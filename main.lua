@@ -1,4 +1,3 @@
-bump = require("bump")
 require("ammo")
 require("ammo/all")
 require("GameWorld")

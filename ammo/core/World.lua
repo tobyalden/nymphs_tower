@@ -1,5 +1,8 @@
 World = class("World")
 
+bump = require("bump")
+bumpWorld = bump.newWorld()
+
 function World:__index(key)
   if key == "count" then
     return self._updates._length
@@ -155,6 +158,7 @@ function World:_updateLists()
       self._updates:remove(v)
       v._removalQueued = false
       v._world = nil
+      bumpWorld:remove(v)
       if v._layer then self._layers[v._layer]:remove(v) end
     end
     
@@ -167,6 +171,7 @@ function World:_updateLists()
       self._updates:push(v)
       v._additionQueued = false
       v._world = self
+      bumpWorld:add(v, v.x, v.y, v.width, v.height)
       if v._layer then self:_setLayer(v) end
       if v.added then v:added() end
     end
