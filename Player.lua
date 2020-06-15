@@ -5,7 +5,7 @@ function Player:initialize(x, y)
     Entity.initialize(self, x, y)
     self.sprite = Sprite:new("rena.png", 50, 50)
     self.sprite.flipX = true
-    self.sprite.flipY = false
+    self.sprite.flipY = true
     self.sprite:add("left", {1})
     self.sprite:add("right", {2})
     self.sprite:add("dance", {1, 2, 3, 4, 5, 6}, 1, true)

@@ -69,12 +69,31 @@ function Entity:draw()
             self.sprite.currentAnimationIndex
         ]
     ]
+
+    local drawScaleX = 1
+    if self.sprite.flipX then
+        drawScaleX = -1
+    end
+    local drawX = self.x
+    if drawScaleX < 0 then
+        drawX = self.x + self.sprite.frameWidth
+    end
+
+    local drawScaleY = 1
+    if self.sprite.flipY then
+        drawScaleY = -1
+    end
+    local drawY = self.y
+    if drawScaleY < 0 then
+        drawY = self.y + self.sprite.frameHeight
+    end
+
     love.graphics.draw(
         self.sprite.image,
         drawQuad,
-        self.x, self.y,
+        drawX, drawY,
         0,
-        1, 1
+        drawScaleX, drawScaleY
     )
 end
 

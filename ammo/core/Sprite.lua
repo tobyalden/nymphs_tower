@@ -2,6 +2,8 @@ Sprite = class("Sprite")
 
 function Sprite:initialize(path, frameWidth, frameHeight)
     self.image = love.graphics.newImage(path)
+    self.frameWidth = frameWidth
+    self.frameHeight = frameHeight
     self.flipX = false
     self.flipY = false
     self.image = love.graphics.newImage(path)
