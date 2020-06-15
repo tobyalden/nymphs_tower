@@ -1,4 +1,3 @@
-require("ammo")
 Player = class("Player", Entity)
 Player.static.SPEED = 400
 

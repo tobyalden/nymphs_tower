@@ -1,4 +1,3 @@
-require("ammo")
 Enemy = class("Enemy", Entity)
 
 function Enemy:initialize(x, y)
