@@ -189,6 +189,8 @@ function World:_updateLists()
                 elseif v.mask.class == Grid then
                     for tileX = 1, v.mask.columns do
                         for tileY = 1, v.mask.rows do
+                            -- TODO: This could be optimized by adding groups
+                            -- of tiles instead of individual tiles
                             if(v.mask:getTile(tileX, tileY)) then
                                 bumpWorld:add(
                                     v.mask.data[tileY][tileX],

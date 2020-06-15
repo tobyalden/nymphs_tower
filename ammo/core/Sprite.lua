@@ -6,6 +6,8 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.frameHeight = frameHeight
     self.flipX = false
     self.flipY = false
+    self.offsetX = 0
+    self.offsetY = 0
     self.image = love.graphics.newImage(path)
     self.frames = {}
     self.animations = {}

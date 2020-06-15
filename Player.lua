@@ -10,6 +10,8 @@ function Player:initialize(x, y)
     self.sprite:add("right", {2})
     self.sprite:add("dance", {1, 2, 3, 4, 5, 6}, 1, true)
     self.sprite:play("dance")
+    --self.sprite.offsetX = 10
+    --self.sprite.offsetY = 20
     self.velocity = Vector:new(0, 0)
     self.mask = Hitbox:new(self, 50, 50)
     self.types = {"player"}

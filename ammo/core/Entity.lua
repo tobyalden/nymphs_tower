@@ -81,6 +81,7 @@ function Entity:draw()
     if drawScaleX < 0 then
         drawX = self.x + self.sprite.frameWidth
     end
+    drawX = drawX + self.sprite.offsetX
 
     local drawScaleY = 1
     if self.sprite.flipY then
@@ -90,6 +91,7 @@ function Entity:draw()
     if drawScaleY < 0 then
         drawY = self.y + self.sprite.frameHeight
     end
+    drawY = drawY + self.sprite.offsetY
 
     love.graphics.draw(
         self.sprite.image,
