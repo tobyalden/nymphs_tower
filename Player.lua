@@ -4,9 +4,11 @@ Player.static.SPEED = 400
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
     self.sprite = Sprite:new("rena.png", 50, 50)
+    self.sprite.flipX = true
+    self.sprite.flipY = false
     self.sprite:add("left", {1})
     self.sprite:add("right", {2})
-    self.sprite:add("dance", {2, 1, 2, 1, 1, 2, 2}, 4, true)
+    self.sprite:add("dance", {1, 2, 3, 4, 5, 6}, 1, true)
     self.sprite:play("dance")
     self.velocity = Vector:new(0, 0)
     self.mask = Hitbox:new(50, 50)

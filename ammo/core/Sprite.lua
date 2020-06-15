@@ -2,13 +2,16 @@ Sprite = class("Sprite")
 
 function Sprite:initialize(path, frameWidth, frameHeight)
     self.image = love.graphics.newImage(path)
+    self.flipX = false
+    self.flipY = false
+    self.image = love.graphics.newImage(path)
     self.frames = {}
     self.animations = {}
     self.currentAnimation = {frames = {1}, fps = 1, loop = false}
     self.currentAnimationIndex = 1
     self.elapsed = 0
-    for frameX = 1, self.image:getWidth() / frameWidth do
-        for frameY = 1, self.image:getHeight() / frameHeight do
+    for frameY = 1, self.image:getHeight() / frameHeight do
+        for frameX = 1, self.image:getWidth() / frameWidth do
             table.insert(
                 self.frames,
                 love.graphics.newQuad(

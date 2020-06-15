@@ -64,14 +64,17 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
+    local drawQuad = self.sprite.frames[
+        self.sprite.currentAnimation.frames[
+            self.sprite.currentAnimationIndex
+        ]
+    ]
     love.graphics.draw(
         self.sprite.image,
-        self.sprite.frames[
-            self.sprite.currentAnimation.frames[
-                self.sprite.currentAnimationIndex
-            ]
-        ],
-        self.x, self.y
+        drawQuad,
+        self.x, self.y,
+        0,
+        1, 1
     )
 end
 
