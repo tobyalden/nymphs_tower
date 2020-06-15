@@ -32,7 +32,7 @@ function Entity:initialize(x, y)
     self._layer = 1
     self.width = 1
     self.height = 1
-    self.type = ""
+    self.types = {}
     self.sprite = Sprite:new("debug.png", 50, 50)
 end
 
@@ -42,8 +42,10 @@ function Entity:moveBy(x, y, solidTypes)
     local shouldCollide = false
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
-            if collided.other.type == solidType then
-                shouldCollide = true
+            for _, otherType in pairs(collided.other.types) do
+                if solidType == otherType then
+                    shouldCollide = true
+                end
             end
         end
     end

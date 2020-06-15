@@ -1,6 +1,6 @@
 Grid = class("Grid")
 
-function Grid:initialize(width, height, tileWidth, tileHeight, solidType)
+function Grid:initialize(parent, width, height, tileWidth, tileHeight)
     self.width = math.ceil(width / tileWidth) * tileWidth
     self.height = math.ceil(height / tileHeight) * tileHeight
     self.tileWidth = tileWidth
@@ -12,7 +12,7 @@ function Grid:initialize(width, height, tileWidth, tileHeight, solidType)
     for tileY = 1, self.rows do
         self.data[tileY] = {}
         for tileX = 1, self.columns do
-            self.data[tileY][tileX] = { isSolid = false, type = solidType }
+            self.data[tileY][tileX] = { isSolid = false, types = parent.types }
         end
     end
 end

@@ -3,13 +3,13 @@ Level = class("Level", Entity)
 
 function Level:initialize(path)
     Entity.initialize(self, 0, 0)
-    self.type = "walls"
+    self.types = {"walls"}
     io.input(path)
     raw = io.read("*all")
     jsonData = json.decode(raw)
     -- TODO: Instead of just grabbing the first layer, check that its name is
     -- "walls"
-    self.mask = Grid:new(jsonData["width"], jsonData["height"], 16, 16, self.type)
+    self.mask = Grid:new(self, jsonData["width"], jsonData["height"], 16, 16)
     for tileX = 1, jsonData["layers"][1]["gridCellsX"] do
         for tileY = 1, jsonData["layers"][1]["gridCellsY"] - 1 do
             self.mask:setTile(
