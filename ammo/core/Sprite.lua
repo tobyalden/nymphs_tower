@@ -4,7 +4,7 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.image = love.graphics.newImage(path)
     self.frames = {}
     self.animations = {}
-    self.currentAnimation = {frames = {1}, fps = 1}
+    self.currentAnimation = {frames = {1}, fps = 1, loop = false}
     self.currentAnimationIndex = 1
     self.elapsed = 0
     for frameX = 1, self.image:getWidth() / frameWidth do
@@ -21,9 +21,11 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     end
 end
 
-function Sprite:add(animationName, animationFrames, animationFps)
+function Sprite:add(animationName, animationFrames, animationFps, loopAnimation)
     fps = fps or 1
-    self.animations[animationName] = {frames = animationFrames, fps = animationFps}
+    self.animations[animationName] = {
+        frames = animationFrames, fps = animationFps, loop = loopAnimation
+    }
 end
 
 function Sprite:play(animationName)
@@ -37,7 +39,11 @@ function Sprite:update(dt)
         self.elapsed = self.elapsed - timePerFrame
         self.currentAnimationIndex = self.currentAnimationIndex + 1
         if not self.currentAnimation.frames[self.currentAnimationIndex] then
-            self.currentAnimationIndex = 1
+            if self.currentAnimation.loop then
+                self.currentAnimationIndex = 1
+            else
+                self.currentAnimationIndex = self.currentAnimationIndex - 1
+            end
         end
 
     end
