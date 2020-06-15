@@ -73,23 +73,23 @@ function Entity:draw()
         ]
     ]
 
-    local drawScaleX = 1
+    local drawScaleX = self.sprite.scaleX
     if self.sprite.flipX then
-        drawScaleX = -1
+        drawScaleX = -drawScaleX
     end
     local drawX = self.x
     if drawScaleX < 0 then
-        drawX = self.x + self.sprite.frameWidth
+        drawX = self.x + self.sprite.frameWidth * self.sprite.scaleX
     end
     drawX = drawX + self.sprite.offsetX
 
-    local drawScaleY = 1
+    local drawScaleY = self.sprite.scaleY
     if self.sprite.flipY then
-        drawScaleY = -1
+        drawScaleY = -drawScaleY
     end
     local drawY = self.y
     if drawScaleY < 0 then
-        drawY = self.y + self.sprite.frameHeight
+        drawY = self.y + self.sprite.frameHeight * self.sprite.scaleY
     end
     drawY = drawY + self.sprite.offsetY
 
