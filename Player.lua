@@ -20,7 +20,7 @@ function Player:update(dt)
     self:moveBy(
         Player.SPEED * self.velocity.x * dt,
         Player.SPEED * self.velocity.y * dt,
-        {"enemy"}
+        {"enemy", "walls"}
     )
 end
 

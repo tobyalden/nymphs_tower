@@ -9,7 +9,7 @@ function Level:initialize(path)
     jsonData = json.decode(raw)
     -- TODO: Instead of just grabbing the first layer, check that its name is
     -- "walls"
-    self.mask = Grid:new(jsonData["width"], jsonData["height"], 16, 16)
+    self.mask = Grid:new(jsonData["width"], jsonData["height"], 16, 16, self.type)
     for tileX = 1, jsonData["layers"][1]["gridCellsX"] do
         for tileY = 1, jsonData["layers"][1]["gridCellsY"] - 1 do
             self.mask:setTile(

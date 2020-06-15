@@ -173,8 +173,24 @@ function World:_updateLists()
             self._updates:push(v)
             v._additionQueued = false
             v._world = self
-            if(v.mask) then
-                bumpWorld:add(v, v.x, v.y, v.mask.width, v.mask.height)
+            if v.mask then
+                if v.mask.class == Hitbox then
+                    bumpWorld:add(v, v.x, v.y, v.mask.width, v.mask.height)
+                elseif v.mask.class == Grid then
+                    for tileX = 1, v.mask.columns do
+                        for tileY = 1, v.mask.rows do
+                            if(v.mask:getTile(tileX, tileY)) then
+                                bumpWorld:add(
+                                    v.mask.data[tileY][tileX],
+                                    v.x + (tileX - 1) * v.mask.tileWidth,
+                                    v.y + (tileY - 1) * v.mask.tileHeight,
+                                    v.mask.tileWidth,
+                                    v.mask.tileHeight
+                                )
+                            end
+                        end
+                    end
+                end
             end
             if v._layer then self:_setLayer(v) end
             if v.added then v:added() end

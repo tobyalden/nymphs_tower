@@ -1,6 +1,6 @@
 Grid = class("Grid")
 
-function Grid:initialize(width, height, tileWidth, tileHeight)
+function Grid:initialize(width, height, tileWidth, tileHeight, solidType)
     self.width = math.ceil(width / tileWidth) * tileWidth
     self.height = math.ceil(height / tileHeight) * tileHeight
     self.tileWidth = tileWidth
@@ -8,19 +8,20 @@ function Grid:initialize(width, height, tileWidth, tileHeight)
     self.rows = self.height / tileHeight
     self.columns = self.width / tileWidth
     self.data = {}
+    self.solidType = solidType
     for tileY = 1, self.rows do
         self.data[tileY] = {}
         for tileX = 1, self.columns do
-            self.data[tileY][tileX] = false
+            self.data[tileY][tileX] = { isSolid = false, type = solidType }
         end
     end
 end
 
 function Grid:setTile(tileX, tileY, solid)
-    self.data[tileY][tileX] = solid
+    self.data[tileY][tileX].isSolid = solid
 end
 
 function Grid:getTile(tileX, tileY)
     -- TODO: Check if tileX & tileY are valid
-    return self.data[tileY][tileX]
+    return self.data[tileY][tileX].isSolid
 end
