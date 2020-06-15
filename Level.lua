@@ -7,15 +7,16 @@ function Level:initialize(path)
     io.input(path)
     raw = io.read("*all")
     jsonData = json.decode(raw)
-    -- TODO: Instead of just grabbing the first layer, check that its name is
-    -- "walls"
     self.mask = Grid:new(self, jsonData["width"], jsonData["height"], 16, 16)
-    for tileX = 1, jsonData["layers"][1]["gridCellsX"] do
-        for tileY = 1, jsonData["layers"][1]["gridCellsY"] - 1 do
-            self.mask:setTile(
-                tileX, tileY,
-                jsonData["layers"][1]["grid2D"][tileY][tileX] == "1"
-            )
+    for _, layer in pairs(jsonData["layers"]) do
+        if layer["name"] == "walls" then
+            for tileX = 1, layer["gridCellsX"] do
+                for tileY = 1, layer["gridCellsY"] - 1 do
+                    self.mask:setTile(
+                        tileX, tileY, layer["grid2D"][tileY][tileX] == "1"
+                    )
+                end
+            end
         end
     end
 end
