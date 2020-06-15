@@ -12,6 +12,7 @@ require(ammo.path .. ".core.Entity")
 require(ammo.path .. ".core.Vector")
 require(ammo.path .. ".core.Hitbox")
 require(ammo.path .. ".core.Grid")
+require(ammo.path .. ".core.Sprite")
 
 ammo.version = "2.0.0"
 ammo.ext = {}

@@ -3,7 +3,10 @@ Player.static.SPEED = 400
 
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
-    self.sprite = love.graphics.newImage("rena.png")
+    self.sprite = Sprite:new("rena.png", 50, 50)
+    self.sprite:add("left", {1})
+    self.sprite:add("right", {2})
+    self.sprite:play("right")
     self.velocity = Vector:new(0, 0)
     self.mask = Hitbox:new(50, 50)
     self.type = "player"
@@ -22,8 +25,4 @@ function Player:update(dt)
         Player.SPEED * self.velocity.y * dt,
         {"enemy", "walls"}
     )
-end
-
-function Player:draw()
-    love.graphics.draw(self.sprite, self.x, self.y)
 end

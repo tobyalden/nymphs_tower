@@ -33,6 +33,7 @@ function Entity:initialize(x, y)
     self.width = 1
     self.height = 1
     self.type = ""
+    self.sprite = Sprite:new("debug.png", 50, 50)
 end
 
 function Entity:moveBy(x, y, solidTypes)
@@ -58,5 +59,13 @@ end
 
 function Entity:added() end
 function Entity:update(dt) end
-function Entity:draw() end
+
+function Entity:draw()
+    love.graphics.draw(
+        self.sprite.image,
+        self.sprite.frames[self.sprite.currentAnimation[1]],
+        self.x, self.y
+    )
+end
+
 function Entity:removed() end
