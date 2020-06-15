@@ -42,11 +42,7 @@ function Entity:moveBy(x, y, solidTypes)
     local shouldCollide = false
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
-            if collided.other.parent then
-                otherTypes = collided.other.parent.types
-            else
-                otherTypes = collided.other.types
-            end
+            otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then
                     shouldCollide = true

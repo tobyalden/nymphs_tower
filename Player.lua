@@ -11,7 +11,7 @@ function Player:initialize(x, y)
     self.sprite:add("dance", {1, 2, 3, 4, 5, 6}, 1, true)
     self.sprite:play("dance")
     self.velocity = Vector:new(0, 0)
-    self.mask = Hitbox:new(50, 50)
+    self.mask = Hitbox:new(self, 50, 50)
     self.types = {"player"}
 end
 
