@@ -10,6 +10,10 @@ function GameWorld:initialize()
         --love.graphics.width / 4, love.graphics.height / 4, true
     --)
     --self:add(enemy)
-    local level = Level:new("level.json")
+    level = Level:new("level.json")
     self:add(level)
+end
+
+function GameWorld:update(dt)
+    World.update(self, dt)
 end

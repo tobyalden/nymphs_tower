@@ -158,10 +158,20 @@ function World:_updateLists()
             self._updates:remove(v)
             v._removalQueued = false
             v._world = nil
-            if bumpWorld:hasItem(v) then
-                bumpWorld:remove(v)
+            if v.mask.class == Hitbox then
+                if bumpWorld:hasItem(v) then
+                    bumpWorld:remove(v)
+                end
+            elseif v.mask.class == Grid then
+                for tileX = 1, v.mask.columns do
+                    for tileY = 1, v.mask.rows do
+                        if(v.mask:getTile(tileX, tileY)) then
+                            bumpWorld:remove(v.mask.data[tileY][tileX])
+                        end
+                    end
+                end
             end
-            if v._layer then self._layers[v._layer]:remove(v) end
+        if v._layer then self._layers[v._layer]:remove(v) end
         end
 
         self._remove = {}
