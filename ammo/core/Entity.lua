@@ -58,12 +58,19 @@ function Entity:moveBy(x, y, solidTypes)
 end
 
 function Entity:added() end
-function Entity:update(dt) end
+
+function Entity:update(dt)
+    self.sprite:update(dt)
+end
 
 function Entity:draw()
     love.graphics.draw(
         self.sprite.image,
-        self.sprite.frames[self.sprite.currentAnimation[1]],
+        self.sprite.frames[
+            self.sprite.currentAnimation.frames[
+                self.sprite.currentAnimationIndex
+            ]
+        ],
         self.x, self.y
     )
 end
