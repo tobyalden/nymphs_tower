@@ -12,7 +12,7 @@ function Grid:initialize(parent, width, height, tileWidth, tileHeight)
     for tileY = 1, self.rows do
         self.data[tileY] = {}
         for tileX = 1, self.columns do
-            self.data[tileY][tileX] = { isSolid = false, types = parent.types }
+            self.data[tileY][tileX] = { isSolid = false, parent = parent }
         end
     end
 end
