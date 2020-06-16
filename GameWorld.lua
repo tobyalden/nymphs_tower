@@ -11,6 +11,8 @@ function GameWorld:initialize()
     --)
     --self:add(enemy)
     level = Level:new("level.json")
+    self:loadSfx({"music.ogg"})
+    self.sfx["music"]:loop()
     self:add(level)
 end
 

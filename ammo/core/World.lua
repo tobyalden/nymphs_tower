@@ -41,6 +41,7 @@ function World:initialize()
     self._remove = {}
 
     self.camera = nil -- set off the default behaviour
+    self.sfx = {}
 end
 
 function World:update(dt)
@@ -86,11 +87,32 @@ function World:draw()
     end
 end
 
+function World:loadSfx(sfxPaths)
+    for _, sfxPath in pairs(sfxPaths) do
+        local sfxName
+        for word in (sfxPath):gmatch("([^.]*).") do
+            sfxName = word
+            break
+        end
+        self.sfx[sfxName] = Sound:new(sfxPath, true)
+    end
+end
+
 function World:start() end
 function World:stop()
+    -- Remove all items from bumpWorld
     local allItems = bumpWorld:getItems()
     for _, v in pairs(allItems) do
         bumpWorld:remove(v)
+    end
+    -- Stop all sounds
+    for _, v in pairs(self.sfx) do
+        v:stopLoops()
+    end
+    for e in self:iterate() do
+        for _, v in pairs(e.sfx) do
+            v:stopLoops()
+        end
     end
 end
 

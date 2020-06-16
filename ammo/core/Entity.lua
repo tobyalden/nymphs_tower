@@ -37,9 +37,14 @@ function Entity:initialize(x, y)
     self.sfx = {}
 end
 
-function Entity:loadSfx(sfxNames)
-    for _, sfxName in pairs(sfxNames) do
-        self.sfx[sfxName] = Sound:new(sfxName .. ".wav", true)
+function Entity:loadSfx(sfxPaths)
+    for _, sfxPath in pairs(sfxPaths) do
+        local sfxName
+        for word in (sfxPath):gmatch("([^.]*).") do
+            sfxName = word
+            break
+        end
+        self.sfx[sfxName] = Sound:new(sfxPath, true)
     end
 end
 
@@ -49,7 +54,6 @@ function Entity:moveBy(x, y, solidTypes)
     local shouldCollide = false
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
-            print(collided.other)
             otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then

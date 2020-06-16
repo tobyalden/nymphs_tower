@@ -10,7 +10,7 @@ function Player:initialize(x, y)
     self.velocity = Vector:new(0, 0)
     self.mask = Hitbox:new(self, 50, 50)
     self.types = {"player"}
-    self:loadSfx({"jump", "run"})
+    self:loadSfx({"jump.wav", "run.wav"})
     self.wasSKeyDown = false
 end
 

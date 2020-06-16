@@ -53,6 +53,14 @@ function Sound:play(restart, volume, pan, isLooping)
     return source
 end
 
+function Sound:stopLoops()
+    for _, v in pairs(self._sources) do
+        if(v:isLooping()) then
+            v:stop()
+        end
+    end
+end
+
 function Sound:loop(volume, pan)
     local source = self:play(false, volume, pan, true)
     source:setLooping(true)
