@@ -37,7 +37,7 @@ function Entity:initialize(x, y)
     self.sfx = {}
 end
 
-function Entity:loadSfx(sfxPaths)
+function loadSfx(parent, sfxPaths)
     for _, sfxPath in pairs(sfxPaths) do
         local sfxName
         words = {}
@@ -47,8 +47,12 @@ function Entity:loadSfx(sfxPaths)
         end
         sfxName = words[1]
         fileType = words[2]
-        self.sfx[sfxName] = Sound:new(sfxPath, fileType == "ogg")
+        parent.sfx[sfxName] = Sound:new(sfxPath, fileType == "ogg")
     end
+end
+
+function Entity:loadSfx(sfxPaths)
+    loadSfx(self, sfxPaths)
 end
 
 function Entity:moveBy(x, y, solidTypes)

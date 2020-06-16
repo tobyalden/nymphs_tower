@@ -88,17 +88,7 @@ function World:draw()
 end
 
 function World:loadSfx(sfxPaths)
-    for _, sfxPath in pairs(sfxPaths) do
-        local sfxName
-        words = {}
-        for word in (sfxPath .. '.'):gmatch("([^.]*).") do
-            sfxName = word
-            table.insert(words, word)
-        end
-        sfxName = words[1]
-        fileType = words[2]
-        self.sfx[sfxName] = Sound:new(sfxPath, fileType == "ogg")
-    end
+    loadSfx(self, sfxPaths)
 end
 
 function World:start() end
