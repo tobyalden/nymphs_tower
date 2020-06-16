@@ -1,70 +1,89 @@
 Sound = class("Sound")
 
 function Sound:__index(key)
-  local result = rawget(self, "_" .. key) or self.class.__instanceDict[key]
-  
-  if result then
-    return result
-  else
-    local proto = rawget(self, '_multi') and rawget(self, '_protos')[1] or rawget(self, '_proto')
+    local result = rawget(self, "_" .. key) or self.class.__instanceDict[key]
 
-    -- calling Source method on SoundPool calls method to prototype Source(s)
-    if proto[key] then
-      Sound[key] = function(s, ...)
-        if s._multi then
-          for _, v in ipairs(s._protos) do
-            v[key](v, ...)
-          end
+    if result then
+        return result
+    elseif key == "count" then
+        return #self._sources
+    end
+end
+
+function Sound:initialize(file, long, volume, pan)
+    self._file = file
+    self._long = long or false
+    self.defaultVolume = volume or 1
+    self.defaultPan = pan or 0
+    self._sources = {}
+
+    if self._long then
+        self._data = file
+    else
+        self._data = type(file) == "string" and love.sound.newSoundData(file) or file
+    end
+end
+
+function Sound:play(restart, volume, pan, isLooping)
+    local source
+
+    for i, v in ipairs(self._sources) do
+        if v:isPlaying() then
+            if isLooping then
+                return v
+            elseif restart then
+                source = v
+                break
+            end
         else
-          return s._proto[key](s._proto, ...)
+            table.remove(self._sources, i)
+            source = v
+            break
         end
-      end
-
-      return Sound[key]
     end
-  end
+
+
+    if not source then source = love.audio.newSource(self._data, "stream") end
+    source:seek(0)
+    source:setVolume(volume or self.defaultVolume)
+    -- TODO: Allow for panning?
+    --source:setPosition(pan or self.defaultPan, 0, 0)
+    source:play()
+    self._sources[#self._sources + 1] = source
+    return source
 end
 
-local function createProto(data, srcType, volume)
-  local proto
-
-  if type(data) == "userdata" and data:typeOf("Source") then
-    proto = data
-  else
-    proto = love.audio.newSource(data, srcType)
-  end
-
-  if volume then proto:setVolume(volume) end
-  return proto
+function Sound:loop(volume, pan)
+    local source = self:play(false, volume, pan, true)
+    source:setLooping(true)
+    return source
 end
 
-function Sound:initialize(data, volume, stream)
-  self._data = data
-  self._type = stream and "stream" or "static"
+function Sound:clearStopped()
+    local i = 1
 
-  if type(data) == "table" then
-    self._multi = true
-    self._protos = {}
-
-    for i, v in ipairs(data) do
-      self._protos[i] = createProto(v, self._type, type(volume) == "table" and volume[i] or volume)
+    while i <= #self._sources do
+        if not self._sources[i]:isPlaying() then
+            table.remove(self._sources, i)
+        else
+            i = i + 1
+        end
     end
-  else
-    self._multi = false
-    self._proto = createProto(data, self._type, volume)
-  end
 end
 
-local rand = math.random
-
-function Sound:play()
-  local proto = self._multi and self._protos[rand(1, #self._protos)] or self._proto
-  local src = proto:clone()
-  src:play()
-  return src
+function Sound:clearAll()
+    self._sources = {}
 end
 
-function Sound:clone()
-  local proto = self._multi and self._protos[rand(1, #self._protos)] or self._proto
-  return proto:clone()
+for _, v in pairs{"pause", "resume", "rewind", "stop"} do
+    Sound[v] = function(self, last)
+        if last and self._sources[#self._sources] then
+            local source = self._sources[#self._sources]
+            if source and source:isPlaying() then source[v](source) end
+        else
+            for _, s in pairs(self._sources) do
+                if s:isPlaying() then s[v](s) end
+            end
+        end
+    end
 end
