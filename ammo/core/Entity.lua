@@ -40,11 +40,14 @@ end
 function Entity:loadSfx(sfxPaths)
     for _, sfxPath in pairs(sfxPaths) do
         local sfxName
-        for word in (sfxPath):gmatch("([^.]*).") do
+        words = {}
+        for word in (sfxPath .. '.'):gmatch("([^.]*).") do
             sfxName = word
-            break
+            table.insert(words, word)
         end
-        self.sfx[sfxName] = Sound:new(sfxPath, true)
+        sfxName = words[1]
+        fileType = words[2]
+        self.sfx[sfxName] = Sound:new(sfxPath, fileType == "ogg")
     end
 end
 
