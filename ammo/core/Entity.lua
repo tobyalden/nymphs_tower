@@ -34,6 +34,13 @@ function Entity:initialize(x, y)
     self.height = 1
     self.types = {}
     self.sprite = Sprite:new("debug.png", 50, 50)
+    self.sfx = {}
+end
+
+function Entity:loadSfx(sfxNames)
+    for _, sfxName in pairs(sfxNames) do
+        self.sfx[sfxName] = Sound:new(sfxName .. ".wav", true)
+    end
 end
 
 function Entity:moveBy(x, y, solidTypes)

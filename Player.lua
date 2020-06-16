@@ -10,7 +10,7 @@ function Player:initialize(x, y)
     self.velocity = Vector:new(0, 0)
     self.mask = Hitbox:new(self, 50, 50)
     self.types = {"player"}
-    self.sfx = { run = Sound:new("run.wav", false), jump = Sound:new("jump.wav", true) }
+    self:loadSfx({"jump", "run"})
     self.wasSKeyDown = false
 end
 
@@ -28,12 +28,12 @@ function Player:update(dt)
         {"enemy", "walls"}
     )
     if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
-        self.sfx.run:loop()
+        self.sfx["run"]:loop()
     else
-        self.sfx.run:stop()
+        self.sfx["run"]:stop()
     end
     if love.keyboard.isDown("s") and not self.wasSKeyDown then
-        self.sfx.jump:play()
+        self.sfx["jump"]:play()
     end
     self.wasSKeyDown = love.keyboard.isDown("s")
 end
