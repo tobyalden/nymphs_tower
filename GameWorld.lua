@@ -6,10 +6,6 @@ function GameWorld:initialize()
     World.initialize(self)
     local player = Player:new(30, 30, true)
     self:add(player)
-    --local enemy = Enemy:new(
-        --love.graphics.width / 4, love.graphics.height / 4, true
-    --)
-    --self:add(enemy)
     level = Level:new("level.json")
     self:loadSfx({"longmusic.ogg"})
     self.sfx["longmusic"]:loop()

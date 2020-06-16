@@ -7,6 +7,8 @@ function Level:initialize(path)
     io.input(path)
     raw = io.read("*all")
     jsonData = json.decode(raw)
+
+    -- set mask
     self.mask = Grid:new(self, jsonData["width"], jsonData["height"], 16, 16)
     for _, layer in pairs(jsonData["layers"]) do
         if layer["name"] == "walls" then
@@ -19,20 +21,17 @@ function Level:initialize(path)
             end
         end
     end
-end
 
-function Level:update(dt)
-end
-
-function Level:draw()
-    for tileX = 1, self.mask.columns do
-        for tileY = 1, self.mask.rows do
-            if(self.mask:getTile(tileX, tileY)) then
-                love.graphics.rectangle(
-                    "fill", (tileX - 1) * 16, (tileY - 1) * 16, 16, 16
-                )
+    -- set graphic
+    self.graphic = Tilemap:new("tiles.png", 16, 16)
+    for tileY = 1, self.mask.rows do
+        for tileX = 1, self.mask.columns do
+            if self.mask:getTile(tileX, tileY) then
+                self.graphic:setTile(tileX, tileY, 3)
             end
         end
     end
 end
 
+function Level:update(dt)
+end

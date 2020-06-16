@@ -33,7 +33,7 @@ function Entity:initialize(x, y)
     self.width = 1
     self.height = 1
     self.types = {}
-    self.sprite = Sprite:new("debug.png", 50, 50)
+    self.graphic = Sprite:new("debug.png", 50, 50)
     self.sfx = {}
 end
 
@@ -82,43 +82,50 @@ end
 function Entity:added() end
 
 function Entity:update(dt)
-    self.sprite:update(dt)
+    if self.graphic.class == Sprite then
+        self.graphic:update(dt)
+    end
 end
 
 function Entity:draw()
-    local drawQuad = self.sprite.frames[
-        self.sprite.currentAnimation.frames[
-            self.sprite.currentAnimationIndex
+    if self.graphic.class == Sprite then
+        local drawQuad = self.graphic.frames[
+            self.graphic.currentAnimation.frames[
+                self.graphic.currentAnimationIndex
+            ]
         ]
-    ]
 
-    local drawScaleX = self.sprite.scaleX
-    if self.sprite.flipX then
-        drawScaleX = -drawScaleX
-    end
-    local drawX = self.x
-    if drawScaleX < 0 then
-        drawX = self.x + self.sprite.frameWidth * self.sprite.scaleX
-    end
-    drawX = drawX + self.sprite.offsetX
+        local drawScaleX = self.graphic.scaleX
+        if self.graphic.flipX then
+            drawScaleX = -drawScaleX
+        end
+        local drawX = self.x
+        if drawScaleX < 0 then
+            drawX = self.x + self.graphic.frameWidth * self.graphic.scaleX
+        end
+        drawX = drawX + self.graphic.offsetX
 
-    local drawScaleY = self.sprite.scaleY
-    if self.sprite.flipY then
-        drawScaleY = -drawScaleY
-    end
-    local drawY = self.y
-    if drawScaleY < 0 then
-        drawY = self.y + self.sprite.frameHeight * self.sprite.scaleY
-    end
-    drawY = drawY + self.sprite.offsetY
+        local drawScaleY = self.graphic.scaleY
+        if self.graphic.flipY then
+            drawScaleY = -drawScaleY
+        end
+        local drawY = self.y
+        if drawScaleY < 0 then
+            drawY = self.y + self.graphic.frameHeight * self.graphic.scaleY
+        end
+        drawY = drawY + self.graphic.offsetY
 
-    love.graphics.draw(
-        self.sprite.image,
-        drawQuad,
-        drawX, drawY,
-        0,
-        drawScaleX, drawScaleY
-    )
+        love.graphics.draw(
+            self.graphic.image,
+            drawQuad,
+            drawX, drawY,
+            0,
+            drawScaleX, drawScaleY
+        )
+    end
+    if self.graphic.class == Tilemap then
+        love.graphics.draw(self.graphic.batch, self.x, self.y)
+    end
 end
 
 function Entity:removed() end

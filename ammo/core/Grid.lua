@@ -22,6 +22,5 @@ function Grid:setTile(tileX, tileY, solid)
 end
 
 function Grid:getTile(tileX, tileY)
-    -- TODO: Check if tileX & tileY are valid
     return self.data[tileY][tileX].isSolid
 end

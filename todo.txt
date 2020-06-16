@@ -1,6 +1,7 @@
 + sfx & music
-- tilemap graphic
-- padding spritemaps & tilemaps
-- text 
-- tweens
+- Graphics: Tilemap, Text, Backdrop, TiledImage 
+- Tweens: Alarm, NumTween, VarTween(?), LinearPath
+- collisions functions (check point, rect, entity.collide, etc.)
+- input system (keyboard, mouse, controller)
+- padding spritemaps & tilemaps (might not be necessary?)
 - web distribution?

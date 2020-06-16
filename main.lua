@@ -4,7 +4,6 @@ require("ammo")
 require("ammo/all")
 require("GameWorld")
 require("Player")
-require("Enemy")
 require("Level")
 
 local gameWidth, gameHeight = 320, 180
