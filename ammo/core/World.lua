@@ -87,7 +87,12 @@ function World:draw()
 end
 
 function World:start() end
-function World:stop() end
+function World:stop()
+    local allItems = bumpWorld:getItems()
+    for _, v in pairs(allItems) do
+        bumpWorld:remove(v)
+    end
+end
 
 function World:add(...)
     for _, v in pairs{...} do
@@ -160,7 +165,7 @@ function World:_updateLists()
             v._world = nil
             if v.mask.class == Hitbox then
                 if bumpWorld:hasItem(v) then
-                    bumpWorld:remove(v)
+                    bumpWorld:remove(v.mask)
                 end
             elseif v.mask.class == Grid then
                 for tileX = 1, v.mask.columns do
@@ -185,7 +190,7 @@ function World:_updateLists()
             v._world = self
             if v.mask then
                 if v.mask.class == Hitbox then
-                    bumpWorld:add(v, v.x, v.y, v.mask.width, v.mask.height)
+                    bumpWorld:add(v.mask, v.x, v.y, v.mask.width, v.mask.height)
                 elseif v.mask.class == Grid then
                     for tileX = 1, v.mask.columns do
                         for tileY = 1, v.mask.rows do

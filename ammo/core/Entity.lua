@@ -45,10 +45,11 @@ end
 
 function Entity:moveBy(x, y, solidTypes)
     solidTypes = solidTypes or {}
-    local actualX, actualY, cols, len = bumpWorld:move(self, self.x + x, self.y + y)
+    local actualX, actualY, cols, len = bumpWorld:move(self.mask, self.x + x, self.y + y)
     local shouldCollide = false
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
+            print(collided.other)
             otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then
@@ -61,7 +62,7 @@ function Entity:moveBy(x, y, solidTypes)
         self.x = actualX
         self.y = actualY
     else
-        bumpWorld:update(self, self.x + x, self.y + y)
+        bumpWorld:update(self.mask, self.x + x, self.y + y)
         self.x = self.x + x
         self.y = self.y + y
     end
