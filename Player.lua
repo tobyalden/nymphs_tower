@@ -16,7 +16,6 @@ function Player:initialize(x, y)
     input.define("down", "down")
     input.define("left", "left")
     input.define("right", "right")
-    self.layer = -1
 end
 
 function Player:update(dt)
