@@ -10,7 +10,6 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.offsetY = 0
     self.scaleX = 1
     self.scaleY = 1
-    self.image = love.graphics.newImage(path)
     self.frames = {}
     self.animations = {}
     self.currentAnimation = {frames = {1}, fps = 1, loop = false}

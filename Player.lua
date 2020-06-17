@@ -11,29 +11,33 @@ function Player:initialize(x, y)
     self.mask = Hitbox:new(self, 50, 50)
     self.types = {"player"}
     self:loadSfx({"jump.wav", "run.wav"})
-    self.wasSKeyDown = false
+    input.define("jump", "z")
+    input.define("up", "up")
+    input.define("down", "down")
+    input.define("left", "left")
+    input.define("right", "right")
+    self.layer = -1
 end
 
 function Player:update(dt)
     Entity.update(self, dt)
-    if love.keyboard.isDown("left") then self.velocity.x = - 1
-    elseif love.keyboard.isDown("right") then self.velocity.x = 1
+    if input.down("left") then self.velocity.x = - 1
+    elseif input.down("right") then self.velocity.x = 1
     else self.velocity.x = 0 end
-    if love.keyboard.isDown("up") then self.velocity.y = -1
-    elseif love.keyboard.isDown("down") then self.velocity.y = 1
+    if input.down("up") then self.velocity.y = -1
+    elseif input.down("down") then self.velocity.y = 1
     else self.velocity.y = 0 end
     self:moveBy(
         Player.SPEED * self.velocity.x * dt,
         Player.SPEED * self.velocity.y * dt,
         {"enemy", "walls"}
     )
+    if input.down("jump") then
+        self.sfx["jump"]:play()
+    end
     if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
         self.sfx["run"]:loop()
     else
         self.sfx["run"]:stop()
     end
-    if love.keyboard.isDown("s") and not self.wasSKeyDown then
-        self.sfx["jump"]:play()
-    end
-    self.wasSKeyDown = love.keyboard.isDown("s")
 end

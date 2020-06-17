@@ -1,9 +1,8 @@
-+ sfx & music
-- Graphics: +Tilemap, Text, Backdrop, TiledImage
-- input system (keyboard, mouse, controller)
+- add controller logic into ammo/input.lua
+- Graphics: Backdrop, TiledImage
 - Tweens: Alarm, NumTween, VarTween(?), LinearPath, easing functions (tweens should belong to entities, like sound effects)
 - collisions functions (check point, rect, entity.collide, etc.)
-- HXP.choose, HXP.frames
+- HXP.choose
 - fixed frame rates
 - toggling fullscreen
 - padding spritemaps & tilemaps (might not be necessary?)
