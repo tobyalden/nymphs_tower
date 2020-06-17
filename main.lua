@@ -5,6 +5,7 @@ require("ammo/all")
 require("GameWorld")
 require("Player")
 require("Level")
+require("UI")
 
 local gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()

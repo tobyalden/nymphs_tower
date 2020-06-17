@@ -44,7 +44,6 @@ function Tilemap:setTile(tileX, tileY, tileId)
         )
         self.spriteIds[spriteKey] = spriteId
     end
-    -- TODO: Store ID, set tile instead of adding if already exists in batch
 end
 
 function Tilemap:getTile(tileX, tileY)

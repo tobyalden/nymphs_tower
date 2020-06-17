@@ -88,6 +88,8 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
+    -- TODO: Could refactor this so we call the draw method of each graphic and
+    -- pass it the entity maybe?
     if self.graphic.class == Sprite then
         local drawQuad = self.graphic.frames[
             self.graphic.currentAnimation.frames[
@@ -122,9 +124,10 @@ function Entity:draw()
             0,
             drawScaleX, drawScaleY
         )
-    end
-    if self.graphic.class == Tilemap then
+    elseif self.graphic.class == Tilemap then
         love.graphics.draw(self.graphic.batch, self.x, self.y)
+    elseif self.graphic.class == Text then
+        love.graphics.draw(self.graphic.image, self.x, self.y)
     end
 end
 

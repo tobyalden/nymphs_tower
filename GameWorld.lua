@@ -7,9 +7,11 @@ function GameWorld:initialize()
     local player = Player:new(30, 30, true)
     self:add(player)
     level = Level:new("level.json")
+    self:add(level)
+    ui = UI:new()
+    self:add(ui)
     self:loadSfx({"longmusic.ogg"})
     self.sfx["longmusic"]:loop()
-    self:add(level)
 end
 
 function GameWorld:update(dt)
