@@ -6,6 +6,7 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
     self.tileWidth = tileWidth
     self.tileHeight = tileHeight
     self.tiles = {}
+    self.spriteIds = {}
 
     for tileY = 1, self.image:getHeight() / tileHeight do
         for tileX = 1, self.image:getWidth() / tileWidth do
@@ -22,13 +23,28 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
 
 end
 
+function getSpriteKey(tileX, tileY)
+    return tileX .. "-" .. tileY
+end
+
 function Tilemap:setTile(tileX, tileY, tileId)
+    local spriteKey = getSpriteKey(tileX, tileY)
+    if self.spriteIds[spriteKey] then
+        self.batch:set(
+            self.spriteIds[spriteKey],
+            self.tiles[tileId],
+            (tileX - 1) * self.tileWidth,
+            (tileY - 1) * self.tileHeight
+        )
+    else
+        local spriteId = self.batch:add(
+            self.tiles[tileId],
+            (tileX - 1) * self.tileWidth,
+            (tileY - 1) * self.tileHeight
+        )
+        self.spriteIds[spriteKey] = spriteId
+    end
     -- TODO: Store ID, set tile instead of adding if already exists in batch
-    self.batch:add(
-        self.tiles[tileId], 
-        (tileX - 1) * self.tileWidth,
-        (tileY - 1) * self.tileHeight
-    )
 end
 
 function Tilemap:getTile(tileX, tileY)

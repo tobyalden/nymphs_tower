@@ -1,7 +1,10 @@
 + sfx & music
-- Graphics: Tilemap, Text, Backdrop, TiledImage 
-- Tweens: Alarm, NumTween, VarTween(?), LinearPath
+- Graphics: Tilemap, Text, Backdrop, TiledImage
+- Tweens: Alarm, NumTween, VarTween(?), LinearPath, easing functions (tweens should belong to entities, like sound effects)
 - collisions functions (check point, rect, entity.collide, etc.)
+- HXP.choose, HXP.frames
+- fixed frame rates
+- toggling fullscreen
 - input system (keyboard, mouse, controller)
 - padding spritemaps & tilemaps (might not be necessary?)
 - web distribution?
