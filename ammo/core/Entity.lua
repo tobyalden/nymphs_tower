@@ -127,7 +127,10 @@ function Entity:draw()
     elseif self.graphic.class == Tilemap then
         love.graphics.draw(self.graphic.batch, self.x, self.y)
     elseif self.graphic.class == Text then
+        local r, g, b, a = love.graphics.getColor()
+        love.graphics.setColor(self.graphic.color)
         love.graphics.draw(self.graphic.image, self.x, self.y)
+        love.graphics.setColor(r, g, b, a)
     elseif self.graphic.class == Backdrop then
         local drawX = (
             self.x % self.graphic.image:getWidth()
