@@ -128,6 +128,10 @@ function Entity:draw()
         love.graphics.draw(self.graphic.batch, self.x, self.y)
     elseif self.graphic.class == Text then
         love.graphics.draw(self.graphic.image, self.x, self.y)
+    elseif self.graphic.class == Backdrop then
+        local drawX = self.x % self.graphic.image:getWidth()
+        local drawY = self.y % self.graphic.image:getHeight()
+        love.graphics.draw(self.graphic.batch, drawX, drawY)
     end
 end
 

@@ -6,8 +6,9 @@ require("GameWorld")
 require("Player")
 require("Level")
 require("UI")
+require("Background")
 
-local gameWidth, gameHeight = 320, 180
+gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
 local windowedScale = 2

@@ -10,6 +10,8 @@ function GameWorld:initialize()
     self:add(level)
     ui = UI:new()
     self:add(ui)
+    background = Background:new()
+    self:add(background)
     self:loadSfx({"longmusic.ogg"})
     self.sfx["longmusic"]:loop()
 end
