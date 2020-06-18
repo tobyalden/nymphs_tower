@@ -1,16 +1,17 @@
 GameWorld = class("GameWorld", World)
 
 local wasDKeyDown = false
+local player
 
 function GameWorld:initialize()
     World.initialize(self)
-    local player = Player:new(30, 30, true)
+    player = Player:new(30, 30, true)
     self:add(player)
-    level = Level:new("level.json")
+    local level = Level:new("level.json")
     self:add(level)
-    ui = UI:new()
+    local ui = UI:new()
     self:add(ui)
-    background = Background:new()
+    local background = Background:new()
     self:add(background)
     self:loadSfx({"longmusic.ogg"})
     self.sfx["longmusic"]:loop()
@@ -22,4 +23,8 @@ function GameWorld:update(dt)
     end
     wasDKeyDown = love.keyboard.isDown("d")
     World.update(self, dt)
+    self.camera.x = player.x + player.mask.width / 2 - gameWidth / 2
+    self.camera.y = player.y + player.mask.height /2 - gameHeight / 2
+    --self.camera.x = player.x - gameWidth / 2
+    --self.camera.y = player.y - gameHeight / 2
 end

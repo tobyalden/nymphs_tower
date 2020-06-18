@@ -4,8 +4,10 @@ function Backdrop:initialize(path)
     self.image = love.graphics.newImage(path)
     self.batch = love.graphics.newSpriteBatch(self.image)
     self.tiles = {}
-    for tileX = 0, math.ceil(gameWidth / self.image:getWidth()) + 1 do
-        for tileY = 0, math.ceil(gameHeight / self.image:getHeight()) + 1 do
+    imagesPerScreenWidth = math.ceil(gameWidth / self.image:getWidth())
+    imagesPerScreenHeight = math.ceil(gameHeight / self.image:getHeight())
+    for tileX = 0, imagesPerScreenWidth + 1 do
+        for tileY = 0, imagesPerScreenHeight + 1 do
             self.batch:add(
                 love.graphics.newQuad(
                     0, 0,

@@ -15,8 +15,8 @@ function Camera:__newindex(key, value)
 end
 
 function Camera:initialize(x, y, zoom, angle)
-  self.x = x or love.graphics.width / 2
-  self.y = y or love.graphics.height / 2
+  self.x = 0
+  self.y = 0
   self.zoom = zoom or 1
   self.angle = angle or 0
 end
@@ -31,9 +31,11 @@ function Camera:set(scale)
   local yCentre = love.graphics.height / self.zoom / 2
   
   love.graphics.push()
-  love.graphics.scale(self.zoom)
-  love.graphics.translate(xCentre, yCentre)
-  love.graphics.rotate(self.angle)
+  -- TODO: If I ever want to be able to zoom or rotate the camera, I'll need to
+  -- deal with translation (could maybe translate, zoom/rotate, and translate back)
+  --love.graphics.scale(self.zoom)
+  --love.graphics.translate(xCentre, yCentre)
+  --love.graphics.rotate(self.angle)
   
   if scale == 0 then
     love.graphics.translate(-xCentre, -yCentre)

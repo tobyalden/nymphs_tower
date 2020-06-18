@@ -1,5 +1,5 @@
 - add controller logic into ammo/input.lua
-- Graphics: Backdrop, TiledImage
+- Graphics: TiledImage
 - Tweens: Alarm, NumTween, VarTween(?), LinearPath, easing functions (tweens should belong to entities, like sound effects)
 - collisions functions (check point, rect, entity.collide, etc.)
 - HXP.choose

@@ -9,7 +9,7 @@
   "layerGridDefaultSize": {"x": 16, "y": 16},
   "levelDefaultSize": {"x": 320, "y": 240},
   "levelMinSize": {"x": 320, "y": 180},
-  "levelMaxSize": {"x": 320, "y": 180},
+  "levelMaxSize": {"x": 3200, "y": 1800},
   "levelValues": [],
   "defaultExportMode": ".json",
   "compactExport": false,

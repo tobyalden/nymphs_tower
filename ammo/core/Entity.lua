@@ -129,8 +129,16 @@ function Entity:draw()
     elseif self.graphic.class == Text then
         love.graphics.draw(self.graphic.image, self.x, self.y)
     elseif self.graphic.class == Backdrop then
-        local drawX = self.x % self.graphic.image:getWidth()
-        local drawY = self.y % self.graphic.image:getHeight()
+        local drawX = (
+            self.x % self.graphic.image:getWidth()
+            + math.floor(self.world.camera.x / self.graphic.image:getWidth())
+            * self.graphic.image:getWidth()
+        )
+        local drawY = (
+            self.y % self.graphic.image:getHeight()
+            + math.floor(self.world.camera.y / self.graphic.image:getHeight())
+            * self.graphic.image:getHeight()
+        )
         love.graphics.draw(self.graphic.batch, drawX, drawY)
     end
 end
