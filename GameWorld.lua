@@ -24,7 +24,5 @@ function GameWorld:update(dt)
     wasDKeyDown = love.keyboard.isDown("d")
     World.update(self, dt)
     self.camera.x = player.x + player.mask.width / 2 - gameWidth / 2
-    self.camera.y = player.y + player.mask.height /2 - gameHeight / 2
-    --self.camera.x = player.x - gameWidth / 2
-    --self.camera.y = player.y - gameHeight / 2
+    --self.camera.y = player.y + player.mask.height /2 - gameHeight / 2
 end

@@ -55,6 +55,28 @@ function Entity:loadSfx(sfxPaths)
     loadSfx(self, sfxPaths)
 end
 
+function Entity:collide(checkX, checkY, solidTypes)
+    local items, _ = bumpWorld:queryRect(
+        checkX, checkY, self.mask.width, self.mask.height
+    )
+    local collided = {}
+    for _, item in pairs(items) do
+        otherTypes = item.parent.types
+        for _, solidType in pairs(solidTypes) do
+            local matchFound = false
+            for _, otherType in pairs(otherTypes) do
+                if solidType == otherType then
+                    matchFound = true
+                    table.insert(collided, item)
+                    break
+                end
+            end
+            if matchFound then break end
+        end
+    end
+    return collided
+end
+
 function Entity:moveBy(x, y, solidTypes)
     solidTypes = solidTypes or {}
     local actualX, actualY, cols, len = bumpWorld:move(self.mask, self.x + x, self.y + y)
