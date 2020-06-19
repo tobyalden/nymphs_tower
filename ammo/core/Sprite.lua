@@ -40,6 +40,7 @@ end
 function Sprite:play(animationName)
     if self.currentAnimation ~= self.animations[animationName] then
         self.currentAnimationIndex = 1
+        self.elapsed = 0
         self.currentAnimation = self.animations[animationName]
     end
 end

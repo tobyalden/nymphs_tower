@@ -27,7 +27,7 @@ function Level:initialize(path)
     for tileY = 1, self.mask.rows do
         for tileX = 1, self.mask.columns do
             if self.mask:getTile(tileX, tileY) then
-                self.graphic:setTile(tileX, tileY, 1)
+                self.graphic:setTile(tileX, tileY, 2)
             end
         end
     end

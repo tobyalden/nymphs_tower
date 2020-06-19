@@ -1,12 +1,12 @@
 Player = class("Player", Entity)
 Player.static.SPEED = 150
-Player.static.GRAVITY = 4
+Player.static.GRAVITY = 600
+Player.static.JUMP_POWER = 150
 
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
-    --self.graphic:add("run", {2, 3, 4, 3}, 4, true)
     self.graphic:add("run", {2, 3, 4, 3}, 6, true)
     self.graphic:add("jump", {5})
     self.graphic:add("crouch", {6})
@@ -34,17 +34,20 @@ function Player:isOnGround()
 end
 
 function Player:movement(dt)
-    if input.down("left") then self.velocity.x = - 1
-    elseif input.down("right") then self.velocity.x = 1
+    if input.down("left") then self.velocity.x = -Player.SPEED
+    elseif input.down("right") then self.velocity.x = Player.SPEED
     else self.velocity.x = 0 end
     if self:isOnGround() then
         self.velocity.y = 0
+        if input.pressed("jump") then
+            self.velocity.y = -Player.JUMP_POWER
+        end
     else
         self.velocity.y = self.velocity.y + Player.GRAVITY * dt
     end
     self:moveBy(
-        Player.SPEED * self.velocity.x * dt,
-        Player.SPEED * self.velocity.y * dt,
+        self.velocity.x * dt,
+        self.velocity.y * dt,
         {"enemy", "walls"}
     )
 end
@@ -76,9 +79,7 @@ function Player:update(dt)
     self:movement(dt)
     self:animation()
     Entity.update(self, dt)
-    --if input.down("jump") then
-        --self.sfx["jump"]:play()
-    --end
+
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
         --self.sfx["run"]:loop()
     --else
