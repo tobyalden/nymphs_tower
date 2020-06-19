@@ -1,5 +1,7 @@
 push = require "push"
 
+inspect = require "inspect"
+
 require("ammo")
 require("ammo/all")
 require("GameWorld")

@@ -1,12 +1,13 @@
 Player = class("Player", Entity)
-Player.static.SPEED = 200
+Player.static.SPEED = 150
 Player.static.GRAVITY = 4
 
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
-    self.graphic:add("run", {2, 3, 4, 3}, 4, true)
+    --self.graphic:add("run", {2, 3, 4, 3}, 4, true)
+    self.graphic:add("run", {2, 3, 4, 3}, 6, true)
     self.graphic:add("jump", {5})
     self.graphic:add("crouch", {6})
     self.graphic:add("jetpack", {7, 8}, 4, true)
@@ -14,6 +15,7 @@ function Player:initialize(x, y)
     self.mask = Hitbox:new(self, 8, 23)
     self.graphic.offsetX = -5;
     self.graphic.offsetY = -9;
+    self.layer = -1
     self.types = {"player"}
     self:loadSfx({"jump.wav", "run.wav"})
     input.define("jump", "z")
@@ -24,15 +26,14 @@ function Player:initialize(x, y)
 end
 
 function Player:isOnGround()
-    if #self:collide(self.x, self.y + 1, {"walls"}) > 0 then
+    if #self:collide(self.x, self.y + 0.01, {"walls"}) > 0 then
         return true
     else
         return false
     end
 end
 
-function Player:update(dt)
-    Entity.update(self, dt)
+function Player:movement(dt)
     if input.down("left") then self.velocity.x = - 1
     elseif input.down("right") then self.velocity.x = 1
     else self.velocity.x = 0 end
@@ -46,12 +47,41 @@ function Player:update(dt)
         Player.SPEED * self.velocity.y * dt,
         {"enemy", "walls"}
     )
-    if input.down("jump") then
-        self.sfx["jump"]:play()
+end
+
+function Player:animation()
+    if self.velocity.x < 0 then
+        self.graphic.flipX = true
+    elseif self.velocity.x > 0 then
+        self.graphic.flipX = false
     end
-    if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
-        self.sfx["run"]:loop()
+    if self.graphic.flipX then
+        self.graphic.offsetX = -3;
     else
-        self.sfx["run"]:stop()
+        self.graphic.offsetX = -5;
     end
+
+    if self:isOnGround() then
+        if self.velocity.x ~= 0 then
+            self.graphic:play("run")
+        else
+            self.graphic:play("idle")
+        end
+    else
+        self.graphic:play("jump")
+    end
+end
+
+function Player:update(dt)
+    self:movement(dt)
+    self:animation()
+    Entity.update(self, dt)
+    --if input.down("jump") then
+        --self.sfx["jump"]:play()
+    --end
+    --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
+        --self.sfx["run"]:loop()
+    --else
+        --self.sfx["run"]:stop()
+    --end
 end
