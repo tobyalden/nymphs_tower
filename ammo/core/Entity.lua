@@ -139,8 +139,9 @@ function Entity:draw()
         end
         drawY = drawY + self.graphic.offsetY
 
+        --love.graphics.draw(self.graphic.paddedImage, 0, 0)
         love.graphics.draw(
-            self.graphic.image,
+            self.graphic.paddedImage,
             drawQuad,
             drawX, drawY,
             0,

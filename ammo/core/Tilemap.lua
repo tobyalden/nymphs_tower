@@ -5,13 +5,13 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
     local imageData = love.image.newImageData(path)
     local widthInTiles = self.image:getWidth() / tileWidth
     local heightInTiles = self.image:getHeight() / tileHeight
-    local bufferedImageData = love.image.newImageData(
-        self.image:getWidth() + widthInTiles + 200,
-        self.image:getHeight() + heightInTiles + 200
-    )
     local pixelOffsetX = 0
     local pixelOffsetY = 0
     local padding = 1
+    local paddedImageData = love.image.newImageData(
+        self.image:getWidth() + widthInTiles * padding,
+        self.image:getHeight() + heightInTiles * padding
+    )
     -- Create a new image from the source image with added padding between tiles
     for pixelY = 0, imageData:getHeight() - 1 do
         if pixelY > 0 and pixelY % tileHeight == 0 then
@@ -22,19 +22,20 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
                 pixelOffsetX = pixelOffsetX + padding
             end
             local r, g, b, a = imageData:getPixel(pixelX, pixelY)
-            bufferedImageData:setPixel(
+            paddedImageData:setPixel(
                 pixelX + pixelOffsetX, pixelY + pixelOffsetY, r, g, b, a
             )
         end
         pixelOffsetX = 0
     end
-    self.bufferedImage = love.graphics.newImage(bufferedImageData)
-    self.batch = love.graphics.newSpriteBatch(self.bufferedImage)
+    self.paddedImage = love.graphics.newImage(paddedImageData)
+    self.batch = love.graphics.newSpriteBatch(self.paddedImage)
     self.tileWidth = tileWidth
     self.tileHeight = tileHeight
     self.tiles = {}
     self.spriteIds = {}
 
+    -- Chop padded image up into tiles
     for tileY = 1, widthInTiles do
         for tileX = 1, heightInTiles do
             table.insert(
@@ -43,7 +44,7 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
                     (tileX - 1) * (tileWidth + padding),
                     (tileY - 1) * (tileHeight + padding),
                     tileWidth, tileHeight,
-                    self.bufferedImage:getWidth(), self.bufferedImage:getHeight()
+                    self.paddedImage:getWidth(), self.paddedImage:getHeight()
                 )
             )
         end

@@ -15,14 +15,47 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.currentAnimation = {frames = {1}, fps = 1, loop = false}
     self.currentAnimationIndex = 1
     self.elapsed = 0
+
+    -- Create a new image from the source image with added padding between frames
+    local imageData = love.image.newImageData(path)
+    local widthInFrames = self.image:getWidth() / frameWidth
+    local heightInFrames = self.image:getHeight() / frameHeight
+    local pixelOffsetX = 0
+    local pixelOffsetY = 0
+    local padding = 1
+    local paddedImageData = love.image.newImageData(
+        self.image:getWidth() + widthInFrames * padding,
+        self.image:getHeight() + heightInFrames * padding
+    )
+
+    -- Create a new image from the source image with added padding between frames
+    for pixelY = 0, imageData:getHeight() - 1 do
+        if pixelY > 0 and pixelY % frameHeight == 0 then
+            pixelOffsetY = pixelOffsetY + padding
+        end
+        for pixelX = 0, imageData:getWidth() - 1 do
+            if pixelX > 0 and pixelX % frameWidth == 0 then
+                pixelOffsetX = pixelOffsetX + padding
+            end
+            local r, g, b, a = imageData:getPixel(pixelX, pixelY)
+            paddedImageData:setPixel(
+                pixelX + pixelOffsetX, pixelY + pixelOffsetY, r, g, b, a
+            )
+        end
+        pixelOffsetX = 0
+    end
+    self.paddedImage = love.graphics.newImage(paddedImageData)
+
+    -- Chop padded image up into frames
     for frameY = 1, self.image:getHeight() / frameHeight do
         for frameX = 1, self.image:getWidth() / frameWidth do
             table.insert(
                 self.frames,
                 love.graphics.newQuad(
-                    (frameX - 1) * frameWidth, (frameY - 1) * frameHeight,
+                    (frameX - 1) * (frameWidth + padding),
+                    (frameY - 1) * (frameHeight + padding),
                     frameWidth, frameHeight,
-                    self.image:getWidth(), self.image:getHeight()
+                    self.paddedImage:getWidth(), self.paddedImage:getHeight()
                 )
             )
         end
