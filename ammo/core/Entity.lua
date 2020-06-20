@@ -127,7 +127,7 @@ end
 function Entity:added() end
 
 function Entity:update(dt)
-    if self.graphic.class == Sprite then
+    if self.graphic.class == Sprite or self.graphic.class == Graphiclist then
         self.graphic:update(dt)
     end
 end
@@ -135,62 +135,71 @@ end
 function Entity:draw()
     -- TODO: Could refactor this so we call the draw method of each graphic and
     -- pass it the entity maybe?
-    local scroll = self.graphic.scroll or 1
+     if self.graphic.class == Graphiclist then
+         for _, v in pairs(self.graphic.allGraphics) do
+            self:_drawGraphic(v)
+         end
+     else
+        self:_drawGraphic(self.graphic)
+     end
+end
+
+function Entity:_drawGraphic(graphic)
+    local scroll = graphic.scroll or 1
     self.world.camera:set(scroll)
-    if self.graphic.class == Sprite then
-        local drawQuad = self.graphic.frames[
-            self.graphic.currentAnimation.frames[
-                self.graphic.currentAnimationIndex
+    if graphic.class == Sprite then
+        local drawQuad = graphic.frames[
+            graphic.currentAnimation.frames[
+                graphic.currentAnimationIndex
             ]
         ]
 
-        local drawScaleX = self.graphic.scaleX
-        if self.graphic.flipX then
+        local drawScaleX = graphic.scaleX
+        if graphic.flipX then
             drawScaleX = -drawScaleX
         end
         local drawX = self.x
         if drawScaleX < 0 then
-            drawX = self.x + self.graphic.frameWidth * self.graphic.scaleX
+            drawX = self.x + graphic.frameWidth * graphic.scaleX
         end
-        drawX = drawX + self.graphic.offsetX
+        drawX = drawX + graphic.offsetX
 
-        local drawScaleY = self.graphic.scaleY
-        if self.graphic.flipY then
+        local drawScaleY = graphic.scaleY
+        if graphic.flipY then
             drawScaleY = -drawScaleY
         end
         local drawY = self.y
         if drawScaleY < 0 then
-            drawY = self.y + self.graphic.frameHeight * self.graphic.scaleY
+            drawY = self.y + graphic.frameHeight * graphic.scaleY
         end
-        drawY = drawY + self.graphic.offsetY
+        drawY = drawY + graphic.offsetY
 
-        --love.graphics.draw(self.graphic.paddedImage, 0, 0)
         love.graphics.draw(
-            self.graphic.paddedImage,
+            graphic.paddedImage,
             drawQuad,
             drawX, drawY,
             0,
             drawScaleX, drawScaleY
         )
-    elseif self.graphic.class == Tilemap then
-        love.graphics.draw(self.graphic.batch, self.x, self.y)
-    elseif self.graphic.class == Text then
+    elseif graphic.class == Tilemap then
+        love.graphics.draw(graphic.batch, self.x, self.y)
+    elseif graphic.class == Text then
         local r, g, b, a = love.graphics.getColor()
-        love.graphics.setColor(self.graphic.color)
-        love.graphics.draw(self.graphic.image, self.x, self.y)
+        love.graphics.setColor(graphic.color)
+        love.graphics.draw(graphic.image, self.x, self.y)
         love.graphics.setColor(r, g, b, a)
-    elseif self.graphic.class == Backdrop then
+    elseif graphic.class == Backdrop then
         local drawX = (
-            self.x * scroll % self.graphic.image:getWidth()
-            + math.floor(self.world.camera.x * scroll / self.graphic.image:getWidth())
-            * self.graphic.image:getWidth()
+            self.x * scroll % graphic.image:getWidth()
+            + math.floor(self.world.camera.x * scroll / graphic.image:getWidth())
+            * graphic.image:getWidth()
         )
         local drawY = (
-            self.y * scroll % self.graphic.image:getHeight()
-            + math.floor(self.world.camera.y * scroll / self.graphic.image:getHeight())
-            * self.graphic.image:getHeight()
+            self.y * scroll % graphic.image:getHeight()
+            + math.floor(self.world.camera.y * scroll / graphic.image:getHeight())
+            * graphic.image:getHeight()
         )
-        love.graphics.draw(self.graphic.batch, drawX, drawY)
+        love.graphics.draw(graphic.batch, drawX, drawY)
     end
     self.world.camera:unset()
 end

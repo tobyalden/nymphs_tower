@@ -16,6 +16,7 @@ require(ammo.path .. ".core.Sprite")
 require(ammo.path .. ".core.Tilemap")
 require(ammo.path .. ".core.Text")
 require(ammo.path .. ".core.Backdrop")
+require(ammo.path .. ".core.Graphiclist")
 
 ammo.version = "2.0.0"
 ammo.ext = {}
