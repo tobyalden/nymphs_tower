@@ -37,7 +37,7 @@ function Level:initialize(path)
                         entity["x"] + 8, entity["y"],
                         entity["width"], entity["height"]
                     )
-                    self.entities["acid"] = acid
+                    table.insert(self.entities, acid)
                 end
             end
         end

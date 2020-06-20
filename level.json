@@ -74,8 +74,8 @@
       "gridCellsX": 255,
       "gridCellsY": 92,
       "entities": [
-        {"name": "acid", "id": 0, "_eid": "67689386", "x": 232, "y": 136, "width": 496, "height": 24, "originX": 0, "originY": 0},
-        {"name": "player", "id": 6, "_eid": "68256185", "x": 24, "y": 96}
+        {"name": "player", "id": 6, "_eid": "68256185", "x": 208, "y": 96},
+        {"name": "acid", "id": 8, "_eid": "67689386", "x": 288, "y": 136, "width": 136, "height": 24, "originX": 0, "originY": 0}
       ]
     }
   ]

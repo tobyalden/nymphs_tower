@@ -24,7 +24,6 @@ function Player:initialize(x, y)
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
-    self.fuel = Player.STARTING_FUEL
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
@@ -37,6 +36,9 @@ function Player:initialize(x, y)
     self.layer = -1
 
     self:loadSfx({"jump.wav", "run.wav"})
+
+    self.health = Player.STARTING_HEALTH
+    self.fuel = Player.STARTING_FUEL
 end
 
 function Player:isOnGround()
@@ -91,7 +93,7 @@ function Player:movement(dt)
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
-        {"enemy", "walls"}
+        {"walls"}
     )
 end
 
@@ -125,6 +127,9 @@ end
 function Player:update(dt)
     self:movement(dt)
     self:animation()
+    if #self:collide(self.x, self.y, {"acid"}) > 0 then
+        self.health = self.health - Acid.DAMAGE_RATE * dt
+    end
     Entity.update(self, dt)
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
