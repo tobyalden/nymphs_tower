@@ -8,6 +8,9 @@ function GameWorld:initialize()
     self:add(player)
     local level = Level:new("level.json")
     self:add(level)
+    for _, entity in pairs(level.entities) do
+        self:add(entity)
+    end
     local ui = UI:new()
     self:add(ui)
     local background = Background:new()

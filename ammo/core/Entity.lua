@@ -200,6 +200,39 @@ function Entity:_drawGraphic(graphic)
             * graphic.image:getHeight()
         )
         love.graphics.draw(graphic.batch, drawX, drawY)
+    elseif graphic.class == TiledSprite then
+        local tiledFrame = graphic.tiledFrames[
+            graphic.currentAnimation.frames[
+                graphic.currentAnimationIndex
+            ]
+        ]
+
+        local drawScaleX = graphic.scaleX
+        if graphic.flipX then
+            drawScaleX = -drawScaleX
+        end
+        local drawX = self.x
+        if drawScaleX < 0 then
+            drawX = self.x + graphic.frameWidth * graphic.scaleX
+        end
+        drawX = drawX + graphic.offsetX
+
+        local drawScaleY = graphic.scaleY
+        if graphic.flipY then
+            drawScaleY = -drawScaleY
+        end
+        local drawY = self.y
+        if drawScaleY < 0 then
+            drawY = self.y + graphic.frameHeight * graphic.scaleY
+        end
+        drawY = drawY + graphic.offsetY
+
+        love.graphics.draw(
+            tiledFrame,
+            drawX, drawY,
+            0,
+            drawScaleX, drawScaleY
+        )
     end
     self.world.camera:unset()
 end

@@ -8,15 +8,30 @@ function Level:initialize(path)
     raw = io.read("*all")
     jsonData = json.decode(raw)
 
-    -- set mask
+    self.entities = {}
+
     self.mask = Grid:new(self, jsonData["width"], jsonData["height"], 16, 16)
     for _, layer in pairs(jsonData["layers"]) do
+        -- set mask
         if layer["name"] == "walls" then
             for tileX = 1, layer["gridCellsX"] do
                 for tileY = 1, layer["gridCellsY"] - 1 do
                     self.mask:setTile(
                         tileX, tileY, layer["grid2D"][tileY][tileX] == "1"
                     )
+                end
+            end
+        end
+
+        -- load entities
+        if layer["name"] == "entities" then
+            for _, entity in pairs(layer["entities"]) do
+                if entity["name"] == "acid" then
+                    local acid = Acid:new(
+                        entity["x"], entity["y"],
+                        entity["width"], entity["height"]
+                    )
+                    table.insert(self.entities, acid)
                 end
             end
         end
