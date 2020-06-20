@@ -2,8 +2,8 @@ Sprite = class("Sprite")
 
 function Sprite:initialize(path, frameWidth, frameHeight)
     self.image = love.graphics.newImage(path)
-    self.frameWidth = frameWidth
-    self.frameHeight = frameHeight
+    self.frameWidth = frameWidth or self.image:getWidth()
+    self.frameHeight = frameHeight or self.image:getHeight()
     self.flipX = false
     self.flipY = false
     self.offsetX = 0
@@ -18,8 +18,8 @@ function Sprite:initialize(path, frameWidth, frameHeight)
 
     -- Create a new image from the source image with added padding between frames
     local imageData = love.image.newImageData(path)
-    local widthInFrames = self.image:getWidth() / frameWidth
-    local heightInFrames = self.image:getHeight() / frameHeight
+    local widthInFrames = self.image:getWidth() / self.frameWidth
+    local heightInFrames = self.image:getHeight() / self.frameHeight
     local pixelOffsetX = 0
     local pixelOffsetY = 0
     local padding = 1
@@ -30,11 +30,11 @@ function Sprite:initialize(path, frameWidth, frameHeight)
 
     -- Create a new image from the source image with added padding between frames
     for pixelY = 0, imageData:getHeight() - 1 do
-        if pixelY > 0 and pixelY % frameHeight == 0 then
+        if pixelY > 0 and pixelY % self.frameHeight == 0 then
             pixelOffsetY = pixelOffsetY + padding
         end
         for pixelX = 0, imageData:getWidth() - 1 do
-            if pixelX > 0 and pixelX % frameWidth == 0 then
+            if pixelX > 0 and pixelX % self.frameWidth == 0 then
                 pixelOffsetX = pixelOffsetX + padding
             end
             local r, g, b, a = imageData:getPixel(pixelX, pixelY)
@@ -47,14 +47,14 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.paddedImage = love.graphics.newImage(paddedImageData)
 
     -- Chop padded image up into frames
-    for frameY = 1, self.image:getHeight() / frameHeight do
-        for frameX = 1, self.image:getWidth() / frameWidth do
+    for frameY = 1, self.image:getHeight() / self.frameHeight do
+        for frameX = 1, self.image:getWidth() / self.frameWidth do
             table.insert(
                 self.frames,
                 love.graphics.newQuad(
-                    (frameX - 1) * (frameWidth + padding),
-                    (frameY - 1) * (frameHeight + padding),
-                    frameWidth, frameHeight,
+                    (frameX - 1) * (self.frameWidth + padding),
+                    (frameY - 1) * (self.frameHeight + padding),
+                    self.frameWidth, self.frameHeight,
                     self.paddedImage:getWidth(), self.paddedImage:getHeight()
                 )
             )

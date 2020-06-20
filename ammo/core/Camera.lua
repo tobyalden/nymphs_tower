@@ -38,7 +38,7 @@ function Camera:set(scale)
   --love.graphics.rotate(self.angle)
   
   if scale == 0 then
-    love.graphics.translate(-xCentre, -yCentre)
+    love.graphics.translate(0, 0)
   else
     love.graphics.translate(-self.x * scale, -self.y * scale)
   end

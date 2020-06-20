@@ -69,9 +69,9 @@ function World:draw()
         if layer and layer.visible then
             if layer.pre then layer.pre() end
 
-            if layer.camera then
-                self.camera:set(layer.scale)
-            end
+            --if layer.camera then
+                --self.camera:set(layer.scale)
+            --end
 
             for v in layer:iterate(true) do -- reverse
                 if v.visible then
@@ -81,7 +81,8 @@ function World:draw()
                 end
             end
 
-            if layer.camera then self.camera:unset() end
+            --if layer.camera then self.camera:unset() end
+            --self.camera:unset()
             if layer.post then layer.post() end
         end
     end

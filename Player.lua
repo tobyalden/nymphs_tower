@@ -1,28 +1,38 @@
 Player = class("Player", Entity)
 Player.static.SPEED = 150
 Player.static.GRAVITY = 600
+Player.static.MAX_FALL_SPEED = 300
+Player.static.MAX_RISE_SPEED = 150
 Player.static.JUMP_POWER = 150
+Player.static.JETPACK_POWER = 900 * 1
+Player.static.STARTING_HEALTH = 100
+
+local releasedJump = false
 
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
-    self.graphic = Sprite:new("player.png", 16, 32)
-    self.graphic:add("idle", {1})
-    self.graphic:add("run", {2, 3, 4, 3}, 6, true)
-    self.graphic:add("jump", {5})
-    self.graphic:add("crouch", {6})
-    self.graphic:add("jetpack", {7, 8}, 4, true)
-    self.velocity = Vector:new(0, 0)
-    self.mask = Hitbox:new(self, 8, 23)
-    self.graphic.offsetX = -5;
-    self.graphic.offsetY = -9;
-    self.layer = -1
-    self.types = {"player"}
-    self:loadSfx({"jump.wav", "run.wav"})
+
     input.define("jump", "z")
     input.define("up", "up")
     input.define("down", "down")
     input.define("left", "left")
     input.define("right", "right")
+
+    self.mask = Hitbox:new(self, 8, 21)
+    self.types = {"player"}
+    self.velocity = Vector:new(0, 0)
+
+    self.graphic = Sprite:new("player.png", 16, 32)
+    self.graphic:add("idle", {1})
+    self.graphic:add("run", {2, 3, 4, 3}, 6, true)
+    self.graphic:add("jump", {5})
+    self.graphic:add("crouch", {5})
+    self.graphic:add("jetpack", {6, 7}, 4, true)
+    self.graphic.offsetX = -5;
+    self.graphic.offsetY = -11;
+    self.layer = -1
+
+    self:loadSfx({"jump.wav", "run.wav"})
 end
 
 function Player:isOnGround()
@@ -33,18 +43,42 @@ function Player:isOnGround()
     end
 end
 
+function Player:moveCollideX(collided)
+    self.velocity.x = 0
+end
+
+function Player:moveCollideY(collided)
+    self.velocity.y = 0
+end
+
 function Player:movement(dt)
     if input.down("left") then self.velocity.x = -Player.SPEED
     elseif input.down("right") then self.velocity.x = Player.SPEED
     else self.velocity.x = 0 end
     if self:isOnGround() then
         self.velocity.y = 0
+        isJetpackOn = false
         if input.pressed("jump") then
             self.velocity.y = -Player.JUMP_POWER
+            releasedJump = false
         end
     else
+        if input.released("jump") then
+            releasedJump = true
+        end
+        if input.down("jump") and releasedJump then
+            isJetpackOn = true
+        else
+            isJetpackOn = false
+        end
+        if isJetpackOn then
+            self.velocity.y = self.velocity.y - Player.JETPACK_POWER * dt
+        end
         self.velocity.y = self.velocity.y + Player.GRAVITY * dt
     end
+    self.velocity.y = math.clamp(
+        self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
+    )
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
@@ -71,7 +105,11 @@ function Player:animation()
             self.graphic:play("idle")
         end
     else
-        self.graphic:play("jump")
+        if isJetpackOn then
+            self.graphic:play("jetpack")
+        else
+            self.graphic:play("jump")
+        end
     end
 end
 

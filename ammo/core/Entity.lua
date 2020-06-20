@@ -78,27 +78,50 @@ function Entity:collide(checkX, checkY, solidTypes)
 end
 
 function Entity:moveBy(x, y, solidTypes)
+    local collidedX = self:_moveBy(x, 0, solidTypes)
+    if(#collidedX > 0) then
+        self:moveCollideX(collidedX)
+    end
+    local collidedY = self:_moveBy(0, y, solidTypes)
+    if(#collidedY > 0) then
+        self:moveCollideY(collidedY)
+    end
+end
+
+function Entity:moveCollideX(collided)
+end
+
+function Entity:moveCollideY(collided)
+end
+
+function Entity:_moveBy(x, y, solidTypes)
     solidTypes = solidTypes or {}
     local actualX, actualY, cols, len = bumpWorld:move(self.mask, self.x + x, self.y + y)
     local shouldCollide = false
+    local allCollided = {}
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
+            local shouldBreak = false
             otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then
                     shouldCollide = true
+                    shouldBreak = true
+                    table.insert(allCollided, collided.other.parent)
+                    break
                 end
             end
+            if shouldBreak then break end
         end
     end
-    if shouldCollide then
+    if #allCollided > 0 then
         self.x = actualX
         self.y = actualY
     else
-        bumpWorld:update(self.mask, self.x + x, self.y + y)
         self.x = self.x + x
         self.y = self.y + y
     end
+    return allCollided
 end
 
 function Entity:added() end
@@ -112,6 +135,8 @@ end
 function Entity:draw()
     -- TODO: Could refactor this so we call the draw method of each graphic and
     -- pass it the entity maybe?
+    local scroll = self.graphic.scroll or 1
+    self.world.camera:set(scroll)
     if self.graphic.class == Sprite then
         local drawQuad = self.graphic.frames[
             self.graphic.currentAnimation.frames[
@@ -156,17 +181,18 @@ function Entity:draw()
         love.graphics.setColor(r, g, b, a)
     elseif self.graphic.class == Backdrop then
         local drawX = (
-            self.x % self.graphic.image:getWidth()
-            + math.floor(self.world.camera.x / self.graphic.image:getWidth())
+            self.x * scroll % self.graphic.image:getWidth()
+            + math.floor(self.world.camera.x * scroll / self.graphic.image:getWidth())
             * self.graphic.image:getWidth()
         )
         local drawY = (
-            self.y % self.graphic.image:getHeight()
-            + math.floor(self.world.camera.y / self.graphic.image:getHeight())
+            self.y * scroll % self.graphic.image:getHeight()
+            + math.floor(self.world.camera.y * scroll / self.graphic.image:getHeight())
             * self.graphic.image:getHeight()
         )
         love.graphics.draw(self.graphic.batch, drawX, drawY)
     end
+    self.world.camera:unset()
 end
 
 function Entity:removed() end

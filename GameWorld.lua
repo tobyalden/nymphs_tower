@@ -1,6 +1,5 @@
 GameWorld = class("GameWorld", World)
 
-local wasDKeyDown = false
 local player
 
 function GameWorld:initialize()
@@ -18,10 +17,6 @@ function GameWorld:initialize()
 end
 
 function GameWorld:update(dt)
-    if love.keyboard.isDown("d") and not wasDKeyDown then
-        ammo.world = GameWorld:new()
-    end
-    wasDKeyDown = love.keyboard.isDown("d")
     World.update(self, dt)
     self.camera.x = player.x + player.mask.width / 2 - gameWidth / 2
     --self.camera.y = player.y + player.mask.height /2 - gameHeight / 2
