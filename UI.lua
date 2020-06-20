@@ -17,7 +17,7 @@ function UI:initialize()
 end
 
 function UI:update(dt)
-    self.graphic.allGraphics.fuelBar.scaleX = player.fuel / Player.STARTING_FUEL
+    self.graphic.allGraphics.fuelBar.scaleX = self.world.player.fuel / Player.STARTING_FUEL
     Entity.update(self, dt)
 end
 
