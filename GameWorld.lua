@@ -1,6 +1,6 @@
 GameWorld = class("GameWorld", World)
 
-local player
+--local player
 
 function GameWorld:initialize()
     World.initialize(self)

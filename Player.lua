@@ -6,6 +6,9 @@ Player.static.MAX_RISE_SPEED = 150
 Player.static.JUMP_POWER = 150
 Player.static.JETPACK_POWER = 900 * 1
 Player.static.STARTING_HEALTH = 100
+Player.static.STARTING_FUEL = 100
+Player.static.JETPACK_FUEL_USE_RATE = 50
+Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 
 local releasedJump = false
 
@@ -15,12 +18,13 @@ function Player:initialize(x, y)
     input.define("jump", "z")
     input.define("up", "up")
     input.define("down", "down")
-    input.define("left", "left")
-    input.define("right", "right")
+    input.define("left", "left", "[")
+    input.define("right", "right", "]")
 
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
+    self.fuel = Player.STARTING_FUEL
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
@@ -58,6 +62,10 @@ function Player:movement(dt)
     if self:isOnGround() then
         self.velocity.y = 0
         isJetpackOn = false
+        self.fuel = math.min(
+            self.fuel + Player.JETPACK_FUEL_RECOVER_RATE * dt,
+            Player.STARTING_FUEL
+        )
         if input.pressed("jump") then
             self.velocity.y = -Player.JUMP_POWER
             releasedJump = false
@@ -66,13 +74,14 @@ function Player:movement(dt)
         if input.released("jump") then
             releasedJump = true
         end
-        if input.down("jump") and releasedJump then
+        if input.down("jump") and releasedJump and self.fuel > 0 then
             isJetpackOn = true
         else
             isJetpackOn = false
         end
         if isJetpackOn then
             self.velocity.y = self.velocity.y - Player.JETPACK_POWER * dt
+            self.fuel = math.max(self.fuel - Player.JETPACK_FUEL_USE_RATE * dt, 0)
         end
         self.velocity.y = self.velocity.y + Player.GRAVITY * dt
     end
