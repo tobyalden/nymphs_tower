@@ -20,6 +20,10 @@ function GameWorld:initialize()
     self.sfx["longmusic"]:loop()
 end
 
+function GameWorld:onDeath()
+    ammo.world = GameWorld:new()
+end
+
 function GameWorld:update(dt)
     World.update(self, dt)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 2

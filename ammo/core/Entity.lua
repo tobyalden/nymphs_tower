@@ -196,7 +196,10 @@ function Entity:_drawGraphic(graphic)
     elseif graphic.class == Text then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(graphic.color)
-        love.graphics.draw(graphic.image, self.x, self.y)
+        love.graphics.draw(
+            graphic.image,
+            self.x + graphic.offsetX, self.y + graphic.offsetY
+        )
         love.graphics.setColor(r, g, b, a)
     elseif graphic.class == Backdrop then
         local drawX = (

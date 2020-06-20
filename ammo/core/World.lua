@@ -88,6 +88,13 @@ function World:draw()
     end
 end
 
+function World:doSequence(sequence)
+    for _, step in pairs(sequence) do
+        local timer = Delay:new(step[1], step[2])
+        self:add(timer)
+    end
+end
+
 function World:loadSfx(sfxPaths)
     loadSfx(self, sfxPaths)
 end
@@ -104,8 +111,10 @@ function World:stop()
         v:stopLoops()
     end
     for e in self:iterate() do
-        for _, v in pairs(e.sfx) do
-            v:stopLoops()
+        if e.sfx then
+            for _, v in pairs(e.sfx) do
+                v:stopLoops()
+            end
         end
     end
 end

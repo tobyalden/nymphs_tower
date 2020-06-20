@@ -1,4 +1,4 @@
-local Delay = class("Delay")
+Delay = class("Delay")
 
 function Delay:initialize(duration, complete, ...)
   self.active = true

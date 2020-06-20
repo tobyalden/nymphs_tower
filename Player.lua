@@ -10,10 +10,12 @@ Player.static.STARTING_FUEL = 100
 Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 
-local releasedJump = false
+local releasedJump
 
 function Player:initialize(x, y)
     Entity.initialize(self, x, y)
+
+    releasedJump = false
 
     input.define("jump", "z")
     input.define("up", "up")
@@ -124,11 +126,26 @@ function Player:animation()
     end
 end
 
+function Player:takeHit(damage)
+    self.health = math.max(self.health - damage, 0)
+    if self.health == 0 then
+        self:die()
+    end
+end
+
+function Player:die()
+    self.visible = false
+    self.active = false
+    self.world:doSequence({
+        {1, function() self.world:onDeath() end}
+    })
+end
+
 function Player:update(dt)
     self:movement(dt)
     self:animation()
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
-        self.health = self.health - Acid.DAMAGE_RATE * dt
+        self:takeHit(Acid.DAMAGE_RATE * dt)
     end
     Entity.update(self, dt)
 
