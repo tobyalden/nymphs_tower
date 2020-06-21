@@ -11,6 +11,7 @@ require("UI")
 require("Background")
 require("Acid")
 require("CameraZone")
+require("PlayerBullet")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()

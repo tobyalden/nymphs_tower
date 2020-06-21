@@ -35,6 +35,7 @@ function Entity:initialize(x, y)
     self.types = {}
     self.graphic = Sprite:new("debug.png", 50, 50)
     self.sfx = {}
+    self.tweens = {}
 end
 
 function loadSfx(parent, sfxPaths)
@@ -75,6 +76,11 @@ function Entity:collide(checkX, checkY, solidTypes)
         end
     end
     return collided
+end
+
+function Entity:addTween(tween)
+    table.insert(self.tweens, tween)
+    return tween
 end
 
 function Entity:moveBy(x, y, solidTypes)
@@ -139,6 +145,9 @@ function Entity:added() end
 function Entity:update(dt)
     if self.graphic.class == Sprite or self.graphic.class == Graphiclist then
         self.graphic:update(dt)
+    end
+    for _, tween in pairs(self.tweens) do
+        tween:update(dt)
     end
 end
 

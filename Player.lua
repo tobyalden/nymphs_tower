@@ -9,6 +9,7 @@ Player.static.STARTING_HEALTH = 100
 Player.static.STARTING_FUEL = 100
 Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
+Player.static.SHOT_COOLDOWN = 1
 
 -- endgame item: anti-gravity belt that halves gravity
 
@@ -19,11 +20,12 @@ function Player:initialize(x, y)
 
     releasedJump = false
 
-    input.define("jump", "z")
     input.define("up", "up")
     input.define("down", "down")
     input.define("left", "left", "[")
     input.define("right", "right", "]")
+    input.define("jump", "z")
+    input.define("shoot", "x")
 
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
@@ -43,6 +45,7 @@ function Player:initialize(x, y)
 
     self.health = Player.STARTING_HEALTH
     self.fuel = Player.STARTING_FUEL
+    self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
 end
 
 function Player:isOnGround()
@@ -148,6 +151,19 @@ end
 function Player:update(dt)
     self:movement(dt)
     self:animation()
+    if input.pressed("shoot") and not self.shotCooldown.active then
+        local bulletHeading = Vector:new(1, 0)
+        if self.graphic.flipX then
+            bulletHeading.x = -1
+        end
+        local bullet = PlayerBullet:new(
+            self.x,
+            self.y - 11 + 17,
+            bulletHeading
+        )
+        self.world:add(bullet)
+        self.shotCooldown:start()
+    end
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
         self:takeHit(Acid.DAMAGE_RATE * dt)
     end

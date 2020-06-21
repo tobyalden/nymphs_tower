@@ -2,106 +2,115 @@
 Vector = class("Vector")
 
 function Vector:initialize(x, y)
-  self.x = x or 0
-  self.y = y or 0
+    self.x = x or 0
+    self.y = y or 0
 end
 
 function Vector:unpack()
-  return self.x, self.y
+    return self.x, self.y
 end
 
 function Vector:set(x, y)
-  if x then self.x = x end
-  if y then self.y = y end
+    if x then self.x = x end
+    if y then self.y = y end
 end
 
-function Vector:normalize()
-  local len = self:len()
-  self.x, self.y = self.x / len, self.y / len
-  return self
+function Vector:normalize(size)
+    if not (x == 0 and y == 0) then
+        local normal = size / self:len()
+        self.x = self.x * normal
+        self.y = self.y * normal
+    end
+    return self
 end
 
 function Vector:normalized()
-  return self / self:len()
+    return self / self:len()
+end
+
+function Vector:scale(scalar)
+    self.x = self.x * scalar
+    self.y = self.y * scalar
+    return self
 end
 
 function Vector:rotate(by)
-  local c, s = math.cos(by), math.sin(by)
-  self.x = c * self.x - s * self.y
-  self.y = s * self.x + c * self.y
-  return self
+    local c, s = math.cos(by), math.sin(by)
+    self.x = c * self.x - s * self.y
+    self.y = s * self.x + c * self.y
+    return self
 end
 
 function Vector:rotated(by)
-  return Vector(self.x, self.y):rotate(by)
+    return Vector(self.x, self.y):rotate(by)
 end
 
 function Vector:perpendicular()
-  return Vector(-self.y, self.x)
+    return Vector(-self.y, self.x)
 end
 
 function Vector:projectOn(v)
-  return (self * v) * v / v:lenSq()
+    return (self * v) * v / v:lenSq()
 end
 
 function Vector:cross(v)
-  return self.x * v.y - self.y * v.x
+    return self.x * v.y - self.y * v.x
 end
 
 function Vector:permul(v)
-  return Vector(self.x * v.x, self.y * v.y)
+    return Vector(self.x * v.x, self.y * v.y)
 end
 
 function Vector:dist(v)
-  return (v - self):len()
+    return (v - self):len()
 end
 
 function Vector:lenSq()
-  return self * self
+    return self * self
 end
 
 function Vector:len()
-  return math.sqrt(self * self)
+    return math.sqrt(self * self)
 end
 
 function Vector:__tostring()
-  return "(" .. self.x .. "," .. self.y ..")"
+    return "(" .. self.x .. "," .. self.y ..")"
 end
 
 function Vector:__unm()
-  return Vector(-self.x, -self.y)
+    return Vector(-self.x, -self.y)
 end
 
 function Vector:__add(v)
-  return Vector(self.x + v.x, self.y + v.y)
+    return Vector(self.x + v.x, self.y + v.y)
 end
 
 function Vector:__sub(v)
-  return Vector(self.x - v.x, self.y - v.y)
+    return Vector(self.x - v.x, self.y - v.y)
 end
 
 function Vector.__mul(a, b)
-  if type(b) == "number" then
-    return Vector(a.x * b, a.y * b)
-  elseif type(a) == "number" then
-    return Vector(b.x * a, b.y * a)
-  else
-    return a.x * b.x + a.y * b.y
-  end
+    if type(b) == "number" then
+        return Vector(a.x * b, a.y * b)
+    elseif type(a) == "number" then
+        return Vector(b.x * a, b.y * a)
+    else
+        return a.x * b.x + a.y * b.y
+    end
 end
 
 function Vector:__div(v)
-  return Vector(self.x / v, self.y / v)
+    return Vector(self.x / v, self.y / v)
 end
 
 function Vector:__eq(v)
-  return self.x == v.x and self.y == v.y
+    return self.x == v.x and self.y == v.y
 end
 
 function Vector:__lt(v)
-  return self.x < v.x or (self.x == v.x and self.y < v.y)
+    return self.x < v.x or (self.x == v.x and self.y < v.y)
 end
 
 function Vector:__le(v)
-  return self.x <= v.x and self.y <= v.y
+    return self.x <= v.x and self.y <= v.y
 end

@@ -18,8 +18,8 @@ function GameWorld:initialize()
     self:add(ui)
     local background = Background:new()
     self:add(background)
-    self:loadSfx({"longmusic.ogg"})
-    self.sfx["longmusic"]:loop()
+    --self:loadSfx({"longmusic.ogg"})
+    --self.sfx["longmusic"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
 end
