@@ -47,6 +47,10 @@ function Level:initialize(path)
                     local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, healthUpgrade)
                 end
+                if entity["name"] == "fuel_upgrade" then
+                    local fuelUpgrade = FuelUpgrade:new(entity["x"], entity["y"])
+                    table.insert(self.entities, fuelUpgrade)
+                end
             end
         end
 

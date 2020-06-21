@@ -34,7 +34,7 @@ function Entity:initialize(x, y)
     self.width = 1
     self.height = 1
     self.types = {}
-    self.graphic = Sprite:new("debug.png", 50, 50)
+    --self.graphic = Sprite:new("debug.png", 50, 50)
     self.sfx = {}
     self.tweens = {}
 end
@@ -144,7 +144,7 @@ end
 function Entity:added() end
 
 function Entity:update(dt)
-    if self.graphic.class == Sprite or self.graphic.class == Graphiclist then
+    if self.graphic and (self.graphic.class == Sprite or self.graphic.class == Graphiclist) then
         self.graphic:update(dt)
     end
     for _, tween in pairs(self.tweens) do
@@ -155,13 +155,14 @@ end
 function Entity:draw()
     -- TODO: Could refactor this so we call the draw method of each graphic and
     -- pass it the entity maybe?
-     if self.graphic.class == Graphiclist then
-         for _, v in pairs(self.graphic.allGraphics) do
+    if not self.graphic then return end
+    if self.graphic.class == Graphiclist then
+        for _, v in pairs(self.graphic.allGraphics) do
             self:_drawGraphic(v)
-         end
-     else
+        end
+    else
         self:_drawGraphic(self.graphic)
-     end
+    end
 end
 
 function Entity:_drawGraphic(graphic)

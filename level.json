@@ -24,7 +24,8 @@
         {"name": "acid", "id": 20, "_eid": "67689386", "x": 1184, "y": 200, "width": 1072, "height": 56, "originX": 0, "originY": 0},
         {"name": "acid", "id": 21, "_eid": "67689386", "x": 368, "y": 232, "width": 112, "height": 24, "originX": 0, "originY": 0},
         {"name": "gun", "id": 23, "_eid": "77310519", "x": 2328, "y": 392, "originX": 0, "originY": 0},
-        {"name": "health_upgrade", "id": 24, "_eid": "78023010", "x": 2192, "y": 72, "originX": 0, "originY": 0}
+        {"name": "health_upgrade", "id": 24, "_eid": "78023010", "x": 2112, "y": 232, "originX": 0, "originY": 0},
+        {"name": "fuel_upgrade", "id": 25, "_eid": "78144176", "x": 2200, "y": 72, "originX": 0, "originY": 0}
       ]
     },
     {

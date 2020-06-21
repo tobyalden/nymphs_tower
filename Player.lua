@@ -49,6 +49,7 @@ function Player:initialize(x, y)
     self.isBufferingShot = false
     self.hasGun = false
     self.healthUpgrades = 0
+    self.fuelUpgrades = 0
 end
 
 function Player:isOnGround()
@@ -78,7 +79,7 @@ function Player:movement(dt)
         isJetpackOn = false
         self.fuel = math.min(
             self.fuel + Player.JETPACK_FUEL_RECOVER_RATE * dt,
-            Player.STARTING_FUEL
+            self:getMaxFuel()
         )
         if input.pressed("jump") then
             self.velocity.y = -Player.JUMP_POWER
@@ -205,7 +206,7 @@ function Player:collisions(dt)
         self.world:doSequence({
             {3, function()
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND A HEALTH UPGRADE"
+                    "YOU FOUND A HEALTH PACK"
                 })
                 self.world:doSequence({
                     {totalTime, function()
@@ -219,12 +220,43 @@ function Player:collisions(dt)
         })
     end
 
+    local collidedFuelUpgrades = self:collide(self.x, self.y, {"fuel_upgrade"})
+    if #collidedFuelUpgrades > 0 then
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {3, function()
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND A FUEL TANK"
+                })
+                self.world:doSequence({
+                    {totalTime, function()
+                        self.world:unpauseLevel()
+                        self.world:remove(collidedFuelUpgrades[1])
+                        self.fuelUpgrades = self.fuelUpgrades + 1
+                        self:restoreFuel()
+                    end}
+                })
+            end}
+        })
+    end
+
 end
 
 function Player:restoreHealth()
     self.health = (
         Player.STARTING_HEALTH
         + self.healthUpgrades * HealthUpgrade.HEALTH_AMOUNT
+    )
+end
+
+function Player:restoreFuel()
+    self.fuel = self:getMaxFuel()
+end
+
+function Player:getMaxFuel()
+    return (
+        Player.STARTING_FUEL
+        + self.fuelUpgrades * FuelUpgrade.FUEL_AMOUNT
     )
 end
 
