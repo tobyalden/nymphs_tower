@@ -4,6 +4,8 @@ local healthBar
 local healthText
 local fuelBar
 local fuelText
+local messageBar
+local message
 
 function UI:initialize()
     Entity.initialize(self)
@@ -21,10 +23,29 @@ function UI:initialize()
     fuelBar.alpha = 0.75
     fuelText.offsetX = 5
     fuelText.offsetY = 17
-    local allGraphics = {healthBar, fuelBar, healthText, fuelText}
+
+    messageBar = Sprite:new("messagebar.png")
+    messageBar.offsetX = 10
+    messageBar.offsetY = 180 - 24 - 9
+    message = Text:new("YOU GOT THE RAYGUN", 16, 'arial.ttf', {1, 1, 1}, 300, 'center')
+    message.offsetX = 10
+    message.offsetY = 180 - 24 - 10
+    local allGraphics = {healthBar, fuelBar, healthText, fuelText, messageBar, message}
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
     self.graphic.scroll = 0
+    self:hideMessage()
+end
+
+function UI:showMessage(messageText)
+    message.alpha = 1
+    messageBar.alpha = 1
+    message:setText(messageText)
+end
+
+function UI:hideMessage(messageText)
+    message.alpha = 0
+    messageBar.alpha = 0
 end
 
 function UI:update(dt)

@@ -173,14 +173,32 @@ function Player:shooting()
     end
 end
 
-function Player:collisions()
+function Player:collisions(dt)
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
         self:takeHit(Acid.DAMAGE_RATE * dt)
     end
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
-        self.world:remove(collidedGuns[1])
-        hasGun = true
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {1, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedGuns[1])
+                hasGun = true
+            end},
+            {1.5, function()
+                self.world.ui:showMessage("YOU FOUND THE RAYGUN") end
+            },
+            {3.5, function()
+                self.world.ui:hideMessage() end
+            },
+            {4, function()
+                self.world.ui:showMessage("PRESS X TO SHOOT") end
+            },
+            {7, function()
+                self.world.ui:hideMessage() end
+            }
+        })
     end
 end
 
@@ -188,7 +206,7 @@ function Player:update(dt)
     self:movement(dt)
     self:animation()
     self:shooting()
-    self:collisions()
+    self:collisions(dt)
     Entity.update(self, dt)
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then

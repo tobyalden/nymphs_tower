@@ -50,7 +50,7 @@ function World:update(dt)
 
     -- update
     for v in self._updates:iterate() do
-        if v.active ~= false then
+        if v.active ~= false and not v.paused then
             v:update(dt)
         end
     end
@@ -189,13 +189,14 @@ function World:_updateLists()
             v._removalQueued = false
             v._world = nil
             if v.mask.class == Hitbox then
-                if bumpWorld:hasItem(v) then
+                if bumpWorld:hasItem(v.mask) then
                     bumpWorld:remove(v.mask)
                 end
             elseif v.mask.class == Grid then
                 for tileX = 1, v.mask.columns do
                     for tileY = 1, v.mask.rows do
                         if(v.mask:getTile(tileX, tileY)) then
+                            -- TODO: Need to verify this really works
                             bumpWorld:remove(v.mask.data[tileY][tileX])
                         end
                     end

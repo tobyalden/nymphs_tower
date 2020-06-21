@@ -7,10 +7,11 @@ GameWorld.static.CAMERA_BUFFER_Y = 30
 local cameraTargetX
 local lerpTimerX
 local previousPlayerFlipX
+local level
 
 function GameWorld:initialize()
     World.initialize(self)
-    local level = Level:new("level.json")
+    level = Level:new("level.json")
     self:add(level)
     for name, entity in pairs(level.entities) do
         self:add(entity)
@@ -18,8 +19,8 @@ function GameWorld:initialize()
             self.player = entity
         end
     end
-    local ui = UI:new()
-    self:add(ui)
+    self.ui = UI:new()
+    self:add(self.ui)
     local background = Background:new()
     self:add(background)
     --self:loadSfx({"longmusic.ogg"})
@@ -28,6 +29,18 @@ function GameWorld:initialize()
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     lerpTimerX = 0
     previousPlayerFlipX = false
+end
+
+function GameWorld:pauseLevel()
+    for _, entity in pairs(level.entities) do
+        entity.paused = true
+    end
+end
+
+function GameWorld:unpauseLevel()
+    for _, entity in pairs(level.entities) do
+        entity.paused = false
+    end
 end
 
 function GameWorld:getCurrentCameraZone()

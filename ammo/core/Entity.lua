@@ -28,6 +28,7 @@ function Entity:initialize(x, y)
     self.x = x or 0
     self.y = y or 0
     self.active = true
+    self.paused = false
     self.visible = true
     self._layer = 1
     self.width = 1
