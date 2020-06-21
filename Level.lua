@@ -43,6 +43,10 @@ function Level:initialize(path)
                     local gun = Gun:new(entity["x"], entity["y"])
                     table.insert(self.entities, gun)
                 end
+                if entity["name"] == "health_upgrade" then
+                    local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
+                    table.insert(self.entities, healthUpgrade)
+                end
             end
         end
 

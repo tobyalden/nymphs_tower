@@ -48,6 +48,7 @@ function Player:initialize(x, y)
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = false
+    self.healthUpgrades = 0
 end
 
 function Player:isOnGround()
@@ -177,23 +178,54 @@ function Player:collisions(dt)
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
         self:takeHit(Acid.DAMAGE_RATE * dt)
     end
+
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
         self.world:pauseLevel()
         self.world:doSequence({
-            {1, function()
-                self.world:unpauseLevel()
-                self.world:remove(collidedGuns[1])
-                hasGun = true
-            end},
-            {1.5, function()
-                self.world.ui:showMessageSequence({
+            {3, function()
+                local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE RAYGUN",
-                    "PRESS X TO SHOOT"
+                    "PRESS X TO SHOOT",
+                })
+                self.world:doSequence({
+                    {totalTime + 1, function()
+                        self.world:unpauseLevel()
+                        self.world:remove(collidedGuns[1])
+                        hasGun = true
+                    end}
                 })
             end}
         })
     end
+
+    local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
+    if #collidedHealthUpgrades > 0 then
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {3, function()
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND A HEALTH UPGRADE"
+                })
+                self.world:doSequence({
+                    {totalTime, function()
+                        self.world:unpauseLevel()
+                        self.world:remove(collidedHealthUpgrades[1])
+                        self.healthUpgrades = self.healthUpgrades + 1
+                        self:restoreHealth()
+                    end}
+                })
+            end}
+        })
+    end
+
+end
+
+function Player:restoreHealth()
+    self.health = (
+        Player.STARTING_HEALTH
+        + self.healthUpgrades * HealthUpgrade.HEALTH_AMOUNT
+    )
 end
 
 function Player:update(dt)

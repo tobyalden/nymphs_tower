@@ -38,6 +38,7 @@ function UI:initialize()
 end
 
 function UI:showMessageSequence(messageSequence)
+    local totalTime = 0
     for i, message in ipairs(messageSequence) do
         local messageDelay = 0.5
         local messageHang = 3
@@ -50,7 +51,9 @@ function UI:showMessageSequence(messageSequence)
                 self:hideMessage()
             end},
         })
+        totalTime = messageDelay + messageHang + (i - 1) * messageTotal
     end
+    return totalTime
 end
 
 function UI:showMessage(messageText)
