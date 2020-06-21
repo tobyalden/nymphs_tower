@@ -187,17 +187,11 @@ function Player:collisions(dt)
                 hasGun = true
             end},
             {1.5, function()
-                self.world.ui:showMessage("YOU FOUND THE RAYGUN") end
-            },
-            {3.5, function()
-                self.world.ui:hideMessage() end
-            },
-            {4, function()
-                self.world.ui:showMessage("PRESS X TO SHOOT") end
-            },
-            {7, function()
-                self.world.ui:hideMessage() end
-            }
+                self.world.ui:showMessageSequence({
+                    "YOU FOUND THE RAYGUN",
+                    "PRESS X TO SHOOT"
+                })
+            end}
         })
     end
 end

@@ -37,6 +37,22 @@ function UI:initialize()
     self:hideMessage()
 end
 
+function UI:showMessageSequence(messageSequence)
+    for i, message in ipairs(messageSequence) do
+        local messageDelay = 0.5
+        local messageHang = 3
+        local messageTotal = messageHang + messageDelay * 2
+        self.world:doSequence({
+            {messageDelay + (i - 1) * messageTotal, function()
+                self:showMessage(message)
+            end},
+            {messageDelay + messageHang + (i - 1) * messageTotal, function()
+                self:hideMessage()
+            end},
+        })
+    end
+end
+
 function UI:showMessage(messageText)
     message.alpha = 1
     messageBar.alpha = 1
