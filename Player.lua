@@ -10,6 +10,8 @@ Player.static.STARTING_FUEL = 100
 Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 
+-- endgame item: anti-gravity belt that halves gravity
+
 local releasedJump
 
 function Player:initialize(x, y)
