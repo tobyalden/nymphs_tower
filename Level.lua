@@ -28,13 +28,13 @@ function Level:initialize(path)
             for _, entity in pairs(layer["entities"]) do
                 if entity["name"] == "player" then
                     local player = Player:new(entity["x"], entity["y"])
-                    player.x = player.x + 8 + 5
+                    player.x = player.x + 5
                     player.y = player.y + 11
                     self.entities["player"] = player
                 end
                 if entity["name"] == "acid" then
                     local acid = Acid:new(
-                        entity["x"] + 8, entity["y"],
+                        entity["x"], entity["y"],
                         entity["width"], entity["height"]
                     )
                     table.insert(self.entities, acid)

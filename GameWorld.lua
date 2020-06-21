@@ -1,6 +1,7 @@
 GameWorld = class("GameWorld", World)
 
---local player
+GameWorld.static.CAMERA_SPEED = 0.15
+GameWorld.static.CAMERA_BUFFER_X = 60
 
 function GameWorld:initialize()
     World.initialize(self)
@@ -18,14 +19,43 @@ function GameWorld:initialize()
     self:add(background)
     self:loadSfx({"longmusic.ogg"})
     self.sfx["longmusic"]:loop()
+    self.cameraVelocity = Vector:new(0, 0)
+    self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
 end
 
 function GameWorld:onDeath()
     ammo.world = GameWorld:new()
 end
 
+local cameraTargetX
+local lerpTimer = 0
+local previousPlayerFlipX = false
 function GameWorld:update(dt)
+    previousPlayerFlipX = self.player.graphic.flipX
     World.update(self, dt)
-    self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 2
-    --self.camera.y = player.y + player.mask.height /2 - gameHeight / 2
+    lerpTimer = lerpTimer + dt
+    local cameraBoundLeft = (
+        self.player.x + self.player.mask.width / 2 - gameWidth / 2
+        - GameWorld.CAMERA_BUFFER_X
+    )
+    local cameraBoundRight = (
+        self.player.x + self.player.mask.width / 2 - gameWidth / 2
+        + GameWorld.CAMERA_BUFFER_X
+    )
+    if not cameraTargetX then
+        cameraTargetX = cameraBoundRight
+    end
+    if self.player.velocity.x > 0 then
+        cameraTargetX = cameraBoundRight
+    elseif self.player.velocity.x < 0 then
+        cameraTargetX = cameraBoundLeft
+    end
+    if previousPlayerFlipX ~= self.player.graphic.flipX then
+        lerpTimer = 0
+    end
+    self.camera.x = math.lerp(
+        self.camera.x,
+        cameraTargetX,
+        math.min(lerpTimer * GameWorld.CAMERA_SPEED, 1)
+    )
 end

@@ -28,6 +28,16 @@ local sqrt = math.sqrt
 local cos = math.cos
 local sin = math.sin
 
+function math.approach(value, target, amount)
+    if value < target - amount then
+        return value + amount
+    elseif value > target + amount then
+        return value - amount
+    else
+        return target
+    end
+end
+
 function math.scale(x, min1, max1, min2, max2)
     return min2 + ((x - min1) / (max1 - min1)) * (max2 - min2)
 end
