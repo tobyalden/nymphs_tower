@@ -18,6 +18,7 @@ require(ammo.path .. ".core.Text")
 require(ammo.path .. ".core.Backdrop")
 require(ammo.path .. ".core.Graphiclist")
 require(ammo.path .. ".core.TiledSprite")
+require(ammo.path .. ".core.Rectangle")
 
 ammo.version = "2.0.0"
 ammo.ext = {}

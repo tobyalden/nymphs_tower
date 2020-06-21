@@ -67,7 +67,7 @@ function Entity:collide(checkX, checkY, solidTypes)
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then
                     matchFound = true
-                    table.insert(collided, item)
+                    table.insert(collided, item.parent)
                     break
                 end
             end

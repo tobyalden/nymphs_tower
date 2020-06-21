@@ -23,6 +23,24 @@ function GameWorld:initialize()
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
 end
 
+function GameWorld:getCurrentCameraZone()
+    local cameraZones = self.player:collide(
+        self.player.x, self.player.y, {"camera_zone"}
+    )
+    local playerCenter = Vector:new(
+        self.player.x + self.player.mask.width / 2,
+        self.player.y + self.player.mask.height / 2
+    )
+    for _, cameraZone in pairs(cameraZones) do
+        if (
+            playerCenter.x > cameraZone.x
+            and playerCenter.x < cameraZone.x + cameraZone.mask.width
+        ) then
+            return cameraZone
+        end
+    end
+end
+
 function GameWorld:onDeath()
     ammo.world = GameWorld:new()
 end
@@ -34,6 +52,7 @@ function GameWorld:update(dt)
     previousPlayerFlipX = self.player.graphic.flipX
     World.update(self, dt)
     lerpTimer = lerpTimer + dt
+    local cameraZone = self:getCurrentCameraZone()
     local cameraBoundLeft = (
         self.player.x + self.player.mask.width / 2 - gameWidth / 2
         - GameWorld.CAMERA_BUFFER_X
@@ -42,6 +61,12 @@ function GameWorld:update(dt)
         self.player.x + self.player.mask.width / 2 - gameWidth / 2
         + GameWorld.CAMERA_BUFFER_X
     )
+    if cameraZones then
+        cameraBoundLeft = math.max(cameraZone.x, cameraBoundLeft)
+        cameraBoundRight = math.min(
+            cameraZone.x + cameraZone.mask.width - gameWidth, cameraBoundRight
+        )
+    end
     if not cameraTargetX then
         cameraTargetX = cameraBoundRight
     end
@@ -58,4 +83,11 @@ function GameWorld:update(dt)
         cameraTargetX,
         math.min(lerpTimer * GameWorld.CAMERA_SPEED, 1)
     )
+    if cameraZone then
+        self.camera.x = math.clamp(
+            self.camera.x,
+            cameraZone.x,
+            cameraZone.x + cameraZone.mask.width - gameWidth
+        )
+    end
 end

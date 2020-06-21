@@ -41,6 +41,19 @@ function Level:initialize(path)
                 end
             end
         end
+
+        -- load camera zones
+        if layer["name"] == "camera_zones" then
+            for _, entity in pairs(layer["entities"]) do
+                if entity["name"] == "camera_zone" then
+                    local cameraZone = CameraZone:new(
+                        entity["x"], entity["y"],
+                        entity["width"], entity["height"]
+                    )
+                    table.insert(self.entities, cameraZone)
+                end
+            end
+        end
     end
 
     -- set graphic
@@ -52,6 +65,8 @@ function Level:initialize(path)
             end
         end
     end
+
+    self.layer = -3
 end
 
 function Level:update(dt)
