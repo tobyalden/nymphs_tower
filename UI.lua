@@ -13,10 +13,12 @@ function UI:initialize()
     fuelText = Text:new("FUEL", 12)
     healthBar.offsetX = 5
     healthBar.offsetY = 5
+    healthBar.alpha = 0.5
     healthText.offsetX = 5
     healthText.offsetY = 2
     fuelBar.offsetX = 5
     fuelBar.offsetY = 20
+    fuelBar.alpha = 0.75
     fuelText.offsetX = 5
     fuelText.offsetY = 17
     local allGraphics = {healthBar, fuelBar, healthText, fuelText}

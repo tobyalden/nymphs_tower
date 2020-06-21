@@ -155,7 +155,11 @@ function Entity:draw()
 end
 
 function Entity:_drawGraphic(graphic)
+    local r, g, b, a = love.graphics.getColor()
     local scroll = graphic.scroll or 1
+    local alpha = graphic.alpha or 1
+    local color = graphic.color or {1, 1, 1}
+    love.graphics.setColor(color[1], color[2], color[3], alpha)
     self.world.camera:set(scroll)
     if graphic.class == Sprite then
         local drawQuad = graphic.frames[
@@ -194,13 +198,10 @@ function Entity:_drawGraphic(graphic)
     elseif graphic.class == Tilemap then
         love.graphics.draw(graphic.batch, self.x, self.y)
     elseif graphic.class == Text then
-        local r, g, b, a = love.graphics.getColor()
-        love.graphics.setColor(graphic.color)
         love.graphics.draw(
             graphic.image,
             self.x + graphic.offsetX, self.y + graphic.offsetY
         )
-        love.graphics.setColor(r, g, b, a)
     elseif graphic.class == Backdrop then
         local drawX = (
             self.x * scroll % graphic.image:getWidth()
@@ -248,6 +249,7 @@ function Entity:_drawGraphic(graphic)
         )
     end
     self.world.camera:unset()
+    love.graphics.setColor(r, g, b, a)
 end
 
 function Entity:removed() end
