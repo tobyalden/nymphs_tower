@@ -13,6 +13,10 @@ function Alarm:start()
     self.time = 0
 end
 
+function Alarm:getPercentComplete()
+    return math.min(self.time / self.duration, 1)
+end
+
 function Alarm:update(dt)
     if self.active then
         self.time = self.time + dt
