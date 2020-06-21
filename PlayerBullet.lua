@@ -7,7 +7,7 @@ function PlayerBullet:initialize(x, y, heading)
     Entity.initialize(self, x, y)
     self.types = {"player_bullet"}
     self.graphic = Sprite:new("playerbullet.png")
-    self.mask = Hitbox:new(self, 3, 3)
+    self.mask = Hitbox:new(self, 6, 6)
     self.velocity = heading
     self.velocity:normalize(PlayerBullet.BULLET_SPEED)
 end

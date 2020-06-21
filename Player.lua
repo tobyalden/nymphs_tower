@@ -47,6 +47,7 @@ function Player:initialize(x, y)
     self.fuel = Player.STARTING_FUEL
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
+    self.hasGun = false
 end
 
 function Player:isOnGround()
@@ -149,10 +150,8 @@ function Player:die()
     })
 end
 
-function Player:update(dt)
-    self:movement(dt)
-    self:animation()
-    if input.pressed("shoot") or self.isBufferingShot then
+function Player:shooting()
+    if hasGun and (input.pressed("shoot") or self.isBufferingShot) then
         if self.shotCooldown.active then
             if self.shotCooldown:getPercentComplete() > 0.75 then
                 self.isBufferingShot = true
@@ -172,9 +171,24 @@ function Player:update(dt)
             self.isBufferingShot = false
         end
     end
+end
+
+function Player:collisions()
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
         self:takeHit(Acid.DAMAGE_RATE * dt)
     end
+    local collidedGuns = self:collide(self.x, self.y, {"gun"})
+    if #collidedGuns > 0 then
+        self.world:remove(collidedGuns[1])
+        hasGun = true
+    end
+end
+
+function Player:update(dt)
+    self:movement(dt)
+    self:animation()
+    self:shooting()
+    self:collisions()
     Entity.update(self, dt)
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then

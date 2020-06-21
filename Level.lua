@@ -39,6 +39,10 @@ function Level:initialize(path)
                     )
                     table.insert(self.entities, acid)
                 end
+                if entity["name"] == "gun" then
+                    local gun = Gun:new(entity["x"], entity["y"])
+                    table.insert(self.entities, gun)
+                end
             end
         end
 

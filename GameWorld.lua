@@ -4,6 +4,10 @@ GameWorld.static.CAMERA_SPEED = 0.15
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
+local cameraTargetX
+local lerpTimerX
+local previousPlayerFlipX
+
 function GameWorld:initialize()
     World.initialize(self)
     local level = Level:new("level.json")
@@ -22,6 +26,8 @@ function GameWorld:initialize()
     --self.sfx["longmusic"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
+    lerpTimerX = 0
+    previousPlayerFlipX = false
 end
 
 function GameWorld:getCurrentCameraZone()
@@ -46,9 +52,6 @@ function GameWorld:onDeath()
     ammo.world = GameWorld:new()
 end
 
-local cameraTargetX
-local lerpTimerX = 0
-local previousPlayerFlipX = false
 function GameWorld:update(dt)
     previousPlayerFlipX = self.player.graphic.flipX
     World.update(self, dt)
