@@ -19,7 +19,7 @@
         {"name": "acid", "id": 10, "_eid": "67689386", "x": 2800, "y": 448, "width": 176, "height": 80, "originX": 0, "originY": 0},
         {"name": "acid", "id": 11, "_eid": "67689386", "x": 2960, "y": 512, "width": 8, "height": 8, "originX": 0, "originY": 0},
         {"name": "acid", "id": 14, "_eid": "67689386", "x": 2336, "y": 424, "width": 112, "height": 8, "originX": 0, "originY": 0},
-        {"name": "player", "id": 16, "_eid": "68256185", "x": 592, "y": 128},
+        {"name": "player", "id": 16, "_eid": "68256185", "x": 704, "y": 127},
         {"name": "acid", "id": 17, "_eid": "67689386", "x": 3568, "y": 440, "width": 16, "height": 8, "originX": 0, "originY": 0},
         {"name": "acid", "id": 20, "_eid": "67689386", "x": 2464, "y": 200, "width": 1072, "height": 56, "originX": 0, "originY": 0},
         {"name": "acid", "id": 21, "_eid": "67689386", "x": 1648, "y": 232, "width": 112, "height": 24, "originX": 0, "originY": 0},
@@ -30,10 +30,6 @@
         {"name": "block", "id": 40, "_eid": "78869308", "x": 3424, "y": 64, "originX": 0, "originY": 0},
         {"name": "block", "id": 41, "_eid": "78869308", "x": 3424, "y": 48, "originX": 0, "originY": 0},
         {"name": "block", "id": 42, "_eid": "78869308", "x": 3440, "y": 48, "originX": 0, "originY": 0},
-        {"name": "block", "id": 43, "_eid": "78869308", "x": 3440, "y": 32, "originX": 0, "originY": 0},
-        {"name": "block", "id": 44, "_eid": "78869308", "x": 3424, "y": 32, "originX": 0, "originY": 0},
-        {"name": "block", "id": 45, "_eid": "78869308", "x": 3424, "y": 16, "originX": 0, "originY": 0},
-        {"name": "block", "id": 46, "_eid": "78869308", "x": 3440, "y": 16, "originX": 0, "originY": 0},
         {"name": "block", "id": 47, "_eid": "78869308", "x": 2928, "y": 96, "originX": 0, "originY": 0},
         {"name": "block", "id": 48, "_eid": "78869308", "x": 2912, "y": 96, "originX": 0, "originY": 0},
         {"name": "block", "id": 49, "_eid": "78869308", "x": 2928, "y": 80, "originX": 0, "originY": 0},
@@ -47,7 +43,46 @@
         {"name": "block", "id": 57, "_eid": "78869308", "x": 2928, "y": 16, "originX": 0, "originY": 0},
         {"name": "block", "id": 58, "_eid": "78869308", "x": 2912, "y": 16, "originX": 0, "originY": 0},
         {"name": "acid", "id": 59, "_eid": "67689386", "x": 2192, "y": 152, "width": 80, "height": 24, "originX": 0, "originY": 0},
-        {"name": "pig", "id": 60, "_eid": "79058822", "x": 352, "y": 96, "originX": 0, "originY": 0}
+        {"name": "pig", "id": 60, "_eid": "79058822", "x": 352, "y": 96, "originX": 0, "originY": 0},
+        {"name": "block", "id": 61, "_eid": "78869308", "x": 3472, "y": 80, "originX": 0, "originY": 0},
+        {"name": "block", "id": 62, "_eid": "78869308", "x": 3456, "y": 80, "originX": 0, "originY": 0},
+        {"name": "block", "id": 64, "_eid": "78869308", "x": 3456, "y": 64, "originX": 0, "originY": 0},
+        {
+          "name": "lock",
+          "id": 65,
+          "_eid": "80316444",
+          "x": 624,
+          "y": 112,
+          "width": 16,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"flag": "pig"}
+        },
+        {
+          "name": "lock",
+          "id": 66,
+          "_eid": "80316444",
+          "x": 320,
+          "y": 112,
+          "width": 16,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"flag": "pig"}
+        },
+        {
+          "name": "flag_trigger",
+          "id": 67,
+          "_eid": "80409325",
+          "x": 552,
+          "y": 16,
+          "width": 16,
+          "height": 144,
+          "originX": 0,
+          "originY": 0,
+          "values": {"flag": "pig"}
+        }
       ]
     },
     {

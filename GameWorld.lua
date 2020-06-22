@@ -29,6 +29,7 @@ function GameWorld:initialize()
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     lerpTimerX = 0
     previousPlayerFlipX = false
+    self.flags = {}
 end
 
 function GameWorld:pauseLevel()

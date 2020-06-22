@@ -59,6 +59,22 @@ function Level:initialize(path)
                     local pig = Pig:new(entity["x"], entity["y"])
                     table.insert(self.entities, pig)
                 end
+                if entity["name"] == "lock" then
+                    local lock = Lock:new(
+                        entity["x"], entity["y"],
+                        entity["width"], entity["height"],
+                        entity["values"]["flag"]
+                    )
+                    table.insert(self.entities, lock)
+                end
+                if entity["name"] == "flag_trigger" then
+                    local flagTrigger = FlagTrigger:new(
+                        entity["x"], entity["y"],
+                        entity["width"], entity["height"],
+                        entity["values"]["flag"]
+                    )
+                    table.insert(self.entities, flagTrigger)
+                end
             end
         end
 

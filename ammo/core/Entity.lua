@@ -30,6 +30,7 @@ function Entity:initialize(x, y)
     self.active = true
     self.paused = false
     self.visible = true
+    self.collidable = true
     self._layer = 1
     self.width = 1
     self.height = 1
@@ -106,7 +107,10 @@ function Entity:_moveBy(x, y, solidTypes)
     local typeFilter = function(item, other)
         for _, solidType in pairs(solidTypes) do
             for _, otherType in pairs(other.parent.types) do
-                if solidType == otherType then return 'slide' end
+                if (
+                    solidType == otherType 
+                    and other.parent.collidable
+                ) then return 'slide' end
             end
         end
         return 'cross'
@@ -149,7 +153,7 @@ end
 function Entity:draw()
     -- TODO: Could refactor this so we call the draw method of each graphic and
     -- pass it the entity maybe?
-    if not self.graphic then return end
+    if not self.graphic or not self.visible then return end
     if self.graphic.class == Graphiclist then
         for _, v in pairs(self.graphic.allGraphics) do
             self:_drawGraphic(v)

@@ -11,6 +11,8 @@ Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.5
 
+Player.static.SOLIDS = {"walls", "block", "lock"}
+
 -- endgame item: anti-gravity belt that halves gravity
 
 local releasedJump
@@ -53,7 +55,7 @@ function Player:initialize(x, y)
 end
 
 function Player:isOnGround()
-    if #self:collide(self.x, self.y + 0.01, {"walls", "block"}) > 0 then
+    if #self:collide(self.x, self.y + 0.01, Player.SOLIDS) > 0 then
         return true
     else
         return false
@@ -106,7 +108,7 @@ function Player:movement(dt)
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
-        {"walls", "block"}
+        Player.SOLIDS
     )
 end
 
@@ -234,6 +236,12 @@ function Player:collisions(dt)
         })
     end
 
+    local collidedFlagTriggers = self:collide(self.x, self.y, {"flag_trigger"})
+    if #collidedFlagTriggers > 0 then
+        for _, collidedFlagTrigger in pairs(collidedFlagTriggers) do
+            collidedFlagTrigger:trigger()
+        end
+    end
 end
 
 function Player:restoreHealth()
