@@ -7,6 +7,7 @@ GameWorld.static.CAMERA_BUFFER_Y = 30
 local cameraTargetX
 local lerpTimerX
 local previousPlayerFlipX
+local previousCameraZone
 local level
 
 function GameWorld:initialize()
@@ -29,6 +30,7 @@ function GameWorld:initialize()
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     lerpTimerX = 0
     previousPlayerFlipX = false
+    previousCameraZone = nil
     self.flags = {}
 end
 
@@ -68,6 +70,7 @@ end
 
 function GameWorld:update(dt)
     previousPlayerFlipX = self.player.graphic.flipX
+    previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
     lerpTimerX = lerpTimerX + dt
 
@@ -98,7 +101,10 @@ function GameWorld:update(dt)
     if(cameraTargetX == cameraBoundLeft) then
     elseif(cameraTargetX == cameraBoundRight) then
     end
-    if previousPlayerFlipX ~= self.player.graphic.flipX then
+    if (
+        previousPlayerFlipX ~= self.player.graphic.flipX
+        or previousCameraZone ~= cameraZone
+    ) then
         lerpTimerX = 0
     end
     self.camera.x = math.lerp(
