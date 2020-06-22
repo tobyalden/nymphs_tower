@@ -51,6 +51,14 @@ function Level:initialize(path)
                     local fuelUpgrade = FuelUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, fuelUpgrade)
                 end
+                if entity["name"] == "block" then
+                    local block = Block:new(entity["x"], entity["y"])
+                    table.insert(self.entities, block)
+                end
+                if entity["name"] == "pig" then
+                    local pig = Pig:new(entity["x"], entity["y"])
+                    table.insert(self.entities, pig)
+                end
             end
         end
 

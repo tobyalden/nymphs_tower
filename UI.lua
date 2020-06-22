@@ -40,7 +40,7 @@ end
 function UI:showMessageSequence(messageSequence)
     local totalTime = 0
     for i, message in ipairs(messageSequence) do
-        local messageDelay = 0.5
+        local messageDelay = 0.25
         local messageHang = 3
         local messageTotal = messageHang + messageDelay * 2
         self.world:doSequence({
@@ -58,7 +58,7 @@ end
 
 function UI:showMessage(messageText)
     message.alpha = 1
-    messageBar.alpha = 1
+    messageBar.alpha = 0.5
     message:setText(messageText)
 end
 

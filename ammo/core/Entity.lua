@@ -106,29 +106,23 @@ function Entity:_moveBy(x, y, solidTypes)
     local typeFilter = function(item, other)
         for _, solidType in pairs(solidTypes) do
             for _, otherType in pairs(other.parent.types) do
-                if solidType == otherType then return 'slide'
-                else return 'cross' end
+                if solidType == otherType then return 'slide' end
             end
         end
+        return 'cross'
     end
     local actualX, actualY, cols, len = bumpWorld:move(
         self.mask, self.x + x, self.y + y, typeFilter
     )
-    local shouldCollide = false
     local allCollided = {}
     for _, collided in pairs(cols) do
         for _, solidType in pairs(solidTypes) do
-            local shouldBreak = false
             local otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
                 if solidType == otherType then
-                    shouldCollide = true
-                    shouldBreak = true
                     table.insert(allCollided, collided.other.parent)
-                    break
                 end
             end
-            if shouldBreak then break end
         end
     end
     if #allCollided > 0 then

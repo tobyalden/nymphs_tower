@@ -47,13 +47,13 @@ function Player:initialize(x, y)
     self.fuel = Player.STARTING_FUEL
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
-    self.hasGun = false
+    self.hasGun = true
     self.healthUpgrades = 0
     self.fuelUpgrades = 0
 end
 
 function Player:isOnGround()
-    if #self:collide(self.x, self.y + 0.01, {"walls"}) > 0 then
+    if #self:collide(self.x, self.y + 0.01, {"walls", "block"}) > 0 then
         return true
     else
         return false
@@ -106,7 +106,7 @@ function Player:movement(dt)
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
-        {"walls"}
+        {"walls", "block"}
     )
 end
 
@@ -153,7 +153,7 @@ function Player:die()
 end
 
 function Player:shooting()
-    if hasGun and (input.pressed("shoot") or self.isBufferingShot) then
+    if self.hasGun and (input.pressed("shoot") or self.isBufferingShot) then
         if self.shotCooldown.active then
             if self.shotCooldown:getPercentComplete() > 0.75 then
                 self.isBufferingShot = true
@@ -180,22 +180,24 @@ function Player:collisions(dt)
         self:takeHit(Acid.DAMAGE_RATE * dt)
     end
 
+    local itemChimeTime = 2
+
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
         self.world:pauseLevel()
         self.world:doSequence({
-            {3, function()
+            {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedGuns[1])
+                self.hasGun = true
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE RAYGUN",
                     "PRESS X TO SHOOT",
                 })
-                self.world:doSequence({
-                    {totalTime + 1, function()
-                        self.world:unpauseLevel()
-                        self.world:remove(collidedGuns[1])
-                        hasGun = true
-                    end}
-                })
+                --self.world:doSequence({
+                    --{totalTime + 1, function()
+                    --end}
+                --})
             end}
         })
     end
@@ -204,18 +206,14 @@ function Player:collisions(dt)
     if #collidedHealthUpgrades > 0 then
         self.world:pauseLevel()
         self.world:doSequence({
-            {3, function()
+            {itemChimeTime, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A HEALTH PACK"
                 })
-                self.world:doSequence({
-                    {totalTime, function()
-                        self.world:unpauseLevel()
-                        self.world:remove(collidedHealthUpgrades[1])
-                        self.healthUpgrades = self.healthUpgrades + 1
-                        self:restoreHealth()
-                    end}
-                })
+                self.world:unpauseLevel()
+                self.world:remove(collidedHealthUpgrades[1])
+                self.healthUpgrades = self.healthUpgrades + 1
+                self:restoreHealth()
             end}
         })
     end
@@ -224,18 +222,14 @@ function Player:collisions(dt)
     if #collidedFuelUpgrades > 0 then
         self.world:pauseLevel()
         self.world:doSequence({
-            {3, function()
+            {itemChimeTime, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A FUEL TANK"
                 })
-                self.world:doSequence({
-                    {totalTime, function()
-                        self.world:unpauseLevel()
-                        self.world:remove(collidedFuelUpgrades[1])
-                        self.fuelUpgrades = self.fuelUpgrades + 1
-                        self:restoreFuel()
-                    end}
-                })
+                self.world:unpauseLevel()
+                self.world:remove(collidedFuelUpgrades[1])
+                self.fuelUpgrades = self.fuelUpgrades + 1
+                self:restoreFuel()
             end}
         })
     end

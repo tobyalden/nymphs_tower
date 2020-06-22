@@ -15,6 +15,8 @@ require("PlayerBullet")
 require("Gun")
 require("HealthUpgrade")
 require("FuelUpgrade")
+require("Block")
+require("Pig")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
