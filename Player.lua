@@ -10,6 +10,7 @@ Player.static.STARTING_FUEL = 100
 Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.5
+Player.static.GUN_POWER = 1
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
 

@@ -11,6 +11,7 @@ function Pig:initialize(x, y)
     self.layer = -2
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
+    self.health = 5
 end
 
 function Pig:update(dt)
@@ -26,5 +27,23 @@ function Pig:update(dt)
         self.velocity.y * dt,
         {"walls"}
     )
+    local collidedBullets = self:collide(self.x, self.y, {"player_bullet"})
+    if #collidedBullets > 0 then
+        self:takeHit(Player.GUN_POWER)
+        for _, collidedBullet in pairs(collidedBullets) do
+            self.world:remove(collidedBullet)
+        end
+    end
     Entity.update(self, dt)
+end
+
+function Pig:takeHit(damage)
+    self.health = self.health - damage
+    if self.health <= 0 then
+        self:die()
+    end
+end
+
+function Pig:die()
+    self.world:remove(self)
 end
