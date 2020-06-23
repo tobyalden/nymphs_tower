@@ -14,7 +14,7 @@ function Block:update(dt)
     if #collidedBullets > 0 then
         self.world:remove(self)
         for _, collidedBullet in pairs(collidedBullets) do
-            collidedBullet.type = ""
+            collidedBullet.collidable = false
             self.world:remove(collidedBullet)
         end
     end

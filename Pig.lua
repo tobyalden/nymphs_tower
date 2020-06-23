@@ -8,7 +8,7 @@ function Pig:initialize(x, y)
     self.types = {"enemy"}
     self.graphic = Sprite:new("pig.png")
     self.mask = Hitbox:new(self, 64, 64)
-    self.layer = -2
+    self.layer = 0
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
     self.health = 5

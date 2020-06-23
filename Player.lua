@@ -11,6 +11,8 @@ Player.static.JETPACK_FUEL_USE_RATE = 50
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.5
 Player.static.GUN_POWER = 1
+Player.static.INVINCIBLE_AFTER_HIT_TIME = 1
+Player.static.HIT_DAMAGE = 25
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
 
@@ -53,6 +55,9 @@ function Player:initialize(x, y)
     self.hasGun = true
     self.healthUpgrades = 0
     self.fuelUpgrades = 0
+    self.invincibleTimer = self:addTween(Alarm:new(
+        Player.INVINCIBLE_AFTER_HIT_TIME
+    ))
 end
 
 function Player:isOnGround()
@@ -114,6 +119,11 @@ function Player:movement(dt)
 end
 
 function Player:animation()
+    if self.invincibleTimer.active then
+        self.graphic.alpha = 0.5
+    else
+        self.graphic.alpha = 1
+    end
     if self.velocity.x < 0 then
         self.graphic.flipX = true
     elseif self.velocity.x > 0 then
@@ -140,11 +150,16 @@ function Player:animation()
     end
 end
 
-function Player:takeHit(damage)
+function Player:decreaseHealth(damage)
     self.health = math.max(self.health - damage, 0)
     if self.health == 0 then
         self:die()
     end
+end
+
+function Player:takeHit(damage)
+    self:decreaseHealth(damage)
+    self.invincibleTimer:start()
 end
 
 function Player:die()
@@ -180,7 +195,7 @@ end
 
 function Player:collisions(dt)
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
-        self:takeHit(Acid.DAMAGE_RATE * dt)
+        self:decreaseHealth(Acid.DAMAGE_RATE * dt)
     end
 
     local itemChimeTime = 2
@@ -242,6 +257,11 @@ function Player:collisions(dt)
         for _, collidedFlagTrigger in pairs(collidedFlagTriggers) do
             collidedFlagTrigger:trigger()
         end
+    end
+
+    local collidedEnemies = self:collide(self.x, self.y, {"enemy"})
+    if #collidedEnemies > 0 and not self.invincibleTimer.active then
+        self:takeHit(Player.HIT_DAMAGE)
     end
 end
 
