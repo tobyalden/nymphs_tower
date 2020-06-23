@@ -34,6 +34,16 @@ function GameWorld:initialize()
     self.flags = {}
 end
 
+function GameWorld:hasFlag(flag)
+    return self.flags[flag] ~= false and self.flags[flag] ~= nil
+end
+
+function GameWorld:removeFlag(flag)
+    local element = self.flags[flag]
+    self.flags[flag] = nil
+    return element
+end
+
 function GameWorld:pauseLevel()
     for _, entity in pairs(level.entities) do
         entity.paused = true

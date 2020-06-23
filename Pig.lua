@@ -2,6 +2,7 @@ Pig = class("Pig", Entity)
 
 Pig.static.MAX_SPEED = 100
 Pig.static.ACCEL = 100
+Pig.static.HEALTH = 10
 
 function Pig:initialize(x, y)
     Entity.initialize(self, x, y)
@@ -11,12 +12,14 @@ function Pig:initialize(x, y)
     self.layer = 0
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
-    self.health = 5
+    self.health = Pig.HEALTH
 end
 
 function Pig:update(dt)
-    self:movement(dt)
-    self:collisions()
+    if self.world:hasFlag("pig") then
+        self:movement(dt)
+        self:collisions()
+    end
     Entity.update(self, dt)
 end
 
@@ -54,4 +57,5 @@ end
 
 function Pig:die()
     self.world:remove(self)
+    self.world:removeFlag("pig")
 end
