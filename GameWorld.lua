@@ -32,6 +32,7 @@ function GameWorld:initialize()
     previousPlayerFlipX = false
     previousCameraZone = nil
     self.flags = {}
+    self.currentBoss = nil
 end
 
 function GameWorld:hasFlag(flag)

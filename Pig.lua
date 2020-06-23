@@ -2,21 +2,24 @@ Pig = class("Pig", Entity)
 
 Pig.static.MAX_SPEED = 100
 Pig.static.ACCEL = 100
-Pig.static.HEALTH = 10
 
 function Pig:initialize(x, y)
     Entity.initialize(self, x, y)
+    self.displayName = "PIG"
+    self.flag = "pig"
     self.types = {"enemy"}
+    self.startingHealth = 12
+    self.health = self.startingHealth
     self.graphic = Sprite:new("pig.png")
     self.mask = Hitbox:new(self, 64, 64)
     self.layer = 0
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
-    self.health = Pig.HEALTH
 end
 
 function Pig:update(dt)
-    if self.world:hasFlag("pig") then
+    if self.world:hasFlag(self.flag) then
+        self.world.currentBoss = self
         self:movement(dt)
         self:collisions()
     end
@@ -57,5 +60,6 @@ end
 
 function Pig:die()
     self.world:remove(self)
-    self.world:removeFlag("pig")
+    self.world:removeFlag(self.flag)
+    self.world.currentBoss = nil
 end

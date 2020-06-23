@@ -27,14 +27,45 @@ function UI:initialize()
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
     messageBar.offsetY = 180 - 24 - 9
-    message = Text:new("YOU GOT THE RAYGUN", 16, 'arial.ttf', {1, 1, 1}, 300, 'center')
+
+    message = Text:new("YOU GOT THE RAYGUN", 16, "arial.ttf", {1, 1, 1}, 300, "center")
     message.offsetX = 10
     message.offsetY = 180 - 24 - 10
-    local allGraphics = {healthBar, fuelBar, healthText, fuelText, messageBar, message}
+
+    bossBar = Sprite:new("bossbar.png")
+    bossBar.offsetX = 10
+    bossBar.offsetY = 180 - 16
+
+    bossName = Text:new("BOSS", 12, "arial.ttf", {0, 1, 1}, 300, "left")
+    bossName.offsetX = 10
+    bossName.offsetY = 180 - 19
+
+    local allGraphics = {healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar, bossName}
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
     self.graphic.scroll = 0
     self:hideMessage()
+end
+
+function UI:update(dt)
+    if self.world.currentBoss then
+        bossBar.alpha = 1
+        bossName.alpha = 1
+        bossBar.scaleX = (
+            self.world.currentBoss.health / self.world.currentBoss.startingHealth
+        )
+        bossName:setText(self.world.currentBoss.displayName)
+    else
+        bossBar.alpha = 0
+        bossName.alpha = 0
+    end
+    fuelBar.scaleX = (
+        self.world.player.fuel / Player.STARTING_FUEL
+    )
+    healthBar.scaleX = (
+        self.world.player.health / Player.STARTING_HEALTH
+    )
+    Entity.update(self, dt)
 end
 
 function UI:showMessageSequence(messageSequence)
@@ -65,15 +96,5 @@ end
 function UI:hideMessage(messageText)
     message.alpha = 0
     messageBar.alpha = 0
-end
-
-function UI:update(dt)
-    fuelBar.scaleX = (
-        self.world.player.fuel / Player.STARTING_FUEL
-    )
-    healthBar.scaleX = (
-        self.world.player.health / Player.STARTING_HEALTH
-    )
-    Entity.update(self, dt)
 end
 
