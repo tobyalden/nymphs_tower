@@ -16,6 +16,7 @@ function Vector:set(x, y)
 end
 
 function Vector:normalize(size)
+    size = size or 1
     if not (x == 0 and y == 0) then
         local normal = size / self:len()
         self.x = self.x * normal
@@ -71,6 +72,12 @@ end
 
 function Vector:len()
     return math.sqrt(self * self)
+end
+
+function Vector:add(v)
+    self.x = self.x + v.x
+    self.y = self.y + v.y
+    return self
 end
 
 function Vector:__tostring()

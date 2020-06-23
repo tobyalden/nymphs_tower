@@ -40,6 +40,12 @@ function Entity:initialize(x, y)
     self.tweens = {}
 end
 
+function Entity:getMaskCenter()
+    return Vector:new(
+        self.x + self.mask.width / 2, (self.y + self.mask.height / 2)
+    )
+end
+
 function loadSfx(parent, sfxPaths)
     for _, sfxPath in pairs(sfxPaths) do
         local sfxName

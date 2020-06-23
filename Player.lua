@@ -12,7 +12,10 @@ Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.5
 Player.static.GUN_POWER = 1
 Player.static.INVINCIBLE_AFTER_HIT_TIME = 1
-Player.static.HIT_DAMAGE = 25
+Player.static.HIT_DAMAGE = 1
+Player.static.KNOCKBACK_POWER_X = 200
+Player.static.KNOCKBACK_POWER_Y = 200
+Player.static.KNOCKBACK_TIME = 0.25
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
 
@@ -58,6 +61,7 @@ function Player:initialize(x, y)
     self.invincibleTimer = self:addTween(Alarm:new(
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
+    self.knockbackTimer = self:addTween(Alarm:new(Player.KNOCKBACK_TIME))
 end
 
 function Player:isOnGround()
@@ -79,6 +83,15 @@ function Player:moveCollideY(collided)
 end
 
 function Player:movement(dt)
+    if self.knockbackTimer.active then
+        self.velocity.y = self.velocity.y + Player.GRAVITY * dt
+        self:moveBy(
+            self.velocity.x * dt,
+            self.velocity.y * dt,
+            Player.SOLIDS
+        )
+        return
+    end
     if input.down("left") then self.velocity.x = -Player.SPEED
     elseif input.down("right") then self.velocity.x = Player.SPEED
     else self.velocity.x = 0 end
@@ -120,7 +133,12 @@ end
 
 function Player:animation()
     if self.invincibleTimer.active then
-        self.graphic.alpha = 0.5
+        local invincibleAlpha = 0.25
+        if self.graphic.alpha == invincibleAlpha then
+            self.graphic.alpha = 1
+        else
+            self.graphic.alpha = invincibleAlpha
+        end
     else
         self.graphic.alpha = 1
     end
@@ -262,7 +280,32 @@ function Player:collisions(dt)
     local collidedEnemies = self:collide(self.x, self.y, {"enemy"})
     if #collidedEnemies > 0 and not self.invincibleTimer.active then
         self:takeHit(Player.HIT_DAMAGE)
+        self:knockback(collidedEnemies[1])
     end
+end
+
+function Player:knockback(source)
+    local knockbackVelocity = Vector:new(
+        self:getMaskCenter().x - source:getMaskCenter().x,
+        self:getMaskCenter().y - source:getMaskCenter().y
+    )
+    --local knockbackVelocity = Vector:new(
+        --Player.KNOCKBACK_POWER_X, -Player.KNOCKBACK_POWER_Y
+    --)
+    --if self:getMaskCenter().x < source:getMaskCenter().x then
+        --knockbackVelocity.x = -Player.KNOCKBACK_POWER_X
+    --end
+    knockbackVelocity:normalize()
+    if math.abs(knockbackVelocity.x) < 0.5 then
+        knockbackVelocity.x = (
+            0.5 * math.abs(knockbackVelocity.x) / knockbackVelocity.x
+        )
+    end
+    knockbackVelocity.x = knockbackVelocity.x * Player.KNOCKBACK_POWER_X
+    knockbackVelocity.y = -Player.KNOCKBACK_POWER_Y
+    --self.velocity:add(knockbackVelocity)
+    self.velocity = knockbackVelocity
+    self.knockbackTimer:start()
 end
 
 function Player:restoreHealth()

@@ -15,6 +15,12 @@ function Pig:initialize(x, y)
 end
 
 function Pig:update(dt)
+    self:movement(dt)
+    self:collisions()
+    Entity.update(self, dt)
+end
+
+function Pig:movement(dt)
     if self.x < self.world.player.x then
         self.accel.x = Pig.ACCEL
     elseif self.x > self.world.player.x then
@@ -27,6 +33,9 @@ function Pig:update(dt)
         self.velocity.y * dt,
         {"walls"}
     )
+end
+
+function Pig:collisions(dt)
     local collidedBullets = self:collide(self.x, self.y, {"player_bullet"})
     if #collidedBullets > 0 then
         self:takeHit(Player.GUN_POWER)
@@ -34,7 +43,6 @@ function Pig:update(dt)
             self.world:remove(collidedBullet)
         end
     end
-    Entity.update(self, dt)
 end
 
 function Pig:takeHit(damage)
