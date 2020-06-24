@@ -35,6 +35,10 @@ function GameWorld:initialize()
     self.currentBoss = nil
 end
 
+function GameWorld:saveGame(saveX, saveY)
+    print('saving')
+end
+
 function GameWorld:hasFlag(flag)
     return self.flags[flag] ~= false and self.flags[flag] ~= nil
 end

@@ -45,6 +45,7 @@ function UI:initialize()
     self.layer = -99
     self.graphic.scroll = 0
     self:hideMessage()
+    self.currentSequence = {}
 end
 
 function UI:update(dt)
@@ -69,21 +70,32 @@ function UI:update(dt)
 end
 
 function UI:showMessageSequence(messageSequence)
+    for _, timer in pairs(self.currentSequence) do
+        timer.active = false
+    end
+    self.currentSequence = {}
     local totalTime = 0
+    local sequenceSteps = {}
     for i, message in ipairs(messageSequence) do
         local messageDelay = 0.25
         local messageHang = 3
         local messageTotal = messageHang + messageDelay * 2
-        self.world:doSequence({
-            {messageDelay + (i - 1) * messageTotal, function()
+        table.insert(sequenceSteps, {
+            messageDelay * (i - 1) + (i - 1) * messageTotal,
+            function()
                 self:showMessage(message)
-            end},
-            {messageDelay + messageHang + (i - 1) * messageTotal, function()
+            end}
+        )
+        table.insert(sequenceSteps, {
+            messageDelay * (i - 1) + messageHang + (i - 1) * messageTotal,
+            function()
                 self:hideMessage()
-            end},
-        })
+            end}
+        )
         totalTime = messageDelay + messageHang + (i - 1) * messageTotal
     end
+    print(sequenceSteps)
+    self.currentSequence = self.world:doSequence(sequenceSteps)
     return totalTime
 end
 

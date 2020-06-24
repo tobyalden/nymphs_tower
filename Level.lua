@@ -75,6 +75,10 @@ function Level:initialize(path)
                     )
                     table.insert(self.entities, flagTrigger)
                 end
+                if entity["name"] == "checkpoint" then
+                    local checkpoint = Checkpoint:new(entity["x"], entity["y"])
+                    table.insert(self.entities, checkpoint)
+                end
             end
         end
 

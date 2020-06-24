@@ -89,10 +89,13 @@ function World:draw()
 end
 
 function World:doSequence(sequence)
+    local allTimers = {}
     for _, step in pairs(sequence) do
         local timer = Delay:new(step[1], step[2])
+        table.insert(allTimers, timer)
         self:add(timer)
     end
+    return allTimers
 end
 
 function World:loadSfx(sfxPaths)

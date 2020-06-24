@@ -62,9 +62,12 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     end
 end
 
-function Sprite:add(animationName, animationFrames, animationFps, loopAnimation)
+function Sprite:add(
+        animationName, animationFrames, animationFps, loopAnimation, complete
+    )
+    self.complete = complete
     local animationFps = animationFps or 1
-    local loopAnimation = loopAnimation or false
+    local loopAnimation = loopAnimation or true
     self.animations[animationName] = {
         frames = animationFrames, fps = animationFps, loop = loopAnimation
     }
@@ -89,6 +92,9 @@ function Sprite:update(dt)
                 self.currentAnimationIndex = 1
             else
                 self.currentAnimationIndex = self.currentAnimationIndex - 1
+            end
+            if self.complete then
+                self.complete()
             end
         end
     end

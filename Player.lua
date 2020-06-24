@@ -41,10 +41,10 @@ function Player:initialize(x, y)
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
-    self.graphic:add("run", {2, 3, 4, 3}, 6, true)
+    self.graphic:add("run", {2, 3, 4, 3}, 6)
     self.graphic:add("jump", {5})
     self.graphic:add("crouch", {5})
-    self.graphic:add("jetpack", {6, 7}, 4, true)
+    self.graphic:add("jetpack", {6, 7}, 4)
     self.graphic.offsetX = -5;
     self.graphic.offsetY = -11;
     self.layer = -1
@@ -281,6 +281,15 @@ function Player:collisions(dt)
     if #collidedEnemies > 0 and not self.invincibleTimer.active then
         self:takeHit(Player.HIT_DAMAGE)
         self:knockback(collidedEnemies[1])
+    end
+
+    if input.pressed("down") then
+        local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
+        if #collidedCheckpoints > 0 then
+            collidedCheckpoints[1]:flash()
+            self.world:saveGame(collidedCheckpoints[1].x, collidedCheckpoints[1].y)
+            self.world.ui:showMessageSequence({ "GAME SAVED" })
+        end
     end
 end
 
