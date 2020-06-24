@@ -15,9 +15,7 @@ function GameWorld:initialize()
         if name == "player" then
             self.player = entity
             if currentCheckpoint then
-                self.player.x = currentCheckpoint[1].x + 5
-                self.player.y = currentCheckpoint[1].y
-                self.player.graphic.flipX = currentCheckpoint[2]
+                self:loadGame()
             end
         end
     end
@@ -36,8 +34,25 @@ function GameWorld:initialize()
     self.currentBoss = nil
 end
 
-function GameWorld:saveGame(saveX, saveY, flipX)
-    currentCheckpoint = {Vector:new(saveX, saveY), flipX}
+function GameWorld:saveGame(saveX, saveY)
+    currentCheckpoint = {}
+    currentCheckpoint["saveX"] = saveX
+    currentCheckpoint["saveY"] = saveY
+    currentCheckpoint["flipX"] = self.player.graphic.flipX
+    currentCheckpoint["hasGun"] = self.player.hasGun
+    currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
+    currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
+    self.player:restoreHealth()
+end
+
+function GameWorld:loadGame()
+    self.player.x = currentCheckpoint["saveX"]
+    self.player.y = currentCheckpoint["saveY"]
+    self.player.graphic.flipX = currentCheckpoint["flipX"]
+    self.player.hasGun = currentCheckpoint["hasGun"]
+    self.player.healthUpgrades = currentCheckpoint["healthUpgrades"]
+    self.player.fuelUpgrades = currentCheckpoint["fuelUpgrades"]
+    self.player:restoreHealth()
 end
 
 function GameWorld:hasFlag(flag)
