@@ -70,7 +70,7 @@ function UI:update(dt)
 end
 
 function UI:showMessageSequence(messageSequence, messageHang)
-    messageSpeed = messageSpeed or 3
+    messageHang = messageHang or 3
     for _, timer in pairs(self.currentSequence) do
         timer.active = false
     end

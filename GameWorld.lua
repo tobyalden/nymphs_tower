@@ -4,20 +4,21 @@ GameWorld.static.CAMERA_SPEED = 0.15
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
-local cameraTargetX
-local lerpTimerX
-local previousPlayerFlipX
-local previousCameraZone
-local level
+local currentCheckpoint = nil
 
 function GameWorld:initialize()
     World.initialize(self)
-    level = Level:new("level.json")
-    self:add(level)
-    for name, entity in pairs(level.entities) do
+    self.level = Level:new("level.json")
+    self:add(self.level)
+    for name, entity in pairs(self.level.entities) do
         self:add(entity)
         if name == "player" then
             self.player = entity
+            if currentCheckpoint then
+                self.player.x = currentCheckpoint[1].x + 5
+                self.player.y = currentCheckpoint[1].y
+                self.player.graphic.flipX = currentCheckpoint[2]
+            end
         end
     end
     self.ui = UI:new()
@@ -28,15 +29,15 @@ function GameWorld:initialize()
     --self.sfx["longmusic"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
-    lerpTimerX = 0
-    previousPlayerFlipX = false
-    previousCameraZone = nil
+    self.lerpTimerX = 0
+    self.previousPlayerFlipX = false
+    self.previousCameraZone = nil
     self.flags = {}
     self.currentBoss = nil
 end
 
-function GameWorld:saveGame(saveX, saveY)
-    print('saving')
+function GameWorld:saveGame(saveX, saveY, flipX)
+    currentCheckpoint = {Vector:new(saveX, saveY), flipX}
 end
 
 function GameWorld:hasFlag(flag)
@@ -50,13 +51,13 @@ function GameWorld:removeFlag(flag)
 end
 
 function GameWorld:pauseLevel()
-    for _, entity in pairs(level.entities) do
+    for _, entity in pairs(self.level.entities) do
         entity.paused = true
     end
 end
 
 function GameWorld:unpauseLevel()
-    for _, entity in pairs(level.entities) do
+    for _, entity in pairs(self.level.entities) do
         entity.paused = false
     end
 end
@@ -84,10 +85,10 @@ function GameWorld:onDeath()
 end
 
 function GameWorld:update(dt)
-    previousPlayerFlipX = self.player.graphic.flipX
-    previousCameraZone = self:getCurrentCameraZone()
+    self.previousPlayerFlipX = self.player.graphic.flipX
+    self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
-    lerpTimerX = lerpTimerX + dt
+    self.lerpTimerX = self.lerpTimerX + dt
 
     local cameraZone = self:getCurrentCameraZone()
 
@@ -105,27 +106,27 @@ function GameWorld:update(dt)
             cameraZone.x + cameraZone.mask.width - gameWidth, cameraBoundRight
         )
     end
-    if not cameraTargetX then
-        cameraTargetX = cameraBoundRight
+    if not self.cameraTargetX then
+        self.cameraTargetX = cameraBoundRight
     end
     if self.player.velocity.x > 0 then
-        cameraTargetX = cameraBoundRight
+        self.cameraTargetX = cameraBoundRight
     elseif self.player.velocity.x < 0 then
-        cameraTargetX = cameraBoundLeft
+        self.cameraTargetX = cameraBoundLeft
     end
-    if(cameraTargetX == cameraBoundLeft) then
-    elseif(cameraTargetX == cameraBoundRight) then
+    if(self.cameraTargetX == cameraBoundLeft) then
+    elseif(self.cameraTargetX == cameraBoundRight) then
     end
     if (
-        previousPlayerFlipX ~= self.player.graphic.flipX
-        or previousCameraZone ~= cameraZone
+        self.previousPlayerFlipX ~= self.player.graphic.flipX
+        or self.previousCameraZone ~= cameraZone
     ) then
-        lerpTimerX = 0
+        self.lerpTimerX = 0
     end
     self.camera.x = math.lerp(
         self.camera.x,
-        cameraTargetX,
-        math.min(lerpTimerX * GameWorld.CAMERA_SPEED, 1)
+        self.cameraTargetX,
+        math.min(self.lerpTimerX * GameWorld.CAMERA_SPEED, 1)
     )
     if cameraZone then
         self.camera.x = math.clamp(

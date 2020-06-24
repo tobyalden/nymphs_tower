@@ -292,7 +292,10 @@ function Player:collisions(dt)
         local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()
-            self.world:saveGame(collidedCheckpoints[1].x, collidedCheckpoints[1].y)
+            self.world:saveGame(
+                collidedCheckpoints[1].x, collidedCheckpoints[1].y,
+                self.graphic.flipX
+            )
             self.world.ui:showMessageSequence({ "GAME SAVED" }, 1)
         end
     end
