@@ -16,6 +16,7 @@ Player.static.HIT_DAMAGE = 20
 Player.static.KNOCKBACK_POWER_X = 200
 Player.static.KNOCKBACK_POWER_Y = 200
 Player.static.KNOCKBACK_TIME = 0.25
+Player.static.FUEL_RECOVERY_DELAY = 0.5
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
 
@@ -62,6 +63,7 @@ function Player:initialize(x, y)
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
     self.knockbackTimer = self:addTween(Alarm:new(Player.KNOCKBACK_TIME))
+    self.fuelRecoveryTimer = self:addTween(Alarm:new(Player.FUEL_RECOVERY_DELAY))
 end
 
 function Player:isOnGround()
@@ -98,10 +100,6 @@ function Player:movement(dt)
     if self:isOnGround() then
         self.velocity.y = 0
         isJetpackOn = false
-        self.fuel = math.min(
-            self.fuel + Player.JETPACK_FUEL_RECOVER_RATE * dt,
-            self:getMaxFuel()
-        )
         if input.pressed("jump") then
             self.velocity.y = -Player.JUMP_POWER
             releasedJump = false
@@ -116,10 +114,17 @@ function Player:movement(dt)
             isJetpackOn = false
         end
         if isJetpackOn then
+            self.fuelRecoveryTimer:start()
             self.velocity.y = self.velocity.y - Player.JETPACK_POWER * dt
             self.fuel = math.max(self.fuel - Player.JETPACK_FUEL_USE_RATE * dt, 0)
         end
         self.velocity.y = self.velocity.y + Player.GRAVITY * dt
+    end
+    if not self.fuelRecoveryTimer.active then
+        self.fuel = math.min(
+            self.fuel + Player.JETPACK_FUEL_RECOVER_RATE * dt,
+            self:getMaxFuel()
+        )
     end
     self.velocity.y = math.clamp(
         self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
@@ -288,7 +293,7 @@ function Player:collisions(dt)
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()
             self.world:saveGame(collidedCheckpoints[1].x, collidedCheckpoints[1].y)
-            self.world.ui:showMessageSequence({ "GAME SAVED" })
+            self.world.ui:showMessageSequence({ "GAME SAVED" }, 1)
         end
     end
 end

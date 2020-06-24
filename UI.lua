@@ -69,7 +69,8 @@ function UI:update(dt)
     Entity.update(self, dt)
 end
 
-function UI:showMessageSequence(messageSequence)
+function UI:showMessageSequence(messageSequence, messageHang)
+    messageSpeed = messageSpeed or 3
     for _, timer in pairs(self.currentSequence) do
         timer.active = false
     end
@@ -78,7 +79,6 @@ function UI:showMessageSequence(messageSequence)
     local sequenceSteps = {}
     for i, message in ipairs(messageSequence) do
         local messageDelay = 0.25
-        local messageHang = 3
         local messageTotal = messageHang + messageDelay * 2
         table.insert(sequenceSteps, {
             messageDelay * (i - 1) + (i - 1) * messageTotal,
@@ -94,7 +94,6 @@ function UI:showMessageSequence(messageSequence)
         )
         totalTime = messageDelay + messageHang + (i - 1) * messageTotal
     end
-    print(sequenceSteps)
     self.currentSequence = self.world:doSequence(sequenceSteps)
     return totalTime
 end
