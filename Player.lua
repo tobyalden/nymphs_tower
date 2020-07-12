@@ -79,7 +79,7 @@ function Player:moveCollideX(collided)
 end
 
 function Player:moveCollideY(collided)
-    if self.velocity.y < 0 then
+    if Player.SOLIDS[collided.type] and self.velocity.y < 0 then
         self.velocity.y = -self.velocity.y / 1.25
     end
 end

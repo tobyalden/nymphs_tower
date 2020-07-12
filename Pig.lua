@@ -8,7 +8,8 @@ function Pig:initialize(x, y)
     self.displayName = "PIG"
     self.flag = "pig"
     self.types = {"enemy"}
-    self.startingHealth = 12
+    --self.startingHealth = 12
+    self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("pig.png")
     self.mask = Hitbox:new(self, 64, 64)
@@ -18,7 +19,9 @@ function Pig:initialize(x, y)
 end
 
 function Pig:update(dt)
-    if self.world:hasFlag(self.flag) then
+    if self.world:hasFlag(self.flag .. '_defeated') then
+        self.world:remove(self)
+    elseif self.world:hasFlag(self.flag) then
         self.world.currentBoss = self
         self:movement(dt)
         self:collisions()
@@ -61,5 +64,6 @@ end
 function Pig:die()
     self.world:remove(self)
     self.world:removeFlag(self.flag)
+    self.world:addFlag(self.flag .. '_defeated')
     self.world.currentBoss = nil
 end

@@ -9,7 +9,7 @@ function FlagTrigger:initialize(x, y, width, height, flag)
 end
 
 function FlagTrigger:trigger()
-    self.world.flags[self.flag] = true
+    self.world:addFlag(self.flag)
     self.world:remove(self)
     --print(inspect(self.world.flags))
 end

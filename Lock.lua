@@ -10,7 +10,10 @@ function Lock:initialize(x, y, width, height, flag)
 end
 
 function Lock:update(dt)
-    local isSolid = self.world:hasFlag(self.flag)
+    local isSolid = (
+        self.world:hasFlag(self.flag)
+        and not self.world:hasFlag(self.flag .. '_defeated')
+    )
     self.visible = isSolid
     self.collidable = isSolid
     Entity.update(self, dt)

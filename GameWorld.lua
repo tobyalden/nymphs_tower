@@ -8,6 +8,7 @@ local currentCheckpoint = nil
 
 function GameWorld:initialize()
     World.initialize(self)
+    self.flags = {}
     self.level = Level:new("level.json")
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
@@ -30,8 +31,8 @@ function GameWorld:initialize()
     self.lerpTimerX = 0
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
-    self.flags = {}
     self.currentBoss = nil
+    print(inspect(self.flags))
 end
 
 function GameWorld:saveGame(saveX, saveY)
@@ -42,6 +43,10 @@ function GameWorld:saveGame(saveX, saveY)
     currentCheckpoint["hasGun"] = self.player.hasGun
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
+    currentCheckpoint["flags"] = {}
+    for flag, _ in pairs(self.flags) do
+        currentCheckpoint["flags"][flag] = true
+    end
     self.player:restoreHealth()
 end
 
@@ -53,16 +58,25 @@ function GameWorld:loadGame()
     self.player.healthUpgrades = currentCheckpoint["healthUpgrades"]
     self.player.fuelUpgrades = currentCheckpoint["fuelUpgrades"]
     self.player:restoreHealth()
+    self.flags = {}
+    for flag, _ in pairs(currentCheckpoint["flags"]) do
+        self:addFlag(flag)
+    end
 end
 
 function GameWorld:hasFlag(flag)
     return self.flags[flag] ~= false and self.flags[flag] ~= nil
 end
 
+function GameWorld:addFlag(flag)
+    print('adding flag ' .. flag)
+    self.flags[flag] = true
+end
+
 function GameWorld:removeFlag(flag)
+    print('removing flag ' .. flag)
     local element = self.flags[flag]
     self.flags[flag] = nil
-    return element
 end
 
 function GameWorld:pauseLevel()
