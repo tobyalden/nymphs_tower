@@ -3,12 +3,14 @@ Alarm = class("Alarm")
 function Alarm:initialize(duration, complete, ...)
     self.active = false
     self.time = 0
-    self.duration = duration
+    self.defaultDuration = duration
+    self.duration = self.defaultDuration
     self.complete = complete
     self.completeArgs = { ... }
 end
 
-function Alarm:start()
+function Alarm:start(newDuration)
+    self.duration = newDuration or self.defaultDuration
     self.active = true
     self.time = 0
 end

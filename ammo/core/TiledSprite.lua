@@ -4,7 +4,7 @@ function TiledSprite:initialize(path, frameWidth, frameHeight, drawWidth, drawHe
     Sprite.initialize(self, path, frameWidth, frameHeight)
     self.tiledFrames = {}
     for i, frame in pairs(self.frames) do
-        self.tiledFrames[i] = love.graphics.newSpriteBatch(self.image)
+        self.tiledFrames[i] = love.graphics.newSpriteBatch(self.paddedImage)
         for tileX = 1, drawWidth / frameWidth do
             for tileY = 1, drawHeight / frameHeight do
                 self.tiledFrames[i]:add(

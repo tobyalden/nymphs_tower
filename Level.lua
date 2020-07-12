@@ -31,53 +31,64 @@ function Level:initialize(path)
                     player.x = player.x + 5
                     player.y = player.y + 11
                     self.entities["player"] = player
-                end
-                if entity["name"] == "acid" then
+                elseif entity["name"] == "acid" then
                     local acid = Acid:new(
                         entity["x"], entity["y"],
                         entity["width"], entity["height"]
                     )
                     table.insert(self.entities, acid)
-                end
-                if entity["name"] == "gun" then
+                elseif entity["name"] == "gun" then
                     local gun = Gun:new(entity["x"], entity["y"])
                     table.insert(self.entities, gun)
-                end
-                if entity["name"] == "health_upgrade" then
+                elseif entity["name"] == "health_upgrade" then
                     local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, healthUpgrade)
-                end
-                if entity["name"] == "fuel_upgrade" then
+                elseif entity["name"] == "fuel_upgrade" then
                     local fuelUpgrade = FuelUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, fuelUpgrade)
-                end
-                if entity["name"] == "block" then
+                elseif entity["name"] == "block" then
                     local block = Block:new(entity["x"], entity["y"])
                     table.insert(self.entities, block)
-                end
-                if entity["name"] == "pig" then
+                elseif entity["name"] == "pig" then
                     local pig = Pig:new(entity["x"], entity["y"])
                     table.insert(self.entities, pig)
-                end
-                if entity["name"] == "lock" then
+                elseif entity["name"] == "lock" then
                     local lock = Lock:new(
                         entity["x"], entity["y"],
                         entity["width"], entity["height"],
                         entity["values"]["flag"]
                     )
                     table.insert(self.entities, lock)
-                end
-                if entity["name"] == "flag_trigger" then
+                elseif entity["name"] == "flag_trigger" then
                     local flagTrigger = FlagTrigger:new(
                         entity["x"], entity["y"],
                         entity["width"], entity["height"],
                         entity["values"]["flag"]
                     )
                     table.insert(self.entities, flagTrigger)
-                end
-                if entity["name"] == "checkpoint" then
+                elseif entity["name"] == "checkpoint" then
                     local checkpoint = Checkpoint:new(entity["x"], entity["y"])
                     table.insert(self.entities, checkpoint)
+                elseif entity["name"] == "spike_floor" then
+                    local spikeFloor = Spike:new(
+                        entity["x"], entity["y"], entity["width"], 16, "floor"
+                    )
+                    table.insert(self.entities, spikeFloor)
+                elseif entity["name"] == "spike_ceiling" then
+                    local spikeCeiling = Spike:new(
+                        entity["x"], entity["y"], entity["width"], 16, "ceiling"
+                    )
+                    table.insert(self.entities, spikeCeiling)
+                elseif entity["name"] == "spike_left" then
+                    local spikeLeft = Spike:new(
+                        entity["x"], entity["y"], 16, entity["height"], "left"
+                    )
+                    table.insert(self.entities, spikeLeft)
+                elseif entity["name"] == "spike_right" then
+                    local spikeRight = Spike:new(
+                        entity["x"], entity["y"], 16, entity["height"], "right"
+                    )
+                    table.insert(self.entities, spikeRight)
                 end
             end
         end

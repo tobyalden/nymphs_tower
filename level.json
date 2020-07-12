@@ -19,7 +19,7 @@
         {"name": "acid", "id": 10, "_eid": "67689386", "x": 2800, "y": 448, "width": 176, "height": 80, "originX": 0, "originY": 0},
         {"name": "acid", "id": 11, "_eid": "67689386", "x": 2960, "y": 512, "width": 8, "height": 8, "originX": 0, "originY": 0},
         {"name": "acid", "id": 14, "_eid": "67689386", "x": 2336, "y": 424, "width": 112, "height": 8, "originX": 0, "originY": 0},
-        {"name": "player", "id": 16, "_eid": "68256185", "x": 1616, "y": 191},
+        {"name": "player", "id": 16, "_eid": "68256185", "x": 2736, "y": 399},
         {"name": "acid", "id": 17, "_eid": "67689386", "x": 3568, "y": 440, "width": 16, "height": 8, "originX": 0, "originY": 0},
         {"name": "acid", "id": 20, "_eid": "67689386", "x": 2464, "y": 200, "width": 1072, "height": 56, "originX": 0, "originY": 0},
         {"name": "acid", "id": 21, "_eid": "67689386", "x": 1648, "y": 232, "width": 112, "height": 24, "originX": 0, "originY": 0},
@@ -99,7 +99,8 @@
         {"name": "block", "id": 85, "_eid": "78869308", "x": 1184, "y": 80, "originX": 0, "originY": 0},
         {"name": "block", "id": 86, "_eid": "78869308", "x": 1232, "y": 16, "originX": 0, "originY": 0},
         {"name": "block", "id": 87, "_eid": "78869308", "x": 1168, "y": 96, "originX": 0, "originY": 0},
-        {"name": "checkpoint", "id": 88, "_eid": "97277017", "x": 3528, "y": 64, "originX": 0, "originY": 0}
+        {"name": "checkpoint", "id": 88, "_eid": "97277017", "x": 3528, "y": 64, "originX": 0, "originY": 0},
+        {"name": "spike_ceiling", "id": 93, "_eid": "58248273", "x": 2864, "y": 304, "width": 48, "originX": 0, "originY": 0}
       ]
     },
     {

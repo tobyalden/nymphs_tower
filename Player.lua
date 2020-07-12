@@ -288,6 +288,16 @@ function Player:collisions(dt)
         self:knockback(collidedEnemies[1])
     end
 
+    local collidedSpikes = self:collide(self.x, self.y, {"spike"})
+    if #collidedSpikes > 0 and not self.invincibleTimer.active then
+        self:takeHit(Player.HIT_DAMAGE)
+        if collidedSpikes[1].facing == "ceiling" then
+            self:knockback(collidedSpikes[1], 0.25, true)
+        else
+            self:knockback(collidedSpikes[1], 0.5, false)
+        end
+    end
+
     if input.pressed("down") then
         local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
         if #collidedCheckpoints > 0 then
@@ -298,17 +308,13 @@ function Player:collisions(dt)
     end
 end
 
-function Player:knockback(source)
+function Player:knockback(source, scale, allowDownwardsKnockback)
+    scale = scale or 1
+    allowDownwardsKnockback = allowDownwardsKnockback or false
     local knockbackVelocity = Vector:new(
         self:getMaskCenter().x - source:getMaskCenter().x,
         self:getMaskCenter().y - source:getMaskCenter().y
     )
-    --local knockbackVelocity = Vector:new(
-        --Player.KNOCKBACK_POWER_X, -Player.KNOCKBACK_POWER_Y
-    --)
-    --if self:getMaskCenter().x < source:getMaskCenter().x then
-        --knockbackVelocity.x = -Player.KNOCKBACK_POWER_X
-    --end
     knockbackVelocity:normalize()
     if math.abs(knockbackVelocity.x) < 0.5 then
         knockbackVelocity.x = (
@@ -316,10 +322,14 @@ function Player:knockback(source)
         )
     end
     knockbackVelocity.x = knockbackVelocity.x * Player.KNOCKBACK_POWER_X
-    knockbackVelocity.y = -Player.KNOCKBACK_POWER_Y
-    --self.velocity:add(knockbackVelocity)
+    if allowDownwardsKnockback then
+        knockbackVelocity.y = Player.KNOCKBACK_POWER_Y * math.sign(knockbackVelocity.y)
+    else
+        knockbackVelocity.y = -Player.KNOCKBACK_POWER_Y
+    end
+    knockbackVelocity:scale(scale)
     self.velocity = knockbackVelocity
-    self.knockbackTimer:start()
+    self.knockbackTimer:start(Player.KNOCKBACK_TIME * scale)
 end
 
 function Player:restoreHealth()
