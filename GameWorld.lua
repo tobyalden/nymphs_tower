@@ -114,6 +114,8 @@ function GameWorld:onDeath()
 end
 
 function GameWorld:update(dt)
+    local wasCameraOnTargetX = self.camera.x == self.cameraTargetX
+
     self.previousPlayerFlipX = self.player.graphic.flipX
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
@@ -143,20 +145,24 @@ function GameWorld:update(dt)
     elseif self.player.velocity.x < 0 then
         self.cameraTargetX = cameraBoundLeft
     end
-    if(self.cameraTargetX == cameraBoundLeft) then
-    elseif(self.cameraTargetX == cameraBoundRight) then
-    end
+    --self.cameraTargetX = math.floor(self.cameraTargetX)
+    local canSnapToTargetX = true
     if (
         self.previousPlayerFlipX ~= self.player.graphic.flipX
         or self.previousCameraZone ~= cameraZone
     ) then
         self.lerpTimerX = 0
+        canSnapToTargetX = false
     end
+    --if wasCameraOnTargetX and canSnapToTargetX then
+        --self.camera.x = self.cameraTargetX
+    --else
     self.camera.x = math.lerp(
         self.camera.x,
         self.cameraTargetX,
         math.min(self.lerpTimerX * GameWorld.CAMERA_SPEED, 1)
     )
+    --end
     if cameraZone then
         self.camera.x = math.clamp(
             self.camera.x,
@@ -173,4 +179,7 @@ function GameWorld:update(dt)
             cameraZone.y + cameraZone.mask.height - gameHeight
         )
     end
+
+    --self.camera.x = math.floor(self.camera.x)
+    --self.camera.y = math.floor(self.camera.y)
 end
