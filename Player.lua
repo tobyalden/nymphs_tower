@@ -79,7 +79,19 @@ function Player:moveCollideX(collided)
 end
 
 function Player:moveCollideY(collided)
-    if Player.SOLIDS[collided.type] and self.velocity.y < 0 then
+    local isSolid = false
+    for _, solidType in pairs(Player.SOLIDS) do
+        for _, collidedType in pairs(collided[1].types) do
+            if solidType == collidedType then
+                isSolid = true
+                break
+            end
+        end
+        if isSolid then
+            break
+        end
+    end
+    if isSolid and self.velocity.y < 0 then
         self.velocity.y = -self.velocity.y / 1.25
     end
 end

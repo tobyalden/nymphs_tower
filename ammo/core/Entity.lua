@@ -170,6 +170,10 @@ function Entity:draw()
 end
 
 function Entity:_drawGraphic(graphic)
+    --local oldX = self.x
+    --local oldY = self.y
+    --self.x = math.round(self.x)
+    --self.y = math.round(self.y)
     local r, g, b, a = love.graphics.getColor()
     local scroll = graphic.scroll or 1
     local alpha = graphic.alpha or 1
@@ -265,6 +269,8 @@ function Entity:_drawGraphic(graphic)
     end
     self.world.camera:unset()
     love.graphics.setColor(r, g, b, a)
+    --self.x = oldX
+    --self.y = oldY
 end
 
 function Entity:removed() end
