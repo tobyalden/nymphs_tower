@@ -33,7 +33,6 @@ function GameWorld:initialize()
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
     self.currentBoss = nil
-    print(inspect(self.flags))
 end
 
 function GameWorld:saveGame(saveX, saveY)
@@ -115,11 +114,13 @@ function GameWorld:onDeath()
 end
 
 function GameWorld:update(dt)
-    local wasCameraOnTargetX = self.camera.x == self.cameraTargetX
-
     self.previousPlayerFlipX = self.player.graphic.flipX
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
+    self:updateCamera(dt)
+end
+
+function GameWorld:updateCamera(dt)
     self.lerpTimerX = self.lerpTimerX + dt
 
     local cameraZone = self:getCurrentCameraZone()
@@ -176,4 +177,7 @@ function GameWorld:update(dt)
             cameraZone.y + cameraZone.mask.height - gameHeight
         )
     end
+
+    self.camera.x = math.round(self.camera.x)
+    self.camera.y = math.round(self.camera.y)
 end

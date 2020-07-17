@@ -93,12 +93,12 @@ function Entity:addTween(tween)
 end
 
 function Entity:moveBy(x, y, solidTypes)
-    self._moveX = self._moveX + self.x
-	self._moveY = self._moveY + self.y
-	self.x = math.round(self._moveX)
-	self.y = math.round(self._moveY)
-	self._moveX = self._moveX - self.x
-	self._moveY = self._moveY - self.y
+    self._moveX = self._moveX + x
+	self._moveY = self._moveY + y
+	x = math.round(self._moveX)
+	y = math.round(self._moveY)
+	self._moveX = self._moveX - x
+	self._moveY = self._moveY - y
 
     local collidedX = self:_moveBy(x, 0, solidTypes)
     if(#collidedX > 0) then

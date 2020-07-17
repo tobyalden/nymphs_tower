@@ -25,8 +25,8 @@ require("Spike")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = true
-local windowedScale = 3
+local fullscreen = false
+local windowedScale = 2
 
 function love.load()
     tick.framerate = -1
