@@ -368,6 +368,7 @@ function Player:update(dt)
     self:animation()
     self:shooting()
     self:collisions(dt)
+
     Entity.update(self, dt)
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then

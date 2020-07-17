@@ -27,6 +27,7 @@ end
 function Entity:initialize(x, y)
     self.x = x or 0
     self.y = y or 0
+    self._moveX, self._moveY = 0, 0
     self.active = true
     self.paused = false
     self.visible = true
@@ -92,6 +93,13 @@ function Entity:addTween(tween)
 end
 
 function Entity:moveBy(x, y, solidTypes)
+    self._moveX = self._moveX + self.x
+	self._moveY = self._moveY + self.y
+	self.x = math.round(self._moveX)
+	self.y = math.round(self._moveY)
+	self._moveX = self._moveX - self.x
+	self._moveY = self._moveY - self.y
+
     local collidedX = self:_moveBy(x, 0, solidTypes)
     if(#collidedX > 0) then
         self:moveCollideX(collidedX)

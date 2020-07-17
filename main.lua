@@ -25,7 +25,7 @@ require("Spike")
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
-local windowedScale = 2
+local windowedScale = 3
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest", 1)

@@ -1,6 +1,6 @@
 GameWorld = class("GameWorld", World)
 
-GameWorld.static.CAMERA_SPEED = 0.15
+GameWorld.static.CAMERA_SPEED = 1.5
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
@@ -28,6 +28,7 @@ function GameWorld:initialize()
     --self.sfx["longmusic"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
+    self.cameraStartX = self.camera.x
     self.lerpTimerX = 0
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
@@ -145,24 +146,20 @@ function GameWorld:update(dt)
     elseif self.player.velocity.x < 0 then
         self.cameraTargetX = cameraBoundLeft
     end
-    --self.cameraTargetX = math.floor(self.cameraTargetX)
-    local canSnapToTargetX = true
     if (
         self.previousPlayerFlipX ~= self.player.graphic.flipX
         or self.previousCameraZone ~= cameraZone
     ) then
         self.lerpTimerX = 0
+        self.cameraStartX = self.camera.x
         canSnapToTargetX = false
     end
-    --if wasCameraOnTargetX and canSnapToTargetX then
-        --self.camera.x = self.cameraTargetX
-    --else
+    local linearLerp = math.min(self.lerpTimerX * GameWorld.CAMERA_SPEED, 1)
     self.camera.x = math.lerp(
-        self.camera.x,
+        self.cameraStartX,
         self.cameraTargetX,
-        math.min(self.lerpTimerX * GameWorld.CAMERA_SPEED, 1)
+        math.sin(linearLerp * math.pi / 2)
     )
-    --end
     if cameraZone then
         self.camera.x = math.clamp(
             self.camera.x,
@@ -179,7 +176,4 @@ function GameWorld:update(dt)
             cameraZone.y + cameraZone.mask.height - gameHeight
         )
     end
-
-    --self.camera.x = math.floor(self.camera.x)
-    --self.camera.y = math.floor(self.camera.y)
 end
