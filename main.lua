@@ -1,3 +1,4 @@
+local tick = require 'tick'
 push = require "push"
 
 inspect = require "inspect"
@@ -24,10 +25,12 @@ require("Spike")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = false
+local fullscreen = true
 local windowedScale = 3
 
 function love.load()
+    tick.framerate = -1
+    tick.rate = 1 / 60
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
     if fullscreen then
         push:setupScreen(
