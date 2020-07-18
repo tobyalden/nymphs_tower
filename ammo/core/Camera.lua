@@ -82,8 +82,8 @@ function Camera:screenPosition(worldX, worldY)
   local angcos = cos(-camera.angle)
   local angsin = sin(-camera.angle)
   local x, y = screenX - self.x, screenY - self.y
-  x = (x * angcos - y * angsin) * self.zoom
-  y = (x * angsin + y * angcos) * self.zoom
+  local x = (x * angcos - y * angsin) * self.zoom
+  local y = (x * angsin + y * angcos) * self.zoom
   return x + love.graphics.width / 2, y + love.graphics.height / 2
 end
 

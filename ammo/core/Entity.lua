@@ -94,17 +94,17 @@ end
 
 function Entity:moveBy(x, y, solidTypes)
     self._moveX = self._moveX + x
-	self._moveY = self._moveY + y
-	x = math.round(self._moveX)
-	y = math.round(self._moveY)
-	self._moveX = self._moveX - x
-	self._moveY = self._moveY - y
+    self._moveY = self._moveY + y
+    local useX = math.round(self._moveX)
+    local useY = math.round(self._moveY)
+    self._moveX = self._moveX - x
+    self._moveY = self._moveY - y
 
-    local collidedX = self:_moveBy(x, 0, solidTypes)
+    local collidedX = self:_moveBy(useX, 0, solidTypes)
     if(#collidedX > 0) then
         self:moveCollideX(collidedX)
     end
-    local collidedY = self:_moveBy(0, y, solidTypes)
+    local collidedY = self:_moveBy(0, useY, solidTypes)
     if(#collidedY > 0) then
         self:moveCollideY(collidedY)
     end

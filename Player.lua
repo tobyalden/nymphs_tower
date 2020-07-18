@@ -7,12 +7,14 @@ Player.static.JUMP_POWER = 150
 Player.static.JETPACK_POWER = 900 * 1
 Player.static.STARTING_HEALTH = 100
 Player.static.STARTING_FUEL = 100
-Player.static.JETPACK_FUEL_USE_RATE = 50
+--Player.static.JETPACK_FUEL_USE_RATE = 50
+Player.static.JETPACK_FUEL_USE_RATE = 1
 Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.5
 Player.static.GUN_POWER = 1
 Player.static.INVINCIBLE_AFTER_HIT_TIME = 1
-Player.static.HIT_DAMAGE = 20
+--Player.static.HIT_DAMAGE = 20
+Player.static.HIT_DAMAGE = 1
 Player.static.KNOCKBACK_POWER_X = 200
 Player.static.KNOCKBACK_POWER_Y = 200
 Player.static.KNOCKBACK_TIME = 0.25
@@ -305,9 +307,11 @@ function Player:collisions(dt)
     if #collidedSpikes > 0 and not self.invincibleTimer.active then
         self:takeHit(Player.HIT_DAMAGE)
         if collidedSpikes[1].facing == "ceiling" then
-            self:knockback(collidedSpikes[1], 0.25, true)
+            self:knockback(collidedSpikes[1], 0.25, true, true)
+        elseif collidedSpikes[1].facing == "floor" then
+            self:knockback(collidedSpikes[1], 0.75, false, true)
         else
-            self:knockback(collidedSpikes[1], 0.5, false)
+            self:knockback(collidedSpikes[1], 0.75, false, false)
         end
     end
 
@@ -321,7 +325,7 @@ function Player:collisions(dt)
     end
 end
 
-function Player:knockback(source, scale, allowDownwardsKnockback)
+function Player:knockback(source, scale, allowDownwardsKnockback, averageX)
     scale = scale or 1
     allowDownwardsKnockback = allowDownwardsKnockback or false
     local knockbackVelocity = Vector:new(
@@ -329,7 +333,7 @@ function Player:knockback(source, scale, allowDownwardsKnockback)
         self:getMaskCenter().y - source:getMaskCenter().y
     )
     knockbackVelocity:normalize()
-    if math.abs(knockbackVelocity.x) < 0.5 then
+    if math.abs(knockbackVelocity.x) < 0.5 and knockbackVelocity.x ~= 0 then
         knockbackVelocity.x = (
             0.5 * math.abs(knockbackVelocity.x) / knockbackVelocity.x
         )
@@ -341,7 +345,12 @@ function Player:knockback(source, scale, allowDownwardsKnockback)
         knockbackVelocity.y = -Player.KNOCKBACK_POWER_Y
     end
     knockbackVelocity:scale(scale)
-    self.velocity = knockbackVelocity
+    if averageX then
+        self.velocity.x = (knockbackVelocity.x + self.velocity.x) / 2
+    else
+        self.velocity.x = knockbackVelocity.x
+    end
+    self.velocity.y = knockbackVelocity.y
     self.knockbackTimer:start(Player.KNOCKBACK_TIME * scale)
 end
 
@@ -364,10 +373,10 @@ function Player:getMaxFuel()
 end
 
 function Player:update(dt)
-    self:movement(dt)
-    self:animation()
     self:shooting()
     self:collisions(dt)
+    self:movement(dt)
+    self:animation()
 
     Entity.update(self, dt)
 

@@ -153,7 +153,6 @@ function GameWorld:updateCamera(dt)
     ) then
         self.lerpTimerX = 0
         self.cameraStartX = self.camera.x
-        canSnapToTargetX = false
     end
     local linearLerp = math.min(self.lerpTimerX * GameWorld.CAMERA_SPEED, 1)
     self.camera.x = math.lerp(
