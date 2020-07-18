@@ -66,8 +66,21 @@ function Entity:loadSfx(sfxPaths)
 end
 
 function Entity:collide(checkX, checkY, solidTypes)
+    local typeFilter = function(item)
+        for _, solidType in pairs(solidTypes) do
+            for _, otherType in pairs(item.parent.types) do
+                if (
+                    solidType == otherType
+                    and item.parent.collidable
+                ) then
+                    return true
+                end
+            end
+        end
+        return false
+    end
     local items, _ = bumpWorld:queryRect(
-        checkX, checkY, self.mask.width, self.mask.height
+        checkX, checkY, self.mask.width, self.mask.height, typeFilter
     )
     local collided = {}
     for _, item in pairs(items) do
@@ -75,11 +88,9 @@ function Entity:collide(checkX, checkY, solidTypes)
         for _, solidType in pairs(solidTypes) do
             local matchFound = false
             for _, otherType in pairs(otherTypes) do
-                if solidType == otherType then
-                    matchFound = true
-                    table.insert(collided, item.parent)
-                    break
-                end
+                matchFound = true
+                table.insert(collided, item.parent)
+                break
             end
             if matchFound then break end
         end
@@ -128,7 +139,7 @@ function Entity:_moveBy(x, y, solidTypes)
         for _, solidType in pairs(solidTypes) do
             for _, otherType in pairs(other.parent.types) do
                 if (
-                    solidType == otherType 
+                    solidType == otherType
                     and other.parent.collidable
                 ) then return 'slide' end
             end
@@ -143,7 +154,10 @@ function Entity:_moveBy(x, y, solidTypes)
         for _, solidType in pairs(solidTypes) do
             local otherTypes = collided.other.parent.types
             for _, otherType in pairs(otherTypes) do
-                if solidType == otherType then
+                if (
+                    solidType == otherType
+                    and collided.other.parent.collidable
+                ) then
                     table.insert(allCollided, collided.other.parent)
                 end
             end
