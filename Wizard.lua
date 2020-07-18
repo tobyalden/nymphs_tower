@@ -1,7 +1,7 @@
 Wizard = class("Wizard", Entity)
 Wizard:include(Boss)
 
-Wizard.static.MAX_SPEED = 90
+Wizard.static.MAX_SPEED = 200
 
 function Wizard:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
@@ -18,19 +18,31 @@ function Wizard:initialize(x, y, nodes)
         self.nodes[i] = Vector:new(node.x, node.y)
     end
     self.nodeIndex = 1
-    self.age = 0
+    self.reversed = false
+    self.lungeTimer = self:addTween(Alarm:new(
+        math.pi,
+        function()
+            self.reversed = love.math.random() > 0.5
+        end,
+        "looping"
+    ))
 end 
 
 function Wizard:update(dt)
-    self.age = self.age + dt
     self:bossUpdate(dt)
     Entity.update(self, dt)
 end
 
 function Wizard:movement(dt)
-    local moveAmount = Wizard.MAX_SPEED * dt * math.sin(self.age)
-    local reversed = moveAmount < 0
-    moveAmount = math.abs(moveAmount)
+    if self.world:hasFlag(self.flag) and not self.lungeTimer.active then
+        self.lungeTimer:start()
+        print('start')
+    end
+    --print(self.lungeTimer.time)
+
+    local moveAmount = Wizard.MAX_SPEED * dt * math.sin(self.lungeTimer.time)
+    local reversed = self.reversed
+    --moveAmount = math.abs(moveAmount)
 
     while moveAmount > 0 do
         local targetNodeIndex = self.nodeIndex
@@ -53,11 +65,14 @@ function Wizard:movement(dt)
             )
             moveAmount = 0
         else
+            local moveRemainder = Vector:new(
+                self._moveX, self._moveY
+            )
             self:moveTo(
                 self.nodes[targetNodeIndex].x,
                 self.nodes[targetNodeIndex].y
             )
-            moveAmount = moveAmount - distanceToNextNode
+            moveAmount = moveAmount - distanceToNextNode + moveRemainder:len()
             if reversed then
                 self.nodeIndex = self.nodeIndex - 1
                 if not self.nodes[self.nodeIndex] then
