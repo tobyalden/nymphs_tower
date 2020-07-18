@@ -110,6 +110,10 @@ function Entity:moveBy(x, y, solidTypes)
     end
 end
 
+function Entity:moveTo(x, y, solidTypes)
+    self:moveBy(x - self.x, y - self.y, solidTypes)
+end
+
 function Entity:moveCollideX(collided)
 end
 
