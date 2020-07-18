@@ -111,6 +111,8 @@ function Entity:moveBy(x, y, solidTypes)
 end
 
 function Entity:moveTo(x, y, solidTypes)
+    self._moveX = 0
+    self._moveY = 0
     self:moveBy(x - self.x, y - self.y, solidTypes)
 end
 

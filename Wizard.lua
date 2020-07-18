@@ -1,7 +1,7 @@
 Wizard = class("Wizard", Entity)
 Wizard:include(Boss)
 
-Wizard.static.MAX_SPEED = 200
+Wizard.static.MAX_SPEED = 90
 
 function Wizard:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
@@ -28,13 +28,21 @@ function Wizard:update(dt)
 end
 
 function Wizard:movement(dt)
-    --local moveAmount = Wizard.MAX_SPEED * dt * math.abs(math.sin(self.age))
-    local moveAmount = Wizard.MAX_SPEED * dt
+    local moveAmount = Wizard.MAX_SPEED * dt * math.sin(self.age)
+    local reversed = moveAmount < 0
+    moveAmount = math.abs(moveAmount)
 
     while moveAmount > 0 do
+        local targetNodeIndex = self.nodeIndex
+        if reversed then
+            targetNodeIndex = self.nodeIndex - 1
+            if not self.nodes[targetNodeIndex] then
+                targetNodeIndex = #self.nodes
+            end
+        end
         local towardsNode = Vector:new(
-            self.nodes[self.nodeIndex].x - self.x,
-            self.nodes[self.nodeIndex].y - self.y
+            self.nodes[targetNodeIndex].x - self.x,
+            self.nodes[targetNodeIndex].y - self.y
         )
         local distanceToNextNode = towardsNode:len()
         if distanceToNextNode > moveAmount then
@@ -46,13 +54,20 @@ function Wizard:movement(dt)
             moveAmount = 0
         else
             self:moveTo(
-                self.nodes[self.nodeIndex].x,
-                self.nodes[self.nodeIndex].y
+                self.nodes[targetNodeIndex].x,
+                self.nodes[targetNodeIndex].y
             )
             moveAmount = moveAmount - distanceToNextNode
-            self.nodeIndex = self.nodeIndex + 1
-            if not self.nodes[self.nodeIndex] then
-                self.nodeIndex = 1
+            if reversed then
+                self.nodeIndex = self.nodeIndex - 1
+                if not self.nodes[self.nodeIndex] then
+                    self.nodeIndex = #self.nodes
+                end
+            else
+                self.nodeIndex = self.nodeIndex + 1
+                if not self.nodes[self.nodeIndex] then
+                    self.nodeIndex = 1
+                end
             end
         end
     end
