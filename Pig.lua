@@ -1,4 +1,5 @@
 Pig = class("Pig", Entity)
+Pig:include(Boss)
 
 Pig.static.MAX_SPEED = 100
 Pig.static.ACCEL = 100
@@ -8,8 +9,8 @@ function Pig:initialize(x, y)
     self.displayName = "PIG"
     self.flag = "pig"
     self.types = {"enemy"}
-    --self.startingHealth = 12
-    self.startingHealth = 1
+    self.startingHealth = 12
+    --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("pig.png")
     self.mask = Hitbox:new(self, 64, 64)
@@ -19,13 +20,7 @@ function Pig:initialize(x, y)
 end
 
 function Pig:update(dt)
-    if self.world:hasFlag(self.flag .. '_defeated') then
-        self.world:remove(self)
-    elseif self.world:hasFlag(self.flag) then
-        self.world.currentBoss = self
-        self:movement(dt)
-        self:collisions()
-    end
+    self:bossUpdate(dt)
     Entity.update(self, dt)
 end
 
@@ -45,25 +40,13 @@ function Pig:movement(dt)
 end
 
 function Pig:collisions(dt)
-    local collidedBullets = self:collide(self.x, self.y, {"player_bullet"})
-    if #collidedBullets > 0 then
-        self:takeHit(Player.GUN_POWER)
-        for _, collidedBullet in pairs(collidedBullets) do
-            self.world:remove(collidedBullet)
-        end
-    end
+    self:bossCollisions(dt)
 end
 
 function Pig:takeHit(damage)
-    self.health = self.health - damage
-    if self.health <= 0 then
-        self:die()
-    end
+    self:bossTakeHit(damage)
 end
 
 function Pig:die()
-    self.world:remove(self)
-    self.world:removeFlag(self.flag)
-    self.world:addFlag(self.flag .. '_defeated')
-    self.world.currentBoss = nil
+    self:bossDie()
 end

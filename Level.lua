@@ -52,6 +52,9 @@ function Level:initialize(path)
                 elseif entity["name"] == "pig" then
                     local pig = Pig:new(entity["x"], entity["y"])
                     table.insert(self.entities, pig)
+                elseif entity["name"] == "wizard" then
+                    local wizard = Wizard:new(entity["x"], entity["y"])
+                    table.insert(self.entities, wizard)
                 elseif entity["name"] == "lock" then
                     local lock = Lock:new(
                         entity["x"], entity["y"],

@@ -5,6 +5,7 @@ inspect = require "inspect"
 
 require("ammo")
 require("ammo/all")
+require("Boss")
 require("GameWorld")
 require("Player")
 require("Level")
@@ -21,7 +22,7 @@ require("Pig")
 require("Lock")
 require("FlagTrigger")
 require("Checkpoint")
-require("Boss")
+require("Wizard")
 require("Spike")
 
 gameWidth, gameHeight = 320, 180
