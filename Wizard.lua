@@ -26,10 +26,12 @@ function Wizard:initialize(x, y, nodes)
         function()
             self.reversed = love.math.random() > 0.5
             self:fireBullet()
-            self.world:doSequence({
-                {0.25, function() self:fireBullet() end},
-                {0.5, function() self:fireBullet() end}
-            })
+            self:addTween(Alarm:new(0.25, function()
+                self:fireBullet()
+            end), true)
+            self:addTween(Alarm:new(0.5, function()
+                self:fireBullet()
+            end), true)
         end,
         "looping"
     ))

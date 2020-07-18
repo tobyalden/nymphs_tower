@@ -191,6 +191,9 @@ function World:_updateLists()
             self._updates:remove(v)
             v._removalQueued = false
             v._world = nil
+            for _, tween in pairs(v.tweens) do
+                tween.active = false
+            end
             if v.mask.class == Hitbox then
                 if bumpWorld:hasItem(v.mask) then
                     bumpWorld:remove(v.mask)

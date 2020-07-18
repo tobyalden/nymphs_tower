@@ -98,8 +98,12 @@ function Entity:collide(checkX, checkY, solidTypes)
     return collided
 end
 
-function Entity:addTween(tween)
+function Entity:addTween(tween, start)
+    start = start or false
     table.insert(self.tweens, tween)
+    if start then
+        tween:start()
+    end
     return tween
 end
 
