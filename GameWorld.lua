@@ -139,12 +139,9 @@ function GameWorld:updateCamera(dt)
             cameraZone.x + cameraZone.mask.width - gameWidth, cameraBoundRight
         )
     end
-    if not self.cameraTargetX then
+    if not self.player.graphic.flipX then
         self.cameraTargetX = cameraBoundRight
-    end
-    if self.player.velocity.x > 0 then
-        self.cameraTargetX = cameraBoundRight
-    elseif self.player.velocity.x < 0 then
+    else
         self.cameraTargetX = cameraBoundLeft
     end
     if (

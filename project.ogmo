@@ -28,7 +28,7 @@
     {
       "definition": "entity",
       "name": "camera_zones",
-      "gridSize": {"x": 160, "y": 90},
+      "gridSize": {"x": 10, "y": 10},
       "exportID": "71401867",
       "requiredTags": [],
       "excludedTags": []
@@ -123,7 +123,7 @@
       "exportID": "71427043",
       "name": "camera_zone",
       "limit": -1,
-      "size": {"x": 160, "y": 90},
+      "size": {"x": 320, "y": 180},
       "origin": {"x": 0, "y": 0},
       "originAnchored": true,
       "shape": {
