@@ -47,8 +47,8 @@ function Player:initialize(x, y)
     self.graphic:add("jump", {5})
     self.graphic:add("crouch", {5})
     self.graphic:add("jetpack", {6, 7}, 4)
-    self.graphic.offsetX = -5;
-    self.graphic.offsetY = -11;
+    self.graphic.offsetX = -5
+    self.graphic.offsetY = -11
     self.layer = -1
 
     self:loadSfx({"jump.wav", "run.wav"})
@@ -300,6 +300,12 @@ function Player:collisions(dt)
     if #collidedEnemies > 0 and not self.invincibleTimer.active then
         self:takeHit(Player.HIT_DAMAGE)
         self:knockback(collidedEnemies[1])
+    end
+
+    local collidedBullets = self:collide(self.x, self.y, {"enemy_bullet"})
+    if #collidedBullets > 0 and not self.invincibleTimer.active then
+        self:takeHit(Player.HIT_DAMAGE)
+        self:knockback(collidedBullets[1], 0.75, false, false)
     end
 
     local collidedSpikes = self:collide(self.x, self.y, {"spike"})

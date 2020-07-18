@@ -2,6 +2,7 @@ Wizard = class("Wizard", Entity)
 Wizard:include(Boss)
 
 Wizard.static.MAX_SPEED = 200
+--Wizard.static.MAX_SPEED = 0
 
 function Wizard:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
@@ -18,11 +19,16 @@ function Wizard:initialize(x, y, nodes)
         self.nodes[i] = Vector:new(node.x, node.y)
     end
     self.nodeIndex = 1
-    self.reversed = false
+    self.reversed = love.math.random() > 0.5
     self.lungeTimer = self:addTween(Alarm:new(
         math.pi,
         function()
             self.reversed = love.math.random() > 0.5
+            self:fireBullet()
+            self.world:doSequence({
+                {0.25, function() self:fireBullet() end},
+                {0.5, function() self:fireBullet() end}
+            })
         end,
         "looping"
     ))
@@ -33,10 +39,22 @@ function Wizard:update(dt)
     Entity.update(self, dt)
 end
 
+function Wizard:fireBullet()
+    local towardsPlayer = Vector:new(
+        self.world.player:getMaskCenter().x - self:getMaskCenter().x,
+        self.world.player:getMaskCenter().y - self:getMaskCenter().y
+    )
+    local bullet = EnemyBullet:new(
+        self.x + self.mask.width / 2 - 9,
+        self.y + self.mask.height / 2 - 9,
+        towardsPlayer
+    )
+    self.world:add(bullet)
+end
+
 function Wizard:movement(dt)
     if self.world:hasFlag(self.flag) and not self.lungeTimer.active then
         self.lungeTimer:start()
-        print('start')
     end
     --print(self.lungeTimer.time)
 
