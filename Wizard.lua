@@ -9,8 +9,8 @@ function Wizard:initialize(x, y, nodes)
     self.displayName = "WIZARD"
     self.flag = "wizard"
     self.types = {"enemy"}
-    --self.startingHealth = 12
-    self.startingHealth = 1
+    self.startingHealth = 10
+    --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("wizard.png")
     self.mask = Hitbox:new(self, 48, 48)
