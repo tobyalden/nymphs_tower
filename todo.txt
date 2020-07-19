@@ -1,9 +1,16 @@
 - add controller logic into ammo/input.lua
-- Graphics: TiledImage
-- Tweens: Alarm, NumTween, VarTween(?), LinearPath, easing functions (tweens should belong to entities, like sound effects)
-- collisions functions (check point, rect, entity.collide, etc.)
-- HXP.choose
-- fixed frame rates
 - toggling fullscreen
-- padding spritemaps & tilemaps (might not be necessary?)
-- web distribution?
+
+- sprites needed:
+
+total resolution is 320 x 180. aesthetic is "raiding creepy/weird alien ruins
+for dangerous artifacts". pretty vague right now, so you'd have a lot of
+freedom with the direction to take things. the only things i'd ask is that 1)
+the player's head isn't covered so you can see her eyes and 2) avoid anything
+with a military theme
+
+- 5 bosses (from around 100 x 100 to 50 x 50, each with 2-3 frames of animation)
+- 1 player (16x32, around 10 frames)
+- 2 small tilesets (each around 20 16x16 tiles)
+- 2 simple backgrounds (tiled, 640 x 360, each with 2 layers)
+- a handful of small objects (maybe 12 or so, all around 16x16 or 32x32)

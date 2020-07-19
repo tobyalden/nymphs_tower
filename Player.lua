@@ -60,7 +60,7 @@ function Player:initialize(x, y)
     self.hasGun = true
     self.healthUpgrades = 0
     --self.fuelUpgrades = 0
-    self.fuelUpgrades = 1
+    self.fuelUpgrades = 2
     self.invincibleTimer = self:addTween(Alarm:new(
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
