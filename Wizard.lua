@@ -29,9 +29,11 @@ function Wizard:initialize(x, y, nodes)
             self:addTween(Alarm:new(0.25, function()
                 self:fireBullet()
             end), true)
-            self:addTween(Alarm:new(0.5, function()
-                self:fireBullet()
-            end), true)
+            if self.world.isHardMode then
+                self:addTween(Alarm:new(0.5, function()
+                    self:fireBullet()
+                end), true)
+            end
         end,
         "looping"
     ))
@@ -57,11 +59,15 @@ end
 
 function Wizard:movement(dt)
     if self.world:hasFlag(self.flag) and not self.lungeTimer.active then
-        self.lungeTimer:start()
+        self.lungeTimer:start(lungeTime)
     end
     --print(self.lungeTimer.time)
 
-    local moveAmount = Wizard.MAX_SPEED * dt * math.sin(self.lungeTimer.time)
+    local maxSpeed = Wizard.MAX_SPEED
+    if not self.world.isHardMode then
+        maxSpeed = maxSpeed / 2
+    end
+    local moveAmount = maxSpeed * dt * math.sin(self.lungeTimer.time)
     local reversed = self.reversed
     --moveAmount = math.abs(moveAmount)
 

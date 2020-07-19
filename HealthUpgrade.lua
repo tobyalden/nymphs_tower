@@ -1,6 +1,6 @@
 HealthUpgrade = class("HealthUpgrade", Entity)
 
-HealthUpgrade.static.HEALTH_AMOUNT = 50
+HealthUpgrade.static.HEALTH_AMOUNT = 25
 
 function HealthUpgrade:initialize(x, y)
     Entity.initialize(self, x, y)
