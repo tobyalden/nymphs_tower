@@ -94,6 +94,9 @@ function Level:initialize(path)
                         entity["x"], entity["y"], 16, entity["height"], "right"
                     )
                     table.insert(self.entities, spikeRight)
+                elseif entity["name"] == "star" then
+                    local star = Star:new(entity["x"], entity["y"])
+                    table.insert(self.entities, star)
                 end
             end
         end

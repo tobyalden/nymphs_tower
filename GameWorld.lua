@@ -101,6 +101,8 @@ function GameWorld:getCurrentCameraZone()
         if (
             playerCenter.x >= cameraZone.x
             and playerCenter.x < cameraZone.x + cameraZone.mask.width
+            and playerCenter.y >= cameraZone.y
+            and playerCenter.y < cameraZone.y + cameraZone.mask.height
         ) then
             return cameraZone
         end
