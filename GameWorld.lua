@@ -96,13 +96,10 @@ function GameWorld:getCurrentCameraZone()
     local cameraZones = self.player:collide(
         self.player.x, self.player.y, {"camera_zone"}
     )
-    local playerCenter = Vector:new(
-        self.player.x + self.player.mask.width / 2,
-        self.player.y + self.player.mask.height / 2
-    )
+    local playerCenter = self.player:getMaskCenter()
     for _, cameraZone in pairs(cameraZones) do
         if (
-            playerCenter.x > cameraZone.x
+            playerCenter.x >= cameraZone.x
             and playerCenter.x < cameraZone.x + cameraZone.mask.width
         ) then
             return cameraZone
