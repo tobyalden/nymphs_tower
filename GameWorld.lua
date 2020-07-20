@@ -33,7 +33,7 @@ function GameWorld:initialize()
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
     self.currentBoss = nil
-    self.isHardMode = true
+    self.isHardMode = false
 end
 
 function GameWorld:saveGame(saveX, saveY)

@@ -22,7 +22,7 @@ function Miku:initialize(x, y, nodes)
     self.nodeIndex = 1
     self.reversed = love.math.random() > 0.5
     self.shotTimer = self:addTween(Alarm:new(
-        0.5,
+        1,
         function()
             self:fireBullet()
         end,
@@ -54,6 +54,10 @@ function Miku:fireBullet()
 end
 
 function Miku:movement(dt)
+    local shotTime = 1
+    if self.world.isHardMode then
+        shotTime = 0.5
+    end
     if self.world:hasFlag(self.flag) and not self.shotTimer.active then
         self.shotTimer:start(shotTime)
     end
