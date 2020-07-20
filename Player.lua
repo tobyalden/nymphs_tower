@@ -58,7 +58,7 @@ function Player:initialize(x, y)
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = true
-    self.healthUpgrades = 0
+    self.healthUpgrades = 5
     --self.fuelUpgrades = 0
     self.fuelUpgrades = 2
     self.invincibleTimer = self:addTween(Alarm:new(
@@ -298,19 +298,19 @@ function Player:collisions(dt)
 
     local collidedEnemies = self:collide(self.x, self.y, {"enemy"})
     if #collidedEnemies > 0 and not self.invincibleTimer.active then
-        self:takeHit(Player.HIT_DAMAGE)
+        self:takeHit(self.hitDamage)
         self:knockback(collidedEnemies[1])
     end
 
     local collidedBullets = self:collide(self.x, self.y, {"enemy_bullet"})
     if #collidedBullets > 0 and not self.invincibleTimer.active then
-        self:takeHit(Player.HIT_DAMAGE)
+        self:takeHit(self.hitDamage)
         self:knockback(collidedBullets[1], 0.75, false, false)
     end
 
     local collidedSpikes = self:collide(self.x, self.y, {"spike"})
     if #collidedSpikes > 0 and not self.invincibleTimer.active then
-        self:takeHit(Player.HIT_DAMAGE)
+        self:takeHit(self.hitDamage)
         if collidedSpikes[1].facing == "ceiling" then
             self:knockback(collidedSpikes[1], 0.25, true, true)
         elseif collidedSpikes[1].facing == "floor" then
@@ -378,6 +378,9 @@ function Player:getMaxFuel()
 end
 
 function Player:update(dt)
+    if self.world.isHardMode then
+        self.hitDamage = Player.HIT_DAMAGE * 2
+    end
     self:shooting()
     self:collisions(dt)
     self:movement(dt)
