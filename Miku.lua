@@ -9,8 +9,8 @@ function Miku:initialize(x, y, nodes)
     self.displayName = "VESSEL"
     self.flag = "miku"
     self.types = {"enemy"}
-    self.startingHealth = 20
-    --self.startingHealth = 1
+    --self.startingHealth = 18
+    self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("miku.png")
     self.mask = Hitbox:new(self, 80, 100)
