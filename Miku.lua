@@ -1,7 +1,7 @@
 Miku = class("Miku", Entity)
 Miku:include(Boss)
 
-Miku.static.MAX_SPEED = 200
+Miku.static.MAX_SPEED = 50
 --Miku.static.MAX_SPEED = 0
 
 function Miku:initialize(x, y, nodes)
@@ -21,19 +21,10 @@ function Miku:initialize(x, y, nodes)
     end
     self.nodeIndex = 1
     self.reversed = love.math.random() > 0.5
-    self.lungeTimer = self:addTween(Alarm:new(
-        math.pi,
+    self.shotTimer = self:addTween(Alarm:new(
+        0.5,
         function()
-            self.reversed = love.math.random() > 0.5
             self:fireBullet()
-            self:addTween(Alarm:new(0.25, function()
-                self:fireBullet()
-            end), true)
-            if self.world.isHardMode then
-                self:addTween(Alarm:new(0.5, function()
-                    self:fireBullet()
-                end), true)
-            end
         end,
         "looping"
     ))
@@ -45,30 +36,33 @@ function Miku:update(dt)
 end
 
 function Miku:fireBullet()
-    local towardsPlayer = Vector:new(
-        self.world.player:getMaskCenter().x - self:getMaskCenter().x,
-        self.world.player:getMaskCenter().y - self:getMaskCenter().y
-    )
+    --local towardsPlayer = Vector:new(
+        --self.world.player:getMaskCenter().x - self:getMaskCenter().x,
+        --self.world.player:getMaskCenter().y - self:getMaskCenter().y
+    --)
+    local shotSeparation = 30
     local bullet = EnemyBullet:new(
-        self.x + self.mask.width / 2 - 9,
-        self.y + self.mask.height / 2 - 9,
-        towardsPlayer
+        self.x,
+        self.y + 20
+        + math.round(love.math.random()) * shotSeparation
+        + math.round(love.math.random()) * shotSeparation,
+        --Vector:new(-1, (0.5 - love.math.random()) / 2),
+        Vector:new(-1, -1 * love.math.random()),
+        150 + love.math.random() * 20, true
     )
     self.world:add(bullet)
 end
 
 function Miku:movement(dt)
-    if self.world:hasFlag(self.flag) and not self.lungeTimer.active then
-        self.lungeTimer:start(lungeTime)
+    if self.world:hasFlag(self.flag) and not self.shotTimer.active then
+        self.shotTimer:start(shotTime)
     end
-    --print(self.lungeTimer.time)
+    --print(self.shotTimer.time)
 
     local maxSpeed = Miku.MAX_SPEED
-    if not self.world.isHardMode then
-        maxSpeed = maxSpeed / 2
-    end
-    local moveAmount = maxSpeed * dt * math.sin(self.lungeTimer.time)
+    local moveAmount = Miku.MAX_SPEED * dt
     local reversed = self.reversed
+    --moveAmount = 0
     --moveAmount = math.abs(moveAmount)
 
     while moveAmount > 0 do
