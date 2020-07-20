@@ -57,6 +57,11 @@ function Level:initialize(path)
                         entity["x"], entity["y"], entity["nodes"]
                     )
                     table.insert(self.entities, wizard)
+                elseif entity["name"] == "miku" then
+                    local miku = Miku:new(
+                        entity["x"], entity["y"], entity["nodes"]
+                    )
+                    table.insert(self.entities, miku)
                 elseif entity["name"] == "lock" then
                     local lock = Lock:new(
                         entity["x"], entity["y"],
