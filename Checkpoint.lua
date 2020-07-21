@@ -19,3 +19,10 @@ function Checkpoint:flash()
     self.graphic:play("flash")
 end
 
+function Checkpoint:update(dt)
+    local isSolid = not self.world:hasFlag('finalboss')
+    self.visible = isSolid
+    self.collidable = isSolid
+    Entity.update(self, dt)
+end
+

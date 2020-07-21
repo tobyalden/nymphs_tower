@@ -64,6 +64,11 @@ function Level:initialize(path)
                         entity["x"], entity["y"], entity["nodes"]
                     )
                     table.insert(self.entities, miku)
+                elseif entity["name"] == "finalboss" then
+                    local finalBoss = FinalBoss:new(
+                        entity["x"], entity["y"], entity["nodes"]
+                    )
+                    table.insert(self.entities, finalBoss)
                 elseif entity["name"] == "lock" then
                     local lock = Lock:new(
                         entity["x"], entity["y"],

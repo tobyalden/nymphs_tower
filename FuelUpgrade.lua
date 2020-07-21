@@ -9,4 +9,3 @@ function FuelUpgrade:initialize(x, y, addFlag)
     self.mask = Hitbox:new(self, 24, 24)
     self.addFlag = addFlag
 end
-
