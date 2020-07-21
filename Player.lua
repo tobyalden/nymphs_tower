@@ -303,6 +303,11 @@ function Player:collisions(dt)
         self:knockback(collidedEnemies[1])
     end
 
+    local collidedInstakills = self:collide(self.x, self.y, {"instakill"})
+    if #collidedInstakills > 0 then
+        self:die()
+    end
+
     local collidedBullets = self:collide(self.x, self.y, {"enemy_bullet"})
     if #collidedBullets > 0 and not self.invincibleTimer.active then
         self:takeHit(self.hitDamage)

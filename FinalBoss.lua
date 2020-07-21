@@ -4,11 +4,14 @@ FinalBoss:include(Boss)
 FinalBoss.static.MAX_SPEED = 100
 --FinalBoss.static.MAX_SPEED = 0
 
+-- TODO: It seems like having a big hitbox and calling moveBy causes the engine
+-- to run incredibly slow. bypassed with snapTo method, but definitely a bug
+
 function FinalBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
     self.displayName = "KEEPER"
     self.flag = "finalboss"
-    self.types = {"enemy"}
+    self.types = {"instakill"}
     self.startingHealth = 50
     --self.startingHealth = 1
     self.health = self.startingHealth
@@ -90,8 +93,8 @@ function FinalBoss:movement(dt)
                 self._moveX, self._moveY
             )
             self:snapTo(
-                self.x + self.nodes[targetNodeIndex].x,
-                self.y + self.nodes[targetNodeIndex].y
+                self.nodes[targetNodeIndex].x,
+                self.nodes[targetNodeIndex].y
             )
             moveAmount = moveAmount - distanceToNextNode + moveRemainder:len()
             self.nodeIndex = self.nodeIndex + 1
