@@ -282,6 +282,7 @@ function Player:collisions(dt)
                     "YOU FOUND A FUEL TANK"
                 })
                 self.world:unpauseLevel()
+                self.world:addFlag(collidedFuelUpgrades[1].addFlag)
                 self.world:remove(collidedFuelUpgrades[1])
                 self.fuelUpgrades = self.fuelUpgrades + 1
                 self:restoreFuel()

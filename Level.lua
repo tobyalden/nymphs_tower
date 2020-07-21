@@ -44,7 +44,9 @@ function Level:initialize(path)
                     local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, healthUpgrade)
                 elseif entity["name"] == "fuel_upgrade" then
-                    local fuelUpgrade = FuelUpgrade:new(entity["x"], entity["y"])
+                    local fuelUpgrade = FuelUpgrade:new(
+                        entity["x"], entity["y"], entity["values"]["add_flag"]
+                    )
                     table.insert(self.entities, fuelUpgrade)
                 elseif entity["name"] == "block" then
                     local block = Block:new(entity["x"], entity["y"])
@@ -73,7 +75,8 @@ function Level:initialize(path)
                     local flagTrigger = FlagTrigger:new(
                         entity["x"], entity["y"],
                         entity["width"], entity["height"],
-                        entity["values"]["flag"]
+                        entity["values"]["flag"],
+                        entity["values"]["require_flag"]
                     )
                     table.insert(self.entities, flagTrigger)
                 elseif entity["name"] == "checkpoint" then

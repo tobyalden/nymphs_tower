@@ -70,6 +70,7 @@ function GameWorld:hasFlag(flag)
 end
 
 function GameWorld:addFlag(flag)
+    if flag == "" then return end
     print('adding flag ' .. flag)
     self.flags[flag] = true
 end
