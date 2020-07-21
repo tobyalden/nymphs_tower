@@ -125,6 +125,14 @@ function Entity:moveBy(x, y, solidTypes)
     end
 end
 
+function Entity:snapTo(x, y)
+    self.x = x
+    self.y = y
+    self._moveX = 0
+    self._moveY = 0
+    bumpWorld:update(self.mask, self.x, self.y)
+end
+
 function Entity:moveTo(x, y, solidTypes)
     self._moveX = 0
     self._moveY = 0
