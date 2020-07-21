@@ -1,3 +1,4 @@
+- boss bullets shouldn't collide with walls - should just disappear when they get too far
 - add controller logic into ammo/input.lua
 - toggling fullscreen
 

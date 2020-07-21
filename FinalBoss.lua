@@ -2,7 +2,7 @@ FinalBoss = class("FinalBoss", Entity)
 FinalBoss:include(Boss)
 
 FinalBoss.static.MAX_SPEED = 100
---FinalBoss.static.MAX_SPEED = 0
+FinalBoss.static.MAX_SPEED_HARD_MODE = 120
 
 -- TODO: It seems like having a big hitbox and calling moveBy causes the engine
 -- to run incredibly slow. bypassed with snapTo method, but definitely a bug
@@ -70,7 +70,10 @@ function FinalBoss:movement(dt)
     --print(self.shotTimer.time)
 
     local maxSpeed = FinalBoss.MAX_SPEED
-    local moveAmount = FinalBoss.MAX_SPEED * dt
+    if self.world.isHardMode then
+        maxSpeed = FinalBoss.MAX_SPEED_HARD_MODE
+    end
+    local moveAmount = maxSpeed * dt
     --moveAmount = 0
     --moveAmount = math.abs(moveAmount)
 
