@@ -28,6 +28,7 @@ require("EnemyBullet")
 require("Star")
 require("Miku")
 require("FinalBoss")
+require("GravityBelt")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()

@@ -58,6 +58,8 @@ function Player:initialize(x, y)
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = true
+    self.hasGravityBelt = false
+    self.isGravityBeltEquipped = false
     self.healthUpgrades = 5
     --self.fuelUpgrades = 0
     self.fuelUpgrades = 4
@@ -94,13 +96,21 @@ function Player:moveCollideY(collided)
         end
     end
     if isSolid and self.velocity.y < 0 then
-        self.velocity.y = -self.velocity.y / 1.25
+      if self.isGravityBeltEquipped then
+          self.velocity.y = -self.velocity.y / 1.05
+        else
+          self.velocity.y = -self.velocity.y / 1.25
+      end
     end
 end
 
 function Player:movement(dt)
+    local gravity = Player.GRAVITY
+    if self.isGravityBeltEquipped then
+        gravity = Player.GRAVITY / 1.5
+    end
     if self.knockbackTimer.active then
-        self.velocity.y = self.velocity.y + Player.GRAVITY * dt
+        self.velocity.y = self.velocity.y + gravity * dt
         self:moveBy(
             self.velocity.x * dt,
             self.velocity.y * dt,
@@ -108,14 +118,22 @@ function Player:movement(dt)
         )
         return
     end
-    if input.down("left") then self.velocity.x = -Player.SPEED
-    elseif input.down("right") then self.velocity.x = Player.SPEED
+    local speed = Player.SPEED
+    if self.isGravityBeltEquipped then
+        speed = Player.SPEED * 1.25
+    end
+    if input.down("left") then self.velocity.x = -speed
+    elseif input.down("right") then self.velocity.x = speed
     else self.velocity.x = 0 end
     if self:isOnGround() then
         self.velocity.y = 0
         isJetpackOn = false
         if input.pressed("jump") then
-            self.velocity.y = -Player.JUMP_POWER
+            if self.isGravityBeltEquipped then
+                self.velocity.y = -Player.JUMP_POWER * 1.25
+            else
+                self.velocity.y = -Player.JUMP_POWER
+            end
             releasedJump = false
         end
     else
@@ -132,7 +150,7 @@ function Player:movement(dt)
             self.velocity.y = self.velocity.y - Player.JETPACK_POWER * dt
             self.fuel = math.max(self.fuel - Player.JETPACK_FUEL_USE_RATE * dt, 0)
         end
-        self.velocity.y = self.velocity.y + Player.GRAVITY * dt
+        self.velocity.y = self.velocity.y + gravity * dt
     end
     if not self.fuelRecoveryTimer.active then
         self.fuel = math.min(
@@ -140,9 +158,15 @@ function Player:movement(dt)
             self:getMaxFuel()
         )
     end
-    self.velocity.y = math.clamp(
-        self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
-    )
+    if  self.isGravityBeltEquipped then
+      self.velocity.y = math.clamp(
+          self.velocity.y, -Player.MAX_RISE_SPEED * 1.25, Player.MAX_FALL_SPEED * 1.25
+      )
+    else
+        self.velocity.y = math.clamp(
+            self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
+        )
+    end
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
@@ -249,10 +273,22 @@ function Player:collisions(dt)
                     "YOU FOUND THE RAYGUN",
                     "PRESS X TO SHOOT",
                 })
-                --self.world:doSequence({
-                    --{totalTime + 1, function()
-                    --end}
-                --})
+            end}
+        })
+    end
+
+    local collidedGravityBelts = self:collide(self.x, self.y, {"gravity_belt"})
+    if #collidedGravityBelts > 0 then
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedGravityBelts[1])
+                self.hasGravityBelt = true
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND THE GRAVITY BELT",
+                    "PRESS UP TO TOGGLE ON AND OFF",
+                })
             end}
         })
     end
@@ -389,6 +425,9 @@ function Player:update(dt)
     end
     self:shooting()
     self:collisions(dt)
+    if input.pressed("up") and self.hasGravityBelt then
+        self.isGravityBeltEquipped = not self.isGravityBeltEquipped
+    end
     self:movement(dt)
     self:animation()
 
