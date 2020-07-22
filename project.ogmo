@@ -812,6 +812,44 @@
       "values": [],
       "texture": "gravitybelt.png",
       "textureImage": "data:image/png;base64,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"
+    },
+    {
+      "exportID": "44154141",
+      "name": "hazard_suit",
+      "limit": -1,
+      "size": {"x": 24, "y": 24},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ff0000ff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 16, "y": 16},
+      "resizeableX": false,
+      "resizeableY": false,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": [],
+      "values": [],
+      "texture": "hazardsuit.png",
+      "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAIAAABvFaqvAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVDhPrY2LCQMxDEOzRHfuvLdAa1BQZNmBNBQenPXLjc/zH1xf47rlPV7EIuK6ovujhzCwqjltCjO5zHamRZpOF5qH3jhMWidIJctwwFGfKZ04VokuAt6QlqqDe1pKHai/k/NTQU+rSo3W1dI+1P4gCaMdtGbgmvz0SuAa6ECXu1cC10BfuX9Ix7hN4jZcB3Wm49OHdMzN7lZc64AmpEaWBkkEaLRVNWuaRIB27QGmtbMuUBuVo4cuecYXdAyrIrGlfiQAAAAASUVORK5CYII="
     }
   ],
   "tilesets": []
