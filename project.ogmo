@@ -28,7 +28,7 @@
     {
       "definition": "entity",
       "name": "camera_zones",
-      "gridSize": {"x": 10, "y": 10},
+      "gridSize": {"x": 1, "y": 1},
       "exportID": "71401867",
       "requiredTags": [],
       "excludedTags": []

@@ -53,14 +53,14 @@ function Player:initialize(x, y)
 
     self:loadSfx({"jump.wav", "run.wav"})
 
-    self.health = Player.STARTING_HEALTH
     self.fuel = Player.STARTING_FUEL
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = true
-    self.hasGravityBelt = false
+    self.hasGravityBelt = true
     self.isGravityBeltEquipped = false
-    self.healthUpgrades = 5
+    self.healthUpgrades = 8
+    self:restoreHealth()
     --self.fuelUpgrades = 0
     self.fuelUpgrades = 4
     self.invincibleTimer = self:addTween(Alarm:new(
