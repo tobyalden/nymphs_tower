@@ -6,6 +6,10 @@ function Vector:initialize(x, y)
     self.y = y or 0
 end
 
+function Vector:copy()
+    return Vector:new(self.x, self.y)
+end
+
 function Vector:unpack()
     return self.x, self.y
 end
