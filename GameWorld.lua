@@ -82,14 +82,14 @@ function GameWorld:removeFlag(flag)
 end
 
 function GameWorld:pauseLevel()
-    for _, entity in pairs(self.level.entities) do
-        entity.paused = true
+    for v in self._updates:iterate() do
+        v.paused = true
     end
 end
 
 function GameWorld:unpauseLevel()
-    for _, entity in pairs(self.level.entities) do
-        entity.paused = false
+    for v in self._updates:iterate() do
+        v.paused = false
     end
 end
 

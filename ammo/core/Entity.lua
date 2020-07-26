@@ -202,8 +202,10 @@ function Entity:update(dt)
     if self.graphic and (self.graphic.class == Sprite or self.graphic.class == Graphiclist) then
         self.graphic:update(dt)
     end
-    for _, tween in pairs(self.tweens) do
-        tween:update(dt)
+    if not self.paused and self.active then
+        for _, tween in pairs(self.tweens) do
+            tween:update(dt)
+        end
     end
 end
 

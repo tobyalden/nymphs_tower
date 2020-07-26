@@ -12,7 +12,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.displayName = "NYMPH"
     self.flag = "secret_boss"
     self.types = {"enemy"}
-    self.startingHealth = 2
+    self.startingHealth = 20
     --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("secretboss.png")
@@ -253,6 +253,12 @@ function SecretBoss:die()
     if self.phaseNumber == 3 then
         self:bossDie()
     else
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {1, function()
+                self.world:unpauseLevel()
+            end}
+        })
         self.phaseNumber = self.phaseNumber + 1
         self.health = self.startingHealth
     end
