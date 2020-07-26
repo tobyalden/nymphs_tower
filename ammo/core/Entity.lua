@@ -41,6 +41,20 @@ function Entity:initialize(x, y)
     self.tweens = {}
 end
 
+function Entity:distanceFrom(otherEntity, useHitbox)
+    useHitbox = useHitbox or false
+    if useHitbox then
+        local myCenter = self:getMaskCenter()
+        local otherEntityCenter = otherEntity:getMaskCenter()
+        return math.sqrt(
+            (otherEntityCenter.x - myCenter.x) ^ 2
+            + (otherEntityCenter.y - myCenter.y) ^ 2
+        )
+    else
+        return math.sqrt((otherEntity.x - self.x) ^ 2 + (otherEntity.y - self.y) ^ 2)
+    end
+end
+
 function Entity:getMaskCenter()
     return Vector:new(
         self.x + self.mask.width / 2, (self.y + self.mask.height / 2)
@@ -125,14 +139,6 @@ function Entity:moveBy(x, y, solidTypes)
     end
 end
 
-function Entity:snapTo(x, y)
-    self.x = x
-    self.y = y
-    self._moveX = 0
-    self._moveY = 0
-    bumpWorld:update(self.mask, self.x, self.y)
-end
-
 function Entity:moveTo(x, y, solidTypes)
     self._moveX = 0
     self._moveY = 0
@@ -146,7 +152,12 @@ function Entity:moveCollideY(collided)
 end
 
 function Entity:_moveBy(x, y, solidTypes)
-    solidTypes = solidTypes or {}
+    if not solidTypes or #solidTypes == 0 then
+        self.x = self.x + x
+        self.y = self.y + y
+        bumpWorld:update(self.mask, self.x, self.y)
+        return {}
+    end
     local typeFilter = function(item, other)
         for _, solidType in pairs(solidTypes) do
             for _, otherType in pairs(other.parent.types) do

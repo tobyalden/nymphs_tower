@@ -5,7 +5,7 @@ FinalBoss.static.MAX_SPEED = 100
 FinalBoss.static.MAX_SPEED_HARD_MODE = 120
 
 -- TODO: It seems like having a big hitbox and calling moveBy causes the engine
--- to run incredibly slow. bypassed with snapTo method, but definitely a bug
+-- to run incredibly slow. bypassed with moveTo method, but definitely a bug
 
 function FinalBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
@@ -45,6 +45,7 @@ function FinalBoss:fireBullet()
     --)
     local shotSeparation = 30
     local bullet = EnemyBullet:new(
+        self,
         self.x,
         self.y + 20
         + math.round(love.math.random()) * shotSeparation
@@ -86,7 +87,7 @@ function FinalBoss:movement(dt)
         local distanceToNextNode = towardsNode:len()
         if distanceToNextNode > moveAmount then
             towardsNode:normalize(moveAmount)
-            self:snapTo(
+            self:moveTo(
                 self.x + towardsNode.x,
                 self.y + towardsNode.y
             )
@@ -95,7 +96,7 @@ function FinalBoss:movement(dt)
             local moveRemainder = Vector:new(
                 self._moveX, self._moveY
             )
-            self:snapTo(
+            self:moveTo(
                 self.nodes[targetNodeIndex].x,
                 self.nodes[targetNodeIndex].y
             )

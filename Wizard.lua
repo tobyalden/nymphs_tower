@@ -50,6 +50,7 @@ function Wizard:fireBullet()
         self.world.player:getMaskCenter().y - self:getMaskCenter().y
     )
     local bullet = EnemyBullet:new(
+        self,
         self.x + self.mask.width / 2 - 9,
         self.y + self.mask.height / 2 - 9,
         towardsPlayer

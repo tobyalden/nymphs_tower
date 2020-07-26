@@ -42,6 +42,7 @@ function Miku:fireBullet()
     --)
     local shotSeparation = 30
     local bullet = EnemyBullet:new(
+        self,
         self.x,
         self.y + 20
         + math.round(love.math.random()) * shotSeparation

@@ -2,9 +2,10 @@ EnemyBullet = class("EnemyBullet", Entity)
 
 EnemyBullet.static.BULLET_SPEED = 100
 
-function EnemyBullet:initialize(x, y, heading, speed, shouldFall)
+function EnemyBullet:initialize(parent, x, y, heading, speed, shouldFall)
     Entity.initialize(self, x, y)
     speed = speed or EnemyBullet.BULLET_SPEED
+    self.parent = parent
     self.shouldFall = shouldFall or false
     self.types = {"enemy_bullet"}
     self.graphic = Sprite:new("enemybullet.png")
@@ -22,17 +23,10 @@ function EnemyBullet:update(dt)
     end
     self:moveBy(
         self.velocity.x * dt,
-        self.velocity.y * dt,
-        {"walls"}
+        self.velocity.y * dt
     )
+    if self:distanceFrom(self.parent, true) > (gameWidth + gameHeight) then
+        self.world:remove(self)
+    end
     Entity.update(self, dt)
 end
-
-function EnemyBullet:moveCollideX(collided)
-    self.world:remove(self)
-end
-
-function EnemyBullet:moveCollideY(collided)
-    self.world:remove(self)
-end
-
