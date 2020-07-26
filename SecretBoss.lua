@@ -1,10 +1,11 @@
 SecretBoss = class("SecretBoss", Entity)
 SecretBoss:include(Boss)
 
-SecretBoss.static.MAX_SPEED = 200
-SecretBoss.static.CHASE_SPEED = 100
+SecretBoss.static.NODE_TRAVEL_SPEED = 200
+SecretBoss.static.BOUNCE_SPEED = 100
+SecretBoss.static.CHASE_SPEED = 80
 SecretBoss.static.PAUSE_TIME = 0.5
---SecretBoss.static.MAX_SPEED = 0
+--SecretBoss.static.NODE_TRAVEL_SPEED = 0
 
 function SecretBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
@@ -31,7 +32,8 @@ function SecretBoss:initialize(x, y, nodes)
     self.fanTimer = self:addTween(Alarm:new(2, function()
         self:fireFan()
     end, "looping"))
-    self.phaseNumber = 2
+    self.phaseNumber = 3
+    -- TODO: Should this pick a random direction?
     self.velocity = Vector:new(-1, 1)
 end 
 
@@ -131,9 +133,9 @@ end
 function SecretBoss:movement(dt)
     if self.phaseNumber == 1 then
         self:phaseOneMovement(dt)
-    else
+    elseif self.phaseNumber == 2 then
         if self.world:hasFlag(self.flag) and not self.fanTimer.active then
-            local maxSpeed = SecretBoss.CHASE_SPEED
+            local maxSpeed = SecretBoss.BOUNCE_SPEED
             if not self.world.isHardMode then
                 maxSpeed = maxSpeed / 2
             end
@@ -141,7 +143,28 @@ function SecretBoss:movement(dt)
             self.fanTimer:start()
         end
         self:phaseTwoMovement(dt)
+    else
+        self.fanTimer.active = false
+        self:phaseThreeMovement(dt)
     end
+end
+
+function SecretBoss:phaseThreeMovement(dt)
+    local towardsPlayer = Vector:new(
+        self.world.player:getMaskCenter().x - self:getMaskCenter().x,
+        self.world.player:getMaskCenter().y - self:getMaskCenter().y
+    )
+    local maxSpeed = SecretBoss.CHASE_SPEED
+    if not self.world.isHardMode then
+        maxSpeed = maxSpeed / 2
+    end
+    towardsPlayer:normalize(maxSpeed / 25)
+    self.velocity.x = self.velocity.x + towardsPlayer.x
+    self.velocity.y = self.velocity.y + towardsPlayer.y
+    if self.velocity:len() > maxSpeed then
+        self.velocity:normalize(maxSpeed)
+    end
+    self:moveBy(self.velocity.x * dt, self.velocity.y * dt)
 end
 
 function SecretBoss:phaseTwoMovement(dt)
@@ -160,12 +183,8 @@ function SecretBoss:phaseOneMovement(dt)
     if self.pauseTimer.active then
         return
     end
-    --if self.world:hasFlag(self.flag) and not self.lungeTimer.active then
-        --self.lungeTimer:start(lungeTime)
-    --end
-    --print(self.lungeTimer.time)
 
-    local maxSpeed = SecretBoss.MAX_SPEED
+    local maxSpeed = SecretBoss.NODE_TRAVEL_SPEED
     if not self.world.isHardMode then
         maxSpeed = maxSpeed / 2
     end
