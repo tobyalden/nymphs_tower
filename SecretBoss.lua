@@ -12,7 +12,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.displayName = "NYMPH"
     self.flag = "secret_boss"
     self.types = {"enemy"}
-    self.startingHealth = 20
+    self.startingHealth = 2
     --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("secretboss.png")
@@ -32,7 +32,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.fanTimer = self:addTween(Alarm:new(2, function()
         self:fireFan()
     end, "looping"))
-    self.phaseNumber = 3
+    self.phaseNumber = 1
     -- TODO: Should this pick a random direction?
     self.velocity = Vector:new(-1, 1)
 end 
@@ -250,6 +250,11 @@ function SecretBoss:takeHit(damage)
 end
 
 function SecretBoss:die()
-    self:bossDie()
+    if self.phaseNumber == 3 then
+        self:bossDie()
+    else
+        self.phaseNumber = self.phaseNumber + 1
+        self.health = self.startingHealth
+    end
 end
 
