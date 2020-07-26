@@ -28,6 +28,7 @@ require("EnemyBullet")
 require("Star")
 require("Miku")
 require("FinalBoss")
+require("SecretBoss")
 require("GravityBelt")
 
 gameWidth, gameHeight = 320, 180

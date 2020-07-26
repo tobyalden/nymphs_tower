@@ -72,6 +72,11 @@ function Level:initialize(path)
                         entity["x"], entity["y"], entity["nodes"]
                     )
                     table.insert(self.entities, finalBoss)
+                elseif entity["name"] == "secret_boss" then
+                    local secretBoss = SecretBoss:new(
+                        entity["x"], entity["y"], entity["nodes"]
+                    )
+                    table.insert(self.entities, secretBoss)
                 elseif entity["name"] == "lock" then
                     local lock = Lock:new(
                         entity["x"], entity["y"],
