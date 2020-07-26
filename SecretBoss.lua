@@ -2,7 +2,7 @@ SecretBoss = class("SecretBoss", Entity)
 SecretBoss:include(Boss)
 
 SecretBoss.static.MAX_SPEED = 200
-SecretBoss.static.CHASE_SPEED = 50
+SecretBoss.static.CHASE_SPEED = 100
 SecretBoss.static.PAUSE_TIME = 0.5
 --SecretBoss.static.MAX_SPEED = 0
 
@@ -28,10 +28,11 @@ function SecretBoss:initialize(x, y, nodes)
     self.attackTimer = self:addTween(Alarm:new(self.pauseTime / 2, function()
         self:fireBullet()
     end))
-    self.fanTimer = self:addTween(Alarm:new(1, function()
+    self.fanTimer = self:addTween(Alarm:new(2, function()
         self:fireFan()
     end, "looping"))
     self.phaseNumber = 2
+    self.velocity = Vector:new(-1, 1)
 end 
 
 function SecretBoss:update(dt)
@@ -49,10 +50,11 @@ function SecretBoss:fireBullet()
 end
 
 function SecretBoss:fireFan()
-    local numBullets = 8
+    local offset = math.random() * math.pi * 2
+    local numBullets = 16
     local increment = (math.pi * 2) / numBullets
     for i = 1, numBullets do
-        local rotation = increment * (i - 1)
+        local rotation = increment * (i - 1) + offset
         local bulletAngle = Vector:new(math.cos(rotation), math.sin(rotation))
         local bullet = EnemyBullet:new(
             self,
@@ -131,6 +133,11 @@ function SecretBoss:movement(dt)
         self:phaseOneMovement(dt)
     else
         if self.world:hasFlag(self.flag) and not self.fanTimer.active then
+            local maxSpeed = SecretBoss.CHASE_SPEED
+            if not self.world.isHardMode then
+                maxSpeed = maxSpeed / 2
+            end
+            self.velocity:normalize(maxSpeed)
             self.fanTimer:start()
         end
         self:phaseTwoMovement(dt)
@@ -138,16 +145,15 @@ function SecretBoss:movement(dt)
 end
 
 function SecretBoss:phaseTwoMovement(dt)
-    local towardsPlayer = Vector:new(
-        self.world.player:getMaskCenter().x - self:getMaskCenter().x,
-        self.world.player:getMaskCenter().y - self:getMaskCenter().y
-    )
-    local maxSpeed = SecretBoss.CHASE_SPEED
-    if not self.world.isHardMode then
-        maxSpeed = maxSpeed / 2
-    end
-    towardsPlayer:normalize(maxSpeed)
-    self:moveBy(towardsPlayer.x * dt, towardsPlayer.y * dt)
+    self:moveBy(self.velocity.x * dt, self.velocity.y * dt, {"walls"})
+end
+
+function SecretBoss:moveCollideX(collided)
+    self.velocity.x = -self.velocity.x
+end
+
+function SecretBoss:moveCollideY(collided)
+    self.velocity.y = -self.velocity.y
 end
 
 function SecretBoss:phaseOneMovement(dt)
