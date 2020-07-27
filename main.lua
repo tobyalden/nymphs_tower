@@ -25,6 +25,7 @@ require("Lock")
 require("FlagTrigger")
 require("Checkpoint")
 require("Wizard")
+require("Curtain")
 require("Spike")
 require("EnemyBullet")
 require("Star")
@@ -45,6 +46,8 @@ function love.load()
     input.define("right", "right", "]")
     input.define("jump", "z")
     input.define("shoot", "x")
+
+    love.window.setTitle("Nymph's Tower")
 
     tick.framerate = -1
     tick.rate = 1 / 60

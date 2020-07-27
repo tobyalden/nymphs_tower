@@ -6,6 +6,9 @@ function MainMenu:initialize()
     World.initialize(self)
     self.menu = Menu:new({"NEW GAME", "CONTINUE", "OPTIONS"})
     self:add(self.menu)
+    self.curtain = Curtain:new()
+    self:add(self.curtain)
+    self.curtain:fadeOut()
 end
 
 function MainMenu:update(dt)
