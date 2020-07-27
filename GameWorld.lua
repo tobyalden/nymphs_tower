@@ -116,7 +116,11 @@ function GameWorld:getCurrentCameraZone()
 end
 
 function GameWorld:onDeath()
-    ammo.world = GameWorld:new()
+    self.curtain:fadeOut()
+    self:doSequence({
+        {1, function() self.curtain:fadeIn() end},
+        {4, function() ammo.world = GameWorld:new() end}
+    })
 end
 
 function GameWorld:update(dt)

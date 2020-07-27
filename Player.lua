@@ -52,7 +52,8 @@ function Player:initialize(x, y)
     self.hasGun = true
     self.hasGravityBelt = true
     self.isGravityBeltEquipped = false
-    self.healthUpgrades = 8
+    self.healthUpgrades = 0
+    --self.healthUpgrades = 8
     self:restoreHealth()
     --self.fuelUpgrades = 0
     self.fuelUpgrades = 4
