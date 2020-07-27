@@ -1,8 +1,20 @@
-- boss bullets shouldn't collide with walls - should just disappear when they get too far
+CAN DO ON OWN
+- save/load to disk
+- wire saving/loading up to main menu
 - add controller logic into ammo/input.lua
 - toggling fullscreen
+- sound effects
+- endings (1 & 2)
+- particles
+- finish map (need to connect core & add camera zones, figure out how to handle top of map)
+- credits
+- timer & %completion screen
+- screenshake / effects
 
-- sprites needed:
+NEED HELP
+- add in real sprites
+- music
+- add map remixes
 
 total resolution is 320 x 180. aesthetic is "raiding creepy/weird alien ruins
 for dangerous artifacts". pretty vague right now, so you'd have a lot of
