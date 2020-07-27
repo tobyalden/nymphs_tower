@@ -7,6 +7,8 @@ require("ammo")
 require("ammo/all")
 require("Boss")
 require("GameWorld")
+require("MainMenu")
+require("Menu")
 require("Player")
 require("Level")
 require("UI")
@@ -37,6 +39,13 @@ local fullscreen = false
 local windowedScale = 2
 
 function love.load()
+    input.define("up", "up")
+    input.define("down", "down")
+    input.define("left", "left", "[")
+    input.define("right", "right", "]")
+    input.define("jump", "z")
+    input.define("shoot", "x")
+
     tick.framerate = -1
     tick.rate = 1 / 60
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
@@ -52,5 +61,5 @@ function love.load()
             {fullscreen = false, pixelperfect = true, resizable = false}
         )
     end
-    ammo.world = GameWorld:new()
+    ammo.world = MainMenu:new()
 end

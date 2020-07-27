@@ -223,9 +223,7 @@ function SecretBoss:phaseOneMovement(dt)
             moveAmount = 0
             self.pauseTimer:start()
             self.attackTimer:start()
-            --else
-                --moveAmount = moveAmount - distanceToNextNode + moveRemainder:len()
-            --end
+            reversed = love.math.random() > 0.5
             if reversed then
                 self.nodeIndex = self.nodeIndex - 1
                 if not self.nodes[self.nodeIndex] then
@@ -261,6 +259,11 @@ function SecretBoss:die()
         })
         self.phaseNumber = self.phaseNumber + 1
         self.health = self.startingHealth
+        if self.phaseNumber == 2 then
+            self.displayName = "NYMPH (WILD)"
+        else
+            self.displayName = "NYMPH (UNDONE)"
+        end
     end
 end
 

@@ -30,13 +30,6 @@ function Player:initialize(x, y)
 
     releasedJump = false
 
-    input.define("up", "up")
-    input.define("down", "down")
-    input.define("left", "left", "[")
-    input.define("right", "right", "]")
-    input.define("jump", "z")
-    input.define("shoot", "x")
-
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
