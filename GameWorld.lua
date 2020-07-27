@@ -34,6 +34,11 @@ function GameWorld:initialize()
     self.previousCameraZone = nil
     self.currentBoss = nil
     self.isHardMode = true
+    self.curtain = Curtain:new()
+    self:add(self.curtain)
+    self.curtain:addTween(Alarm:new(1, function()
+        self.curtain:fadeOut()
+    end), true)
 end
 
 function GameWorld:saveGame(saveX, saveY)
