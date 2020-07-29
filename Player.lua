@@ -48,7 +48,10 @@ function Player:initialize(x, y)
     self.graphic.flipX = true
     self.layer = -1
 
-    self:loadSfx({"jump.wav", "run.wav", "land.wav"})
+    self:loadSfx({
+        "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
+        "bumphead.wav", "jetpackon.wav"
+    })
 
     self.fuel = Player.STARTING_FUEL
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
@@ -68,6 +71,7 @@ function Player:initialize(x, y)
     self.fuelRecoveryTimer = self:addTween(Alarm:new(Player.FUEL_RECOVERY_DELAY))
     --self.sfx["longmusic"]:loop()
     self.wasOnGround = false
+    self.wasJetpackOn = false
 end
 
 function Player:isOnGround()
@@ -103,6 +107,7 @@ function Player:moveCollideY(collided)
                 self.velocity.y = -self.velocity.y / 1.25
             end
         end
+        self.sfx["bumphead"]:play()
     end
 end
 
@@ -129,7 +134,7 @@ function Player:movement(dt)
         accel = Player.RUN_ACCEL
     end
     if self.isGravityBeltEquipped then
-        accel = Player.ACCEL * 1.25
+        accel = Player.RUN_ACCEL * 1.25
     end
     if input.down("left") then self.accel.x = -accel
     elseif input.down("right") then self.accel.x = accel
@@ -456,7 +461,19 @@ function Player:update(dt)
     if not self.wasOnGround and self:isOnGround() then
         self.sfx["land"]:play()
     end
+    if isJetpackOn then
+        self.sfx["jetpack"]:loop()
+        if not self.wasJetpackOn then
+            self.sfx["jetpackon"]:play()
+        end
+    else
+        self.sfx["jetpack"]:stop()
+        if self.wasJetpackOn then
+            self.sfx["jetpackoff"]:play()
+        end
+    end
     self.wasOnGround = self:isOnGround()
+    self.wasJetpackOn = isJetpackOn
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
         --self.sfx["run"]:loop()
