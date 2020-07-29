@@ -122,6 +122,12 @@ function World:stop()
     end
 end
 
+function World:addGraphic(graphicToAdd)
+    local e = Entity:new(0, 0)
+    e.graphic = graphicToAdd
+    self:add(e)
+end
+
 function World:add(...)
     for _, v in pairs{...} do
         if not v._world then

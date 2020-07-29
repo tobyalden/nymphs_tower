@@ -9,6 +9,7 @@ function MainMenu:initialize()
     self:add(self.menu)
     self.curtain = Curtain:new()
     self:add(self.curtain)
+    self:addGraphic(Sprite:new("mainmenu.png"))
     self.curtain:fadeOut()
 end
 
