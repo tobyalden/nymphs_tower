@@ -1,12 +1,13 @@
 CAN DO ON OWN
 - make jetpack a pickup
-- save/load to disk
++ save/load to disk
 - wire saving/loading up to main menu
 - add controller logic into ammo/input.lua
 - toggling fullscreen
+- particles
+
 - sound effects
 - endings (1 & 2)
-- particles
 - finish map (need to connect core & add camera zones, figure out how to handle top of map)
 - credits
 - timer & %completion screen

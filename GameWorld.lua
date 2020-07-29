@@ -53,6 +53,12 @@ function GameWorld:saveGame(saveX, saveY)
     if self.player.hasGun then
         currentCheckpoint["hasGun"] = "true"
     end
+    if self.player.hasGravityBelt then
+        currentCheckpoint["hasGravityBelt"] = "true"
+    end
+    if self.player.isGravityBeltEquipped then
+        currentCheckpoint["isGravityBeltEquipped"] = "true"
+    end
 
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
@@ -76,6 +82,8 @@ function GameWorld:loadGame()
     self.player.healthUpgrades = loadedCheckpoint["healthUpgrades"]
     self.player.fuelUpgrades = loadedCheckpoint["fuelUpgrades"]
 
+    self.player.hasGravityBelt = currentCheckpoint["hasGravityBelt"] == "true"
+    self.player.isGravityBeltEquipped = currentCheckpoint["isGravityBeltEquipped"] == "true"
     self.player.graphic.flipX = currentCheckpoint["flipX"] == "true"
     self.player.hasGun = currentCheckpoint["hasGun"] == "true"
 
