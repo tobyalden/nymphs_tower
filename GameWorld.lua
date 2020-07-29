@@ -4,7 +4,6 @@ GameWorld.static.CAMERA_SPEED = 1.5
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
-local currentCheckpoint = nil
 local saveData = require("saveData")
 
 function GameWorld:initialize()
@@ -16,7 +15,7 @@ function GameWorld:initialize()
         self:add(entity)
         if name == "player" then
             self.player = entity
-            if currentCheckpoint then
+            if saveData.exists("currentCheckpoint") then
                 self:loadGame()
             end
         end
@@ -43,7 +42,7 @@ function GameWorld:initialize()
 end
 
 function GameWorld:saveGame(saveX, saveY)
-    currentCheckpoint = {}
+    local currentCheckpoint = {}
     currentCheckpoint["saveX"] = saveX
     currentCheckpoint["saveY"] = saveY
 
@@ -82,10 +81,10 @@ function GameWorld:loadGame()
     self.player.healthUpgrades = loadedCheckpoint["healthUpgrades"]
     self.player.fuelUpgrades = loadedCheckpoint["fuelUpgrades"]
 
-    self.player.hasGravityBelt = currentCheckpoint["hasGravityBelt"] == "true"
-    self.player.isGravityBeltEquipped = currentCheckpoint["isGravityBeltEquipped"] == "true"
-    self.player.graphic.flipX = currentCheckpoint["flipX"] == "true"
-    self.player.hasGun = currentCheckpoint["hasGun"] == "true"
+    self.player.hasGravityBelt = loadedCheckpoint["hasGravityBelt"] == "true"
+    self.player.isGravityBeltEquipped = loadedCheckpoint["isGravityBeltEquipped"] == "true"
+    self.player.graphic.flipX = loadedCheckpoint["flipX"] == "true"
+    self.player.hasGun = loadedCheckpoint["hasGun"] == "true"
 
     self.flags = {}
     for _, flag in pairs(saveData.load("currentFlags")) do

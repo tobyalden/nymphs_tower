@@ -83,6 +83,10 @@ local function formatData2(data)
   return finalString
 end
 
+function saveData.exists(saveFile)
+  return love.filesystem.getInfo(saveFile) ~= nil
+end
+
 function saveData.load(saveFile)
   local chunk, fileError = love.filesystem.load(saveFile)
   return chunk(), fileError

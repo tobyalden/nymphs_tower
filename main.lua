@@ -64,6 +64,6 @@ function love.load()
             {fullscreen = false, pixelperfect = true, resizable = false}
         )
     end
-    --ammo.world = MainMenu:new()
-    ammo.world = GameWorld:new()
+    ammo.world = MainMenu:new()
+    --ammo.world = GameWorld:new()
 end
