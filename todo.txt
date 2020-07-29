@@ -1,7 +1,7 @@
 MIN DEMO
 - finish map (need to connect core & add camera zones, figure out how to handle top of map)
 - endings (1 & 2) / credits
-- sound effects
+~ sound effects
 - particles
 
 CAN DO ON OWN

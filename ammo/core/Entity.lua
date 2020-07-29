@@ -41,6 +41,25 @@ function Entity:initialize(x, y)
     self.tweens = {}
 end
 
+function Entity:explode(numParticles, particleSpeed, particleScale, particleFps, offsetX, offsetY)
+    offsetX = offsetX or 0
+    offsetY = offsetY or 0
+    local offset = math.random() * math.pi * 2
+    local increment = (math.pi * 2) / numParticles
+    for i = 1, numParticles do
+        local rotation = increment * (i - 1) + offset + (offset / 4 * math.random())
+        local particleHeading = Vector:new(math.cos(rotation), math.sin(rotation))
+        --particleSpeed = particleSpeed + particleSpeed * math.random()
+        local offset = 6 * particleScale
+        local particle = Particle:new(
+            self:getMaskCenter().x - offset + offsetX,
+            self:getMaskCenter().y - offset + offsetY,
+            particleHeading, particleSpeed, particleScale, particleFps
+        )
+        self.world:add(particle)
+    end
+end
+
 function Entity:distanceFrom(otherEntity, useHitbox)
     useHitbox = useHitbox or false
     if useHitbox then

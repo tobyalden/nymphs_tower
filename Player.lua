@@ -157,6 +157,7 @@ function Player:movement(dt)
                 self.velocity.y = -Player.JUMP_POWER
             end
             self.sfx["jump"]:play()
+            self:explode(4, 40, 1, 12, 0, 10)
             releasedJump = false
         end
     else
@@ -469,6 +470,7 @@ function Player:update(dt)
     Entity.update(self, dt)
     if not self.wasOnGround and self:isOnGround() then
         self.sfx["land"]:play()
+        self:explode(4, 40, 1, 12, 0, 10)
     end
     if isJetpackOn then
         self.sfx["jetpack"]:loop()

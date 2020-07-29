@@ -22,11 +22,16 @@ function PlayerBullet:update(dt)
     Entity.update(self, dt)
 end
 
-function PlayerBullet:moveCollideX(collided)
+function PlayerBullet:hit()
     self.world:remove(self)
     self.sfx["playerbulletexplode"]:play()
+    self:explode(4, 30, 1, 18)
+end
+
+function PlayerBullet:moveCollideX(collided)
+    self:hit()
 end
 
 function PlayerBullet:moveCollideY(collided)
-    self.world:remove(self)
+    self:hit()
 end

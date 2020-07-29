@@ -57,12 +57,12 @@ function SecretBoss:fireFan()
     local increment = (math.pi * 2) / numBullets
     for i = 1, numBullets do
         local rotation = increment * (i - 1) + offset
-        local bulletAngle = Vector:new(math.cos(rotation), math.sin(rotation))
+        local bulletHeading = Vector:new(math.cos(rotation), math.sin(rotation))
         local bullet = EnemyBullet:new(
             self,
             self.x + self.mask.width / 2 - 9,
             self.y + self.mask.height / 2 - 9,
-            bulletAngle,
+            bulletHeading,
             EnemyBullet.BULLET_SPEED * 1.5,
             false, true
         )
