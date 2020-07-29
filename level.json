@@ -899,11 +899,7 @@
           "originY": 0,
           "values": {"flag": "test", "require_flag": ""}
         },
-        {"name": "spike_floor", "id": 592, "_eid": "58243373", "x": 3656, "y": 7216, "width": 80, "originX": 0, "originY": 0},
-        {"name": "spike_floor", "id": 593, "_eid": "58243373", "x": 3880, "y": 7232, "width": 64, "originX": 0, "originY": 0},
-        {"name": "spike_ceiling", "id": 594, "_eid": "58248273", "x": 3828, "y": 7184, "width": 16, "originX": 0, "originY": 0},
-        {"name": "spike_left", "id": 595, "_eid": "58255772", "x": 3776, "y": 7184, "height": 16, "originX": 0, "originY": 0},
-        {"name": "spike_right", "id": 596, "_eid": "58259368", "x": 3872, "y": 7184, "height": 16, "originX": 0, "originY": 0}
+        {"name": "checkpoint", "id": 597, "_eid": "97277017", "x": 4708, "y": 7216, "originX": 0, "originY": 0}
       ]
     },
     {

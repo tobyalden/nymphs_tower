@@ -80,6 +80,13 @@ function Player:initialize(x, y)
     self.runParticleTimer = self:addTween(Alarm:new(0.3, function()
         self:explode(3, 30, 0.5, 14, 0, 11, 1)
     end))
+    self.jetpackParticleTimer = self:addTween(Alarm:new(0.1, function()
+        if self.graphic.flipX then
+            self:explode(3, 50, 1, 4, 5, 2, 1)
+        else
+            self:explode(3, 50, 1, 4, -5, 2, 1)
+        end
+    end))
 end
 
 function Player:isOnGround()
@@ -512,11 +519,13 @@ function Player:update(dt)
         end
         if isJetpackOn then
             self.sfx["jetpack"]:loop()
+            self.jetpackParticleTimer.active = true
             if not self.wasJetpackOn then
                 self.sfx["jetpackon"]:play()
             end
         else
             self.sfx["jetpack"]:stop()
+            self.jetpackParticleTimer.active = false
             if self.wasJetpackOn then
                 self.sfx["jetpackoff"]:play()
             end
