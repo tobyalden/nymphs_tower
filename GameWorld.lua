@@ -4,8 +4,6 @@ GameWorld.static.CAMERA_SPEED = 1.5
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
-local saveData = require("saveData")
-
 function GameWorld:initialize()
     World.initialize(self)
     self.flags = {}

@@ -96,4 +96,8 @@ function saveData.save(data, saveFile)
   return love.filesystem.write(saveFile, formatData2(data))
 end
 
+function saveData.clear(saveFile)
+  return love.filesystem.remove(saveFile)
+end
+
 return saveData
