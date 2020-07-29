@@ -1,5 +1,7 @@
 Player = class("Player", Entity)
 Player.static.SPEED = 150
+Player.static.RUN_ACCEL = 150 * 4 * 4 * 2
+Player.static.AIR_ACCEL = 150 * 4 * 4
 Player.static.GRAVITY = 600
 Player.static.MAX_FALL_SPEED = 300
 Player.static.MAX_RISE_SPEED = 150
@@ -33,6 +35,7 @@ function Player:initialize(x, y)
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
+    self.accel = Vector:new(0, 0)
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
@@ -42,9 +45,10 @@ function Player:initialize(x, y)
     self.graphic:add("jetpack", {6, 7}, 4)
     self.graphic.offsetX = -5
     self.graphic.offsetY = -11
+    self.graphic.flipX = true
     self.layer = -1
 
-    self:loadSfx({"jump.wav", "run.wav"})
+    self:loadSfx({"jump.wav", "run.wav", "land.wav"})
 
     self.fuel = Player.STARTING_FUEL
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
@@ -62,6 +66,8 @@ function Player:initialize(x, y)
     ))
     self.knockbackTimer = self:addTween(Alarm:new(Player.KNOCKBACK_TIME))
     self.fuelRecoveryTimer = self:addTween(Alarm:new(Player.FUEL_RECOVERY_DELAY))
+    --self.sfx["longmusic"]:loop()
+    self.wasOnGround = false
 end
 
 function Player:isOnGround()
@@ -89,12 +95,14 @@ function Player:moveCollideY(collided)
             break
         end
     end
-    if isSolid and self.velocity.y < 0 then
-      if self.isGravityBeltEquipped then
-          self.velocity.y = -self.velocity.y / 1.05
-        else
-          self.velocity.y = -self.velocity.y / 1.25
-      end
+    if isSolid then
+        if self.velocity.y < 0 then
+            if self.isGravityBeltEquipped then
+                self.velocity.y = -self.velocity.y / 1.05
+            else
+                self.velocity.y = -self.velocity.y / 1.25
+            end
+        end
     end
 end
 
@@ -116,9 +124,22 @@ function Player:movement(dt)
     if self.isGravityBeltEquipped then
         speed = Player.SPEED * 1.25
     end
-    if input.down("left") then self.velocity.x = -speed
-    elseif input.down("right") then self.velocity.x = speed
-    else self.velocity.x = 0 end
+    local accel = Player.AIR_ACCEL
+    if self:isOnGround() then
+        accel = Player.RUN_ACCEL
+    end
+    if self.isGravityBeltEquipped then
+        accel = Player.ACCEL * 1.25
+    end
+    if input.down("left") then self.accel.x = -accel
+    elseif input.down("right") then self.accel.x = accel
+    else self.accel.x = 0 end
+    if input.down("left") or input.down("right") then
+        self.velocity.x = self.velocity.x + self.accel.x * dt
+    else
+        self.velocity.x = math.approach(self.velocity.x, 0, accel * dt)
+    end
+    self.velocity.x = math.clamp(self.velocity.x, -speed, speed)
     if self:isOnGround() then
         self.velocity.y = 0
         isJetpackOn = false
@@ -128,6 +149,7 @@ function Player:movement(dt)
             else
                 self.velocity.y = -Player.JUMP_POWER
             end
+            self.sfx["jump"]:play()
             releasedJump = false
         end
     else
@@ -160,6 +182,11 @@ function Player:movement(dt)
         self.velocity.y = math.clamp(
             self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
         )
+    end
+    if self:isOnGround() and self.velocity.x ~= 0 then
+        self.sfx["run"]:loop()
+    else
+        self.sfx["run"]:stop()
     end
     self:moveBy(
         self.velocity.x * dt,
@@ -426,6 +453,10 @@ function Player:update(dt)
     self:animation()
 
     Entity.update(self, dt)
+    if not self.wasOnGround and self:isOnGround() then
+        self.sfx["land"]:play()
+    end
+    self.wasOnGround = self:isOnGround()
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
         --self.sfx["run"]:loop()

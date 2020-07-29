@@ -1,21 +1,20 @@
-CAN DO ON OWN
-- make jetpack a pickup
-+ save/load to disk
-- wire saving/loading up to main menu
-- add controller logic into ammo/input.lua
-- toggling fullscreen
+MIN DEMO
+- finish map (need to connect core & add camera zones, figure out how to handle top of map)
+- endings (1 & 2) / credits
+- sound effects
 - particles
 
-- sound effects
-- endings (1 & 2)
-- finish map (need to connect core & add camera zones, figure out how to handle top of map)
-- credits
+CAN DO ON OWN
+- make jetpack a pickup
+- add controller logic into ammo/input.lua
+- toggling fullscreen
+
 - timer & %completion screen
 - screenshake / effects
 
 NEED HELP
-- add in real sprites
 - music
+- add in real sprites
 - add map remixes
 
 total resolution is 320 x 180. aesthetic is "raiding creepy/weird alien ruins
