@@ -51,7 +51,7 @@ function Player:initialize(x, y)
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot.wav",
-        "playerhit.wav"
+        "playerhit.wav", "acid.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -286,6 +286,9 @@ end
 function Player:collisions(dt)
     if #self:collide(self.x, self.y, {"acid"}) > 0 then
         self:decreaseHealth(Acid.DAMAGE_RATE * dt)
+        self.sfx["acid"]:loop()
+    else
+        self.sfx["acid"]:stop()
     end
 
     local itemChimeTime = 2
