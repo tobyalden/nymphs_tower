@@ -50,7 +50,7 @@ function Player:initialize(x, y)
 
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
-        "bumphead.wav", "jetpackon.wav"
+        "bumphead.wav", "jetpackon.wav", "save.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -393,6 +393,7 @@ function Player:collisions(dt)
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()
             self.world:saveGame(collidedCheckpoints[1].x + 3, collidedCheckpoints[1].y)
+            self.sfx["save"]:play()
             self.world.ui:showMessageSequence({ "GAME SAVED" }, 1)
         end
     end
