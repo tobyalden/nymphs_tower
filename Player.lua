@@ -15,7 +15,8 @@ Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.4
 Player.static.GUN_POWER = 1
 Player.static.INVINCIBLE_AFTER_HIT_TIME = 1
-Player.static.HIT_DAMAGE = 20
+--Player.static.HIT_DAMAGE = 20
+Player.static.HIT_DAMAGE = 200
 Player.static.KNOCKBACK_POWER_X = 200
 Player.static.KNOCKBACK_POWER_Y = 200
 Player.static.KNOCKBACK_TIME = 0.25
@@ -51,7 +52,8 @@ function Player:initialize(x, y)
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot.wav",
-        "playerhit.wav", "acid.wav", "acidland.wav", "acidout.wav"
+        "playerhit.wav", "acid.wav", "acidland.wav", "acidout.wav",
+        "playerdeath.wav", "playerpredeath.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -74,6 +76,10 @@ function Player:initialize(x, y)
     self.wasOnGround = false
     self.wasJetpackOn = false
     self.wasInAcid = false
+
+    self.runParticleTimer = self:addTween(Alarm:new(0.3, function()
+        self:explode(3, 30, 0.5, 14, 0, 11, 1)
+    end))
 end
 
 function Player:isOnGround()
@@ -157,7 +163,7 @@ function Player:movement(dt)
                 self.velocity.y = -Player.JUMP_POWER
             end
             self.sfx["jump"]:play()
-            self:explode(4, 40, 1, 12, 0, 10)
+            self:explode(4, 40, 1, 12, 0, 10, 1)
             releasedJump = false
         end
     else
@@ -193,8 +199,10 @@ function Player:movement(dt)
     end
     if self:isOnGround() and self.velocity.x ~= 0 then
         self.sfx["run"]:loop()
+        self.runParticleTimer.active = true
     else
         self.sfx["run"]:stop()
+        self.runParticleTimer.active = false
     end
     self:moveBy(
         self.velocity.x * dt,
@@ -248,17 +256,32 @@ function Player:decreaseHealth(damage)
 end
 
 function Player:takeHit(damage)
-    self.sfx["playerhit"]:play()
     self:decreaseHealth(damage)
-    self.invincibleTimer:start()
+    if self.health > 0 then
+        self.sfx["playerhit"]:play()
+        self.invincibleTimer:start()
+    else
+        self.sfx["playerpredeath"]:play()
+    end
 end
 
 function Player:die()
-    self.visible = false
-    self.active = false
+    self:explode(30, 250, 2, 2, 0, 0, -99, true)
+    self:explode(20, 180, 1.5, 2, 0, 0, -99, true)
+    self:explode(10, 150, 1, 2, 0, 0, -99, true)
+    self.world:pauseLevel()
     self.world:doSequence({
+        {0.75, function()
+            self.world:unpauseLevel()
+            self.sfx["playerdeath"]:play()
+            self.visible = false
+            self.active = false
+        end},
         {1, function() self.world:onDeath() end}
     })
+    self.sfx["jetpack"]:stop()
+    self.sfx["acid"]:stop()
+    self.sfx["run"]:stop()
 end
 
 function Player:shooting()
@@ -468,31 +491,33 @@ function Player:update(dt)
     self:animation()
 
     Entity.update(self, dt)
-    if not self.wasOnGround and self:isOnGround() then
-        self.sfx["land"]:play()
-        self:explode(4, 40, 1, 12, 0, 10)
-    end
-    if isJetpackOn then
-        self.sfx["jetpack"]:loop()
-        if not self.wasJetpackOn then
-            self.sfx["jetpackon"]:play()
+    if self.health > 0 then
+        if not self.wasOnGround and self:isOnGround() then
+            self.sfx["land"]:play()
+            self:explode(4, 40, 1, 12, 0, 10, 1)
         end
-    else
-        self.sfx["jetpack"]:stop()
-        if self.wasJetpackOn then
-            self.sfx["jetpackoff"]:play()
+        if isJetpackOn then
+            self.sfx["jetpack"]:loop()
+            if not self.wasJetpackOn then
+                self.sfx["jetpackon"]:play()
+            end
+        else
+            self.sfx["jetpack"]:stop()
+            if self.wasJetpackOn then
+                self.sfx["jetpackoff"]:play()
+            end
         end
-    end
-    if self:isInAcid() then
-        self.sfx["acid"]:loop()
-        if not self.wasInAcid then
-            self.sfx["acidland"]:play()
+        if self:isInAcid() then
+            self.sfx["acid"]:loop()
+            if not self.wasInAcid then
+                self.sfx["acidland"]:play()
+            end
+        else
+            if self.wasInAcid then
+                self.sfx["acidout"]:play()
+            end
+            self.sfx["acid"]:stop()
         end
-    else
-        if self.wasInAcid then
-            self.sfx["acidout"]:play()
-        end
-        self.sfx["acid"]:stop()
     end
     self.wasOnGround = self:isOnGround()
     self.wasJetpackOn = isJetpackOn

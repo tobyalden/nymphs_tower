@@ -25,7 +25,7 @@ end
 function PlayerBullet:hit()
     self.world:remove(self)
     self.sfx["playerbulletexplode"]:play()
-    self:explode(4, 30, 1, 18)
+    self:explode(4, 30, 1, 18, 0, 0, 1)
 end
 
 function PlayerBullet:moveCollideX(collided)

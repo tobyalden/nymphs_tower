@@ -41,20 +41,23 @@ function Entity:initialize(x, y)
     self.tweens = {}
 end
 
-function Entity:explode(numParticles, particleSpeed, particleScale, particleFps, offsetX, offsetY)
+function Entity:explode(numParticles, particleSpeed, particleScale, particleFps, offsetX, offsetY, particleLayer, startPaused)
     offsetX = offsetX or 0
     offsetY = offsetY or 0
+    particleLayer = particleLayer or -99
     local offset = math.random() * math.pi * 2
     local increment = (math.pi * 2) / numParticles
     for i = 1, numParticles do
-        local rotation = increment * (i - 1) + offset + (offset / 4 * math.random())
+        --local rotation = increment * (i - 1) + offset + (offset / 4 * math.random())
+        local rotation = increment * (i - 1) + offset
         local particleHeading = Vector:new(math.cos(rotation), math.sin(rotation))
-        --particleSpeed = particleSpeed + particleSpeed * math.random()
+        --particleSpeed = particleSpeed + ((particleSpeed / 8) * (math.random()))
         local offset = 6 * particleScale
         local particle = Particle:new(
             self:getMaskCenter().x - offset + offsetX,
             self:getMaskCenter().y - offset + offsetY,
-            particleHeading, particleSpeed, particleScale, particleFps
+            particleHeading, particleSpeed, particleScale, particleFps,
+            particleLayer, startPaused
         )
         self.world:add(particle)
     end
