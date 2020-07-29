@@ -116,6 +116,7 @@ function Player:moveCollideY(collided)
             end
         end
         self.sfx["bumphead"]:play()
+        self:explode(4, 40, 0.5, 12, 0, -13, 1)
     end
 end
 
