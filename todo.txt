@@ -1,4 +1,5 @@
 CAN DO ON OWN
+- make jetpack a pickup
 - save/load to disk
 - wire saving/loading up to main menu
 - add controller logic into ammo/input.lua

@@ -5,6 +5,7 @@ GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 
 local currentCheckpoint = nil
+local saveData = require("saveData")
 
 function GameWorld:initialize()
     World.initialize(self)
@@ -45,29 +46,45 @@ function GameWorld:saveGame(saveX, saveY)
     currentCheckpoint = {}
     currentCheckpoint["saveX"] = saveX
     currentCheckpoint["saveY"] = saveY
-    currentCheckpoint["flipX"] = self.player.graphic.flipX
-    currentCheckpoint["hasGun"] = self.player.hasGun
+
+    if self.player.graphic.flipX then
+        currentCheckpoint["flipX"] = "true"
+    end
+    if self.player.hasGun then
+        currentCheckpoint["hasGun"] = "true"
+    end
+
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
-    currentCheckpoint["flags"] = {}
+    saveData.save(currentCheckpoint, "currentCheckpoint")
+
+    local currentFlags = {}
     for flag, _ in pairs(self.flags) do
-        currentCheckpoint["flags"][flag] = true
+        table.insert(currentFlags, flag)
     end
+    saveData.save(currentFlags, "currentFlags")
+
     self.player:restoreHealth()
 end
 
 function GameWorld:loadGame()
-    self.player.x = currentCheckpoint["saveX"]
-    self.player.y = currentCheckpoint["saveY"]
-    self.player.graphic.flipX = currentCheckpoint["flipX"]
-    self.player.hasGun = currentCheckpoint["hasGun"]
-    self.player.healthUpgrades = currentCheckpoint["healthUpgrades"]
-    self.player.fuelUpgrades = currentCheckpoint["fuelUpgrades"]
-    self.player:restoreHealth()
+    local loadedCheckpoint = saveData.load("currentCheckpoint")
+    self.player.x = loadedCheckpoint["saveX"]
+    self.player.y = loadedCheckpoint["saveY"]
+    self.player.graphic.flipX = loadedCheckpoint["flipX"]
+    self.player.hasGun = loadedCheckpoint["hasGun"]
+    self.player.healthUpgrades = loadedCheckpoint["healthUpgrades"]
+    self.player.fuelUpgrades = loadedCheckpoint["fuelUpgrades"]
+
+    self.player.graphic.flipX = currentCheckpoint["flipX"] == "true"
+    self.player.hasGun = currentCheckpoint["hasGun"] == "true"
+
     self.flags = {}
-    for flag, _ in pairs(currentCheckpoint["flags"]) do
+    for _, flag in pairs(saveData.load("currentFlags")) do
         self:addFlag(flag)
     end
+
+    self.player:restoreHealth()
 end
 
 function GameWorld:hasFlag(flag)
