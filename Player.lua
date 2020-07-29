@@ -266,12 +266,13 @@ function Player:takeHit(damage)
 end
 
 function Player:die()
+    -- Version with hitstop
     self:explode(30, 250, 2, 2, 0, 0, -99, true)
     self:explode(20, 180, 1.5, 2, 0, 0, -99, true)
     self:explode(10, 150, 1, 2, 0, 0, -99, true)
     self.world:pauseLevel()
     self.world:doSequence({
-        {0.75, function()
+        {0.1, function()
             self.world:unpauseLevel()
             self.sfx["playerdeath"]:play()
             self.visible = false
@@ -279,6 +280,18 @@ function Player:die()
         end},
         {1, function() self.world:onDeath() end}
     })
+
+    -- Version without hitstop
+    --self:explode(30, 250, 2, 2, 0, 0, -99, false)
+    --self:explode(20, 180, 1.5, 2, 0, 0, -99, false)
+    --self:explode(10, 150, 1, 2, 0, 0, -99, false)
+    --self.sfx["playerdeath"]:play()
+    --self.visible = false
+    --self.active = false
+    --self.world:doSequence({
+        --{1, function() self.world:onDeath() end}
+    --})
+
     self.sfx["jetpack"]:stop()
     self.sfx["acid"]:stop()
     self.sfx["run"]:stop()
