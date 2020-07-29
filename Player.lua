@@ -51,7 +51,7 @@ function Player:initialize(x, y)
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot.wav",
-        "playerhit.wav", "acid.wav"
+        "playerhit.wav", "acid.wav", "acidland.wav", "acidout.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -73,6 +73,7 @@ function Player:initialize(x, y)
     --self.sfx["longmusic"]:loop()
     self.wasOnGround = false
     self.wasJetpackOn = false
+    self.wasInAcid = false
 end
 
 function Player:isOnGround()
@@ -283,12 +284,13 @@ function Player:shooting()
     end
 end
 
+function Player:isInAcid()
+    return #self:collide(self.x, self.y, {"acid"}) > 0
+end
+
 function Player:collisions(dt)
-    if #self:collide(self.x, self.y, {"acid"}) > 0 then
+    if self:isInAcid() then
         self:decreaseHealth(Acid.DAMAGE_RATE * dt)
-        self.sfx["acid"]:loop()
-    else
-        self.sfx["acid"]:stop()
     end
 
     local itemChimeTime = 2
@@ -479,8 +481,20 @@ function Player:update(dt)
             self.sfx["jetpackoff"]:play()
         end
     end
+    if self:isInAcid() then
+        self.sfx["acid"]:loop()
+        if not self.wasInAcid then
+            self.sfx["acidland"]:play()
+        end
+    else
+        if self.wasInAcid then
+            self.sfx["acidout"]:play()
+        end
+        self.sfx["acid"]:stop()
+    end
     self.wasOnGround = self:isOnGround()
     self.wasJetpackOn = isJetpackOn
+    self.wasInAcid = self:isInAcid()
 
     --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
         --self.sfx["run"]:loop()
