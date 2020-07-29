@@ -50,7 +50,8 @@ function Player:initialize(x, y)
 
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
-        "bumphead.wav", "jetpackon.wav", "save.wav"
+        "bumphead.wav", "jetpackon.wav", "save.wav", "shoot.wav",
+        "playerhit.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -245,6 +246,7 @@ function Player:decreaseHealth(damage)
 end
 
 function Player:takeHit(damage)
+    self.sfx["playerhit"]:play()
     self:decreaseHealth(damage)
     self.invincibleTimer:start()
 end
@@ -274,6 +276,7 @@ function Player:shooting()
                 bulletHeading
             )
             self.world:add(bullet)
+            self.sfx["shoot"]:play()
             self.shotCooldown:start()
             self.isBufferingShot = false
         end

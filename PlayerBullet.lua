@@ -10,6 +10,7 @@ function PlayerBullet:initialize(x, y, heading)
     self.mask = Hitbox:new(self, 6, 6)
     self.velocity = heading
     self.velocity:normalize(PlayerBullet.BULLET_SPEED)
+    self:loadSfx({"playerbulletexplode.wav"})
 end
 
 function PlayerBullet:update(dt)
@@ -23,6 +24,7 @@ end
 
 function PlayerBullet:moveCollideX(collided)
     self.world:remove(self)
+    self.sfx["playerbulletexplode"]:play()
 end
 
 function PlayerBullet:moveCollideY(collided)
