@@ -6,6 +6,7 @@ function Block:initialize(x, y)
     self.graphic = Sprite:new("block.png")
     self.mask = Hitbox:new(self, 16, 16)
     self.layer = -2
+    self:loadSfx({"blockbreak.wav"})
 end
 
 function Block:update(dt)
@@ -17,5 +18,7 @@ function Block:update(dt)
             collidedBullet.collidable = false
             self.world:remove(collidedBullet)
         end
+        self.sfx["blockbreak"]:play()
+        self:explode(8, 80, 1, 3, 0, 0, 1, false, true)
     end
 end

@@ -15,16 +15,14 @@ Player.static.JETPACK_FUEL_RECOVER_RATE = 100
 Player.static.SHOT_COOLDOWN = 0.4
 Player.static.GUN_POWER = 1
 Player.static.INVINCIBLE_AFTER_HIT_TIME = 1
---Player.static.HIT_DAMAGE = 20
-Player.static.HIT_DAMAGE = 200
+Player.static.HIT_DAMAGE = 20
+--Player.static.HIT_DAMAGE = 200
 Player.static.KNOCKBACK_POWER_X = 200
 Player.static.KNOCKBACK_POWER_Y = 200
 Player.static.KNOCKBACK_TIME = 0.25
 Player.static.FUEL_RECOVERY_DELAY = 0.5
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
-
--- endgame item: anti-gravity belt that halves gravity
 
 local releasedJump
 
@@ -51,9 +49,9 @@ function Player:initialize(x, y)
 
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
-        "bumphead.wav", "jetpackon.wav", "save.wav", "shoot.wav",
-        "playerhit.wav", "acid.wav", "acidland.wav", "acidout.wav",
-        "playerdeath.wav", "playerpredeath.wav"
+        "bumphead.wav", "jetpackon.wav", "save.wav", "shoot1.wav",
+        "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav", "acidland.wav",
+        "acidout.wav", "playerdeath.wav", "playerpredeath.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -280,7 +278,7 @@ function Player:die()
     self:explode(10, 150, 1, 2, 0, 0, -99, true)
     self.world:pauseLevel()
     self.world:doSequence({
-        {0.1, function()
+        {0.5, function()
             self.world:unpauseLevel()
             self.sfx["playerdeath"]:play()
             self.visible = false
@@ -322,7 +320,9 @@ function Player:shooting()
                 bulletHeading
             )
             self.world:add(bullet)
-            self.sfx["shoot"]:play()
+            local choices = {1, 2, 3} 
+            --self.sfx['shoot' .. math.random(#choices)]:play()
+            self.sfx['shoot1']:play()
             self.shotCooldown:start()
             self.isBufferingShot = false
         end
