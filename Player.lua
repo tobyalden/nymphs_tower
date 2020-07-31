@@ -76,6 +76,7 @@ function Player:initialize(x, y)
     self.wasOnGround = false
     self.wasJetpackOn = false
     self.wasInAcid = false
+    self.harmonicaDelay = self:addTween(Alarm:new(2.5))
 
     self.runParticleTimer = self:addTween(Alarm:new(0.3, function()
         self:explode(3, 30, 0.5, 14, 0, 11, 1)
@@ -567,10 +568,13 @@ function Player:update(dt)
 
     Entity.update(self, dt)
 
-    if self.hasHarmonica and input.down("down") then
-        self.sfx["harmonica"]:loop()
+    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") then
+        if not self.sfx["harmonica"]:isPlaying() then
+            self.harmonicaDelay:start()
+            self.sfx["harmonica"]:loop()
+        end
     else
-        if self.sfx["harmonica"]:isPlaying() then
+        if self.sfx["harmonica"]:isPlaying() and not self.harmonicaDelay.active then
             self.sfx["harmonica_stop"]:play()
         end
         self.sfx["harmonica"]:stop()
