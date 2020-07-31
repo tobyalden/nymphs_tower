@@ -52,7 +52,8 @@ function Player:initialize(x, y)
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot1.wav",
         "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav", "acidland.wav",
         "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
-        "fueljingle.wav", "healthjingle.wav", "harmonica.wav", "harmonica_stop.wav"
+        "fueljingle.wav", "healthjingle.wav", "harmonica.wav",
+        "harmonica_stop.wav", "harmonica_angel.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -60,7 +61,7 @@ function Player:initialize(x, y)
     self.isBufferingShot = false
     self.hasGun = true
     self.hasGravityBelt = true
-    self.hasHarmonica = false
+    self.hasHarmonica = true
     self.isGravityBeltEquipped = false
     self.healthUpgrades = 0
     --self.healthUpgrades = 8
@@ -568,16 +569,21 @@ function Player:update(dt)
 
     Entity.update(self, dt)
 
+    local sfxName = "harmonica"
+    -- TODO: Remove hardcoded value here
+    if self.y == 1499 then
+        sfxName = "harmonica_angel"
+    end
     if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") then
-        if not self.sfx["harmonica"]:isPlaying() then
+        if not self.sfx[sfxName]:isPlaying() then
             self.harmonicaDelay:start()
-            self.sfx["harmonica"]:loop()
+            self.sfx[sfxName]:loop()
         end
     else
-        if self.sfx["harmonica"]:isPlaying() and not self.harmonicaDelay.active then
+        if self.sfx[sfxName]:isPlaying() and not self.harmonicaDelay.active then
             self.sfx["harmonica_stop"]:play()
         end
-        self.sfx["harmonica"]:stop()
+        self.sfx[sfxName]:stop()
     end
 
     self:handleSfx()

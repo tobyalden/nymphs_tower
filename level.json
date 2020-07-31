@@ -784,7 +784,6 @@
         {"name": "acid", "id": 479, "_eid": "67689386", "x": 4800, "y": 10240, "width": 304, "height": 2352, "originX": 0, "originY": 0},
         {"name": "health_upgrade", "id": 481, "_eid": "78023010", "x": 4644, "y": 10152, "originX": 0, "originY": 0},
         {"name": "acid", "id": 482, "_eid": "67689386", "x": 240, "y": 12352, "width": 4560, "height": 208, "originX": 0, "originY": 0},
-        {"name": "player", "id": 485, "_eid": "68256185", "x": 1296, "y": 9864},
         {"name": "acid", "id": 486, "_eid": "67689386", "x": 2444, "y": 11576, "width": 164, "height": 776, "originX": 0, "originY": 0},
         {"name": "checkpoint", "id": 487, "_eid": "97277017", "x": 2408, "y": 11536, "originX": 0, "originY": 0},
         {"name": "hazard_suit", "id": 488, "_eid": "44154141", "x": 2612, "y": 11544, "originX": 0, "originY": 0},
@@ -900,7 +899,8 @@
           "values": {"flag": "test", "require_flag": ""}
         },
         {"name": "checkpoint", "id": 597, "_eid": "97277017", "x": 4708, "y": 7216, "originX": 0, "originY": 0},
-        {"name": "harmonica", "id": 599, "_eid": "09203317", "x": 1340, "y": 9848, "originX": 0, "originY": 0}
+        {"name": "harmonica", "id": 599, "_eid": "09203317", "x": 1340, "y": 9848, "originX": 0, "originY": 0},
+        {"name": "player", "id": 600, "_eid": "68256185", "x": 2420, "y": 1488}
       ]
     },
     {
