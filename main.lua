@@ -36,6 +36,7 @@ require("FinalBoss")
 require("SecretBoss")
 require("GravityBelt")
 require("Particle")
+require("Harmonica")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()

@@ -2,7 +2,7 @@ MIN DEMO
 - finish map (need to connect core & add camera zones, figure out how to handle top of map)
 - endings (1 & 2) / credits
 ~ sound effects
-- particles
++ particles
 
 CAN DO ON OWN
 - make jetpack a pickup

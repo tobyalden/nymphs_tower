@@ -17,7 +17,7 @@ function Pig:initialize(x, y)
     self.layer = 0
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
-    self:loadSfx({"bossdeath.wav", "bosspredeath.wav"})
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
 end
 
 function Pig:update(dt)

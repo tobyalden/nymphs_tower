@@ -51,7 +51,8 @@ function Player:initialize(x, y)
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot1.wav",
         "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav", "acidland.wav",
-        "acidout.wav", "playerdeath.wav", "playerpredeath.wav"
+        "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
+        "fueljingle.wav", "healthjingle.wav", "harmonica.wav", "harmonica_stop.wav"
     })
 
     self.fuel = Player.STARTING_FUEL
@@ -59,6 +60,7 @@ function Player:initialize(x, y)
     self.isBufferingShot = false
     self.hasGun = true
     self.hasGravityBelt = true
+    self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.healthUpgrades = 0
     --self.healthUpgrades = 8
@@ -372,11 +374,28 @@ function Player:collisions(dt)
         })
     end
 
-    local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
-    if #collidedHealthUpgrades > 0 then
+    local collidedHarmonicas = self:collide(self.x, self.y, {"harmonica"})
+    if #collidedHarmonicas > 0 then
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedHarmonicas[1])
+                self.hasHarmonica = true
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND THE HARMONICA",
+                    "HOLD DOWN TO USE",
+                })
+            end}
+        })
+    end
+
+    local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
+    if #collidedHealthUpgrades > 0 then
+        self.sfx["healthjingle"]:play()
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {3.8, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A HEALTH PACK"
                 })
@@ -390,9 +409,10 @@ function Player:collisions(dt)
 
     local collidedFuelUpgrades = self:collide(self.x, self.y, {"fuel_upgrade"})
     if #collidedFuelUpgrades > 0 then
+        self.sfx["fueljingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
-            {itemChimeTime, function()
+            {10.6, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A FUEL TANK"
                 })
@@ -499,19 +519,8 @@ function Player:getMaxFuel()
     )
 end
 
-function Player:update(dt)
-    if self.world.isHardMode then
-        self.hitDamage = Player.HIT_DAMAGE * 2
-    end
-    self:shooting()
-    self:collisions(dt)
-    if input.pressed("up") and self.hasGravityBelt then
-        self.isGravityBeltEquipped = not self.isGravityBeltEquipped
-    end
-    self:movement(dt)
-    self:animation()
 
-    Entity.update(self, dt)
+function Player:handleSfx()
     if self.health > 0 then
         if not self.wasOnGround and self:isOnGround() then
             self.sfx["land"]:play()
@@ -542,6 +551,32 @@ function Player:update(dt)
             self.sfx["acid"]:stop()
         end
     end
+end
+
+function Player:update(dt)
+    if self.world.isHardMode then
+        self.hitDamage = Player.HIT_DAMAGE * 2
+    end
+    self:shooting()
+    self:collisions(dt)
+    if input.pressed("up") and self.hasGravityBelt then
+        self.isGravityBeltEquipped = not self.isGravityBeltEquipped
+    end
+    self:movement(dt)
+    self:animation()
+
+    Entity.update(self, dt)
+
+    if self.hasHarmonica and input.down("down") then
+        self.sfx["harmonica"]:loop()
+    else
+        if self.sfx["harmonica"]:isPlaying() then
+            self.sfx["harmonica_stop"]:play()
+        end
+        self.sfx["harmonica"]:stop()
+    end
+
+    self:handleSfx()
     self.wasOnGround = self:isOnGround()
     self.wasJetpackOn = isJetpackOn
     self.wasInAcid = self:isInAcid()

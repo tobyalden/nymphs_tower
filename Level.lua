@@ -40,6 +40,9 @@ function Level:initialize(path)
                 elseif entity["name"] == "gun" then
                     local gun = Gun:new(entity["x"], entity["y"])
                     table.insert(self.entities, gun)
+                elseif entity["name"] == "harmonica" then
+                    local harmonica = Harmonica:new(entity["x"], entity["y"])
+                    table.insert(self.entities, harmonica)
                   elseif entity["name"] == "gravity_belt" then
                       local gravityBelt = GravityBelt:new(entity["x"], entity["y"])
                       table.insert(self.entities, gravityBelt)

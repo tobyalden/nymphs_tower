@@ -31,6 +31,7 @@ function FinalBoss:initialize(x, y, nodes)
         "looping"
     ))
     self.stopMoving = false
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
 end 
 
 function FinalBoss:update(dt)

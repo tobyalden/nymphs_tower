@@ -35,6 +35,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.phaseNumber = 1
     -- TODO: Should this pick a random direction?
     self.velocity = Vector:new(-1, 1)
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
 end 
 
 function SecretBoss:update(dt)

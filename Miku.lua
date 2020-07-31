@@ -28,6 +28,7 @@ function Miku:initialize(x, y, nodes)
         end,
         "looping"
     ))
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
 end 
 
 function Miku:update(dt)

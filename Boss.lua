@@ -12,6 +12,8 @@ Boss = {
         self.health = self.health - damage
         if self.health <= 0 then
             self:die()
+        else
+            self.sfx["bosshit"]:play()
         end
     end,
     bossDie = function(self)
