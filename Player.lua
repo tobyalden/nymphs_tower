@@ -67,7 +67,7 @@ function Player:initialize(x, y)
     --self.healthUpgrades = 8
     self:restoreHealth()
     --self.fuelUpgrades = 0
-    self.fuelUpgrades = 4
+    self.fuelUpgrades = 0
     self.invincibleTimer = self:addTween(Alarm:new(
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
@@ -324,7 +324,7 @@ function Player:shooting()
                 bulletHeading
             )
             self.world:add(bullet)
-            local choices = {1, 2, 3} 
+            local choices = {1, 2, 3}
             --self.sfx['shoot' .. math.random(#choices)]:play()
             self.sfx['shoot1']:play()
             self.shotCooldown:start()

@@ -40,7 +40,7 @@ require("Harmonica")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = false
+local fullscreen = true
 local windowedScale = 2
 
 function love.load()

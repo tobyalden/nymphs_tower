@@ -1,7 +1,7 @@
 Acid = class("Acid", Entity)
 
 Acid.static.DAMAGE_RATE = 12.5
---Acid.static.DAMAGE_RATE = 126
+--Acid.static.DAMAGE_RATE = 0
 
 function Acid:initialize(x, y, width, height)
     Entity.initialize(self, x, y)
@@ -10,4 +10,3 @@ function Acid:initialize(x, y, width, height)
     self.mask = Hitbox:new(self, width, height)
     self.layer = -2
 end
-
