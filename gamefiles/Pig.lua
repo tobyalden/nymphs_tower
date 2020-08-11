@@ -9,8 +9,8 @@ function Pig:initialize(x, y)
     self.displayName = "PIG"
     self.flag = "pig"
     self.types = {"enemy"}
-    --self.startingHealth = 12
-    self.startingHealth = 1
+    self.startingHealth = 12
+    --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("pig.png")
     self.mask = Hitbox:new(self, 64, 64)

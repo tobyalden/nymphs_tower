@@ -4,8 +4,10 @@ Level = class("Level", Entity)
 function Level:initialize(path)
     Entity.initialize(self, 0, 0)
     self.types = {"walls"}
-    io.input(path)
-    raw = io.read("*all")
+    --io.input(path)
+    --io.input(path)
+    --raw = io.read("*all")
+    raw = love.filesystem.read(path)
     jsonData = json.decode(raw)
 
     self.entities = {}
@@ -46,6 +48,9 @@ function Level:initialize(path)
                   elseif entity["name"] == "gravity_belt" then
                       local gravityBelt = GravityBelt:new(entity["x"], entity["y"])
                       table.insert(self.entities, gravityBelt)
+                elseif entity["name"] == "hazard_suit" then
+                    local hazardSuit = HazardSuit:new(entity["x"], entity["y"])
+                    table.insert(self.entities, hazardSuit)
                 elseif entity["name"] == "health_upgrade" then
                     local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
                     table.insert(self.entities, healthUpgrade)

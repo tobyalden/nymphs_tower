@@ -1,0 +1,27 @@
+the player (16x32) with the following animations. please draw the jetpack and the raygun held by the player on separate layers and export them separately so i can toggle them on and off as the player recieves them!
+    - standing (1 frame)
+    - running (3 frames)
+    - jumping (1 frame)
+    - jetpacking (1 frame)
+    - playing harmonica (1 frame)
+the bosses. can be totally static (i.e. only one frame)
+    - pig (slides back and forth) (64x64)
+    - wizard (levitates in a circle around the player and casts big projectiles at them) (48x48)
+    - miku (always faces left, floats up and down and lobs big projectiles from its midsection) (80x100)
+    - final boss (massive, chases the player) (192x160)
+    - secret boss (loosely resembles a person with long hair and a billowing dress in shape, but its face is featureless and its entire body made of a pitch-black, shiny substance, like the carapace of a beetle) (40x50)
+powerups. the player collects these. they're all 24x24
+    - fuel upgrade
+    - health upgrade
+    - gravity belt
+    - ray gun (the less it looks like a real gun the better)
+    - hazard suit
+    - harmonica
+    - crown
+misc. assets
+    - tiles (TODO: still not sure how i'm gonna handle these... will have to see mockup first i guess)
+    - wooden crate (16x16)
+    - big circular projectile. shot by bosses (24x24)
+    - small circular projectile. shot by bosses (12x12)
+    - spike (16x16)
+    - star (hazard that bounces around you have to avoid) (16x16h)

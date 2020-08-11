@@ -14,7 +14,7 @@ function GameWorld:initialize()
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                --self:loadGame()
+                self:loadGame()
             end
         end
     end
@@ -56,6 +56,12 @@ function GameWorld:saveGame(saveX, saveY)
     if self.player.isGravityBeltEquipped then
         currentCheckpoint["isGravityBeltEquipped"] = "true"
     end
+    if self.player.hasHarmonica then
+        currentCheckpoint["hasHarmonica"] = "true"
+    end
+    if self.player.hasHazardSuit then
+        currentCheckpoint["hasHazardSuit"] = "true"
+    end
 
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
@@ -83,6 +89,8 @@ function GameWorld:loadGame()
     self.player.isGravityBeltEquipped = loadedCheckpoint["isGravityBeltEquipped"] == "true"
     self.player.graphic.flipX = loadedCheckpoint["flipX"] == "true"
     self.player.hasGun = loadedCheckpoint["hasGun"] == "true"
+    self.player.hasHarmonica = loadedCheckpoint["hasHarmonica"] == "true"
+    self.player.hasHazardSuit = loadedCheckpoint["hasHazardSuit"] == "true"
 
     self.flags = {}
     for _, flag in pairs(saveData.load("currentFlags")) do

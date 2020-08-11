@@ -1,7 +1,8 @@
 MIN DEMO
-- finish map (need to connect core & add camera zones, figure out how to handle top of map)
+- add crown + jetpack
 - endings (1 & 2) / credits
 ~ sound effects
+~ finish map (need to connect core & add camera zones, figure out how to handle top of map)
 + particles
 
 CAN DO ON OWN
@@ -15,7 +16,7 @@ CAN DO ON OWN
 NEED HELP
 - music
 - add in real sprites
-- add map remixes
+- add map remixes (low effort version... just do new game+, maybe sprinkle in random obstacles
 
 total resolution is 320 x 180. aesthetic is "raiding creepy/weird alien ruins
 for dangerous artifacts". pretty vague right now, so you'd have a lot of

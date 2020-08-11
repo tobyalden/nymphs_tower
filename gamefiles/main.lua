@@ -37,10 +37,11 @@ require("SecretBoss")
 require("GravityBelt")
 require("Particle")
 require("Harmonica")
+require("HazardSuit")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = true
+local fullscreen = false
 local windowedScale = 2
 
 function love.load()
