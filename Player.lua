@@ -56,18 +56,20 @@ function Player:initialize(x, y)
         "harmonica_stop.wav", "harmonica_angel.wav"
     })
 
-    self.fuel = Player.STARTING_FUEL
+    self.healthUpgrades = 0
+    self.fuelUpgrades = 0
+
+    self.fuel = self:getMaxFuel()
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = true
     self.hasGravityBelt = true
     self.hasHarmonica = true
     self.isGravityBeltEquipped = false
-    self.healthUpgrades = 0
+
     --self.healthUpgrades = 8
     self:restoreHealth()
     --self.fuelUpgrades = 0
-    self.fuelUpgrades = 0
     self.invincibleTimer = self:addTween(Alarm:new(
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
@@ -515,10 +517,16 @@ function Player:restoreFuel()
 end
 
 function Player:getMaxFuel()
-    return (
-        Player.STARTING_FUEL
-        + self.fuelUpgrades * FuelUpgrade.FUEL_AMOUNT
-    )
+    if self.fuelUpgrades == 0 then
+        return 0
+    elseif self.fuelUpgrades == 1 then
+        return Player.STARTING_FUEL
+    else
+        return (
+            Player.STARTING_FUEL
+            + (self.fuelUpgrades - 1) * FuelUpgrade.FUEL_AMOUNT
+        )
+    end
 end
 
 
