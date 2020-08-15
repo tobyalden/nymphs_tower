@@ -58,6 +58,12 @@ function GameWorld:initialize()
     end), true)
 end
 
+function GameWorld:clearSave()
+    saveData.clear("currentCheckpoint")
+    saveData.clear("currentFlags")
+    saveData.clear("itemIds")
+end
+
 function GameWorld:saveGame(saveX, saveY)
     local currentCheckpoint = {}
     currentCheckpoint["saveX"] = saveX
@@ -182,6 +188,10 @@ function GameWorld:update(dt)
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
     self:updateCamera(dt)
+    if input.pressed("reset") then
+        self:clearSave()
+        ammo.world = GameWorld:new()
+    end
 end
 
 function GameWorld:updateCamera(dt)

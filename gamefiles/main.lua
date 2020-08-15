@@ -51,6 +51,7 @@ function love.load()
     input.define("right", "right", "]")
     input.define("jump", "z")
     input.define("shoot", "x")
+    input.define("reset", "r")
 
     love.window.setTitle("Nymph's Tower")
 
