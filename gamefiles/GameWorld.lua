@@ -50,7 +50,7 @@ function GameWorld:initialize()
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
     self.currentBoss = nil
-    self.isHardMode = true
+    self.isHardMode = false
     self.curtain = Curtain:new()
     self:add(self.curtain)
     self.curtain:addTween(Alarm:new(1, function()

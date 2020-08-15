@@ -32,9 +32,12 @@ function FinalBoss:initialize(x, y, nodes)
     ))
     self.stopMoving = false
     self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
-end 
+end
 
 function FinalBoss:update(dt)
+    if not self.world.isHardMode and self.health == self.startingHealth then
+        self.health = math.ceil(self.startingHealth * 2/3)
+    end
     self:bossUpdate(dt)
     Entity.update(self, dt)
 end
@@ -122,5 +125,3 @@ end
 function FinalBoss:die()
     self:bossDie()
 end
-
-
