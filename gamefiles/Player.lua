@@ -354,6 +354,7 @@ function Player:collisions(dt)
             {itemChimeTime, function()
                 self.world:unpauseLevel()
                 self.world:remove(collidedGuns[1])
+                table.insert(self.world.itemIds, collidedGuns[1].uniqueId)
                 self.hasGun = true
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE RAYGUN",
@@ -370,6 +371,7 @@ function Player:collisions(dt)
             {itemChimeTime, function()
                 self.world:unpauseLevel()
                 self.world:remove(collidedGravityBelts[1])
+                table.insert(self.world.itemIds, collidedGravityBelts[1].uniqueId)
                 self.hasGravityBelt = true
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE GRAVITY BELT",
@@ -386,6 +388,7 @@ function Player:collisions(dt)
             {itemChimeTime, function()
                 self.world:unpauseLevel()
                 self.world:remove(collidedHazardSuits[1])
+                table.insert(self.world.itemIds, collidedHazardSuits[1].uniqueId)
                 self.hasHazardSuit = true
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE HAZARD SUIT"
@@ -401,6 +404,7 @@ function Player:collisions(dt)
             {itemChimeTime, function()
                 self.world:unpauseLevel()
                 self.world:remove(collidedHarmonicas[1])
+                table.insert(self.world.itemIds, collidedHarmonicas[1].uniqueId)
                 self.hasHarmonica = true
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE HARMONICA",
@@ -421,6 +425,7 @@ function Player:collisions(dt)
                 })
                 self.world:unpauseLevel()
                 self.world:remove(collidedHealthUpgrades[1])
+                table.insert(self.world.itemIds, collidedHealthUpgrades[1].uniqueId)
                 self.healthUpgrades = self.healthUpgrades + 1
                 self:restoreHealth()
             end}
@@ -439,6 +444,7 @@ function Player:collisions(dt)
                 self.world:unpauseLevel()
                 self.world:addFlag(collidedFuelUpgrades[1].addFlag)
                 self.world:remove(collidedFuelUpgrades[1])
+                table.insert(self.world.itemIds, collidedFuelUpgrades[1].uniqueId)
                 self.fuelUpgrades = self.fuelUpgrades + 1
                 self:restoreFuel()
             end}

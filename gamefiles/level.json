@@ -699,8 +699,8 @@
           "name": "fuel_upgrade",
           "id": 461,
           "_eid": "78144176",
-          "x": 4308,
-          "y": 4964,
+          "x": 4260,
+          "y": 5080,
           "originX": 0,
           "originY": 0,
           "values": {"add_flag": "trigger_finalboss"}
@@ -747,18 +747,6 @@
             {"x": 1792, "y": 6024},
             {"x": 572, "y": 6024}
           ]
-        },
-        {
-          "name": "flag_trigger",
-          "id": 465,
-          "_eid": "80409325",
-          "x": 4260,
-          "y": 5008,
-          "width": 24,
-          "height": 96,
-          "originX": 0,
-          "originY": 0,
-          "values": {"flag": "trigger_finalboss", "require_flag": ""}
         },
         {"name": "checkpoint", "id": 466, "_eid": "97277017", "x": 3960, "y": 5088, "originX": 0, "originY": 0},
         {
@@ -897,7 +885,8 @@
           "originX": 0,
           "originY": 0,
           "values": {"add_flag": ""}
-        }
+        },
+        {"name": "checkpoint", "id": 605, "_eid": "97277017", "x": 344, "y": 10176, "originX": 0, "originY": 0}
       ]
     },
     {

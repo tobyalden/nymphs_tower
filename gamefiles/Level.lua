@@ -26,6 +26,7 @@ function Level:initialize(path)
         end
 
         -- load entities
+        local uniqueId = 0
         if layer["name"] == "entities" then
             for _, entity in pairs(layer["entities"]) do
                 if entity["name"] == "player" then
@@ -40,25 +41,40 @@ function Level:initialize(path)
                     )
                     table.insert(self.entities, acid)
                 elseif entity["name"] == "gun" then
-                    local gun = Gun:new(entity["x"], entity["y"])
+                    local gun = Gun:new(entity["x"], entity["y"], uniqueId)
                     table.insert(self.entities, gun)
+                    uniqueId = uniqueId + 1
                 elseif entity["name"] == "harmonica" then
-                    local harmonica = Harmonica:new(entity["x"], entity["y"])
+                    local harmonica = Harmonica:new(
+                        entity["x"], entity["y"], uniqueId
+                    )
                     table.insert(self.entities, harmonica)
-                  elseif entity["name"] == "gravity_belt" then
-                      local gravityBelt = GravityBelt:new(entity["x"], entity["y"])
-                      table.insert(self.entities, gravityBelt)
+                    uniqueId = uniqueId + 1
+                elseif entity["name"] == "gravity_belt" then
+                    local gravityBelt = GravityBelt:new(
+                        entity["x"], entity["y"], uniqueId
+                    )
+                    table.insert(self.entities, gravityBelt)
+                    uniqueId = uniqueId + 1
                 elseif entity["name"] == "hazard_suit" then
-                    local hazardSuit = HazardSuit:new(entity["x"], entity["y"])
+                    local hazardSuit = HazardSuit:new(
+                        entity["x"], entity["y"], uniqueId
+                    )
                     table.insert(self.entities, hazardSuit)
+                    uniqueId = uniqueId + 1
                 elseif entity["name"] == "health_upgrade" then
-                    local healthUpgrade = HealthUpgrade:new(entity["x"], entity["y"])
+                    local healthUpgrade = HealthUpgrade:new(
+                        entity["x"], entity["y"], uniqueId
+                    )
                     table.insert(self.entities, healthUpgrade)
+                    uniqueId = uniqueId + 1
                 elseif entity["name"] == "fuel_upgrade" then
                     local fuelUpgrade = FuelUpgrade:new(
-                        entity["x"], entity["y"], entity["values"]["add_flag"]
+                        entity["x"], entity["y"],
+                        entity["values"]["add_flag"], uniqueId
                     )
                     table.insert(self.entities, fuelUpgrade)
+                    uniqueId = uniqueId + 1
                 elseif entity["name"] == "block" then
                     local block = Block:new(entity["x"], entity["y"])
                     table.insert(self.entities, block)

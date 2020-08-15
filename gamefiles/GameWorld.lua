@@ -7,14 +7,33 @@ GameWorld.static.CAMERA_BUFFER_Y = 30
 function GameWorld:initialize()
     World.initialize(self)
     self.flags = {}
+    self.itemIds = {}
     self.level = Level:new("level.json")
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
-        self:add(entity)
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
                 self:loadGame()
+            end
+            self:add(entity)
+        end
+    end
+    for name, entity in pairs(self.level.entities) do
+        if name ~= "player" then
+            if not entity.uniqueId then
+                self:add(entity)
+            else
+                local isCollected = false
+                for _, itemId in pairs(self.itemIds) do
+                    if itemId == entity.uniqueId then
+                        isCollected = true
+                        break
+                    end
+                end
+                if not isCollected then
+                    self:add(entity)
+                end
             end
         end
     end
@@ -73,6 +92,8 @@ function GameWorld:saveGame(saveX, saveY)
     end
     saveData.save(currentFlags, "currentFlags")
 
+    saveData.save(self.itemIds, "itemIds")
+
     self.player:restoreHealth()
 end
 
@@ -96,6 +117,9 @@ function GameWorld:loadGame()
     for _, flag in pairs(saveData.load("currentFlags")) do
         self:addFlag(flag)
     end
+
+    self.itemIds = saveData.load("itemIds")
+    print('loaded itemIds: ' .. inspect(self.itemIds))
 
     self.player:restoreHealth()
 end
