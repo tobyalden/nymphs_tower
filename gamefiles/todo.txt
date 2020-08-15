@@ -1,7 +1,7 @@
-- bugfix final boss healthbar on normal mode
-- add footholds to get out from bottom of ocean
++ add footholds to get out from bottom of ocean
++ make acid in true final cavern extend all the way to secret boss
 - make sure you can't fall off tower before fighting miku
-- make acid in true final cavern extend all the way to secret boss
+- bugfix final boss healthbar on normal mode
 
 MIN DEMO
 - add crown + jetpack

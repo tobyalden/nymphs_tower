@@ -888,7 +888,9 @@
         {"name": "checkpoint", "id": 605, "_eid": "97277017", "x": 344, "y": 10176, "originX": 0, "originY": 0},
         {"name": "acid", "id": 607, "_eid": "67689386", "x": 240, "y": 10240, "width": 92, "height": 2092, "originX": 0, "originY": 0},
         {"name": "acid", "id": 610, "_eid": "67689386", "x": 4520, "y": 10400, "width": 284, "height": 1916, "originX": 0, "originY": 0},
-        {"name": "player", "id": 611, "_eid": "68256185", "x": 304, "y": 10176}
+        {"name": "player", "id": 611, "_eid": "68256185", "x": 2908, "y": 5488},
+        {"name": "acid", "id": 612, "_eid": "67689386", "x": 2540, "y": 5376, "width": 556, "height": 344, "originX": 0, "originY": 0},
+        {"name": "acid", "id": 613, "_eid": "67689386", "x": 2544, "y": 5720, "width": 320, "height": 168, "originX": 0, "originY": 0}
       ]
     },
     {
