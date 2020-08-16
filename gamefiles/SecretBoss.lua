@@ -54,7 +54,10 @@ end
 
 function SecretBoss:fireFan()
     local offset = math.random() * math.pi * 2
-    local numBullets = 16
+    local numBullets = 8
+    if self.world.isHardMode then
+        numBullets = 16
+    end
     local increment = (math.pi * 2) / numBullets
     for i = 1, numBullets do
         local rotation = increment * (i - 1) + offset

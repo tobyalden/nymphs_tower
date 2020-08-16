@@ -50,10 +50,10 @@ function Player:initialize(x, y)
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
         "bumphead.wav", "jetpackon.wav", "save.wav", "shoot1.wav",
-        "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav", "acidland.wav",
-        "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
-        "fueljingle.wav", "healthjingle.wav", "harmonica.wav",
-        "harmonica_stop.wav", "harmonica_angel.wav"
+        "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav",
+        "acidland.wav", "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
+        "fueljingle.wav", "healthjingle.wav", "itemjingle.wav",
+        "harmonica.wav", "harmonica_stop.wav", "harmonica_angel.wav"
     })
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
@@ -347,10 +347,11 @@ function Player:collisions(dt)
         self:decreaseHealth(Acid.DAMAGE_RATE * dt)
     end
 
-    local itemChimeTime = 2
+    local itemChimeTime = 5
 
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
+        self.sfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -368,6 +369,7 @@ function Player:collisions(dt)
 
     local collidedGravityBelts = self:collide(self.x, self.y, {"gravity_belt"})
     if #collidedGravityBelts > 0 then
+        self.sfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -385,6 +387,7 @@ function Player:collisions(dt)
 
     local collidedHazardSuits = self:collide(self.x, self.y, {"hazard_suit"})
     if #collidedHazardSuits > 0 then
+        self.sfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -401,6 +404,7 @@ function Player:collisions(dt)
 
     local collidedHarmonicas = self:collide(self.x, self.y, {"harmonica"})
     if #collidedHarmonicas > 0 then
+        self.sfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -439,7 +443,7 @@ function Player:collisions(dt)
         self.sfx["fueljingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
-            {10.6, function()
+            {8.374, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A FUEL TANK"
                 })
