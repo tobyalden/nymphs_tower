@@ -113,7 +113,7 @@ function GameWorld:saveGame(saveX, saveY)
             end
         end
         if isAcid then
-            acidLevels[entity.uniqueId] = entity.rise_to
+            acidLevels[entity.uniqueId] = entity.riseTo
         end
     end
     print('saving acid levels: '..inspect(acidLevels))
@@ -155,9 +155,9 @@ function GameWorld:loadGame()
             end
         end
         if isAcid then
-            for uniqueId, rise_to in pairs(acidLevels) do
+            for uniqueId, riseTo in pairs(acidLevels) do
                 if entity.uniqueId == uniqueId then
-                    entity.rise_to = rise_to
+                    entity.riseTo = riseTo
                 end
             end
         end

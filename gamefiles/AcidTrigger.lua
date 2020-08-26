@@ -1,15 +1,15 @@
 AcidTrigger = class("AcidTrigger", Entity)
 
-function AcidTrigger:initialize(x, y, width, height, acid_id, rise_to, uniqueId)
+function AcidTrigger:initialize(x, y, width, height, acidId, riseTo, uniqueId)
     Entity.initialize(self, x, y)
     self.uniqueId = uniqueId
     print(uniqueId)
-    self.acid_id = acid_id
-    self.rise_to = rise_to
+    self.acidId = acidId
+    self.riseTo = riseTo
     self.types = {"acid_trigger"}
     self.mask = Hitbox:new(self, width, height)
     self.graphic = TiledSprite:new("acidtrigger.png", 16, 16, width, height)
-    self.acid_id = acid_id
+    self.acidId = acidId
     self.requireAcid = requireAcid
 end
 
@@ -22,8 +22,8 @@ function AcidTrigger:trigger()
                 break
             end
         end
-        if isAcid and entity.acid_id == self.acid_id then
-            entity:rise(self.rise_to)
+        if isAcid and entity.acidId == self.acidId then
+            entity:rise(self.riseTo)
             self.world:remove(self)
         end
     end
