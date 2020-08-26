@@ -62,6 +62,7 @@ function GameWorld:clearSave()
     saveData.clear("currentCheckpoint")
     saveData.clear("currentFlags")
     saveData.clear("itemIds")
+    saveData.clear("acidLevels")
 end
 
 function GameWorld:saveGame(saveX, saveY)
@@ -101,6 +102,22 @@ function GameWorld:saveGame(saveX, saveY)
     saveData.save(self.itemIds, "itemIds")
 
     self.player:restoreHealth()
+
+    local acidLevels = {}
+    for _, entity in pairs(self.level.entities) do
+        local isAcid = false
+        for _, entityType in pairs(entity.types) do
+            if entityType == "acid" then
+                isAcid = true
+                break
+            end
+        end
+        if isAcid then
+            acidLevels[entity.uniqueId] = entity.rise_to
+        end
+    end
+    print('saving acid levels: '..inspect(acidLevels))
+    saveData.save(acidLevels, "acidLevels")
 end
 
 function GameWorld:loadGame()
@@ -126,6 +143,25 @@ function GameWorld:loadGame()
 
     self.itemIds = saveData.load("itemIds")
     print('loaded itemIds: ' .. inspect(self.itemIds))
+
+    local acidLevels = saveData.load("acidLevels")
+    print('loading acid levels: '..inspect(acidLevels))
+    for _, entity in pairs(self.level.entities) do
+        local isAcid = false
+        for _, entityType in pairs(entity.types) do
+            if entityType == "acid" then
+                isAcid = true
+                break
+            end
+        end
+        if isAcid then
+            for uniqueId, rise_to in pairs(acidLevels) do
+                if entity.uniqueId == uniqueId then
+                    entity.rise_to = rise_to
+                end
+            end
+        end
+    end
 
     self.player:restoreHealth()
 end

@@ -3,8 +3,9 @@ Acid = class("Acid", Entity)
 Acid.static.DAMAGE_RATE = 12.5
 --Acid.static.DAMAGE_RATE = 0
 
-function Acid:initialize(x, y, width, height, acid_id, rise_speed)
+function Acid:initialize(x, y, width, height, acid_id, rise_speed, uniqueId)
     Entity.initialize(self, x, y)
+    self.uniqueId = uniqueId
     self.acid_id = acid_id
     self.rise_speed = rise_speed
     self.originalY = y
@@ -15,24 +16,28 @@ function Acid:initialize(x, y, width, height, acid_id, rise_speed)
     self.mask = Hitbox:new(self, width, height)
     self.layer = -2
     self.riseTimer = self:addTween(Alarm:new(1, function()
-        self.graphic.scaleY = (
-            1 + (self.rise_to / self.originalHeight - 1)
-            * 1
-        )
-        self.y = (
-            self.originalY - (self.rise_to - self.originalHeight)
-            * 1
-        )
-        self.mask:updateHeight(self.originalHeight * self.graphic.scaleY)
-
-        self.originalY = self.y
-        self.originalHeight = self.mask.height
-        self.graphic = TiledSprite:new(
-            "acid.png", 8, 8, self.mask.width, self.mask.height
-        )
-        self.graphic.scaleY = 1
-        print('done')
+        self:finishRise()
     end))
+    self.onStart = false
+end
+
+function Acid:finishRise()
+    self.graphic.scaleY = (
+        1 + (self.rise_to / self.originalHeight - 1)
+        * 1
+    )
+    self.y = (
+        self.originalY - (self.rise_to - self.originalHeight)
+        * 1
+    )
+    self.mask:updateHeight(self.originalHeight * self.graphic.scaleY)
+
+    self.originalY = self.y
+    self.originalHeight = self.mask.height
+    self.graphic = TiledSprite:new(
+        "acid.png", 8, 8, self.mask.width, self.mask.height
+    )
+    self.graphic.scaleY = 1
 end
 
 function Acid:rise(rise_to)
@@ -43,6 +48,10 @@ function Acid:rise(rise_to)
 end
 
 function Acid:update(dt)
+    if not self.onStart then
+        self:finishRise()
+        self.onStart = true
+    end
     if self.riseTimer.active then
         self.graphic.scaleY = (
             1 + (self.rise_to / self.originalHeight - 1)

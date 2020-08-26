@@ -468,6 +468,7 @@ function Player:collisions(dt)
     if #collidedAcidTriggers > 0 then
         for _, collidedAcidTrigger in pairs(collidedAcidTriggers) do
             collidedAcidTrigger:trigger()
+            table.insert(self.world.itemIds, collidedAcidTrigger.uniqueId)
         end
     end
 

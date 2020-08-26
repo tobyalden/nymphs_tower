@@ -1,7 +1,9 @@
 AcidTrigger = class("AcidTrigger", Entity)
 
-function AcidTrigger:initialize(x, y, width, height, acid_id, rise_to)
+function AcidTrigger:initialize(x, y, width, height, acid_id, rise_to, uniqueId)
     Entity.initialize(self, x, y)
+    self.uniqueId = uniqueId
+    print(uniqueId)
     self.acid_id = acid_id
     self.rise_to = rise_to
     self.types = {"acid_trigger"}
