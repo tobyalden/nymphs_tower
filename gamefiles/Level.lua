@@ -37,9 +37,17 @@ function Level:initialize(path)
                 elseif entity["name"] == "acid" then
                     local acid = Acid:new(
                         entity["x"], entity["y"],
-                        entity["width"], entity["height"]
+                        entity["width"], entity["height"],
+                        entity["values"]["acid_id"], entity["values"]["rise_speed"]
                     )
                     table.insert(self.entities, acid)
+                elseif entity["name"] == "acid_trigger" then
+                    local acidTrigger = AcidTrigger:new(
+                        entity["x"], entity["y"],
+                        entity["width"], entity["height"],
+                        entity["values"]["acid_id"], entity["values"]["rise_to"]
+                    )
+                    table.insert(self.entities, acidTrigger)
                 elseif entity["name"] == "gun" then
                     local gun = Gun:new(entity["x"], entity["y"], uniqueId)
                     table.insert(self.entities, gun)

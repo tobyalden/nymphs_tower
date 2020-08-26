@@ -464,6 +464,13 @@ function Player:collisions(dt)
         end
     end
 
+    local collidedAcidTriggers = self:collide(self.x, self.y, {"acid_trigger"})
+    if #collidedAcidTriggers > 0 then
+        for _, collidedAcidTrigger in pairs(collidedAcidTriggers) do
+            collidedAcidTrigger:trigger()
+        end
+    end
+
     local collidedEnemies = self:collide(self.x, self.y, {"enemy"})
     if #collidedEnemies > 0 and not self.invincibleTimer.active then
         self:takeHit(self.hitDamage)
