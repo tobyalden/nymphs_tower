@@ -5,3 +5,8 @@ function Hitbox:initialize(parent, width, height)
   self.width = width
   self.height = height
 end
+
+function Hitbox:updateHeight(newHeight)
+    self.height = newHeight
+    bumpWorld:update(self, self.parent.x, self.parent.y, self.width, self.height)
+end
