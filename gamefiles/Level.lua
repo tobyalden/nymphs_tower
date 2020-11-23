@@ -16,8 +16,8 @@ function Level:initialize(path)
     for _, layer in pairs(jsonData["layers"]) do
         -- set mask
         if layer["name"] == "walls" then
-            for tileX = 1, layer["gridCellsX"] do
-                for tileY = 1, layer["gridCellsY"] - 1 do
+            for tileX = 1, self.mask.columns do
+                for tileY = 1, self.mask.rows do
                     self.mask:setTile(
                         tileX, tileY, layer["grid2D"][tileY][tileX] == "1"
                     )
