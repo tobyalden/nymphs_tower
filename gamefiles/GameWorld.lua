@@ -8,13 +8,18 @@ function GameWorld:initialize()
     World.initialize(self)
     self.flags = {}
     self.itemIds = {}
-    self.level = Level:new("level.json")
+    self.level = Level:new({
+        "level_top.json",
+        "level_middle.json",
+        "level_bottom.json"
+        --"level.json"
+    })
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                self:loadGame()
+                --self:loadGame()
             end
             self:add(entity)
         end

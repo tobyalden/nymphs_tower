@@ -1,8 +1,8 @@
 Grid = class("Grid")
 
 function Grid:initialize(parent, width, height, tileWidth, tileHeight)
-    self.width = math.floor(width / tileWidth) * tileWidth
-    self.height = math.floor(height / tileHeight) * tileHeight
+    self.width = math.ceil(width / tileWidth) * tileWidth
+    self.height = math.ceil(height / tileHeight) * tileHeight
     self.tileWidth = tileWidth
     self.tileHeight = tileHeight
     self.rows = self.height / tileHeight
