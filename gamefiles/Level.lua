@@ -198,6 +198,10 @@ function Level:initialize(paths)
     end
 
     -- set graphic
+    local allTopEdgeTiles = generateNonrepeatingSequence({2, 3, 7}, self.mask.columns)
+    local allBottomEdgeTiles = generateNonrepeatingSequence({26, 27, 32}, self.mask.columns)
+    local allLeftEdgeTiles = generateNonrepeatingSequence({9, 17, 6}, self.mask.rows)
+    local allRightEdgeTiles = generateNonrepeatingSequence({12, 20, 8}, self.mask.rows)
     self.graphic = Tilemap:new("tiles.png", 16, 16)
     for tileY = 1, self.mask.rows do
         for tileX = 1, self.mask.columns do
@@ -346,7 +350,7 @@ function Level:initialize(paths)
                     and not self.mask:getTile(tileX, tileY - 1)
                 ) then
                     -- top edge
-                    self.graphic:setTile(tileX, tileY, 2)
+                    self.graphic:setTile(tileX, tileY, allTopEdgeTiles[tileX])
                 elseif (
                     self.mask:getTile(tileX - 1, tileY)
                     and self.mask:getTile(tileX + 1, tileY)
@@ -354,7 +358,7 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY - 1)
                 ) then
                     -- bottom edge
-                    self.graphic:setTile(tileX, tileY, 26)
+                    self.graphic:setTile(tileX, tileY, allBottomEdgeTiles[tileX])
                 elseif (
                     not self.mask:getTile(tileX - 1, tileY)
                     and self.mask:getTile(tileX + 1, tileY)
@@ -362,7 +366,7 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY - 1)
                 ) then
                     -- left edge
-                    self.graphic:setTile(tileX, tileY, 9)
+                    self.graphic:setTile(tileX, tileY, allLeftEdgeTiles[tileY])
                 elseif (
                     self.mask:getTile(tileX - 1, tileY)
                     and not self.mask:getTile(tileX + 1, tileY)
@@ -370,16 +374,29 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY - 1)
                 ) then
                     -- right edge
-                    self.graphic:setTile(tileX, tileY, 12)
+                    self.graphic:setTile(tileX, tileY, allRightEdgeTiles[tileY])
                 else
                     -- center
-                    self.graphic:setTile(tileX, tileY, 5)
+                    local allCenterTiles = {5, 5, 5, 5, 22, 30, 31}
+                    self.graphic:setTile(tileX, tileY, allCenterTiles[love.math.random(#allCenterTiles)])
                 end
             end
         end
     end
 
     self.layer = -3
+end
+
+function generateNonrepeatingSequence(numbersInSequence, length)
+    local sequence = {}
+    for i = 1, length do
+        local numberToAdd = numbersInSequence[love.math.random(#numbersInSequence)]
+        while numberToAdd == sequence[#sequence] do
+            numberToAdd = numbersInSequence[love.math.random(#numbersInSequence)]
+        end
+        table.insert(sequence, numberToAdd)
+    end
+    return sequence
 end
 
 function Level:update(dt)
