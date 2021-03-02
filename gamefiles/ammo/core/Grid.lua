@@ -22,5 +22,8 @@ function Grid:setTile(tileX, tileY, solid)
 end
 
 function Grid:getTile(tileX, tileY)
+    if tileX < 1 or tileY < 1 or tileX > self.columns or tileY > self.rows then
+        return false
+    end
     return self.data[tileY][tileX].isSolid
 end

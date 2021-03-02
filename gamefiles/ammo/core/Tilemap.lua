@@ -36,8 +36,8 @@ function Tilemap:initialize(path, tileWidth, tileHeight)
     self.spriteIds = {}
 
     -- Chop padded image up into tiles
-    for tileY = 1, widthInTiles do
-        for tileX = 1, heightInTiles do
+    for tileY = 1, heightInTiles do
+        for tileX = 1, widthInTiles do
             table.insert(
                 self.tiles,
                 love.graphics.newQuad(

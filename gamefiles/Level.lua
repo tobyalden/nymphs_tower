@@ -202,7 +202,167 @@ function Level:initialize(paths)
     for tileY = 1, self.mask.rows do
         for tileX = 1, self.mask.columns do
             if self.mask:getTile(tileX, tileY) then
-                self.graphic:setTile(tileX, tileY, 2)
+                -- tile placing logic
+                if (
+                    not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- standalone 1x1
+                    self.graphic:setTile(tileX, tileY, 23)
+                elseif (
+                    self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- left edge of 1-tall
+                    self.graphic:setTile(tileX, tileY, 14)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- right edge of 1-tall
+                    self.graphic:setTile(tileX, tileY, 16)
+                elseif (
+                    self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- top edge of 1-wide
+                    self.graphic:setTile(tileX, tileY, 13)
+                elseif (
+                    self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                ) then
+                    -- bottom edge of 1-wide
+                    self.graphic:setTile(tileX, tileY, 29)
+                elseif (
+                    self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- middle of 1-tall
+                    self.graphic:setTile(tileX, tileY, 15)
+                elseif (
+                    not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- middle of 1-wide
+                    self.graphic:setTile(tileX, tileY, 21)
+                elseif (
+                    self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- top left corner
+                    self.graphic:setTile(tileX, tileY, 1)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- top right corner
+                    self.graphic:setTile(tileX, tileY, 4)
+                elseif (
+                    self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                ) then
+                    -- bottom left corner
+                    self.graphic:setTile(tileX, tileY, 25)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                ) then
+                    -- bottom right corner
+                    self.graphic:setTile(tileX, tileY, 28)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX - 1, tileY - 1)
+                ) then
+                    -- top left inner corner
+                    self.graphic:setTile(tileX, tileY, 10)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX + 1, tileY - 1)
+                ) then
+                    -- top right inner corner
+                    self.graphic:setTile(tileX, tileY, 11)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX - 1, tileY + 1)
+                ) then
+                    -- bottom left inner corner
+                    self.graphic:setTile(tileX, tileY, 18)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                    and not self.mask:getTile(tileX + 1, tileY + 1)
+                ) then
+                    -- bottom right inner corner
+                    self.graphic:setTile(tileX, tileY, 19)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and not self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- top edge
+                    self.graphic:setTile(tileX, tileY, 2)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and not self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- bottom edge
+                    self.graphic:setTile(tileX, tileY, 26)
+                elseif (
+                    not self.mask:getTile(tileX - 1, tileY)
+                    and self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- left edge
+                    self.graphic:setTile(tileX, tileY, 9)
+                elseif (
+                    self.mask:getTile(tileX - 1, tileY)
+                    and not self.mask:getTile(tileX + 1, tileY)
+                    and self.mask:getTile(tileX, tileY + 1)
+                    and self.mask:getTile(tileX, tileY - 1)
+                ) then
+                    -- right edge
+                    self.graphic:setTile(tileX, tileY, 12)
+                else
+                    -- center
+                    self.graphic:setTile(tileX, tileY, 5)
+                end
             end
         end
     end
