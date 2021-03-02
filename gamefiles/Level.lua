@@ -297,6 +297,9 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY + 1)
                     and self.mask:getTile(tileX, tileY - 1)
                     and not self.mask:getTile(tileX - 1, tileY - 1)
+                    and self.mask:getTile(tileX + 1, tileY - 1)
+                    and self.mask:getTile(tileX - 1, tileY + 1)
+                    and self.mask:getTile(tileX + 1, tileY + 1)
                 ) then
                     -- top left inner corner
                     self.graphic:setTile(tileX, tileY, 10)
@@ -306,6 +309,9 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY + 1)
                     and self.mask:getTile(tileX, tileY - 1)
                     and not self.mask:getTile(tileX + 1, tileY - 1)
+                    and self.mask:getTile(tileX - 1, tileY - 1)
+                    and self.mask:getTile(tileX - 1, tileY + 1)
+                    and self.mask:getTile(tileX + 1, tileY + 1)
                 ) then
                     -- top right inner corner
                     self.graphic:setTile(tileX, tileY, 11)
@@ -315,6 +321,9 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY + 1)
                     and self.mask:getTile(tileX, tileY - 1)
                     and not self.mask:getTile(tileX - 1, tileY + 1)
+                    and self.mask:getTile(tileX - 1, tileY - 1)
+                    and self.mask:getTile(tileX + 1, tileY - 1)
+                    and self.mask:getTile(tileX + 1, tileY + 1)
                 ) then
                     -- bottom left inner corner
                     self.graphic:setTile(tileX, tileY, 18)
@@ -324,6 +333,9 @@ function Level:initialize(paths)
                     and self.mask:getTile(tileX, tileY + 1)
                     and self.mask:getTile(tileX, tileY - 1)
                     and not self.mask:getTile(tileX + 1, tileY + 1)
+                    and self.mask:getTile(tileX - 1, tileY - 1)
+                    and self.mask:getTile(tileX + 1, tileY - 1)
+                    and self.mask:getTile(tileX - 1, tileY + 1)
                 ) then
                     -- bottom right inner corner
                     self.graphic:setTile(tileX, tileY, 19)
