@@ -9,9 +9,9 @@ function GameWorld:initialize()
     self.flags = {}
     self.itemIds = {}
     self.level = Level:new({
+        "bonus3.json"
         --"level_top.json",
         --"level_middle.json",
-        "level_bottom.json"
         --"level.json"
     })
     self:add(self.level)

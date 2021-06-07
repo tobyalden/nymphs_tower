@@ -3,7 +3,7 @@ Background = class("Background", Entity)
 function Background:initialize()
     Entity.initialize(self, 0, 0)
     self.graphic = Backdrop:new("background.png")
-    self.graphic.scroll = 0.5
+    self.graphic.scroll = 0
     self.layer = 2
 end
 

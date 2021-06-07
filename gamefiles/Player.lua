@@ -38,10 +38,15 @@ function Player:initialize(x, y)
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
-    self.graphic:add("run", {2, 3, 4, 3}, 6)
-    self.graphic:add("jump", {5})
-    self.graphic:add("crouch", {5})
-    self.graphic:add("jetpack", {6, 7}, 4)
+    self.graphic:add("run", {2, 3, 4}, 6)
+    self.graphic:add("jump", {4})
+    self.graphic:add("jetpack", {5})
+    self.graphic:add("idle_gun", {6}, 4)
+    self.graphic:add("jetpack", {5})
+    self.graphic:add("run_gun", {7, 8, 9}, 6)
+    self.graphic:add("jump_gun", {9})
+    self.graphic:add("harmonica", {10})
+    self.graphic:add("jetpack_gun", {11})
     self.graphic.offsetX = -5
     self.graphic.offsetY = -11
     self.graphic.flipX = true
@@ -58,16 +63,16 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
-    self.hasGun = false
+    self.hasGun = true
     self.hasGravityBelt = false
     self.hasHazardSuit = false
     self.hasHarmonica = false
     self.isGravityBeltEquipped = false
 
-    self.healthUpgrades = 8 -- MAX
-    self.fuelUpgrades = 5 -- MAX
-    --self.healthUpgrades = 0
-    --self.fuelUpgrades = 0
+    --self.healthUpgrades = 8 -- MAX
+    --self.fuelUpgrades = 5 -- MAX
+    self.healthUpgrades = 0
+    self.fuelUpgrades = 0
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -243,22 +248,28 @@ function Player:animation()
         self.graphic.flipX = false
     end
     if self.graphic.flipX then
-        self.graphic.offsetX = -3;
+        self.graphic.offsetX = -3
     else
-        self.graphic.offsetX = -5;
+        self.graphic.offsetX = -5
     end
 
+    local animationSuffix = "d"
+    if self.hasGun then
+        animationSuffix = "_gun";
+    else
+        animationSuffix = "";
+    end
     if self:isOnGround() then
         if self.velocity.x ~= 0 then
-            self.graphic:play("run")
+            self.graphic:play("run"  ..  animationSuffix)
         else
-            self.graphic:play("idle")
+            self.graphic:play("idle"  ..  animationSuffix)
         end
     else
         if isJetpackOn then
-            self.graphic:play("jetpack")
+            self.graphic:play("jetpack"  ..  animationSuffix)
         else
-            self.graphic:play("jump")
+            self.graphic:play("jump"  ..  animationSuffix)
         end
     end
 end
@@ -325,7 +336,7 @@ function Player:shooting()
             end
             local bullet = PlayerBullet:new(
                 self.x,
-                self.y - 11 + 15,
+                self.y - 11 + 15 + 4,
                 bulletHeading
             )
             self.world:add(bullet)
@@ -443,7 +454,7 @@ function Player:collisions(dt)
         self.sfx["fueljingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
-            {8.374, function()
+            {2, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A FUEL TANK"
                 })

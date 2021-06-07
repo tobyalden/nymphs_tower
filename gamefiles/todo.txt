@@ -1,5 +1,12 @@
-+ add footholds to get out from bottom of ocean
-+ make acid in true final cavern extend all the way to secret boss
+- add all graphics
+- music
+- outside texture + transition
+- ending
+- add timer
+- shorten item pickup sfx
+- main menu
+- add teleport to john's level
+- texture swap john's level
 - make sure you can't fall off tower before fighting miku
 - bugfix final boss healthbar on normal mode
 
