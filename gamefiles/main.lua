@@ -39,11 +39,12 @@ require("GravityBelt")
 require("Particle")
 require("Harmonica")
 require("HazardSuit")
+require("Inside")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
-local windowedScale = 2
+local windowedScale = 4
 
 function love.load()
     input.define("up", "up")

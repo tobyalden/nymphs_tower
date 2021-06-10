@@ -1436,16 +1436,6 @@
         {"name": "checkpoint", "id": 597, "_eid": "97277017", "x": 4708, "y": 7216, "originX": 0, "originY": 0},
         {"name": "harmonica", "id": 602, "_eid": "09203317", "x": 2852, "y": 5912, "originX": 0, "originY": 0},
         {"name": "crown", "id": 603, "_eid": "32237990", "x": 2524, "y": 4888, "originX": 0, "originY": 0},
-        {
-          "name": "fuel_upgrade",
-          "id": 604,
-          "_eid": "78144176",
-          "x": 396,
-          "y": 10184,
-          "originX": 0,
-          "originY": 0,
-          "values": {"add_flag": ""}
-        },
         {"name": "checkpoint", "id": 605, "_eid": "97277017", "x": 344, "y": 10176, "originX": 0, "originY": 0},
         {
           "name": "acid",
@@ -1496,7 +1486,7 @@
           "values": {"acid_id": "", "rise_speed": 0}
         },
         {"name": "player", "id": 614, "_eid": "68256185", "x": 276, "y": 10176},
-        {"name": "gun", "id": 615, "_eid": "77310519", "x": 432, "y": 10184, "originX": 0, "originY": 0}
+        {"name": "inside", "id": 617, "_eid": "35608956", "x": 596, "y": 10064, "width": 308, "height": 180, "originX": 0, "originY": 0}
       ]
     },
     {

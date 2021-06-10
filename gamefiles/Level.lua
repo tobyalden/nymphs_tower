@@ -143,6 +143,12 @@ function Level:initialize(paths)
                             entity["values"]["require_flag"]
                         )
                         table.insert(levelEntities, flagTrigger)
+                    elseif entity["name"] == "inside" then
+                        local inside = Inside:new(
+                            entity["x"], entity["y"],
+                            entity["width"], entity["height"]
+                        )
+                        table.insert(levelEntities, inside)
                     elseif entity["name"] == "checkpoint" then
                         local checkpoint = Checkpoint:new(entity["x"], entity["y"])
                         table.insert(levelEntities, checkpoint)
