@@ -20,7 +20,7 @@ function Level:initialize(paths)
     self.mask = Grid:new(self, standardWidth, totalHeight, 16, 16)
 
     local uniqueId = 0
-    local heightOffset = 0
+    heightOffset = 0
 
     for _, path in pairs(paths) do
         local levelEntities = {}
@@ -195,6 +195,7 @@ function Level:initialize(paths)
             table.insert(self.entities, entity)
         end
         heightOffset = heightOffset + jsonData["height"]
+        -- TODO: This may be bugged in how it messes with Acid.y but not Acid.originalY after the fact
     end
 
     -- set graphic

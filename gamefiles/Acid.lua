@@ -24,12 +24,20 @@ end
 function Acid:finishRise()
     self.graphic.scaleY = (
         1 + (self.riseTo / self.originalHeight - 1)
-        * 1
     )
+    --print('y ' .. self.y)
+    --print('originalY ' .. self.originalY)
+    --print('riseTo ' .. self.riseTo)
+    --print('originalHeight ' .. self.originalHeight)
     self.y = (
         self.originalY - (self.riseTo - self.originalHeight)
-        * 1
     )
+    --print('------------------------')
+    --print('y ' .. self.y)
+    --print('originalY ' .. self.originalY)
+    --print('riseTo ' .. self.riseTo)
+    --print('originalHeight ' .. self.originalHeight)
+    --print('\n')
     self.mask:updateHeight(self.originalHeight * self.graphic.scaleY)
 
     self.originalY = self.y

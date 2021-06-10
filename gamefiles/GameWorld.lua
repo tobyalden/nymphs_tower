@@ -10,8 +10,8 @@ function GameWorld:initialize()
     self.itemIds = {}
     self.level = Level:new({
         --"bonus3.json"
-        "level_top.json",
-        "level_middle.json",
+        --"level_top.json",
+        --"level_middle.json",
         "level.json"
     })
     self:add(self.level)
@@ -44,8 +44,12 @@ function GameWorld:initialize()
     end
     self.ui = UI:new()
     self:add(self.ui)
-    local background = Background:new()
-    self:add(background)
+    local cave = Background:new("background.png", 2, 0, 0)
+    self:add(cave)
+    local clouds = Background:new("clouds.png", 2, 0.2, 50)
+    self:add(clouds)
+    local fog = Background:new("fog.png", 1, 0.4, 100)
+    self:add(fog)
     self:loadSfx({"insideambience.wav"})
     self.sfx["insideambience"]:loop()
     self.cameraVelocity = Vector:new(0, 0)

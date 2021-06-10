@@ -1,4 +1,6 @@
 - add all graphics
+- add autofire
+- add sfx for when acid levels are changing
 - music
 - outside texture + transition
 - ending
@@ -7,6 +9,7 @@
 - main menu
 - add teleport to john's level
 - texture swap john's level
+- finish john's level
 - make sure you can't fall off tower before fighting miku
 - bugfix final boss healthbar on normal mode
 
