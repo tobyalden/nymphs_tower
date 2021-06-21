@@ -1,17 +1,20 @@
+- music
+- boss nodes are not offset
+- cloud layer has visible seam
+- add teleport to john's level
 - add all graphics
 - add autofire
+- add ambience for indoors and outdoors
 - add sfx for when acid levels are changing
-- music
-- outside texture + transition
 - ending
 - add timer
-- shorten item pickup sfx
 - main menu
-- add teleport to john's level
 - texture swap john's level
 - finish john's level
 - make sure you can't fall off tower before fighting miku
 - bugfix final boss healthbar on normal mode
++ shorten item pickup sfx
++ outside texture + transition
 
 MIN DEMO
 - add crown + jetpack

@@ -9,10 +9,11 @@ function GameWorld:initialize()
     self.flags = {}
     self.itemIds = {}
     self.level = Level:new({
-        --"bonus3.json"
-        --"level_top.json",
-        --"level_middle.json",
-        "level.json"
+        "level_1.json",
+        "level_2.json",
+        "level_3.json",
+        "level_4.json"
+        --"level.json"
     })
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do

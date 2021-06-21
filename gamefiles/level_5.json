@@ -1485,8 +1485,7 @@
           "originY": 0,
           "values": {"acid_id": "", "rise_speed": 0}
         },
-        {"name": "player", "id": 614, "_eid": "68256185", "x": 276, "y": 10176},
-        {"name": "inside", "id": 617, "_eid": "35608956", "x": 596, "y": 10064, "width": 308, "height": 180, "originX": 0, "originY": 0}
+        {"name": "player", "id": 614, "_eid": "68256185", "x": 276, "y": 10176}
       ]
     },
     {
@@ -1547,6 +1546,126 @@
         {"name": "camera_zone", "id": 51, "_eid": "71427043", "x": 2571, "y": 7845, "width": 320, "height": 180, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 52, "_eid": "71427043", "x": 2891, "y": 5426, "width": 1715, "height": 1700, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 53, "_eid": "71427043", "x": 2571, "y": 5426, "width": 320, "height": 2419, "originX": 0, "originY": 0}
+      ]
+    },
+    {
+      "name": "sound_zones",
+      "_eid": "30291001",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 16,
+      "gridCellHeight": 16,
+      "gridCellsX": 324,
+      "gridCellsY": 791,
+      "entities": [
+        {
+          "name": "inside",
+          "id": 0,
+          "_eid": "35608956",
+          "x": 2240,
+          "y": 4704,
+          "width": 368,
+          "height": 272,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": ""}
+        },
+        {
+          "name": "inside",
+          "id": 6,
+          "_eid": "35608956",
+          "x": 448,
+          "y": 4992,
+          "width": 1552,
+          "height": 1184,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": ""}
+        },
+        {
+          "name": "inside",
+          "id": 7,
+          "_eid": "35608956",
+          "x": 1952,
+          "y": 5008,
+          "width": 2512,
+          "height": 336,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": ""}
+        },
+        {
+          "name": "inside",
+          "id": 8,
+          "_eid": "35608956",
+          "x": 2464,
+          "y": 5376,
+          "width": 2096,
+          "height": 1568,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": ""}
+        },
+        {
+          "name": "inside",
+          "id": 9,
+          "_eid": "35608956",
+          "x": 2464,
+          "y": 6944,
+          "width": 640,
+          "height": 1072,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": ""}
+        },
+        {
+          "name": "inside",
+          "id": 12,
+          "_eid": "35608956",
+          "x": 544,
+          "y": 9760,
+          "width": 3792,
+          "height": 576,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "1"}
+        },
+        {
+          "name": "inside",
+          "id": 13,
+          "_eid": "35608956",
+          "x": 400,
+          "y": 11280,
+          "width": 4272,
+          "height": 1296,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "silence"}
+        },
+        {
+          "name": "inside",
+          "id": 14,
+          "_eid": "35608956",
+          "x": 592,
+          "y": 8992,
+          "width": 3424,
+          "height": 368,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "2"}
+        },
+        {
+          "name": "inside",
+          "id": 15,
+          "_eid": "35608956",
+          "x": 3584,
+          "y": 8768,
+          "width": 464,
+          "height": 272,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "2"}
+        }
       ]
     },
     {

@@ -445,6 +445,17 @@
       ]
     },
     {
+      "name": "sound_zones",
+      "_eid": "30291001",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 16,
+      "gridCellHeight": 16,
+      "gridCellsX": 324,
+      "gridCellsY": 145,
+      "entities": []
+    },
+    {
       "name": "walls",
       "_eid": "17724135",
       "offsetX": 0,
