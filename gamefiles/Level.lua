@@ -198,6 +198,19 @@ function Level:initialize(paths)
         end
         for _, entity in ipairs(levelEntities) do
             entity.y = entity.y + heightOffset
+            if entity.class == Acid then
+                entity.originalY = entity.originalY + heightOffset
+            end
+            if (
+                entity.class == Wizard
+                or entity.class == Miku
+                or entity.class == FinalBoss
+                or entity.class == SecretBoss
+            ) then
+                for _, node in ipairs(entity.nodes) do
+                    node.y = node.y + heightOffset
+                end
+            end
             table.insert(self.entities, entity)
         end
         heightOffset = heightOffset + jsonData["height"]

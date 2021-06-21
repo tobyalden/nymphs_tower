@@ -1,4 +1,6 @@
 - music
+- acid levels not offset
+- player walk cycle has a stray pixel
 - boss nodes are not offset
 - cloud layer has visible seam
 - add teleport to john's level
