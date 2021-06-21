@@ -614,7 +614,7 @@
           "height": 272,
           "originX": 0,
           "originY": 0,
-          "values": {"music": ""}
+          "values": {"music": "silence"}
         },
         {
           "name": "inside",
@@ -626,7 +626,7 @@
           "height": 1184,
           "originX": 0,
           "originY": 0,
-          "values": {"music": ""}
+          "values": {"music": "4"}
         },
         {
           "name": "inside",
@@ -638,7 +638,7 @@
           "height": 336,
           "originX": 0,
           "originY": 0,
-          "values": {"music": ""}
+          "values": {"music": "4"}
         },
         {
           "name": "inside",
@@ -650,7 +650,7 @@
           "height": 1568,
           "originX": 0,
           "originY": 0,
-          "values": {"music": ""}
+          "values": {"music": "silence"}
         }
       ]
     },
