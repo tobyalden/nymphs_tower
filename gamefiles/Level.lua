@@ -143,12 +143,6 @@ function Level:initialize(paths)
                             entity["values"]["require_flag"]
                         )
                         table.insert(levelEntities, flagTrigger)
-                    elseif entity["name"] == "inside" then
-                        local inside = Inside:new(
-                            entity["x"], entity["y"],
-                            entity["width"], entity["height"]
-                        )
-                        table.insert(levelEntities, inside)
                     elseif entity["name"] == "checkpoint" then
                         local checkpoint = Checkpoint:new(entity["x"], entity["y"])
                         table.insert(levelEntities, checkpoint)
@@ -195,6 +189,20 @@ function Level:initialize(paths)
                     end
                 end
             end
+
+            -- load camera zones
+            if layer["name"] == "sound_zones" then
+                for _, entity in pairs(layer["entities"]) do
+                    if entity["name"] == "inside" then
+                        local inside = Inside:new(
+                            entity["x"], entity["y"],
+                            entity["width"], entity["height"]
+                        )
+                        table.insert(levelEntities, inside)
+                    end
+                end
+            end
+
         end
         for _, entity in ipairs(levelEntities) do
             entity.y = entity.y + heightOffset

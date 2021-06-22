@@ -1,4 +1,7 @@
 - music
+- add ambience for indoors and outdoors
+- main menu
+- ending
 - acid levels not offset
 - player walk cycle has a stray pixel
 - boss nodes are not offset
@@ -6,11 +9,8 @@
 - add teleport to john's level
 - add all graphics
 - add autofire
-- add ambience for indoors and outdoors
 - add sfx for when acid levels are changing
-- ending
 - add timer
-- main menu
 - texture swap john's level
 - finish john's level
 - make sure you can't fall off tower before fighting miku

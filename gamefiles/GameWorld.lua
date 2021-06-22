@@ -51,8 +51,9 @@ function GameWorld:initialize()
     self:add(clouds)
     local fog = Background:new("fog.png", 1, 0.4, 100, false)
     self:add(fog)
-    self:loadSfx({"insideambience.wav"})
+    self:loadSfx({"insideambience.wav", "outsideambience.wav"})
     self.sfx["insideambience"]:loop()
+    self.sfx["outsideambience"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     self.cameraStartX = self.camera.x
@@ -233,10 +234,29 @@ function GameWorld:update(dt)
     self.previousPlayerFlipX = self.player.graphic.flipX
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
+    self:updateSounds(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
         self:clearSave()
         ammo.world = GameWorld:new()
+    end
+end
+
+function GameWorld:updateSounds(dt)
+    if self.player:isInside() then
+        self.sfx["insideambience"]:setVolume(
+            math.approach(self.sfx["insideambience"]:getVolume(), 1, dt)
+        )
+        self.sfx["outsideambience"]:setVolume(
+            math.approach(self.sfx["outsideambience"]:getVolume(), 0, dt)
+        )
+    else
+        self.sfx["insideambience"]:setVolume(
+            math.approach(self.sfx["insideambience"]:getVolume(), 0, dt)
+        )
+        self.sfx["outsideambience"]:setVolume(
+            math.approach(self.sfx["outsideambience"]:getVolume(), 1, dt)
+        )
     end
 end
 

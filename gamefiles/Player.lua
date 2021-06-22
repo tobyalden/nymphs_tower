@@ -101,6 +101,10 @@ function Player:initialize(x, y)
     end))
 end
 
+function Player:isInside()
+    return #self:collide(self.x, self.y, {"inside"}) > 0
+end
+
 function Player:isOnGround()
     if #self:collide(self.x, self.y + 0.01, Player.SOLIDS) > 0 then
         return true

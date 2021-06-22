@@ -13,11 +13,10 @@ end
 function Background:update(dt)
     self.x = self.x + dt * self.speed
     --self.y = self.y + dt * 60
-    local collidedInsides = self.world.player:collide(
-        self.world.player.x, self.world.player.y, {"inside"}
-    )
-    local playerIsInside = #collidedInsides > 0
-    if self.isInside and playerIsInside or not self.isInside and not playerIsInside then
+    if (
+        self.isInside and self.world.player:isInside()
+        or not self.isInside and not self.world.player:isInside()
+    ) then
         self.graphic.alpha = math.approach(self.graphic.alpha, 1, dt)
     else
         self.graphic.alpha = math.approach(self.graphic.alpha, 0, dt)
