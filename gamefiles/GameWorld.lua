@@ -4,6 +4,9 @@ GameWorld.static.CAMERA_SPEED = 1.5
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
 GameWorld.static.MUSIC_FADE_SPEED = 0.2
+GameWorld.static.ALL_INDOORS_MUSIC = {
+    "explore1", "explore2", "explore3", "explore4", "silence"
+}
 
 function GameWorld:initialize()
     World.initialize(self)
@@ -55,7 +58,8 @@ function GameWorld:initialize()
     self:loadSfx({
         "insideambience.wav", "outsideambience.wav",
         "explore1.ogg", "explore2.ogg", "explore3.ogg", "explore4.ogg",
-        "boss1.ogg", "boss2.ogg", "boss3.ogg", "outside.ogg"
+        "boss1.ogg", "boss2.ogg", "boss3.ogg",
+        "outside.ogg", "silence.wav"
     })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
@@ -267,9 +271,16 @@ function GameWorld:updateSounds(dt)
 
     -- update music
     if self.player:isInside() then
+        local musicName = self.player:collide(
+            self.player.x, self.player.y, {"inside"}
+        )[1].musicName
+        self.sfx[musicName]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
         self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
     else
         self.sfx["outside"]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+        for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
+            self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+        end
     end
 end
 

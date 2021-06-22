@@ -5,6 +5,7 @@ function Inside:initialize(x, y, width, height, musicName)
     self.types = {"inside"}
     self.mask = Hitbox:new(self, width, height)
     self.musicName = musicName
+    --print(self.musicName)
 end
 
 

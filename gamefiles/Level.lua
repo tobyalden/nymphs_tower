@@ -196,7 +196,8 @@ function Level:initialize(paths)
                     if entity["name"] == "inside" then
                         local inside = Inside:new(
                             entity["x"], entity["y"],
-                            entity["width"], entity["height"]
+                            entity["width"], entity["height"],
+                            entity["values"]["music"]
                         )
                         table.insert(levelEntities, inside)
                     end

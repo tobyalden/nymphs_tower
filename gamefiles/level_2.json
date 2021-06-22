@@ -626,7 +626,7 @@
           "height": 1184,
           "originX": 0,
           "originY": 0,
-          "values": {"music": "4"}
+          "values": {"music": "explore4"}
         },
         {
           "name": "inside",
@@ -638,7 +638,7 @@
           "height": 336,
           "originX": 0,
           "originY": 0,
-          "values": {"music": "4"}
+          "values": {"music": "explore4"}
         },
         {
           "name": "inside",
