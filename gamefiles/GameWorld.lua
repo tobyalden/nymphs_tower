@@ -282,13 +282,13 @@ function GameWorld:updateSounds(dt)
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then
-        self.sfx[GameWorld.static.ALL_BOSS_MUSIC[self.currentBoss.flag]]:fadeIn(dt)
+        self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]:fadeIn(dt)
         self.sfx["outside"]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
         end
     else
-        for _, v in ipairs(GameWorld.ALL_BOSS_MUSIC) do
+        for _, v in pairs(GameWorld.ALL_BOSS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
         end
         if self.player:isInside() then

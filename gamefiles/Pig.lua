@@ -10,10 +10,13 @@ function Pig:initialize(x, y)
     self.flag = "pig"
     self.types = {"enemy"}
     self.startingHealth = 12
-    --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("pig.png")
-    self.mask = Hitbox:new(self, 64, 64)
+    self.graphic = Sprite:new("pig.png", 64, 64)
+    self.graphic.offsetY = -5
+    self.mask = Hitbox:new(self, 64, 59)
+    self.graphic:add("idle", {1})
+    self.graphic:add("run", {1, 2, 3, 2}, 6)
+    self.graphic:play("idle")
     self.layer = 0
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
@@ -21,6 +24,14 @@ function Pig:initialize(x, y)
 end
 
 function Pig:update(dt)
+    if self.world.currentBoss == self then
+        self.graphic:play("run")
+        if self.velocity.x < 0 then
+            self.graphic.flipX = true
+        elseif self.velocity.x > 0 then
+            self.graphic.flipX = false
+        end
+    end
     self:bossUpdate(dt)
     Entity.update(self, dt)
 end
