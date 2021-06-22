@@ -65,6 +65,12 @@ function Sound:getVolume()
     end
 end
 
+function Sound:stop()
+    for _, v in pairs(self._sources) do
+        v:stop()
+    end
+end
+
 function Sound:stopLoops()
     for _, v in pairs(self._sources) do
         if(v:isLooping()) then

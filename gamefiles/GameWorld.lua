@@ -3,6 +3,7 @@ GameWorld = class("GameWorld", World)
 GameWorld.static.CAMERA_SPEED = 1.5
 GameWorld.static.CAMERA_BUFFER_X = 60
 GameWorld.static.CAMERA_BUFFER_Y = 30
+GameWorld.static.MUSIC_FADE_SPEED = 0.2
 
 function GameWorld:initialize()
     World.initialize(self)
@@ -52,7 +53,9 @@ function GameWorld:initialize()
     local fog = Background:new("fog.png", 1, 0.4, 100, false)
     self:add(fog)
     self:loadSfx({
-        "insideambience.wav", "outsideambience.wav"
+        "insideambience.wav", "outsideambience.wav",
+        "explore1.ogg", "explore2.ogg", "explore3.ogg", "explore4.ogg",
+        "boss1.ogg", "boss2.ogg", "boss3.ogg", "outside.ogg"
     })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
@@ -129,7 +132,7 @@ function GameWorld:saveGame(saveX, saveY)
             acidLevels[entity.uniqueId] = entity.riseTo
         end
     end
-    print('saving acid levels: '..inspect(acidLevels))
+    --print('saving acid levels: '..inspect(acidLevels))
     saveData.save(acidLevels, "acidLevels")
 end
 
@@ -155,10 +158,10 @@ function GameWorld:loadGame()
     end
 
     self.itemIds = saveData.load("itemIds")
-    print('loaded itemIds: ' .. inspect(self.itemIds))
+    --print('loaded itemIds: ' .. inspect(self.itemIds))
 
     local acidLevels = saveData.load("acidLevels")
-    print('loading acid levels: '..inspect(acidLevels))
+    --print('loading acid levels: '..inspect(acidLevels))
     for _, entity in pairs(self.level.entities) do
         local isAcid = false
         for _, entityType in pairs(entity.types) do
@@ -264,7 +267,26 @@ function GameWorld:updateSounds(dt)
 
     -- update music
     if self.player:isInside() then
+        if self.sfx["outside"]:isPlaying() then
+            if self.sfx["outside"]:getVolume() > 0 then
+                self.sfx["outside"]:setVolume(math.approach(
+                    self.sfx["outside"]:getVolume(),
+                    0,
+                    dt * GameWorld.MUSIC_FADE_SPEED
+                ))
+            else
+                self.sfx["outside"]:stop()
+            end
+        end
     else
+        if not self.sfx["outside"]:isPlaying() then
+            self.sfx["outside"]:loop()
+        end
+        self.sfx["outside"]:setVolume(math.approach(
+            self.sfx["outside"]:getVolume(),
+            1,
+            dt * GameWorld.MUSIC_FADE_SPEED)
+        )
     end
 end
 
