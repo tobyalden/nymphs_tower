@@ -267,26 +267,9 @@ function GameWorld:updateSounds(dt)
 
     -- update music
     if self.player:isInside() then
-        if self.sfx["outside"]:isPlaying() then
-            if self.sfx["outside"]:getVolume() > 0 then
-                self.sfx["outside"]:setVolume(math.approach(
-                    self.sfx["outside"]:getVolume(),
-                    0,
-                    dt * GameWorld.MUSIC_FADE_SPEED
-                ))
-            else
-                self.sfx["outside"]:stop()
-            end
-        end
+        self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
     else
-        if not self.sfx["outside"]:isPlaying() then
-            self.sfx["outside"]:loop()
-        end
-        self.sfx["outside"]:setVolume(math.approach(
-            self.sfx["outside"]:getVolume(),
-            1,
-            dt * GameWorld.MUSIC_FADE_SPEED)
-        )
+        self.sfx["outside"]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
     end
 end
 

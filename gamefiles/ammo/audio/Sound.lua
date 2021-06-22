@@ -53,6 +53,23 @@ function Sound:play(restart, volume, pan, isLooping)
     return source
 end
 
+function Sound:fadeOut(fadeAmount)
+    if self:isPlaying() then
+        if self:getVolume() > 0 then
+            self:setVolume(math.approach(self:getVolume(), 0, fadeAmount))
+        else
+            self:stop()
+        end
+    end
+end
+
+function Sound:fadeIn(fadeAmount)
+    if not self:isPlaying() then
+        self:loop()
+    end
+    self:setVolume(math.approach(self:getVolume(), 1, fadeAmount))
+end
+
 function Sound:setVolume(volume)
     for _, v in pairs(self._sources) do
         v:setVolume(volume)
