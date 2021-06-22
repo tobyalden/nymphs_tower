@@ -51,7 +51,9 @@ function GameWorld:initialize()
     self:add(clouds)
     local fog = Background:new("fog.png", 1, 0.4, 100, false)
     self:add(fog)
-    self:loadSfx({"insideambience.wav", "outsideambience.wav"})
+    self:loadSfx({
+        "insideambience.wav", "outsideambience.wav"
+    })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
@@ -243,6 +245,7 @@ function GameWorld:update(dt)
 end
 
 function GameWorld:updateSounds(dt)
+    -- update ambience
     if self.player:isInside() then
         self.sfx["insideambience"]:setVolume(
             math.approach(self.sfx["insideambience"]:getVolume(), 1, dt)
@@ -257,6 +260,11 @@ function GameWorld:updateSounds(dt)
         self.sfx["outsideambience"]:setVolume(
             math.approach(self.sfx["outsideambience"]:getVolume(), 1, dt)
         )
+    end
+
+    -- update music
+    if self.player:isInside() then
+    else
     end
 end
 
