@@ -7,6 +7,13 @@ GameWorld.static.MUSIC_FADE_SPEED = 0.2
 GameWorld.static.ALL_INDOORS_MUSIC = {
     "explore1", "explore2", "explore3", "explore4", "silence"
 }
+GameWorld.static.ALL_BOSS_MUSIC = {
+    pig = "boss1",
+    wizard = "boss1",
+    miku = "boss1",
+    finalboss = "boss2",
+    secret_boss = "boss3"
+}
 
 function GameWorld:initialize()
     World.initialize(self)
@@ -24,7 +31,7 @@ function GameWorld:initialize()
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                --self:loadGame()
+                self:loadGame()
             end
             self:add(entity)
         end
@@ -270,16 +277,31 @@ function GameWorld:updateSounds(dt)
     end
 
     -- update music
-    if self.player:isInside() then
-        local musicName = self.player:collide(
-            self.player.x, self.player.y, {"inside"}
-        )[1].musicName
-        self.sfx[musicName]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
-        self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
-    else
-        self.sfx["outside"]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+    if self.player.isDead then
+        for _, v in pairs(self.sfx) do
+            v:stopLoops()
+        end
+    elseif self.currentBoss ~= nil then
+        self.sfx[GameWorld.static.ALL_BOSS_MUSIC[self.currentBoss.flag]]:fadeIn(dt)
+        self.sfx["outside"]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
-            self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.sfx[v]:fadeOut(dt)
+        end
+    else
+        for _, v in ipairs(GameWorld.ALL_BOSS_MUSIC) do
+            self.sfx[v]:fadeOut(dt)
+        end
+        if self.player:isInside() then
+            local musicName = self.player:collide(
+                self.player.x, self.player.y, {"inside"}
+            )[1].musicName
+            self.sfx[musicName]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+        else
+            self.sfx["outside"]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
+                self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+            end
         end
     end
 end

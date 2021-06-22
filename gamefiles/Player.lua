@@ -35,6 +35,7 @@ function Player:initialize(x, y)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
+    self.isDead = false
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
@@ -297,6 +298,7 @@ end
 
 function Player:die()
     -- Version with hitstop
+    self.isDead = true
     self:explode(30, 250, 2, 2, 0, 0, -99, true)
     self:explode(20, 180, 1.5, 2, 0, 0, -99, true)
     self:explode(10, 150, 1, 2, 0, 0, -99, true)
