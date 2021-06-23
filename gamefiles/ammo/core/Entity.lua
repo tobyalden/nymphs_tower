@@ -300,25 +300,6 @@ function Entity:_drawGraphic(graphic)
             0,
             drawScaleX, drawScaleY
         )
-    elseif graphic.class == Tilemap then
-        love.graphics.draw(graphic.batch, self.x, self.y)
-    elseif graphic.class == Text then
-        love.graphics.draw(
-            graphic.image,
-            self.x + graphic.offsetX, self.y + graphic.offsetY
-        )
-    elseif graphic.class == Backdrop then
-        local drawX = (
-            self.x * scroll % graphic.image:getWidth()
-            + math.floor(self.world.camera.x * scroll / graphic.image:getWidth())
-            * graphic.image:getWidth()
-        )
-        local drawY = (
-            self.y * scroll % graphic.image:getHeight()
-            + math.floor(self.world.camera.y * scroll / graphic.image:getHeight())
-            * graphic.image:getHeight()
-        )
-        love.graphics.draw(graphic.batch, drawX, drawY)
     elseif graphic.class == TiledSprite then
         local tiledFrame = graphic.tiledFrames[
             graphic.currentAnimation.frames[
@@ -352,6 +333,25 @@ function Entity:_drawGraphic(graphic)
             0,
             drawScaleX, drawScaleY
         )
+    elseif graphic.class == Tilemap then
+        love.graphics.draw(graphic.batch, self.x, self.y)
+    elseif graphic.class == Text then
+        love.graphics.draw(
+            graphic.image,
+            self.x + graphic.offsetX, self.y + graphic.offsetY
+        )
+    elseif graphic.class == Backdrop then
+        local drawX = (
+            self.x * scroll % graphic.image:getWidth()
+            + math.floor(self.world.camera.x * scroll / graphic.image:getWidth())
+            * graphic.image:getWidth()
+        )
+        local drawY = (
+            self.y * scroll % graphic.image:getHeight()
+            + math.floor(self.world.camera.y * scroll / graphic.image:getHeight())
+            * graphic.image:getHeight()
+        )
+        love.graphics.draw(graphic.batch, drawX, drawY)
     end
     self.world.camera:unset()
     love.graphics.setColor(r, g, b, a)

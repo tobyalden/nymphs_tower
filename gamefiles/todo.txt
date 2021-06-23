@@ -1,24 +1,28 @@
-- music
-- add ambience for indoors and outdoors
-- main menu
++ main menu
+- fix miku hitbox
+- add more logical quest chain with harmonica and crown
+- add teleport to john's level
+- texture swap john's level
+- finish john's level
 - ending
-- acid levels not offset
+
 - player walk cycle has a stray pixel
 - fix hitboxes on items
-- inside texture does not tile vertically
-- boss nodes are not offset
 - cloud layer has visible seam
-- add teleport to john's level
 - add all graphics
 - add autofire
 - add sfx for when acid levels are changing
 - add timer
-- texture swap john's level
-- finish john's level
 - make sure you can't fall off tower before fighting miku
 - bugfix final boss healthbar on normal mode
+
 + shorten item pickup sfx
 + outside texture + transition
++ music
++ add ambience for indoors and outdoors
++ acid levels not offset
++ inside texture does not tile vertically
++ boss nodes are not offset
 
 MIN DEMO
 - add crown + jetpack
