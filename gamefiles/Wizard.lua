@@ -41,6 +41,9 @@ function Wizard:initialize(x, y, nodes)
 end 
 
 function Wizard:update(dt)
+    self.graphic.flipX = (
+        self.world.player:getMaskCenter().x > self:getMaskCenter().x
+    )
     self:bossUpdate(dt)
     Entity.update(self, dt)
 end
