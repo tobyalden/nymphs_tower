@@ -62,10 +62,10 @@ function UI:update(dt)
     end
     fuelBar.scaleX = (
         self.world.player.fuel / Player.STARTING_FUEL
-    )
+    ) / 2
     healthBar.scaleX = (
         self.world.player.health / Player.STARTING_HEALTH
-    )
+    ) / 2
     Entity.update(self, dt)
 end
 
