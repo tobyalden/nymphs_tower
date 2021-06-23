@@ -56,7 +56,7 @@ function GameWorld:initialize()
     end
     self.ui = UI:new()
     self:add(self.ui)
-    local cave = Background:new("background.png", 2, 1, 0, true)
+    local cave = Background:new("background_light.png", 2, 1, 0, true)
     self:add(cave)
     local clouds = Background:new("clouds.png", 2, 0.2, 50, false)
     self:add(clouds)
