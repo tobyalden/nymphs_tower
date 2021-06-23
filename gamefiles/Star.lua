@@ -5,7 +5,9 @@ Star.static.MOVE_SPEED = 100
 function Star:initialize(x, y, headingX, headingY)
     Entity.initialize(self, x, y)
     self.types = {"enemy"}
-    self.graphic = Sprite:new("star.png")
+    self.graphic = Sprite:new("star.png", 16, 16)
+    self.graphic:add("idle", {1, 2}, 6)
+    self.graphic:play("idle")
     self.mask = Hitbox:new(self, 12, 12)
     self.graphic.offsetX = -2
     self.graphic.offsetY = -2
