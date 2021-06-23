@@ -3,7 +3,7 @@ Lock = class("Lock", Entity)
 function Lock:initialize(x, y, width, height, flag)
     Entity.initialize(self, x, y)
     self.types = {"lock"}
-    self.graphic = TiledSprite:new("lock.png", 16, 16, width, height)
+    self.graphic = TiledSprite:new("lock.png", 32, 32, width, height)
     self.mask = Hitbox:new(self, width, height)
     self.layer = -2
     self.flag = flag
