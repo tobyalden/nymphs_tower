@@ -79,6 +79,7 @@ function GameWorld:initialize()
     self.previousPlayerFlipX = false
     self.previousCameraZone = nil
     self.currentBoss = nil
+    self.currentMusic = nil
     self.isHardMode = false
     self.curtain = Curtain:new()
     self:add(self.curtain)
@@ -284,7 +285,8 @@ function GameWorld:updateSounds(dt)
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then
-        self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]:fadeIn(dt)
+        self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]
+        self.currentMusic:fadeIn(dt)
         self.sfx["outside"]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
@@ -297,13 +299,21 @@ function GameWorld:updateSounds(dt)
             local musicName = self.player:collide(
                 self.player.x, self.player.y, {"inside"}
             )[1].musicName
-            self.sfx[musicName]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.currentMusic = self.sfx[musicName]
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
             self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
         else
-            self.sfx["outside"]:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.currentMusic = self.sfx["outside"]
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
             for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
                 self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
             end
+        end
+    end
+
+    if self.player.isPlayingHarmonica then
+        if self.currentMusic ~= nil then
+            self.currentMusic:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED * 2, false)
         end
     end
 end

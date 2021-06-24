@@ -85,7 +85,6 @@ function Player:initialize(x, y)
     ))
     self.knockbackTimer = self:addTween(Alarm:new(Player.KNOCKBACK_TIME))
     self.fuelRecoveryTimer = self:addTween(Alarm:new(Player.FUEL_RECOVERY_DELAY))
-    --self.sfx["longmusic"]:loop()
     self.wasOnGround = false
     self.wasJetpackOn = false
     self.wasInAcid = false

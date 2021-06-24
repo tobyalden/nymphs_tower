@@ -53,11 +53,12 @@ function Sound:play(restart, volume, pan, isLooping)
     return source
 end
 
-function Sound:fadeOut(fadeAmount)
+function Sound:fadeOut(fadeAmount, stop)
+    stop = stop or true
     if self:isPlaying() then
         if self:getVolume() > 0 then
             self:setVolume(math.approach(self:getVolume(), 0, fadeAmount))
-        else
+        elseif stop then
             self:stop()
         end
     end
