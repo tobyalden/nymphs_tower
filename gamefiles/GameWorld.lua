@@ -56,11 +56,13 @@ function GameWorld:initialize()
     end
     self.ui = UI:new()
     self:add(self.ui)
-    local cave = Background:new("background_light.png", 2, 1, 0, true)
+    local cave = Background:new("background_light.png", 3, 1, 0, true)
     self:add(cave)
-    local clouds = Background:new("clouds.png", 2, 0.2, 50, false)
+    local light = Background:new("shadows.png", 2, 0.6, 2, true)
+    self:add(light)
+    local clouds = Background:new("clouds.png", 3, 0.2, 50, false)
     self:add(clouds)
-    local fog = Background:new("fog.png", 1, 0.4, 100, false)
+    local fog = Background:new("fog.png", 2, 0.4, 100, false)
     self:add(fog)
     self:loadSfx({
         "insideambience.wav", "outsideambience.wav",

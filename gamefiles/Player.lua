@@ -64,16 +64,16 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
-    self.hasGun = true
+    self.hasGun = false
     self.hasGravityBelt = false
     self.hasHazardSuit = false
     self.hasHarmonica = false
     self.isGravityBeltEquipped = false
 
-    self.healthUpgrades = 8 -- MAX
-    self.fuelUpgrades = 5 -- MAX
-    --self.healthUpgrades = 0
-    --self.fuelUpgrades = 0
+    --self.healthUpgrades = 8 -- MAX
+    --self.fuelUpgrades = 5 -- MAX
+    self.healthUpgrades = 0
+    self.fuelUpgrades = 0
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -177,6 +177,7 @@ function Player:movement(dt)
     else
         self.velocity.x = math.approach(self.velocity.x, 0, accel * dt)
     end
+    -- TODO: Speedrun tech where jetpack affects your x velocity slightly?
     self.velocity.x = math.clamp(self.velocity.x, -speed, speed)
     if self:isOnGround() then
         self.velocity.y = 0
@@ -330,7 +331,7 @@ function Player:die()
 end
 
 function Player:shooting()
-    if self.hasGun and (input.pressed("shoot") or self.isBufferingShot) then
+    if self.hasGun and (input.down("shoot") or self.isBufferingShot) then
         if self.shotCooldown.active then
             if self.shotCooldown:getPercentComplete() > 0.75 then
                 self.isBufferingShot = true
