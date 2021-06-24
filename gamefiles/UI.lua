@@ -6,6 +6,9 @@ local fuelBar
 local fuelText
 local messageBar
 local message
+local gravityBelt
+local hazardSuit
+local harmonica
 
 function UI:initialize()
     Entity.initialize(self)
@@ -24,6 +27,17 @@ function UI:initialize()
     fuelText.offsetX = 5
     fuelText.offsetY = 17
 
+    gravityBelt = Sprite:new("gravitybelticon.png", 16, 16)
+    gravityBelt:add("off", {1})
+    gravityBelt:add("on", {2})
+    gravityBelt.offsetY = fuelBar.offsetY + 10
+
+    hazardSuit = Sprite:new("hazardsuiticon.png")
+    hazardSuit.offsetY = fuelBar.offsetY + 10
+
+    harmonica = Sprite:new("harmonicaicon.png")
+    harmonica.offsetY = fuelBar.offsetY + 10
+
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
     messageBar.offsetY = 180 - 24 - 9
@@ -40,7 +54,10 @@ function UI:initialize()
     bossName.offsetX = 10
     bossName.offsetY = 180 - 19
 
-    local allGraphics = {healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar, bossName}
+    local allGraphics = {
+        healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
+        bossName, gravityBelt, hazardSuit, harmonica
+    }
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
     self.graphic.scroll = 0
@@ -49,6 +66,34 @@ function UI:initialize()
 end
 
 function UI:update(dt)
+    local items = {}
+    if self.world.player.hasGravityBelt then
+        gravityBelt.alpha = 1
+        if self.world.player.isGravityBeltEquipped then
+            gravityBelt:play("on")
+        else
+            gravityBelt:play("off")
+        end
+        table.insert(items, gravityBelt)
+    else
+        gravityBelt.alpha = 0
+    end
+    if self.world.player.hasHazardSuit then
+        hazardSuit.alpha = 1
+        table.insert(items, hazardSuit)
+    else
+        hazardSuit.alpha = 0
+    end
+    if self.world.player.hasHarmonica then
+        harmonica.alpha = 1
+        table.insert(items, harmonica)
+    else
+        harmonica.alpha = 0
+    end
+    for i, item in ipairs(items) do
+        item.offsetX = 5 + 16 * (i - 1)
+    end
+
     if self.world.currentBoss then
         bossBar.alpha = 1
         bossName.alpha = 1
