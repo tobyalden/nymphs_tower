@@ -178,6 +178,11 @@ function Player:movement(dt)
         self.velocity.x = math.approach(self.velocity.x, 0, accel * dt)
     end
     -- TODO: Speedrun tech where jetpack affects your x velocity slightly?
+    --if self.velocity.x > speed then
+        --self.velocity.x = math.approach(self.velocity.x, speed, dt * Player.RUN_ACCEL)
+    --elseif self.velocity.x < -speed then
+        --self.velocity.x = math.approach(self.velocity.x, -speed, dt * Player.RUN_ACCEL)
+    --end
     self.velocity.x = math.clamp(self.velocity.x, -speed, speed)
     if self:isOnGround() then
         self.velocity.y = 0
@@ -230,8 +235,12 @@ function Player:movement(dt)
         self.sfx["run"]:stop()
         self.runParticleTimer.active = false
     end
+    local velocityXTech = self.velocity.x
+    if isJetpackOn and not self:isOnGround() then
+        velocityXTech = velocityXTech * 1.1
+    end
     self:moveBy(
-        self.velocity.x * dt,
+        velocityXTech * dt,
         self.velocity.y * dt,
         Player.SOLIDS
     )
