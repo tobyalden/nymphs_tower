@@ -64,16 +64,17 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
-    self.hasGun = false
-    self.hasGravityBelt = false
-    self.hasHazardSuit = false
-    self.hasHarmonica = false
+    self.hasGun = true
+    self.hasGravityBelt = true
+    self.hasHazardSuit = true
+    self.hasHarmonica = true
     self.isGravityBeltEquipped = false
+    self.isPlayingHarmonica = false
 
-    --self.healthUpgrades = 8 -- MAX
-    --self.fuelUpgrades = 5 -- MAX
-    self.healthUpgrades = 0
-    self.fuelUpgrades = 0
+    self.healthUpgrades = 8 -- MAX
+    self.fuelUpgrades = 5 -- MAX
+    --self.healthUpgrades = 0
+    --self.fuelUpgrades = 0
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -145,6 +146,15 @@ function Player:moveCollideY(collided)
 end
 
 function Player:movement(dt)
+    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") then
+        self.isPlayingHarmonica = true
+    else
+        self.isPlayingHarmonica = false
+    end
+    if self.isPlayingHarmonica then
+        return
+    end
+
     local gravity = Player.GRAVITY
     if self.isGravityBeltEquipped then
         gravity = Player.GRAVITY / 1.5
@@ -219,7 +229,7 @@ function Player:movement(dt)
             self:getMaxFuel()
         )
     end
-    if  self.isGravityBeltEquipped then
+    if self.isGravityBeltEquipped then
       self.velocity.y = math.clamp(
           self.velocity.y, -Player.MAX_RISE_SPEED * 1.25, Player.MAX_FALL_SPEED * 1.25
       )
@@ -227,13 +237,6 @@ function Player:movement(dt)
         self.velocity.y = math.clamp(
             self.velocity.y, -Player.MAX_RISE_SPEED, Player.MAX_FALL_SPEED
         )
-    end
-    if self:isOnGround() and self.velocity.x ~= 0 then
-        self.sfx["run"]:loop()
-        self.runParticleTimer.active = true
-    else
-        self.sfx["run"]:stop()
-        self.runParticleTimer.active = false
     end
     local velocityXTech = self.velocity.x
     if isJetpackOn and not self:isOnGround() then
@@ -247,6 +250,11 @@ function Player:movement(dt)
 end
 
 function Player:animation()
+    if self:isOnGround() and self.velocity.x ~= 0 then
+        self.runParticleTimer.active = true
+    else
+        self.runParticleTimer.active = false
+    end
     if self.invincibleTimer.active then
         local invincibleAlpha = 0.25
         if self.graphic.alpha == invincibleAlpha then
@@ -274,7 +282,9 @@ function Player:animation()
     else
         animationSuffix = "";
     end
-    if self:isOnGround() then
+    if self.isPlayingHarmonica then
+        self.graphic:play("harmonica")
+    elseif self:isOnGround() then
         if self.velocity.x ~= 0 then
             self.graphic:play("run"  ..  animationSuffix)
         else
@@ -594,10 +604,38 @@ end
 
 
 function Player:handleSfx()
-    if self.health > 0 then
+    if self.isDead then
+        self.sfx["run"]:stop()
+        self.sfx["acid"]:stop()
+        self.sfx["jetpack"]:stop()
+        self.sfx["harmonica"]:stop()
+        self.sfx["harmonica_angel"]:stop()
+    else
         if not self.wasOnGround and self:isOnGround() then
             self.sfx["land"]:play()
             self:explode(4, 40, 1, 12, 0, 10, 1)
+        end
+        if self:isOnGround() and self.velocity.x ~= 0 then
+            self.sfx["jetpack"]:loop()
+        else
+            self.sfx["run"]:stop()
+        end
+
+        local harmonicaSfxName = "harmonica"
+        -- TODO: Remove hardcoded value here
+        if self.y == 1499 then
+            harmonicaSfxName = "harmonica_angel"
+        end
+        if self.isPlayingHarmonica then
+            if not self.sfx[harmonicaSfxName]:isPlaying() then
+                self.harmonicaDelay:start()
+                self.sfx[harmonicaSfxName]:loop()
+            end
+        else
+            if self.sfx[harmonicaSfxName]:isPlaying() and not self.harmonicaDelay.active then
+                self.sfx["harmonica_stop"]:play()
+            end
+            self.sfx[harmonicaSfxName]:stop()
         end
         if isJetpackOn then
             self.sfx["jetpack"]:loop()
@@ -639,23 +677,6 @@ function Player:update(dt)
     self:animation()
 
     Entity.update(self, dt)
-
-    local sfxName = "harmonica"
-    -- TODO: Remove hardcoded value here
-    if self.y == 1499 then
-        sfxName = "harmonica_angel"
-    end
-    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") then
-        if not self.sfx[sfxName]:isPlaying() then
-            self.harmonicaDelay:start()
-            self.sfx[sfxName]:loop()
-        end
-    else
-        if self.sfx[sfxName]:isPlaying() and not self.harmonicaDelay.active then
-            self.sfx["harmonica_stop"]:play()
-        end
-        self.sfx[sfxName]:stop()
-    end
 
     self:handleSfx()
     self.wasOnGround = self:isOnGround()
