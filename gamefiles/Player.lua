@@ -59,7 +59,8 @@ function Player:initialize(x, y)
         "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav",
         "acidland.wav", "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
         "fueljingle.wav", "healthjingle.wav", "itemjingle.wav",
-        "harmonica.wav", "harmonica_stop.wav", "harmonica_angel.wav"
+        "harmonica.wav", "harmonica_stop.wav", "harmonica_angel.wav",
+        "equip.wav", "unequip.wav", "highjump.wav"
     })
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
@@ -199,10 +200,11 @@ function Player:movement(dt)
         if input.pressed("jump") then
             if self.isGravityBeltEquipped then
                 self.velocity.y = -Player.JUMP_POWER * 1.25
+                self.sfx["highjump"]:play()
             else
                 self.velocity.y = -Player.JUMP_POWER
+                self.sfx["jump"]:play()
             end
-            self.sfx["jump"]:play()
             self:explode(4, 40, 1, 12, 0, 10, 1)
             releasedJump = false
         end
@@ -361,7 +363,7 @@ function Player:shooting()
             end
             local bullet = PlayerBullet:new(
                 self.x,
-                self.y + 8
+                self.y + 8,
                 bulletHeading
             )
             if self:isOnGround() then
@@ -684,6 +686,11 @@ function Player:update(dt)
     self:collisions(dt)
     if input.pressed("up") and self.hasGravityBelt then
         self.isGravityBeltEquipped = not self.isGravityBeltEquipped
+        if self.isGravityBeltEquipped then
+            self.sfx["equip"]:play()
+        else
+            self.sfx["unequip"]:play()
+        end
     end
     self:movement(dt)
     self:animation()

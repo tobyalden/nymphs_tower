@@ -14,6 +14,7 @@ function Star:initialize(x, y, headingX, headingY)
     self.velocity = Vector:new(headingX, headingY)
     self.velocity:normalize(Star.MOVE_SPEED)
     self.layer = -1
+    self:loadSfx({"bounce.wav"})
 end
 
 function Star:update(dt)
@@ -28,10 +29,21 @@ function Star:update(dt)
     Entity.update(self, dt)
 end
 
+function Star:playBounceSound()
+    local distanceFromPlayer = self:distanceFrom(self.world.player)
+    if distanceFromPlayer > 250 then
+        return
+    end
+    local volume = math.min(100 / distanceFromPlayer, 1)
+    self.sfx["bounce"]:play(true, volume)
+end
+
 function Star:moveCollideX(collided)
     self.velocity.x = -self.velocity.x
+    self:playBounceSound()
 end
 
 function Star:moveCollideY(collided)
     self.velocity.y = -self.velocity.y
+    self:playBounceSound()
 end

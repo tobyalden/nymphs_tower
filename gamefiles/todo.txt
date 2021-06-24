@@ -1,9 +1,9 @@
 + main menu
++ stop footstep sfx on death
 - fix miku hitbox
 - fade out music when you get really high
 - add sfx for enemies and turning gravity belt on/off
 - add graphical indicator for gravity belt
-- stop footstep sfx on death
 - add more logical quest chain with harmonica and crown
 - add teleport to john's level
 - texture swap john's level

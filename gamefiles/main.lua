@@ -43,8 +43,8 @@ require("Inside")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = true
-local windowedScale = 4
+local fullscreen = false
+local windowedScale = 2
 
 function love.load()
     input.define("up", "up")
