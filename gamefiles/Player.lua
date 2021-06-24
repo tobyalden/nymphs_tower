@@ -361,9 +361,22 @@ function Player:shooting()
             end
             local bullet = PlayerBullet:new(
                 self.x,
-                self.y - 11 + 15 + 4,
+                self.y + 8
                 bulletHeading
             )
+            if self:isOnGround() then
+                if self.velocity:len() ~= 0 then
+                    bullet.y = bullet.y - 2
+                else
+                    bullet.y = bullet.y - 1
+                end
+            else
+                if isJetpackOn then
+                    bullet.y = bullet.y - 4
+                else
+                    bullet.y = bullet.y - 2
+                end
+            end
             self.world:add(bullet)
             local choices = {1, 2, 3}
             --self.sfx['shoot' .. math.random(#choices)]:play()
