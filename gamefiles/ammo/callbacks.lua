@@ -3,6 +3,7 @@
 
 if input and ammo.db then
     function love.update(dt)
+        love.globalUpdate()
         ammo.update(dt)
         ammo.db.update(dt)
         input.update()
@@ -19,11 +20,13 @@ if input and ammo.db then
     end
 elseif ammo.db then
     function love.update(dt)
+        love.globalUpdate()
         ammo.update(dt)
         ammo.db.update(dt)
     end
 elseif input then
     function love.update(dt)
+        love.globalUpdate()
         ammo.update(dt)
         input.update()
     end

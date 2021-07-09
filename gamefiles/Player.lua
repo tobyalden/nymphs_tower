@@ -66,9 +66,9 @@ function Player:initialize(x, y)
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
     self.hasGun = false
-    self.hasGravityBelt = true
-    self.hasHazardSuit = true
-    self.hasHarmonica = true
+    self.hasGravityBelt = false
+    self.hasHazardSuit = false
+    self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
 
