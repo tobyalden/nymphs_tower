@@ -11,7 +11,7 @@ function Pig:initialize(x, y)
     self.types = {"enemy"}
     self.startingHealth = 12
     self.health = self.startingHealth
-    self.graphic = Sprite:new("pig.png", 64, 64)
+    self.graphic = Sprite:new("larva.png", 64, 64)
     self.graphic.offsetY = -5
     self.mask = Hitbox:new(self, 64, 59)
     self.graphic:add("idle", {1})

@@ -17,6 +17,7 @@ GameWorld.static.ALL_BOSS_MUSIC = {
 
 function GameWorld:initialize()
     World.initialize(self)
+    self.timer = 0
     self.flags = {}
     self.itemIds = {}
     self.level = Level:new({
@@ -83,7 +84,7 @@ function GameWorld:initialize()
     self.isHardMode = false
     self.curtain = Curtain:new()
     self:add(self.curtain)
-    self.curtain:addTween(Alarm:new(1, function()
+    self.curtain:addTween(Alarm:new(3, function()
         self.curtain:fadeOut()
     end), true)
 end
@@ -118,6 +119,8 @@ function GameWorld:saveGame(saveX, saveY)
     if self.player.hasHazardSuit then
         currentCheckpoint["hasHazardSuit"] = "true"
     end
+
+    currentCheckpoint["time"] = self.timer
 
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
@@ -165,6 +168,8 @@ function GameWorld:loadGame()
     self.player.hasGun = loadedCheckpoint["hasGun"] == "true"
     self.player.hasHarmonica = loadedCheckpoint["hasHarmonica"] == "true"
     self.player.hasHazardSuit = loadedCheckpoint["hasHazardSuit"] == "true"
+
+    self.timer = loadedCheckpoint["time"]
 
     self.flags = {}
     for _, flag in pairs(saveData.load("currentFlags")) do
@@ -250,6 +255,7 @@ function GameWorld:onDeath()
 end
 
 function GameWorld:update(dt)
+    self.timer = self.timer + dt
     self.previousPlayerFlipX = self.player.graphic.flipX
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
@@ -264,19 +270,11 @@ end
 function GameWorld:updateSounds(dt)
     -- update ambience
     if self.player:isInside() then
-        self.sfx["insideambience"]:setVolume(
-            math.approach(self.sfx["insideambience"]:getVolume(), 1, dt)
-        )
-        self.sfx["outsideambience"]:setVolume(
-            math.approach(self.sfx["outsideambience"]:getVolume(), 0, dt)
-        )
+        self.sfx["insideambience"]:fadeIn(dt)
+        self.sfx["outsideambience"]:fadeOut(dt)
     else
-        self.sfx["insideambience"]:setVolume(
-            math.approach(self.sfx["insideambience"]:getVolume(), 0, dt)
-        )
-        self.sfx["outsideambience"]:setVolume(
-            math.approach(self.sfx["outsideambience"]:getVolume(), 1, dt)
-        )
+        self.sfx["insideambience"]:fadeOut(dt)
+        self.sfx["outsideambience"]:fadeIn(dt)
     end
 
     -- update music
@@ -286,7 +284,7 @@ function GameWorld:updateSounds(dt)
         end
     elseif self.currentBoss ~= nil then
         self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]
-        self.currentMusic:fadeIn(dt)
+        self.currentMusic:fadeIn(dt, 1)
         self.sfx["outside"]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
@@ -300,7 +298,7 @@ function GameWorld:updateSounds(dt)
                 self.player.x, self.player.y, {"inside"}
             )[1].musicName
             self.currentMusic = self.sfx[musicName]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
             self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
         else
             self.currentMusic = self.sfx["outside"]

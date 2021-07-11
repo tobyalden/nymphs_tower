@@ -10,6 +10,8 @@ local gravityBelt
 local hazardSuit
 local harmonica
 
+local timerText
+
 function UI:initialize()
     Entity.initialize(self)
     healthBar = Sprite:new("healthbar.png")
@@ -54,9 +56,14 @@ function UI:initialize()
     bossName.offsetX = 10
     bossName.offsetY = 180 - 19
 
+    timerText = Text:new("0.000", 12, "arial.ttf", {0, 1, 1}, 300, "right")
+    timerText.offsetX = 15
+    timerText.offsetY = 180 - 19
+    timerText.alpha = 0.5
+
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
-        bossName, gravityBelt, hazardSuit, harmonica
+        bossName, gravityBelt, hazardSuit, harmonica, timerText
     }
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
@@ -111,6 +118,7 @@ function UI:update(dt)
     healthBar.scaleX = (
         self.world.player.health / Player.STARTING_HEALTH
     ) / 2
+    timerText:setText(string.format("%.2f", self.world.timer))
     Entity.update(self, dt)
 end
 

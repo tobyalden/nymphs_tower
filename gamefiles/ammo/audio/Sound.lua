@@ -64,9 +64,10 @@ function Sound:fadeOut(fadeAmount, stop)
     end
 end
 
-function Sound:fadeIn(fadeAmount)
+function Sound:fadeIn(fadeAmount, startVolume)
+    startVolume = 0 or startVolume
     if not self:isPlaying() then
-        self:loop()
+        self:loop(startVolume)
     end
     self:setVolume(math.approach(self:getVolume(), 1, fadeAmount))
 end
