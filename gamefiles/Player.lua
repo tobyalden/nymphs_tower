@@ -60,7 +60,7 @@ function Player:initialize(x, y)
         "acidland.wav", "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
         "fueljingle.wav", "healthjingle.wav", "itemjingle.wav",
         "harmonica.wav", "harmonica_stop.wav", "harmonica_angel.wav",
-        "equip.wav", "unequip.wav", "highjump.wav"
+        "equip.wav", "unequip.wav", "highjump.wav", "mapopen.wav", "mapclose.wav"
     })
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
@@ -71,6 +71,8 @@ function Player:initialize(x, y)
     self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
+    self.hasMap = true
+    self.isLookingAtMap = false
 
     --self.healthUpgrades = 8 -- MAX
     --self.fuelUpgrades = 5 -- MAX
@@ -151,7 +153,18 @@ function Player:movement(dt)
     else
         self.isPlayingHarmonica = false
     end
-    if self.isPlayingHarmonica then
+
+    if self.velocity.y == 0 and self.hasMap and input.pressed("map") then
+        self.velocity.x = 0
+        self.isLookingAtMap = not self.isLookingAtMap
+        if self.isLookingAtMap then
+            self.sfx["mapopen"]:play()
+        else
+            self.sfx["mapclose"]:play()
+        end
+    end
+
+    if self.isPlayingHarmonica or self.isLookingAtMap then
         return
     end
 
@@ -277,7 +290,7 @@ function Player:animation()
         self.graphic.offsetX = -5
     end
 
-    local animationSuffix = "d"
+    local animationSuffix
     if self.hasGun then
         animationSuffix = "_gun";
     else
@@ -684,6 +697,7 @@ function Player:update(dt)
     end
     self:shooting()
     self:collisions(dt)
+
     if input.pressed("up") and self.hasGravityBelt then
         self.isGravityBeltEquipped = not self.isGravityBeltEquipped
         if self.isGravityBeltEquipped then
@@ -692,6 +706,7 @@ function Player:update(dt)
             self.sfx["unequip"]:play()
         end
     end
+
     self:movement(dt)
     self:animation()
 

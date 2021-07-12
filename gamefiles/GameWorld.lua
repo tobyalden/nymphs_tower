@@ -25,14 +25,16 @@ function GameWorld:initialize()
         "level_2.json",
         "level_3.json",
         "level_4.json"
-        --"level.json"
+        --"bonus1.json",
+        --"bonus2.json",
+        --"bonus3.json"
     })
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                self:loadGame()
+                --self:loadGame()
             end
             self:add(entity)
         end
@@ -55,7 +57,7 @@ function GameWorld:initialize()
             end
         end
     end
-    self.ui = UI:new()
+    self.ui = UI:new(self.level)
     self:add(self.ui)
     local cave = Background:new("background_light.png", 3, 1, 0, true)
     self:add(cave)

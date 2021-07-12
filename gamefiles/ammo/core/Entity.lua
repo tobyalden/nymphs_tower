@@ -334,7 +334,11 @@ function Entity:_drawGraphic(graphic)
             drawScaleX, drawScaleY
         )
     elseif graphic.class == Tilemap then
-        love.graphics.draw(graphic.batch, self.x, self.y)
+        local drawX = self.x + graphic.offsetX
+        local drawY = self.y + graphic.offsetY
+        local drawScaleX = graphic.scaleX
+        local drawScaleY = graphic.scaleY
+        love.graphics.draw(graphic.batch, drawX, drawY, 0, drawScaleX, drawScaleY)
     elseif graphic.class == Text then
         love.graphics.draw(
             graphic.image,

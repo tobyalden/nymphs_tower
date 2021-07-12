@@ -2,6 +2,10 @@ Tilemap = class("Tilemap")
 
 function Tilemap:initialize(path, tileWidth, tileHeight)
     self.image = love.graphics.newImage(path)
+    self.offsetX = 0
+    self.offsetY = 0
+    self.scaleX = 1
+    self.scaleY = 1
     local imageData = love.image.newImageData(path)
     local widthInTiles = self.image:getWidth() / tileWidth
     local heightInTiles = self.image:getHeight() / tileHeight

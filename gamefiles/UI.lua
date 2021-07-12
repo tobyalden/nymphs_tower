@@ -1,4 +1,5 @@
 UI = class("UI", Entity)
+UI.static.MAP_SCROLL_SPEED = 100
 
 local healthBar
 local healthText
@@ -9,10 +10,10 @@ local message
 local gravityBelt
 local hazardSuit
 local harmonica
-
 local timerText
+local map
 
-function UI:initialize()
+function UI:initialize(level)
     Entity.initialize(self)
     healthBar = Sprite:new("healthbar.png")
     healthText = Text:new("HP", 12)
@@ -61,9 +62,28 @@ function UI:initialize()
     timerText.offsetY = 180 - 19
     timerText.alpha = 0.5
 
+    map = Tilemap:new("maptiles.png", 1, 1)
+    local mapBorder = 8
+    for tileY = 1, level.mask.rows + mapBorder * 2 do
+        for tileX = 1, level.mask.columns + mapBorder * 2 do
+            map:setTile(tileX, tileY, 1)
+        end
+    end
+    for tileY = 1, level.mask.rows do
+        for tileX = 1, level.mask.columns do
+            if level.mask:getTile(tileX, tileY) then
+                map:setTile(tileX + mapBorder, tileY + mapBorder, 1)
+            else
+                map:setTile(tileX + mapBorder, tileY + mapBorder, 2)
+            end
+        end
+    end
+    map.scaleX = 0.5
+    map.scaleY = 0.5
+
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
-        bossName, gravityBelt, hazardSuit, harmonica, timerText
+        bossName, gravityBelt, hazardSuit, harmonica, timerText, map
     }
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
@@ -119,6 +139,27 @@ function UI:update(dt)
         self.world.player.health / Player.STARTING_HEALTH
     ) / 2
     timerText:setText(string.format("%.2f", self.world.timer))
+
+    if self.world.player.isLookingAtMap then
+        map.alpha = 1
+        if input.down("up") then
+            map.offsetY = map.offsetY + UI.MAP_SCROLL_SPEED * dt
+        elseif input.down("down") then
+            map.offsetY = map.offsetY - UI.MAP_SCROLL_SPEED * dt
+        end
+        map.offsetY = math.clamp(
+            map.offsetY,
+            -self.world.level.mask.rows * map.scaleY + 180 - 180 / 4,
+            180 / 4
+        )
+        map.offsetY = math.round(map.offsetY)
+    else
+        map.offsetX = 320 / 2 - self.world.level.mask.columns * map.scaleX / 2
+        map.offsetY = 180 / 2 - self.world.level.mask.rows * map.scaleY / 2
+        map.alpha = 0
+    end
+    --map.offsetY = -self.world.player.y / 16 * map.scaleY + 180 / 2
+
     Entity.update(self, dt)
 end
 

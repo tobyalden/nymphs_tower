@@ -43,8 +43,8 @@ require("Inside")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = false
-local windowedScale = 2
+local fullscreen = true
+local windowedScale = 4
 
 function love.globalUpdate()
     if input.pressed("quit") then
@@ -60,6 +60,7 @@ function love.load()
     input.define("jump", "z")
     input.define("shoot", "x")
     input.define("reset", "r")
+    input.define("map", "return")
     input.define("quit", "escape")
 
     love.window.setTitle("Nymph's Tower")
