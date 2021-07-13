@@ -47,7 +47,7 @@ require("Compass")
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
-local windowedScale = 4
+local windowedScale = 2
 
 function love.globalUpdate()
     if input.pressed("quit") then
