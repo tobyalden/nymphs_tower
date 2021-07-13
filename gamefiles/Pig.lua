@@ -26,7 +26,7 @@ end
 function Pig:update(dt)
     if self.world.currentBoss == self then
         self.graphic:play("run")
-        if self.velocity.x < 0 then
+        if self.velocity.x > 0 then
             self.graphic.flipX = true
         elseif self.velocity.x > 0 then
             self.graphic.flipX = false

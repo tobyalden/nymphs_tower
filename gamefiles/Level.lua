@@ -71,6 +71,18 @@ function Level:initialize(paths)
                         local gun = Gun:new(entity["x"], entity["y"], uniqueId)
                         table.insert(levelEntities, gun)
                         uniqueId = uniqueId + 1
+                    elseif entity["name"] == "map" then
+                        local map = Map:new(entity["x"], entity["y"], uniqueId)
+                        table.insert(levelEntities, map)
+                        uniqueId = uniqueId + 1
+                    elseif entity["name"] == "compass" then
+                        local compass = Compass:new(entity["x"], entity["y"], uniqueId)
+                        table.insert(levelEntities, compass)
+                        uniqueId = uniqueId + 1
+                    elseif entity["name"] == "crown" then
+                        local crown = Crown:new(entity["x"], entity["y"], uniqueId)
+                        table.insert(levelEntities, crown)
+                        uniqueId = uniqueId + 1
                     elseif entity["name"] == "harmonica" then
                         local harmonica = Harmonica:new(
                             entity["x"], entity["y"], uniqueId

@@ -12,6 +12,9 @@ local hazardSuit
 local harmonica
 local timerText
 local map
+local mapIcon
+local compassIcon
+local crownIcon
 
 function UI:initialize(level)
     Entity.initialize(self)
@@ -40,6 +43,15 @@ function UI:initialize(level)
 
     harmonica = Sprite:new("harmonicaicon.png")
     harmonica.offsetY = fuelBar.offsetY + 10
+
+    mapIcon = Sprite:new("mapicon.png")
+    mapIcon.offsetY = fuelBar.offsetY + 10
+
+    compassIcon = Sprite:new("compassicon.png")
+    compassIcon.offsetY = fuelBar.offsetY + 10
+
+    crownIcon = Sprite:new("crownicon.png")
+    crownIcon.offsetY = fuelBar.offsetY + 10
 
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
@@ -83,7 +95,8 @@ function UI:initialize(level)
 
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
-        bossName, gravityBelt, hazardSuit, harmonica, timerText, map
+        bossName, gravityBelt, hazardSuit, harmonica, timerText, map, mapIcon,
+        compassIcon, crownIcon
     }
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
@@ -116,6 +129,24 @@ function UI:update(dt)
         table.insert(items, harmonica)
     else
         harmonica.alpha = 0
+    end
+    if self.world.player.hasMap then
+        mapIcon.alpha = 1
+        table.insert(items, mapIcon)
+    else
+        mapIcon.alpha = 0
+    end
+    if self.world.player.hasCompass then
+        compassIcon.alpha = 1
+        table.insert(items, compassIcon)
+    else
+        compassIcon.alpha = 0
+    end
+    if self.world.player.hasCrown then
+        crownIcon.alpha = 1
+        table.insert(items, crownIcon)
+    else
+        crownIcon.alpha = 0
     end
     for i, item in ipairs(items) do
         item.offsetX = 5 + 16 * (i - 1)
@@ -155,7 +186,7 @@ function UI:update(dt)
         map.offsetY = math.round(map.offsetY)
     else
         map.offsetX = 320 / 2 - self.world.level.mask.columns * map.scaleX / 2
-        map.offsetY = 180 / 2 - self.world.level.mask.rows * map.scaleY / 2
+        --map.offsetY = 180 / 2 - self.world.level.mask.rows * map.scaleY / 2
         map.alpha = 0
     end
     --map.offsetY = -self.world.player.y / 16 * map.scaleY + 180 / 2

@@ -71,7 +71,8 @@ function Player:initialize(x, y)
     self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
-    self.hasMap = true
+    self.hasMap = false
+    self.hasCompass = false
     self.isLookingAtMap = false
 
     --self.healthUpgrades = 8 -- MAX
@@ -479,6 +480,60 @@ function Player:collisions(dt)
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND THE HARMONICA",
                     "HOLD DOWN TO USE",
+                })
+            end}
+        })
+    end
+
+    local collidedMaps = self:collide(self.x, self.y, {"map"})
+    if #collidedMaps > 0 then
+        self.sfx["itemjingle"]:play()
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedMaps[1])
+                table.insert(self.world.itemIds, collidedMaps[1].uniqueId)
+                self.hasMap = true
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND THE MAP",
+                    "PRESS ENTER TO USE",
+                })
+            end}
+        })
+    end
+
+    local collidedCompasses = self:collide(self.x, self.y, {"compass"})
+    if #collidedCompasses > 0 then
+        self.sfx["itemjingle"]:play()
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedCompasses[1])
+                table.insert(self.world.itemIds, collidedCompasses[1].uniqueId)
+                self.hasCompass = true
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND THE COMPASS",
+                    "PRESS ENTER TO USE",
+                })
+            end}
+        })
+    end
+
+    local collidedCrowns = self:collide(self.x, self.y, {"crown"})
+    if #collidedCrowns > 0 then
+        self.sfx["itemjingle"]:play()
+        self.world:pauseLevel()
+        self.world:doSequence({
+            {itemChimeTime, function()
+                self.world:unpauseLevel()
+                self.world:remove(collidedCrowns[1])
+                table.insert(self.world.itemIds, collidedCrowns[1].uniqueId)
+                self.hasCrown = true
+                local totalTime = self.world.ui:showMessageSequence({
+                    "YOU FOUND THE CROWN",
+                    "RETURN TO THE BOAT",
                 })
             end}
         })
