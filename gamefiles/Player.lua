@@ -150,7 +150,7 @@ function Player:moveCollideY(collided)
 end
 
 function Player:movement(dt)
-    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") then
+    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") and not self.isLookingAtMap then
         self.isPlayingHarmonica = true
     else
         self.isPlayingHarmonica = false
@@ -754,7 +754,7 @@ function Player:update(dt)
     self:shooting()
     self:collisions(dt)
 
-    if input.pressed("up") and self.hasGravityBelt then
+    if input.pressed("up") and self.hasGravityBelt and not (self.isLookingAtMap or self.isPlayingHarmonica) then
         self.isGravityBeltEquipped = not self.isGravityBeltEquipped
         if self.isGravityBeltEquipped then
             self.sfx["equip"]:play()

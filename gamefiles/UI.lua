@@ -95,8 +95,8 @@ function UI:initialize(level)
 
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
-        bossName, gravityBelt, hazardSuit, harmonica, timerText, map, mapIcon,
-        compassIcon, crownIcon
+        bossName, gravityBelt, hazardSuit, harmonica, timerText, mapIcon,
+        compassIcon, crownIcon, map
     }
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
@@ -118,18 +118,6 @@ function UI:update(dt)
     else
         gravityBelt.alpha = 0
     end
-    if self.world.player.hasHazardSuit then
-        hazardSuit.alpha = 1
-        table.insert(items, hazardSuit)
-    else
-        hazardSuit.alpha = 0
-    end
-    if self.world.player.hasHarmonica then
-        harmonica.alpha = 1
-        table.insert(items, harmonica)
-    else
-        harmonica.alpha = 0
-    end
     if self.world.player.hasMap then
         mapIcon.alpha = 1
         table.insert(items, mapIcon)
@@ -141,6 +129,18 @@ function UI:update(dt)
         table.insert(items, compassIcon)
     else
         compassIcon.alpha = 0
+    end
+    if self.world.player.hasHazardSuit then
+        hazardSuit.alpha = 1
+        table.insert(items, hazardSuit)
+    else
+        hazardSuit.alpha = 0
+    end
+    if self.world.player.hasHarmonica then
+        harmonica.alpha = 1
+        table.insert(items, harmonica)
+    else
+        harmonica.alpha = 0
     end
     if self.world.player.hasCrown then
         crownIcon.alpha = 1
