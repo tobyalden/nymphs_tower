@@ -12,9 +12,12 @@ local hazardSuit
 local harmonica
 local timerText
 local map
+local compass
 local mapIcon
 local compassIcon
 local crownIcon
+
+local mapBorder = 8
 
 function UI:initialize(level)
     Entity.initialize(self)
@@ -75,7 +78,6 @@ function UI:initialize(level)
     timerText.alpha = 0.5
 
     map = Tilemap:new("maptiles.png", 1, 1)
-    local mapBorder = 8
     for tileY = 1, level.mask.rows + mapBorder * 2 do
         for tileX = 1, level.mask.columns + mapBorder * 2 do
             map:setTile(tileX, tileY, 1)
@@ -93,9 +95,21 @@ function UI:initialize(level)
     map.scaleX = 0.5
     map.scaleY = 0.5
 
+    compass = Tilemap:new("maptiles.png", 1, 1)
+    for tileY = 1, level.mask.rows + mapBorder * 2 do
+        for tileX = 1, level.mask.columns + mapBorder * 2 do
+            --if love.math.random() < 0.5 then
+            compass:setTile(tileX, tileY, 1)
+            --end
+        end
+    end
+    compass.scaleX = 0.5
+    compass.scaleY = 0.5
+
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
         bossName, gravityBelt, hazardSuit, harmonica, timerText, mapIcon,
+        --compassIcon, crownIcon, map, compass
         compassIcon, crownIcon, map
     }
     self.graphic = Graphiclist:new(allGraphics)
@@ -189,6 +203,9 @@ function UI:update(dt)
         --map.offsetY = 180 / 2 - self.world.level.mask.rows * map.scaleY / 2
         map.alpha = 0
     end
+    compass.alpha = map.alpha
+    compass.offsetX = map.offsetX
+    compass.offsetX = map.offsetX
     --map.offsetY = -self.world.player.y / 16 * map.scaleY + 180 / 2
 
     Entity.update(self, dt)
