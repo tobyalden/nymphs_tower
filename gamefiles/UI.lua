@@ -77,6 +77,14 @@ function UI:initialize(level)
         table.insert(allPings, v)
     end
 
+    self.pingTimer = self:addTween(Alarm:new(
+        1,
+        function()
+            -- do nothing
+        end,
+        "looping"
+    ))
+
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
     messageBar.offsetY = 180 - 24 - 9
@@ -197,6 +205,13 @@ function UI:update(dt)
     ) / 2
     timerText:setText(string.format("%.2f", self.world.timer))
 
+    for _, v in pairs(allPings) do
+        v.alpha = map.alpha
+        if self.world.player.isLookingAtMap then
+            playerPing.alpha = 1 - self.pingTimer:getPercentComplete()
+        end
+    end
+
     if self.world.player.isLookingAtMap then
         map.alpha = 1
         if input.down("up") then
@@ -211,6 +226,10 @@ function UI:update(dt)
         )
         map.offsetY = math.round(map.offsetY)
 
+        if not self.pingTimer.active then
+            self.pingTimer:start(1)
+        end
+
         self:updateCompass()
     else
         map.offsetX = 320 / 2 - self.world.level.mask.columns * map.scaleX / 2
@@ -218,9 +237,7 @@ function UI:update(dt)
             map.offsetY = -self.world.player.y / 16 * map.scaleY + 180 / 2
         end
         map.alpha = 0
-    end
-    for _, v in pairs(allPings) do
-        v.alpha = map.alpha
+        self.pingTimer.active = false
     end
 
     Entity.update(self, dt)
@@ -233,7 +250,7 @@ function UI:updateCompass()
         if self.world:hasFlag(boss.flag .. '_defeated') then
             bossPings[i].alpha = 0
         else
-            bossPings[i].alpha = 1
+            bossPings[i].alpha = 1 - self.pingTimer:getPercentComplete()
             self:updatePing(bossPings[i], boss)
         end
     end
