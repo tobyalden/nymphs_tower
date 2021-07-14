@@ -15,7 +15,9 @@ local map
 local mapIcon
 local compassIcon
 local crownIcon
-local ping
+
+local playerPing
+local bossPings
 
 local mapBorder = 8
 
@@ -56,7 +58,19 @@ function UI:initialize(level)
     crownIcon = Sprite:new("crownicon.png")
     crownIcon.offsetY = fuelBar.offsetY + 10
 
-    ping = Sprite:new("ping.png")
+    playerPing = Sprite:new("playerping.png")
+    bossPings = {
+        Sprite:new("bossping.png"),
+        Sprite:new("bossping.png"),
+        Sprite:new("bossping.png"),
+        Sprite:new("bossping.png"),
+        Sprite:new("bossping.png")
+    }
+
+    allPings = {playerPing}
+    for _, v in pairs(bossPings) do
+        table.insert(allPings, v)
+    end
 
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
@@ -100,8 +114,11 @@ function UI:initialize(level)
     local allGraphics = {
         healthBar, fuelBar, healthText, fuelText, messageBar, message, bossBar,
         bossName, gravityBelt, hazardSuit, harmonica, timerText, mapIcon,
-        compassIcon, crownIcon, map, ping
+        compassIcon, crownIcon, map
     }
+    for _, v in pairs(allPings) do
+        table.insert(allGraphics, v)
+    end
     self.graphic = Graphiclist:new(allGraphics)
     self.layer = -99
     self.graphic.scroll = 0
@@ -197,16 +214,22 @@ function UI:update(dt)
         end
         map.alpha = 0
     end
-    ping.alpha = map.alpha
+    for _, v in pairs(allPings) do
+        v.alpha = map.alpha
+    end
 
     Entity.update(self, dt)
 end
 
 function UI:updateCompass()
-    local playerTileX = math.round(self.world.player.x / 16)
-    local playerTileY = math.round(self.world.player.y / 16)
-    ping.offsetX = map.offsetX + playerTileX * map.scaleX + 2
-    ping.offsetY = map.offsetY + playerTileY * map.scaleY + 2
+    self:updatePing(playerPing, self.world.player)
+end
+
+function UI:updatePing(ping, entity)
+    local tileX = math.round(entity.x / 16)
+    local tileY = math.round(entity.y / 16)
+    ping.offsetX = map.offsetX + tileX * map.scaleX + 2
+    ping.offsetY = map.offsetY + tileY * map.scaleY + 2
 end
 
 function UI:showMessageSequence(messageSequence, messageHang)
