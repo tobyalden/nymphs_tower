@@ -46,7 +46,7 @@ require("Compass")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = true
+local fullscreen = false
 local windowedScale = 2
 
 function love.globalUpdate()
@@ -84,5 +84,10 @@ function love.load()
         )
     end
     -- ammo.world = MainMenu:new()
-    ammo.world = GameWorld:new()
+    ammo.world = GameWorld:new({
+        "level_1.json",
+        "level_2.json",
+        "level_3.json",
+        "level_4.json"
+    })
 end

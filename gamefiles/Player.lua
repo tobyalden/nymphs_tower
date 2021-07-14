@@ -52,6 +52,7 @@ function Player:initialize(x, y)
     self.graphic.offsetY = -11
     self.graphic.flipX = true
     self.layer = -1
+    self.harmonicaTimer = 0
 
     self:loadSfx({
         "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
@@ -686,7 +687,7 @@ function Player:getMaxFuel()
 end
 
 
-function Player:handleSfx()
+function Player:handleSfx(dt)
     if self.isDead then
         self.sfx["run"]:stop()
         self.sfx["acid"]:stop()
@@ -714,8 +715,19 @@ function Player:handleSfx()
                 self.harmonicaDelay:start()
                 self.sfx[harmonicaSfxName]:loop()
             end
+            self.harmonicaTimer = self.harmonicaTimer + dt
+            if (
+                self.harmonicaTimer > 5
+                and harmonicaSfxName == "harmonica_angel"
+            ) then
+                self.world:teleportToSecondTower()
+            end
         else
-            if self.sfx[harmonicaSfxName]:isPlaying() and not self.harmonicaDelay.active then
+            self.harmonicaTimer = 0
+            if (
+                self.sfx[harmonicaSfxName]:isPlaying()
+                and not self.harmonicaDelay.active
+            ) then
                 self.sfx["harmonica_stop"]:play()
             end
             self.sfx[harmonicaSfxName]:stop()
@@ -748,13 +760,19 @@ function Player:handleSfx()
 end
 
 function Player:update(dt)
+    print(self.harmonicaTimer)
     if self.world.isHardMode then
         self.hitDamage = Player.HIT_DAMAGE * 2
     end
     self:shooting()
     self:collisions(dt)
 
-    if input.pressed("up") and self.hasGravityBelt and not (self.isLookingAtMap or self.isPlayingHarmonica) then
+    if (
+        input.pressed("up")
+        and self.hasGravityBelt
+        and not (self.isLookingAtMap
+        or self.isPlayingHarmonica)
+    ) then
         self.isGravityBeltEquipped = not self.isGravityBeltEquipped
         if self.isGravityBeltEquipped then
             self.sfx["equip"]:play()
@@ -768,7 +786,7 @@ function Player:update(dt)
 
     Entity.update(self, dt)
 
-    self:handleSfx()
+    self:handleSfx(dt)
     self.wasOnGround = self:isOnGround()
     self.wasJetpackOn = isJetpackOn
     self.wasInAcid = self:isInAcid()

@@ -15,20 +15,12 @@ GameWorld.static.ALL_BOSS_MUSIC = {
     secret_boss = "boss3"
 }
 
-function GameWorld:initialize()
+function GameWorld:initialize(levelStack)
     World.initialize(self)
     self.timer = 0
     self.flags = {}
     self.itemIds = {}
-    self.level = Level:new({
-        "level_1.json",
-        "level_2.json",
-        "level_3.json",
-        "level_4.json"
-        --"bonus1.json",
-        --"bonus2.json",
-        --"bonus3.json"
-    })
+    self.level = Level:new(levelStack)
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
@@ -95,6 +87,14 @@ function GameWorld:initialize()
     self.curtain:addTween(Alarm:new(3, function()
         self.curtain:fadeOut()
     end), true)
+end
+
+function teleportToSecondTower()
+    ammo.world = GameWorld:new({
+        "bonus1.json",
+        "bonus2.json",
+        "bonus3.json"
+    })
 end
 
 function GameWorld:clearSave()
