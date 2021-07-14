@@ -15,7 +15,8 @@
       "gridCellsX": 1296,
       "gridCellsY": 1072,
       "entities": [
-        {"name": "gravity_belt", "id": 470, "_eid": "39633749", "x": 2388, "y": 1496, "originX": 0, "originY": 0}
+        {"name": "gravity_belt", "id": 470, "_eid": "39633749", "x": 2388, "y": 1496, "originX": 0, "originY": 0},
+        {"name": "player", "id": 613, "_eid": "68256185", "x": 2388, "y": 1300}
       ]
     },
     {

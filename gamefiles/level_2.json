@@ -407,7 +407,6 @@
           "values": {"acid_id": "", "rise_speed": 0}
         },
         {"name": "health_upgrade", "id": 469, "_eid": "78023010", "x": 584, "y": 1496, "originX": 0, "originY": 0},
-        {"name": "gravity_belt", "id": 470, "_eid": "39633749", "x": 2388, "y": -2792, "originX": 0, "originY": 0},
         {
           "name": "acid",
           "id": 472,

@@ -85,9 +85,12 @@ function love.load()
     end
     -- ammo.world = MainMenu:new()
     ammo.world = GameWorld:new({
-        "level_1.json",
-        "level_2.json",
-        "level_3.json",
-        "level_4.json"
+        --"level_1.json",
+        --"level_2.json",
+        --"level_3.json",
+        --"level_4.json"
+        "bonus1.json",
+        "bonus2.json",
+        "bonus3.json"
     })
 end

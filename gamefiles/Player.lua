@@ -66,21 +66,21 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     self.isBufferingShot = false
-    self.hasGun = true
-    self.hasGravityBelt = true
-    self.hasHazardSuit = true
-    self.hasHarmonica = true
+    self.hasGun = false
+    self.hasGravityBelt = false
+    self.hasHazardSuit = false
+    self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
-    self.hasMap = true
+    self.hasMap = false
     self.hasCompass = true
-    self.hasCrown = true
+    self.hasCrown = false
     self.isLookingAtMap = false
 
-    self.healthUpgrades = 8 -- MAX
-    self.fuelUpgrades = 5 -- MAX
-    --self.healthUpgrades = 0
-    --self.fuelUpgrades = 0
+    --self.healthUpgrades = 8 -- MAX
+    --self.fuelUpgrades = 5 -- MAX
+    self.healthUpgrades = 0
+    self.fuelUpgrades = 0
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -157,7 +157,7 @@ function Player:movement(dt)
         self.isPlayingHarmonica = false
     end
 
-    if self.velocity.y == 0 and self.hasMap and input.pressed("map") then
+    if self.velocity.y == 0 and (self.hasMap or self.hasCompass) and input.pressed("map") then
         self.velocity.x = 0
         self.isLookingAtMap = not self.isLookingAtMap
         if self.isLookingAtMap then

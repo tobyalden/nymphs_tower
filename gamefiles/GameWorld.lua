@@ -26,7 +26,7 @@ function GameWorld:initialize(levelStack)
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                self:loadGame()
+                --self:loadGame()
             end
             self:add(entity)
         end
@@ -84,12 +84,16 @@ function GameWorld:initialize(levelStack)
     self.isHardMode = false
     self.curtain = Curtain:new()
     self:add(self.curtain)
-    self.curtain:addTween(Alarm:new(3, function()
+    --self.curtain:addTween(Alarm:new(3, function()
         self.curtain:fadeOut()
-    end), true)
+    --end), true)
 end
 
-function teleportToSecondTower()
+function GameWorld:teleportToSecondTower()
+    saveData.clear("currentCheckpoint")
+    saveData.clear("currentFlags")
+    saveData.clear("itemIds")
+    saveData.clear("acidLevels")
     ammo.world = GameWorld:new({
         "bonus1.json",
         "bonus2.json",

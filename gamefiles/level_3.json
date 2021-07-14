@@ -674,7 +674,6 @@
           "originY": 0,
           "values": {"headingX": 1, "headingY": 0}
         },
-        {"name": "gravity_belt", "id": 470, "_eid": "39633749", "x": 2388, "y": -5368, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 584, "_eid": "58243373", "x": 2576, "y": 1136, "width": 128, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 585, "_eid": "58243373", "x": 2752, "y": 1136, "width": 128, "originX": 0, "originY": 0},
         {

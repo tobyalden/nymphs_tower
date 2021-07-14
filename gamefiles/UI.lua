@@ -213,7 +213,9 @@ function UI:update(dt)
     end
 
     if self.world.player.isLookingAtMap then
-        map.alpha = 1
+        if self.world.hasMap then
+            map.alpha = 1
+        end
         if input.down("up") then
             map.offsetY = map.offsetY + UI.MAP_SCROLL_SPEED * dt
         elseif input.down("down") then
@@ -245,22 +247,26 @@ end
 
 function UI:updateCompass()
     self:updatePing(playerPing, self.world.player)
-    for i = 1, 5 do
-        local boss = self.world.level.bosses[i]
-        if self.world:hasFlag(boss.flag .. '_defeated') then
-            bossPings[i].alpha = 0
-        else
-            bossPings[i].alpha = 1 - self.pingTimer:getPercentComplete()
-            self:updatePing(bossPings[i], boss)
+    if self.world.level.bosses[1] then
+        for i = 1, 5 do
+            local boss = self.world.level.bosses[i]
+            if self.world:hasFlag(boss.flag .. '_defeated') then
+                bossPings[i].alpha = 0
+            else
+                bossPings[i].alpha = 1 - self.pingTimer:getPercentComplete()
+                self:updatePing(bossPings[i], boss)
+            end
         end
     end
-    for i = 1, 50 do
-        local item = self.world.level.items[i]
-        if not item then
-            itemPings[i].alpha = 0
-        else
-            itemPings[i].alpha = 1
-            self:updatePing(itemPings[i], item)
+    if self.world.level.items[1] then
+        for i = 1, 50 do
+            local item = self.world.level.items[i]
+            if not item then
+                itemPings[i].alpha = 0
+            else
+                itemPings[i].alpha = 1
+                self:updatePing(itemPings[i], item)
+            end
         end
     end
 end

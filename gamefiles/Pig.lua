@@ -28,7 +28,7 @@ function Pig:update(dt)
         self.graphic:play("run")
         if self.velocity.x > 0 then
             self.graphic.flipX = true
-        elseif self.velocity.x > 0 then
+        elseif self.velocity.x < 0 then
             self.graphic.flipX = false
         end
     end
