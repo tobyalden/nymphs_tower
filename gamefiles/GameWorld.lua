@@ -53,6 +53,12 @@ function GameWorld:initialize()
                 end
                 if not isCollected then
                     self:add(entity)
+                else
+                    for i, item in ipairs(self.level.items) do
+                        if item.uniqueId == entity.uniqueId then
+                            table.remove(self.level.items, i)
+                        end
+                    end
                 end
             end
         end

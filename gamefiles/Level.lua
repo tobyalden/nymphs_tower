@@ -7,6 +7,7 @@ function Level:initialize(paths)
 
     self.entities = {}
     self.bosses = {}
+    self.items = {}
 
     -- Figure out total size of map
     local standardWidth
@@ -71,42 +72,50 @@ function Level:initialize(paths)
                     elseif entity["name"] == "gun" then
                         local gun = Gun:new(entity["x"], entity["y"], uniqueId)
                         table.insert(levelEntities, gun)
+                        table.insert(self.items, gun)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "map" then
                         local map = Map:new(entity["x"], entity["y"], uniqueId)
                         table.insert(levelEntities, map)
+                        table.insert(self.items, map)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "compass" then
                         local compass = Compass:new(entity["x"], entity["y"], uniqueId)
                         table.insert(levelEntities, compass)
+                        table.insert(self.items, compass)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "crown" then
                         local crown = Crown:new(entity["x"], entity["y"], uniqueId)
                         table.insert(levelEntities, crown)
+                        table.insert(self.items, crown)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "harmonica" then
                         local harmonica = Harmonica:new(
                             entity["x"], entity["y"], uniqueId
                         )
                         table.insert(levelEntities, harmonica)
+                        table.insert(self.items, harmonica)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "gravity_belt" then
                         local gravityBelt = GravityBelt:new(
                             entity["x"], entity["y"], uniqueId
                         )
                         table.insert(levelEntities, gravityBelt)
+                        table.insert(self.items, gravityBelt)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "hazard_suit" then
                         local hazardSuit = HazardSuit:new(
                             entity["x"], entity["y"], uniqueId
                         )
                         table.insert(levelEntities, hazardSuit)
+                        table.insert(self.items, hazardSuit)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "health_upgrade" then
                         local healthUpgrade = HealthUpgrade:new(
                             entity["x"], entity["y"], uniqueId
                         )
                         table.insert(levelEntities, healthUpgrade)
+                        table.insert(self.items, healthUpgrade)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "fuel_upgrade" then
                         local fuelUpgrade = FuelUpgrade:new(
@@ -114,6 +123,7 @@ function Level:initialize(paths)
                             entity["values"]["add_flag"], uniqueId
                         )
                         table.insert(levelEntities, fuelUpgrade)
+                        table.insert(self.items, fuelUpgrade)
                         uniqueId = uniqueId + 1
                     elseif entity["name"] == "block" then
                         local block = Block:new(entity["x"], entity["y"])

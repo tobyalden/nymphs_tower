@@ -621,7 +621,7 @@ function Player:collisions(dt)
         end
     end
 
-    if input.pressed("down") then
+    if input.pressed("down") and not self.isLookingAtMap then
         local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()

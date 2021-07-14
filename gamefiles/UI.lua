@@ -18,6 +18,7 @@ local crownIcon
 
 local playerPing
 local bossPings
+local itemPings
 
 local mapBorder = 8
 
@@ -59,16 +60,20 @@ function UI:initialize(level)
     crownIcon.offsetY = fuelBar.offsetY + 10
 
     playerPing = Sprite:new("playerping.png")
-    bossPings = {
-        Sprite:new("bossping.png"),
-        Sprite:new("bossping.png"),
-        Sprite:new("bossping.png"),
-        Sprite:new("bossping.png"),
-        Sprite:new("bossping.png")
-    }
+    bossPings = {}
+    itemPings = {}
+    for i = 1, 5 do
+        table.insert(bossPings, Sprite:new("bossping.png"))
+    end
+    for i = 1, 50 do
+        table.insert(itemPings, Sprite:new("itemping.png"))
+    end
 
     allPings = {playerPing}
     for _, v in pairs(bossPings) do
+        table.insert(allPings, v)
+    end
+    for _, v in pairs(itemPings) do
         table.insert(allPings, v)
     end
 
@@ -232,13 +237,22 @@ function UI:updateCompass()
             self:updatePing(bossPings[i], boss)
         end
     end
+    for i = 1, 50 do
+        local item = self.world.level.items[i]
+        if not item then
+            itemPings[i].alpha = 0
+        else
+            itemPings[i].alpha = 1
+            self:updatePing(itemPings[i], item)
+        end
+    end
 end
 
 function UI:updatePing(ping, entity)
     local tileX = math.round(entity.x / 16)
     local tileY = math.round(entity.y / 16)
-    ping.offsetX = map.offsetX + tileX * map.scaleX + 2
-    ping.offsetY = map.offsetY + tileY * map.scaleY + 2
+    ping.offsetX = map.offsetX + tileX * map.scaleX + 3
+    ping.offsetY = map.offsetY + tileY * map.scaleY + 3
 end
 
 function UI:showMessageSequence(messageSequence, messageHang)
