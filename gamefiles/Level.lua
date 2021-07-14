@@ -6,6 +6,7 @@ function Level:initialize(paths)
     self.types = {"walls"}
 
     self.entities = {}
+    self.bosses = {}
 
     -- Figure out total size of map
     local standardWidth
@@ -120,26 +121,31 @@ function Level:initialize(paths)
                     elseif entity["name"] == "pig" then
                         local pig = Pig:new(entity["x"], entity["y"] + 5)
                         table.insert(levelEntities, pig)
+                        table.insert(self.bosses, pig)
                     elseif entity["name"] == "wizard" then
                         local wizard = Wizard:new(
                             entity["x"], entity["y"], entity["nodes"]
                         )
                         table.insert(levelEntities, wizard)
+                        table.insert(self.bosses, wizard)
                     elseif entity["name"] == "miku" then
                         local miku = Miku:new(
                             entity["x"], entity["y"], entity["nodes"]
                         )
                         table.insert(levelEntities, miku)
+                        table.insert(self.bosses, miku)
                     elseif entity["name"] == "finalboss" then
                         local finalBoss = FinalBoss:new(
                             entity["x"], entity["y"], entity["nodes"]
                         )
                         table.insert(levelEntities, finalBoss)
+                        table.insert(self.bosses, finalBoss)
                     elseif entity["name"] == "secret_boss" then
                         local secretBoss = SecretBoss:new(
                             entity["x"], entity["y"], entity["nodes"]
                         )
                         table.insert(levelEntities, secretBoss)
+                        table.insert(self.bosses, secretBoss)
                     elseif entity["name"] == "lock" then
                         local lock = Lock:new(
                             entity["x"], entity["y"],

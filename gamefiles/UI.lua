@@ -223,6 +223,15 @@ end
 
 function UI:updateCompass()
     self:updatePing(playerPing, self.world.player)
+    for i = 1, 5 do
+        local boss = self.world.level.bosses[i]
+        if self.world:hasFlag(boss.flag .. '_defeated') then
+            bossPings[i].alpha = 0
+        else
+            bossPings[i].alpha = 1
+            self:updatePing(bossPings[i], boss)
+        end
+    end
 end
 
 function UI:updatePing(ping, entity)

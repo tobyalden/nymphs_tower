@@ -34,7 +34,7 @@ function GameWorld:initialize()
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                --self:loadGame()
+                self:loadGame()
             end
             self:add(entity)
         end
