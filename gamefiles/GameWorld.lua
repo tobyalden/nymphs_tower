@@ -77,7 +77,11 @@ function GameWorld:initialize(levelStack)
     self:add(cave)
     local light = Background:new("shadows.png", 2, 0.6, 2, true)
     self:add(light)
-    local clouds = Background:new("clouds.png", 3, 0.2, 50, false)
+    local tileset = ""
+    if GameWorld.isSecondTower then
+        tileset = "2"
+    end
+    local clouds = Background:new("clouds" .. tileset .. ".png", 3, 0.2, 50, false)
     self:add(clouds)
     local fog = Background:new("fog.png", 2, 0.4, 100, false)
     self:add(fog)
