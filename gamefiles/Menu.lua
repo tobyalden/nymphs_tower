@@ -31,8 +31,12 @@ function Menu:initialize(itemNames)
     self.submenuCursorIsYes = false
     self.graphic:add(self.submenu)
 
+    local tower = GameWorld.FIRST_TOWER
+    if GameWorld.isSecondTower then
+        tower = GameWorld.SECOND_TOWER
+    end
     self.startTimer = self:addTween(Alarm:new(3, function()
-        ammo.world = GameWorld:new()
+        ammo.world = GameWorld:new(tower)
     end))
 end
 

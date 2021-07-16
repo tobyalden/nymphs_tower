@@ -69,17 +69,17 @@ function Player:initialize(x, y)
     self.hasGun = false
     self.hasGravityBelt = false
     self.hasHazardSuit = false
-    self.hasHarmonica = false
+    self.hasHarmonica = true
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
     self.hasMap = false
     self.hasCompass = true
-    self.hasCrown = false
+    self.hasCrown = true
     self.isLookingAtMap = false
 
-    --self.healthUpgrades = 8 -- MAX
+    self.healthUpgrades = 8 --MAX
     --self.fuelUpgrades = 5 -- MAX
-    self.healthUpgrades = 0
+    --self.healthUpgrades = 0
     self.fuelUpgrades = 0
 
     self.hitDamage = Player.HIT_DAMAGE
@@ -760,7 +760,6 @@ function Player:handleSfx(dt)
 end
 
 function Player:update(dt)
-    print(self.harmonicaTimer)
     if self.world.isHardMode then
         self.hitDamage = Player.HIT_DAMAGE * 2
     end

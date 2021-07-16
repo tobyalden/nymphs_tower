@@ -4,21 +4,25 @@ function Spike:initialize(x, y, width, height, facing)
     Entity.initialize(self, x, y)
     self.facing = facing
     self.types = {"spike"}
+    local tileset = ""
+    if GameWorld.isSecondTower then
+        tileset = "2"
+    end
     if facing == "floor" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. ".png", 48, 16, width, height
+            "spike_" .. self.facing .. tileset .. ".png", 48, 16, width, height
         )
     elseif facing == "ceiling" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. ".png", 48, 16, width, height
+            "spike_" .. self.facing .. tileset .. ".png", 48, 16, width, height
         )
     elseif facing == "left" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. ".png", 16, 48, width, height
+            "spike_" .. self.facing .. tileset .. ".png", 16, 48, width, height
         )
     elseif facing == "right" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. ".png", 16, 48, width, height
+            "spike_" .. self.facing .. tileset .. ".png", 16, 48, width, height
         )
     end
     local safetyBuffer = 2

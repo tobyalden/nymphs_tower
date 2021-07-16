@@ -28,11 +28,13 @@ function Level:initialize(paths)
         local levelEntities = {}
         local raw = love.filesystem.read(path)
         local jsonData = json.decode(raw)
+        local sliceHeight
         for _, layer in pairs(jsonData["layers"]) do
             -- set mask
             if layer["name"] == "walls" then
                 local columns = math.ceil(jsonData["width"] / 16)
                 local rows = math.ceil(jsonData["height"] / 16)
+                sliceHeight = rows * 16
                 for tileX = 1, columns do
                     for tileY = 1, rows do
                         local tileHeightOffset = math.ceil(heightOffset / 16)
@@ -250,7 +252,7 @@ function Level:initialize(paths)
             end
             table.insert(self.entities, entity)
         end
-        heightOffset = heightOffset + jsonData["height"]
+        heightOffset = heightOffset + sliceHeight
         -- TODO: This may be bugged in how it messes with Acid.y but not Acid.originalY after the fact
     end
 
@@ -259,7 +261,11 @@ function Level:initialize(paths)
     local allBottomEdgeTiles = generateNonrepeatingSequence({26, 27, 32}, self.mask.columns)
     local allLeftEdgeTiles = generateNonrepeatingSequence({9, 17, 6}, self.mask.rows)
     local allRightEdgeTiles = generateNonrepeatingSequence({12, 20, 8}, self.mask.rows)
-    self.graphic = Tilemap:new("tiles.png", 16, 16)
+    local tileset = "tiles.png"
+    if GameWorld.isSecondTower then
+        tileset = "tiles2.png"
+    end
+    self.graphic = Tilemap:new(tileset, 16, 16)
     for tileY = 1, self.mask.rows do
         for tileX = 1, self.mask.columns do
             if self.mask:getTile(tileX, tileY) then

@@ -7,6 +7,7 @@ GameWorld.static.MUSIC_FADE_SPEED = 0.2
 GameWorld.static.ALL_INDOORS_MUSIC = {
     "explore1", "explore2", "explore3", "explore4", "silence"
 }
+
 GameWorld.static.ALL_BOSS_MUSIC = {
     pig = "boss1",
     wizard = "boss1",
@@ -14,6 +15,21 @@ GameWorld.static.ALL_BOSS_MUSIC = {
     finalboss = "boss2",
     secret_boss = "boss3"
 }
+
+GameWorld.static.FIRST_TOWER = {
+    "bonus1.json",
+    "bonus2.json",
+    "bonus3.json"
+}
+
+GameWorld.static.SECOND_TOWER = {
+    "level_1.json",
+    "level_2.json",
+    "level_3.json",
+    "level_4.json"
+}
+
+GameWorld.static.isSecondTower = true
 
 function GameWorld:initialize(levelStack)
     World.initialize(self)
@@ -94,11 +110,7 @@ function GameWorld:teleportToSecondTower()
     saveData.clear("currentFlags")
     saveData.clear("itemIds")
     saveData.clear("acidLevels")
-    ammo.world = GameWorld:new({
-        "bonus1.json",
-        "bonus2.json",
-        "bonus3.json"
-    })
+    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
 end
 
 function GameWorld:clearSave()
@@ -260,9 +272,13 @@ end
 
 function GameWorld:onDeath()
     self.curtain:fadeOut()
+    local tower = GameWorld.FIRST_TOWER
+    if GameWorld.isSecondTower then
+        tower = GameWorld.SECOND_TOWER
+    end
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
-        {4, function() ammo.world = GameWorld:new() end}
+        {4, function() ammo.world = GameWorld:new(tower) end}
     })
 end
 
@@ -275,7 +291,7 @@ function GameWorld:update(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
         self:clearSave()
-        ammo.world = GameWorld:new()
+        ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
     end
 end
 

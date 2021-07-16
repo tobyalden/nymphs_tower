@@ -12,7 +12,11 @@ function Acid:initialize(x, y, width, height, acidId, riseSpeed, uniqueId)
     self.originalHeight = height
     self.riseTo = height
     self.types = {"acid"}
-    self.graphic = TiledSprite:new("acid.png", 8, 8, width, height)
+    self.tileset = "acid"
+    if GameWorld.isSecondTower then
+        self.tileset = "acid2"
+    end
+    self.graphic = TiledSprite:new(self.tileset .. ".png", 8, 8, width, height)
     self.mask = Hitbox:new(self, width, height)
     self.layer = -2
     self.riseTimer = self:addTween(Alarm:new(1, function()
@@ -33,7 +37,7 @@ function Acid:finishRise()
     self.originalY = self.y
     self.originalHeight = self.mask.height
     self.graphic = TiledSprite:new(
-        "acid.png", 8, 8, self.mask.width, self.mask.height
+        self.tileset .. ".png", 8, 8, self.mask.width, self.mask.height
     )
     self.graphic.scaleY = 1
 end

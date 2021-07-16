@@ -3,7 +3,6 @@ AcidTrigger = class("AcidTrigger", Entity)
 function AcidTrigger:initialize(x, y, width, height, acidId, riseTo, uniqueId)
     Entity.initialize(self, x, y)
     self.uniqueId = uniqueId
-    print(uniqueId)
     self.acidId = acidId
     self.riseTo = riseTo
     self.types = {"acid_trigger"}

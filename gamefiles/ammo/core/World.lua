@@ -1,7 +1,6 @@
 World = class("World")
 
 bump = require("bump")
-bumpWorld = bump.newWorld()
 
 function World:__index(key)
     if key == "count" then
@@ -31,6 +30,8 @@ function World:__newindex(key, value)
 end
 
 function World:initialize()
+    bumpWorld = bump.newWorld()
+
     self.active = true
     self.visible = true
 

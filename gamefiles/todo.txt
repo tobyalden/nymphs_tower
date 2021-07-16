@@ -10,6 +10,7 @@
 - texture swap john's level
 - finish john's level
 - ending
+- make acid cave and hazard suit more lenient
 
 - player walk cycle has a stray pixel
 - fix hitboxes on items
