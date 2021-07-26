@@ -310,36 +310,36 @@ function GameWorld:updateSounds(dt)
     end
 
     -- update music
-    if self.player.isDead then
-        for _, v in pairs(self.sfx) do
-            v:stopLoops()
-        end
-    elseif self.currentBoss ~= nil then
-        self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]
-        self.currentMusic:fadeIn(dt, 1)
-        self.sfx["outside"]:fadeOut(dt)
-        for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
-            self.sfx[v]:fadeOut(dt)
-        end
-    else
-        for _, v in pairs(GameWorld.ALL_BOSS_MUSIC) do
-            self.sfx[v]:fadeOut(dt)
-        end
-        if self.player:isInside() then
-            local musicName = self.player:collide(
-                self.player.x, self.player.y, {"inside"}
-            )[1].musicName
-            self.currentMusic = self.sfx[musicName]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
-            self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
-        else
-            self.currentMusic = self.sfx["outside"]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
-            for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
-                self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
-            end
-        end
-    end
+    --if self.player.isDead then
+        --for _, v in pairs(self.sfx) do
+            --v:stopLoops()
+        --end
+    --elseif self.currentBoss ~= nil then
+        --self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag]]
+        --self.currentMusic:fadeIn(dt, 1)
+        --self.sfx["outside"]:fadeOut(dt)
+        --for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
+            --self.sfx[v]:fadeOut(dt)
+        --end
+    --else
+        --for _, v in pairs(GameWorld.ALL_BOSS_MUSIC) do
+            --self.sfx[v]:fadeOut(dt)
+        --end
+        --if self.player:isInside() then
+            --local musicName = self.player:collide(
+                --self.player.x, self.player.y, {"inside"}
+            --)[1].musicName
+            --self.currentMusic = self.sfx[musicName]
+            --self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
+            --self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+        --else
+            --self.currentMusic = self.sfx["outside"]
+            --self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            --for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
+                --self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+            --end
+        --end
+    --end
 
     if self.player.isPlayingHarmonica then
         if self.currentMusic ~= nil then

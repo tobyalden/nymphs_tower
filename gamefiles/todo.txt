@@ -12,7 +12,7 @@
 - ending
 - make acid cave and hazard suit more lenient
 
-- player walk cycle has a stray pixel
++ player walk cycle has a stray pixel
 - fix hitboxes on items
 - cloud layer has visible seam
 - add all graphics

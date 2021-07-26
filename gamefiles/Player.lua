@@ -65,7 +65,7 @@ function Player:initialize(x, y)
     })
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
-    self.isBufferingShot = false
+    --self.isBufferingShot = false
     self.hasGun = false
     self.hasGravityBelt = false
     self.hasHazardSuit = false
@@ -367,11 +367,12 @@ function Player:die()
 end
 
 function Player:shooting()
-    if self.hasGun and (input.down("shoot") or self.isBufferingShot) then
+    --if self.hasGun and (input.down("shoot") or self.isBufferingShot) then
+    if self.hasGun and input.down("shoot") then
         if self.shotCooldown.active then
-            if self.shotCooldown:getPercentComplete() > 0.75 then
-                self.isBufferingShot = true
-            end
+            --if self.shotCooldown:getPercentComplete() > 0.75 then
+                --self.isBufferingShot = true
+            --end
         else
             local bulletHeading = Vector:new(1, 0)
             if self.graphic.flipX then
@@ -400,7 +401,7 @@ function Player:shooting()
             --self.sfx['shoot' .. math.random(#choices)]:play()
             self.sfx['shoot1']:play()
             self.shotCooldown:start()
-            self.isBufferingShot = false
+            --self.isBufferingShot = false
         end
     end
 end
