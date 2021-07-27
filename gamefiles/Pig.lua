@@ -13,9 +13,14 @@ function Pig:initialize(x, y)
     self.health = self.startingHealth
     self.graphic = Sprite:new("larva.png", 64, 64)
     self.graphic.offsetY = -5
-    self.mask = Hitbox:new(self, 64, 59)
-    self.graphic:add("idle", {1})
-    self.graphic:add("run", {1, 2, 3, 2}, 6)
+    self.mask = Hitbox:new(self, 32, 59)
+    if GameWorld.isSecondTower then
+        self.graphic:add("idle", {4})
+        self.graphic:add("run", {4, 5, 6, 5}, 6)
+    else
+        self.graphic:add("idle", {1})
+        self.graphic:add("run", {1, 2, 3, 2}, 6)
+    end
     self.graphic:play("idle")
     self.layer = 0
     self.velocity = Vector:new(0, 0)
@@ -26,10 +31,18 @@ end
 function Pig:update(dt)
     if self.world.currentBoss == self then
         self.graphic:play("run")
+        local oldFlipX = self.graphic.flipX
         if self.velocity.x > 0 then
             self.graphic.flipX = true
         elseif self.velocity.x < 0 then
             self.graphic.flipX = false
+        end
+        if oldFlipX ~= self.graphic.flipX then
+            if self.graphic.flipX then
+                self.mask:updateOffset(32, 0)
+            else
+                self.mask:updateOffset(0, 0)
+            end
         end
     end
     self:bossUpdate(dt)
@@ -37,10 +50,14 @@ function Pig:update(dt)
 end
 
 function Pig:movement(dt)
+    local accel = Pig.ACCEL
+    if self.world.isHardMode then
+        accel = accel * 2
+    end
     if self.x < self.world.player.x then
-        self.accel.x = Pig.ACCEL
+        self.accel.x = accel
     elseif self.x > self.world.player.x then
-        self.accel.x = -Pig.ACCEL
+        self.accel.x = -accel
     end
     self.velocity.x = self.velocity.x + self.accel.x * dt
     self.velocity.x = math.clamp(self.velocity.x, -Pig.MAX_SPEED, Pig.MAX_SPEED)

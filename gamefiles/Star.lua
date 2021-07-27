@@ -24,7 +24,7 @@ function Star:update(dt)
     self:moveBy(
         self.velocity.x * dt,
         self.velocity.y * dt,
-        {"walls"}
+        {"walls", "block"}
     )
     Entity.update(self, dt)
 end

@@ -188,7 +188,7 @@ function Entity:_moveBy(x, y, solidTypes)
     if not solidTypes or #solidTypes == 0 then
         self.x = self.x + x
         self.y = self.y + y
-        bumpWorld:update(self.mask, self.x, self.y)
+        bumpWorld:update(self.mask, self.x + self.mask.offsetX, self.y + self.mask.offsetY)
         return {}
     end
     local typeFilter = function(item, other)
@@ -203,7 +203,7 @@ function Entity:_moveBy(x, y, solidTypes)
         return 'cross'
     end
     local actualX, actualY, cols, len = bumpWorld:move(
-        self.mask, self.x + x, self.y + y, typeFilter
+        self.mask, self.x + self.mask.offsetX + x, self.y + self.mask.offsetY + y, typeFilter
     )
     local allCollided = {}
     for _, collided in pairs(cols) do

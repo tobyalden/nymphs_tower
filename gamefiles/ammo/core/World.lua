@@ -229,7 +229,7 @@ function World:_updateLists()
             v._world = self
             if v.mask then
                 if v.mask.class == Hitbox then
-                    bumpWorld:add(v.mask, v.x, v.y, v.mask.width, v.mask.height)
+                    bumpWorld:add(v.mask, v.x + v.mask.offsetX, v.y + v.mask.offsetY, v.mask.width, v.mask.height)
                 elseif v.mask.class == Grid then
                     for tileX = 1, v.mask.columns do
                         for tileY = 1, v.mask.rows do

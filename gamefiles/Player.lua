@@ -66,7 +66,7 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     --self.isBufferingShot = false
-    self.hasGun = false
+    self.hasGun = true
     self.hasGravityBelt = false
     self.hasHazardSuit = false
     self.hasHarmonica = true
@@ -80,7 +80,7 @@ function Player:initialize(x, y)
     self.healthUpgrades = 8 --MAX
     --self.fuelUpgrades = 5 -- MAX
     --self.healthUpgrades = 0
-    self.fuelUpgrades = 0
+    self.fuelUpgrades = 2
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -412,7 +412,11 @@ end
 
 function Player:collisions(dt)
     if self:isInAcid() and not self.hasHazardSuit then
-        self:decreaseHealth(Acid.DAMAGE_RATE * dt)
+        local acidDamage = Acid.DAMAGE_RATE * dt
+        if self.world.isHardMode then
+            acidDamage = acidDamage * 2
+        end
+        self:decreaseHealth(acidDamage)
     end
 
     local itemChimeTime = 5

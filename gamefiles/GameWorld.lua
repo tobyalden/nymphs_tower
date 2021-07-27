@@ -16,13 +16,13 @@ GameWorld.static.ALL_BOSS_MUSIC = {
     secret_boss = "boss3"
 }
 
-GameWorld.static.FIRST_TOWER = {
+GameWorld.static.SECOND_TOWER = {
     "bonus1.json",
     "bonus2.json",
     "bonus3.json"
 }
 
-GameWorld.static.SECOND_TOWER = {
+GameWorld.static.FIRST_TOWER = {
     "level_1.json",
     "level_2.json",
     "level_3.json",
@@ -42,7 +42,7 @@ function GameWorld:initialize(levelStack)
         if name == "player" then
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                --self:loadGame()
+                self:loadGame()
             end
             self:add(entity)
         end
@@ -101,7 +101,7 @@ function GameWorld:initialize(levelStack)
     self.previousCameraZone = nil
     self.currentBoss = nil
     self.currentMusic = nil
-    self.isHardMode = false
+    self.isHardMode = GameWorld.isSecondTower
     self.curtain = Curtain:new()
     self:add(self.curtain)
     --self.curtain:addTween(Alarm:new(3, function()
