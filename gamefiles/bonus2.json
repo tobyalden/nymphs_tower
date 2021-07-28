@@ -362,7 +362,7 @@
           "x": 928,
           "y": 1232,
           "width": 32,
-          "height": 16,
+          "height": 32,
           "originX": 0,
           "originY": 0,
           "values": {"flag": "wizard"}
@@ -374,7 +374,7 @@
           "x": 672,
           "y": 1232,
           "width": 32,
-          "height": 16,
+          "height": 32,
           "originX": 0,
           "originY": 0,
           "values": {"flag": "wizard"}

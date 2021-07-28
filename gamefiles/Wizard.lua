@@ -12,7 +12,15 @@ function Wizard:initialize(x, y, nodes)
     self.startingHealth = 10
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("wizard.png")
+    self.graphic = Sprite:new("wizard_kai.png", 48, 48)
+    if GameWorld.isSecondTower then
+        self.graphic:add("idle", {5})
+        self.graphic:add("fly", {5, 6, 7, 8}, 5)
+    else
+        self.graphic:add("idle", {1})
+        self.graphic:add("fly", {1, 2, 3, 4}, 5)
+    end
+    self.graphic:play("idle")
     self.mask = Hitbox:new(self, 48, 48)
     self.layer = 0
     self.nodes = {}
@@ -41,6 +49,9 @@ function Wizard:initialize(x, y, nodes)
 end 
 
 function Wizard:update(dt)
+    if self.world.currentBoss == self then
+        self.graphic:play("fly")
+    end
     self.graphic.flipX = (
         self.world.player:getMaskCenter().x > self:getMaskCenter().x
     )
