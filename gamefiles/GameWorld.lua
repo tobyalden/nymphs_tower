@@ -229,6 +229,15 @@ function GameWorld:loadGame()
     self.player:restoreHealth()
 end
 
+function GameWorld:hasItem(uniqueId)
+    for _, itemId in pairs(self.itemIds) do
+        if itemId == uniqueId then
+            return true
+        end
+    end
+    return false
+end
+
 function GameWorld:hasFlag(flag)
     return self.flags[flag] ~= false and self.flags[flag] ~= nil
 end
@@ -295,7 +304,8 @@ function GameWorld:update(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
         self:clearSave()
-        ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+        --ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+        ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
 end
 

@@ -80,7 +80,7 @@ function Player:initialize(x, y)
     self.healthUpgrades = 8 --MAX
     --self.fuelUpgrades = 5 -- MAX
     --self.healthUpgrades = 0
-    self.fuelUpgrades = 2
+    self.fuelUpgrades = 3
 
     self.hitDamage = Player.HIT_DAMAGE
 

@@ -247,8 +247,8 @@ end
 
 function UI:updateCompass()
     self:updatePing(playerPing, self.world.player)
-    if self.world.level.bosses[1] then
-        for i = 1, 5 do
+    for i = 1, 5 do
+        if self.world.level.bosses[i] then
             local boss = self.world.level.bosses[i]
             if self.world:hasFlag(boss.flag .. '_defeated') then
                 bossPings[i].alpha = 0
@@ -261,7 +261,7 @@ function UI:updateCompass()
     if self.world.level.items[1] then
         for i = 1, 50 do
             local item = self.world.level.items[i]
-            if not item then
+            if not item or self.world:hasItem(item.uniqueId) then
                 itemPings[i].alpha = 0
             else
                 itemPings[i].alpha = 1
