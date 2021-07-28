@@ -10,7 +10,7 @@ end
 
 function Hitbox:updateHeight(newHeight)
     self.height = newHeight
-    bumpWorld:update(
+    self.parent.world.bumpWorld:update(
         self,
         self.parent.x + self.offsetX, self.parent.y + self.offsetY,
         self.width, self.height
@@ -20,7 +20,7 @@ end
 function Hitbox:updateOffset(newOffsetX, newOffsetY)
     self.offsetX = newOffsetX
     self.offsetY = newOffsetY
-    bumpWorld:update(
+    self.parent.world.bumpWorld:update(
         self,
         self.parent.x + self.offsetX, self.parent.y + self.offsetY,
         self.width, self.height

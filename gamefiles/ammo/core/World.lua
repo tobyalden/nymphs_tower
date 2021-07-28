@@ -30,7 +30,8 @@ function World:__newindex(key, value)
 end
 
 function World:initialize()
-    bumpWorld = bump.newWorld()
+    print('creating new world')
+    self.bumpWorld = bump.newWorld()
 
     self.active = true
     self.visible = true
@@ -105,10 +106,10 @@ end
 
 function World:start() end
 function World:stop()
-    -- Remove all items from bumpWorld
-    local allItems = bumpWorld:getItems()
+    -- Remove all items from self.bumpWorld
+    local allItems = self.bumpWorld:getItems()
     for _, v in pairs(allItems) do
-        bumpWorld:remove(v)
+        self.bumpWorld:remove(v)
     end
     -- Stop all sounds
     for _, v in pairs(self.sfx) do
@@ -202,15 +203,15 @@ function World:_updateLists()
                 tween.active = false
             end
             if v.mask.class == Hitbox then
-                if bumpWorld:hasItem(v.mask) then
-                    bumpWorld:remove(v.mask)
+                if self.bumpWorld:hasItem(v.mask) then
+                    self.bumpWorld:remove(v.mask)
                 end
             elseif v.mask.class == Grid then
                 for tileX = 1, v.mask.columns do
                     for tileY = 1, v.mask.rows do
                         if(v.mask:getTile(tileX, tileY)) then
                             -- TODO: Need to verify this really works
-                            bumpWorld:remove(v.mask.data[tileY][tileX])
+                            self.bumpWorld:remove(v.mask.data[tileY][tileX])
                         end
                     end
                 end
@@ -229,14 +230,14 @@ function World:_updateLists()
             v._world = self
             if v.mask then
                 if v.mask.class == Hitbox then
-                    bumpWorld:add(v.mask, v.x + v.mask.offsetX, v.y + v.mask.offsetY, v.mask.width, v.mask.height)
+                    self.bumpWorld:add(v.mask, v.x + v.mask.offsetX, v.y + v.mask.offsetY, v.mask.width, v.mask.height)
                 elseif v.mask.class == Grid then
                     for tileX = 1, v.mask.columns do
                         for tileY = 1, v.mask.rows do
                             -- TODO: This could be optimized by adding groups
                             -- of tiles instead of individual tiles
                             if(v.mask:getTile(tileX, tileY)) then
-                                bumpWorld:add(
+                                self.bumpWorld:add(
                                     v.mask.data[tileY][tileX],
                                     v.x + (tileX - 1) * v.mask.tileWidth,
                                     v.y + (tileY - 1) * v.mask.tileHeight,

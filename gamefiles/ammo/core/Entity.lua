@@ -126,7 +126,7 @@ function Entity:collide(checkX, checkY, solidTypes)
         end
         return false
     end
-    local items, _ = bumpWorld:queryRect(
+    local items, _ = self.world.bumpWorld:queryRect(
         checkX, checkY, self.mask.width, self.mask.height, typeFilter
     )
     local collided = {}
@@ -188,7 +188,7 @@ function Entity:_moveBy(x, y, solidTypes)
     if not solidTypes or #solidTypes == 0 then
         self.x = self.x + x
         self.y = self.y + y
-        bumpWorld:update(self.mask, self.x + self.mask.offsetX, self.y + self.mask.offsetY)
+        self.world.bumpWorld:update(self.mask, self.x + self.mask.offsetX, self.y + self.mask.offsetY)
         return {}
     end
     local typeFilter = function(item, other)
@@ -202,7 +202,7 @@ function Entity:_moveBy(x, y, solidTypes)
         end
         return 'cross'
     end
-    local actualX, actualY, cols, len = bumpWorld:move(
+    local actualX, actualY, cols, len = self.world.bumpWorld:move(
         self.mask, self.x + self.mask.offsetX + x, self.y + self.mask.offsetY + y, typeFilter
     )
     local allCollided = {}
