@@ -12,7 +12,13 @@ function Miku:initialize(x, y, nodes)
     self.startingHealth = 18
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("miku.png")
+    self.graphic = Sprite:new("bee.png", 80, 100)
+    if GameWorld.isSecondTower then
+        self.graphic:add("fly", {9, 10, 11, 12, 13, 14, 15, 16}, 10)
+    else
+        self.graphic:add("fly", {1, 2, 3, 4, 5, 6, 7, 8}, 10)
+    end
+    self.graphic:play("fly")
     self.mask = Hitbox:new(self, 80, 100)
     self.layer = 0
     self.nodes = {}
@@ -32,6 +38,11 @@ function Miku:initialize(x, y, nodes)
 end 
 
 function Miku:update(dt)
+    if GameWorld.isSecondTower then
+        self.graphic.flipX = (
+            self.world.player:getMaskCenter().x > self:getMaskCenter().x
+        )
+    end
     self:bossUpdate(dt)
     Entity.update(self, dt)
 end
@@ -42,14 +53,18 @@ function Miku:fireBullet()
         --self.world.player:getMaskCenter().y - self:getMaskCenter().y
     --)
     local shotSeparation = 30
+    local bulletDirection = -1
+    if self.graphic.flipX then
+        bulletDirection = 1
+    end
     local bullet = EnemyBullet:new(
         self,
-        self.x,
-        self.y + 20
-        + math.round(love.math.random()) * shotSeparation
-        + math.round(love.math.random()) * shotSeparation,
+        self.x + self.mask.width / 2 - 9,
+        self.y + 20,
+        --+ math.round(love.math.random()) * shotSeparation
+        --+ math.round(love.math.random()) * shotSeparation,
         --Vector:new(-1, (0.5 - love.math.random()) / 2),
-        Vector:new(-1, -1 * love.math.random()),
+        Vector:new(bulletDirection, -1 * love.math.random()),
         150 + love.math.random() * 20, true
     )
     self.world:add(bullet)
