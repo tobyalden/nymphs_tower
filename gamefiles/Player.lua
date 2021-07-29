@@ -169,6 +169,12 @@ function Player:movement(dt)
     end
 
     if self.isPlayingHarmonica or self.isLookingAtMap then
+        if not self.fuelRecoveryTimer.active then
+            self.fuel = math.min(
+                self.fuel + Player.JETPACK_FUEL_RECOVER_RATE * dt,
+                self:getMaxFuel()
+            )
+        end
         return
     end
 
@@ -752,7 +758,9 @@ function Player:handleSfx(dt)
             end
         end
         if self:isInAcid() then
-            self.sfx["acid"]:loop()
+            if not self.hasAcidSuit then
+                self.sfx["acid"]:loop()
+            end
             if not self.wasInAcid then
                 self.sfx["acidland"]:play()
             end

@@ -149,8 +149,8 @@ end
 
 function UI:isTileOnTornMap(level, tileX, tileY)
     return (
-        tileX * 1.3 + tileY * 1.5 >= (level.mask.rows + level.mask.columns) / 3
-        and tileX * 0.4 + (level.mask.rows - tileY) * 2 >= (level.mask.rows + level.mask.columns) / 5
+        --tileX * 1.3 + tileY * 1.5 >= (level.mask.rows + level.mask.columns) / 3
+        tileX * 0.4 + (level.mask.rows - tileY) * 2 >= (level.mask.rows + level.mask.columns) / 5
     )
 end
 
@@ -271,6 +271,8 @@ function UI:updateCompass()
                 bossPings[i].alpha = 1 - self.pingTimer:getPercentComplete()
                 self:updatePing(bossPings[i], boss)
             end
+        else
+            bossPings[i].alpha = 0
         end
     end
     if self.world.level.items[1] then

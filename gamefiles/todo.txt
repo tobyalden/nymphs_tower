@@ -1,62 +1,17 @@
-+ main menu
-+ stop footstep sfx on death
-+ fade out music when you get really high
-+ add sfx for enemies and turning gravity belt on/off
-- fix miku hitbox
-- add graphical indicator for gravity belt
-
-- add more logical quest chain with harmonica and crown
-- add teleport to john's level
-- texture swap john's level
-- finish john's level
-- ending
+- main menu
+- add ghosts
+- add acid rises to johns level
+- add music to johns level
+- add sfx (and maybe visual fx) for teleporting to second tower
+- add bottom of second tower
+- add tutorial for jumping and using jetpack
+- add ending screen
+- add toggle for timer
+- move timer to not overlap with boss health
+- add credits
 - make acid cave and hazard suit more lenient
-
-+ player walk cycle has a stray pixel
-- fix hitboxes on items
 - cloud layer has visible seam
-- add all graphics
-- add autofire
 - add sfx for when acid levels are changing
-- add timer
-- make sure you can't fall off tower before fighting miku
-- bugfix final boss healthbar on normal mode
-
-+ shorten item pickup sfx
-+ outside texture + transition
-+ music
-+ add ambience for indoors and outdoors
-+ acid levels not offset
-+ inside texture does not tile vertically
-+ boss nodes are not offset
-
-MIN DEMO
-- add crown + jetpack
-- endings (1 & 2) / credits
-~ sound effects
-~ finish map (need to connect core & add camera zones, figure out how to handle top of map)
-+ particles
-
-CAN DO ON OWN
+- add all graphics
 - add controller logic into ammo/input.lua
 - toggling fullscreen
-
-- timer & %completion screen
-- screenshake / effects
-
-NEED HELP
-- music
-- add in real sprites
-- add map remixes (low effort version... just do new game+, maybe sprinkle in random obstacles
-
-total resolution is 320 x 180. aesthetic is "raiding creepy/weird alien ruins
-for dangerous artifacts". pretty vague right now, so you'd have a lot of
-freedom with the direction to take things. the only things i'd ask is that 1)
-the player's head isn't covered so you can see her eyes and 2) avoid anything
-with a military theme
-
-- 5 bosses (from around 100 x 100 to 50 x 50, each with 2-3 frames of animation)
-- 1 player (16x32, around 10 frames)
-- 2 small tilesets (each around 20 16x16 tiles)
-- 2 simple backgrounds (tiled, 640 x 360, each with 2 layers)
-- a handful of small objects (maybe 12 or so, all around 16x16 or 32x32)

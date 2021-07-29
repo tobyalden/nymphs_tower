@@ -10,9 +10,9 @@ FinalBoss.static.MAX_SPEED_HARD_MODE = 150.25
 function FinalBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
     if GameWorld.isSecondTower then
-        self.displayName = "WOUNDED KEEPER"
-    else
         self.displayName = "KEEPER"
+    else
+        self.displayName = "WOUNDED KEEPER"
     end
     self.flag = "finalboss"
     self.types = {"instakill"}
