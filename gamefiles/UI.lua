@@ -109,15 +109,23 @@ function UI:initialize(level)
     map = Tilemap:new("maptiles.png", 1, 1)
     for tileY = 1, level.mask.rows + mapBorder * 2 do
         for tileX = 1, level.mask.columns + mapBorder * 2 do
-            map:setTile(tileX, tileY, 1)
+            if GameWorld.isSecondTower then
+                if self:isTileOnTornMap(level, tileX, tileY) then
+                    map:setTile(tileX, tileY, 1)
+                end
+            else
+                map:setTile(tileX, tileY, 1)
+            end
         end
     end
     for tileY = 1, level.mask.rows do
         for tileX = 1, level.mask.columns do
-            if level.mask:getTile(tileX, tileY) then
-                map:setTile(tileX + mapBorder, tileY + mapBorder, 1)
-            else
-                map:setTile(tileX + mapBorder, tileY + mapBorder, 2)
+            if not GameWorld.isSecondTower or self:isTileOnTornMap(level, tileX + mapBorder, tileY + mapBorder) then
+                if level.mask:getTile(tileX, tileY) then
+                    map:setTile(tileX + mapBorder, tileY + mapBorder, 1)
+                else
+                    map:setTile(tileX + mapBorder, tileY + mapBorder, 2)
+                end
             end
         end
     end
@@ -137,6 +145,13 @@ function UI:initialize(level)
     self.graphic.scroll = 0
     self:hideMessage()
     self.currentSequence = {}
+end
+
+function UI:isTileOnTornMap(level, tileX, tileY)
+    return (
+        tileX * 1.3 + tileY * 1.5 >= (level.mask.rows + level.mask.columns) / 3
+        and tileX * 0.4 + (level.mask.rows - tileY) * 2 >= (level.mask.rows + level.mask.columns) / 5
+    )
 end
 
 function UI:update(dt)
@@ -213,7 +228,7 @@ function UI:update(dt)
     end
 
     if self.world.player.isLookingAtMap then
-        if self.world.hasMap then
+        if self.world.player.hasMap then
             map.alpha = 1
         end
         if input.down("up") then
