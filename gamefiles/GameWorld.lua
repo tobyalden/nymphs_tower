@@ -17,6 +17,7 @@ GameWorld.static.ALL_BOSS_MUSIC = {
 }
 
 GameWorld.static.SECOND_TOWER = {
+    "bonus0.json",
     "bonus1.json",
     "bonus2.json",
     "bonus3.json"
@@ -40,9 +41,10 @@ function GameWorld:initialize(levelStack)
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
+            print('player found')
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                self:loadGame()
+                --self:loadGame()
             end
             self:add(entity)
         end
