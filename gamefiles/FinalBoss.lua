@@ -2,7 +2,7 @@ FinalBoss = class("FinalBoss", Entity)
 FinalBoss:include(Boss)
 
 FinalBoss.static.MAX_SPEED = 100
-FinalBoss.static.MAX_SPEED_HARD_MODE = 120
+FinalBoss.static.MAX_SPEED_HARD_MODE = 151
 
 -- TODO: It seems like having a big hitbox and calling moveBy causes the engine
 -- to run incredibly slow. bypassed with moveTo method, but definitely a bug

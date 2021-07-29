@@ -44,7 +44,7 @@ function GameWorld:initialize(levelStack)
             print('player found')
             self.player = entity
             if saveData.exists("currentCheckpoint") then
-                --self:loadGame()
+                self:loadGame()
             end
             self:add(entity)
         end

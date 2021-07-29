@@ -77,9 +77,9 @@ function Player:initialize(x, y)
     self.hasCrown = true
     self.isLookingAtMap = false
 
-    self.healthUpgrades = 8 --MAX
+    --self.healthUpgrades = 8 --MAX
     --self.fuelUpgrades = 5 -- MAX
-    --self.healthUpgrades = 0
+    self.healthUpgrades = 6
     self.fuelUpgrades = 4
 
     self.hitDamage = Player.HIT_DAMAGE
@@ -151,7 +151,8 @@ function Player:moveCollideY(collided)
 end
 
 function Player:movement(dt)
-    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") and not self.isLookingAtMap then
+    local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
+    if self.velocity:len() == 0 and self.hasHarmonica and input.down("down") and not self.isLookingAtMap and #collidedCheckpoints == 0 then
         self.isPlayingHarmonica = true
     else
         self.isPlayingHarmonica = false
