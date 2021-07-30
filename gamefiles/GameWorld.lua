@@ -93,7 +93,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         "insideambience.wav", "outsideambience.wav",
         "explore1.ogg", "explore2.ogg", "explore3.ogg", "explore4.ogg",
         "boss1.ogg", "boss2.ogg", "boss3.ogg",
-        "outside.ogg", "silence.wav"
+        "outside.ogg", "silence.wav", "restart.wav"
     })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
@@ -108,9 +108,12 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self.isHardMode = GameWorld.isSecondTower
     self.curtain = Curtain:new()
     self:add(self.curtain)
-    --self.curtain:addTween(Alarm:new(3, function()
+    self.curtain:addTween(Alarm:new(3, function()
         self.curtain:fadeOut()
-    --end), true)
+        self.curtain:addTween(Alarm:new(2, function()
+            self.player.canMove = true
+        end), true)
+    end), true)
     if saveOnEntry then
         self.player.x = startX
         self.player.y = startY
@@ -302,15 +305,27 @@ function GameWorld:onDeath()
 end
 
 function GameWorld:update(dt)
-    self.timer = self.timer + dt
+    if self.player.canMove then
+        self.timer = self.timer + dt
+    end
     self.previousPlayerFlipX = self.player.graphic.flipX
     self.previousCameraZone = self:getCurrentCameraZone()
     World.update(self, dt)
     self:updateSounds(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
+        self.curtain:fadeIn()
+        self.curtain.graphic.alpha = 1
         clearSave()
-        ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+        for _, v in pairs(self.sfx) do
+            v:stopLoops()
+        end
+        self.sfx["restart"]:play()
+        self:doSequence({
+            {0.1, function()
+                ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+            end}
+        })
         --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
     if input.pressed("teleport") then

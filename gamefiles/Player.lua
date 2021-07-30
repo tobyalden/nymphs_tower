@@ -31,6 +31,8 @@ function Player:initialize(x, y)
 
     releasedJump = false
 
+    self.canMove = false
+
     self.mask = Hitbox:new(self, 8, 21)
     self.types = {"player"}
     self.velocity = Vector:new(0, 0)
@@ -790,6 +792,9 @@ function Player:handleSfx(dt)
 end
 
 function Player:update(dt)
+    if not self.canMove then
+        return
+    end
     if self.world.isHardMode then
         self.hitDamage = Player.HIT_DAMAGE * 2
     end

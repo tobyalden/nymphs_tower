@@ -1,6 +1,4 @@
-- main menu
 - add sfx to restart, fix restart so you're not moving blind
-+ save isInSecondTower
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add tutorial for jumping and using jetpack
 - add toggle for timer
@@ -19,3 +17,8 @@
 
 - add credits
 - add ending screen
+
+------------------------------------------------------------------------------
+
++ main menu
++ save isInSecondTower
