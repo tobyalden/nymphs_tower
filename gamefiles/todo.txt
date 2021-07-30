@@ -3,6 +3,7 @@
 - add acid rises to johns level
 - add music to johns level
 - add sfx (and maybe visual fx) for teleporting to second tower
+- save isInSecondTower
 - add bottom of second tower
 - add tutorial for jumping and using jetpack
 - add ending screen

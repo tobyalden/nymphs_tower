@@ -30,7 +30,7 @@ GameWorld.static.FIRST_TOWER = {
     "level_4.json"
 }
 
-GameWorld.static.isSecondTower = true
+GameWorld.static.isSecondTower = false
 
 function GameWorld:initialize(levelStack)
     World.initialize(self)
@@ -306,8 +306,8 @@ function GameWorld:update(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
         self:clearSave()
-        --ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
-        ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
+        ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+        --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
 end
 

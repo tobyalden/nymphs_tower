@@ -127,6 +127,13 @@ function Level:initialize(paths)
                         table.insert(levelEntities, fuelUpgrade)
                         table.insert(self.items, fuelUpgrade)
                         uniqueId = uniqueId + 1
+                    elseif entity["name"] == "decoration" then
+                        local decoration = Decoration:new(
+                            entity["x"], entity["y"],
+                            entity["values"]["path"],
+                            entity["values"]["layer"]
+                        )
+                        table.insert(levelEntities, decoration)
                     elseif entity["name"] == "block" then
                         local block = Block:new(entity["x"], entity["y"])
                         table.insert(levelEntities, block)

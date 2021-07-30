@@ -43,6 +43,7 @@ require("Inside")
 require("Crown")
 require("Map")
 require("Compass")
+require("Decoration")
 
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()

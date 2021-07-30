@@ -1132,6 +1132,47 @@
       "values": [],
       "texture": "compass.png",
       "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAFyGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDIgNzkuMTY0MzUyLCAyMDIwLzAxLzMwLTE1OjUwOjM4ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjEuMSAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDIxLTA2LTMwVDE4OjI3OjM0LTA3OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDIxLTA2LTMwVDE4OjI3OjM0LTA3OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyMS0wNi0zMFQxODoyNzozNC0wNzowMCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyYzcwNTg4Yy1jMGJhLWQ1NDItODhhNC0yYmQxZmI1NzhhNmMiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDpmN2ExOTQwZS0zOTc5LTIxNDMtOWQyNC0xYWM3YzgxYzUyZjciIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowYjExZjgzMC0yMWQ0LWU2NDYtYmZkYy01MzJhZmE4MDdkNzUiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDowYjExZjgzMC0yMWQ0LWU2NDYtYmZkYy01MzJhZmE4MDdkNzUiIHN0RXZ0OndoZW49IjIwMjEtMDYtMzBUMTg6Mjc6MzQtMDc6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMS4xIChXaW5kb3dzKSIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MmM3MDU4OGMtYzBiYS1kNTQyLTg4YTQtMmJkMWZiNTc4YTZjIiBzdEV2dDp3aGVuPSIyMDIxLTA2LTMwVDE4OjI3OjM0LTA3OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgMjEuMSAoV2luZG93cykiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+YdDrhAAAAZlJREFUSIntlq9Ow1AUh79LkLwAYlVVhFBX10mq6CugcMNMkk1tQQ7BXFUlwRW1ytXV1aCakHRij1HEOOW2t90SkgmSHXX/ne93zrn3NFVVVXFMOzsq/SRwEvgfAuf7Nj3LPtSFKi2LLj9kXUknz2YzAFzHYT4aVwC3D/e106Bcs7GGDVASRgCkZaFaAamfdTOD+Whc6WAR3ZZrXMcBIMtzLt7e6wAELPMkjCoRaWSQhFEDLkDdPp8mAFw9z8ny3MhGhJIwIi0LVQt4lr0XLmCBi20/XgHYWEOSMNKzIC0LZZRoUK53A03ADwL8IODl+qYBB7i8e+zLREHHK9pYw0b0fhAAsIpjA95jSp/UfSB1080PAlZxzCqOe2kSfdvXEACYLBckYVQ7tcFSbx2ehFGj9rB7ntIHRonSssCzbBKafQAw0CKWqNtn2o3X2clyyLPsjt2vetSGd5kuoLI8r+D3YifLheGgZ6DbTzaqvd64A9dxVB/gL3BDIMtzXMdRnmUb5emCaxesZN42te+35dDXVI96Op12nvkGPDLH4W2fK6MAAAAASUVORK5CYII="
+    },
+    {
+      "exportID": "60345245",
+      "name": "decoration",
+      "limit": -1,
+      "size": {"x": 32, "y": 32},
+      "origin": {"x": 0, "y": 0},
+      "originAnchored": true,
+      "shape": {
+        "label": "Rectangle",
+        "points": [
+          {"x": -1, "y": -1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": -1},
+          {"x": -1, "y": 1},
+          {"x": 1, "y": 1}
+        ]
+      },
+      "color": "#ff0000ff",
+      "tileX": false,
+      "tileY": false,
+      "tileSize": {"x": 16, "y": 16},
+      "resizeableX": true,
+      "resizeableY": true,
+      "rotatable": false,
+      "rotationDegrees": 360,
+      "canFlipX": false,
+      "canFlipY": false,
+      "canSetColor": false,
+      "hasNodes": false,
+      "nodeLimit": 0,
+      "nodeDisplay": 0,
+      "nodeGhost": true,
+      "tags": [],
+      "values": [
+        {"name": "path", "definition": "String", "defaults": "decoration", "maxLength": 0, "trimWhitespace": true},
+        {"name": "layer", "definition": "Integer", "defaults": -1, "bounded": false, "min": -100, "max": 100}
+      ],
+      "texture": "decoration.png",
+      "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACjSURBVEhL7dBBCoNAEETRHER3nt9dDpGLuPMM+kEoh1anJqKE4MBb9cAv9PUe2lvVAWsdmPrPVdTEcwbGpkuF10BN+IFt9MqBkC6kJvxAuJRQEz8dOPd/oCbMQLgUUhNPG+CSCq+iJs5/wZ8MHFUyT1ATuQFkBsIlpSb8wLa1e0ypCTOAJaeirUNN+IGFZmwdaqJ04Ctqog7sUhPrwE3qgDG0M+IJYWLYsZi7AAAAAElFTkSuQmCC"
     }
   ],
   "tilesets": []

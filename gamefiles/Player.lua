@@ -418,6 +418,13 @@ function Player:isInAcid()
 end
 
 function Player:collisions(dt)
+    local collidedDecorations = self:collide(self.x, self.y, {"decoration"})
+    if #collidedDecorations > 0 then
+        self.layer = -10
+    else
+        self.layer = -1
+    end
+
     if self:isInAcid() and not self.hasHazardSuit then
         local acidDamage = Acid.DAMAGE_RATE * dt
         if self.world.isHardMode then
