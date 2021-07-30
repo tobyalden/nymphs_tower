@@ -87,7 +87,7 @@ function Player:initialize(x, y)
     self.hitDamage = Player.HIT_DAMAGE
 
     self:restoreHealth()
-    self.fuel = self:getMaxFuel()
+    self.fuel = 0
     self.invincibleTimer = self:addTween(Alarm:new(
         Player.INVINCIBLE_AFTER_HIT_TIME
     ))
