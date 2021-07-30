@@ -94,5 +94,5 @@ function love.load()
         )
     end
      --ammo.world = MainMenu:new()
-    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
+    ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
 end

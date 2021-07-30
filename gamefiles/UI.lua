@@ -261,6 +261,17 @@ function UI:update(dt)
 end
 
 function UI:updateCompass()
+    if not self.world.player.hasCompass then
+        playerPing.alpha = 0
+        for i = 1, 5 do
+            bossPings[i].alpha = 0
+        end
+        for i = 1, 50 do
+            itemPings[i].alpha = 0
+        end
+        return
+    end
+
     self:updatePing(playerPing, self.world.player)
     for i = 1, 5 do
         if self.world.level.bosses[i] then

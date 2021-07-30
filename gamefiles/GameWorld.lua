@@ -40,12 +40,14 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self.level = Level:new(levelStack)
     self:add(self.level)
     local startX, startY
+    local isStartOfGame = true
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
             self.player = entity
             startX = entity.x
             startY = entity.y
             if saveData.exists("currentCheckpoint") then
+                isStartOfGame = false
                 self:loadGame()
             end
             self:add(entity)
@@ -112,6 +114,16 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         self.curtain:fadeOut()
         self.curtain:addTween(Alarm:new(2, function()
             self.player.canMove = true
+            if isStartOfGame then
+                self.curtain:addTween(Alarm:new(2, function()
+                    self.ui:showMessageSequence({
+                        "PRESS Z TO JUMP",
+                        "HOLD Z IN AIR TO USE JETPACK",
+                        "PRESS DOWN TO SAVE",
+                        "AT RED CHECKPOINTS"
+                    })
+                end), true)
+            end
         end), true)
     end), true)
     if saveOnEntry then

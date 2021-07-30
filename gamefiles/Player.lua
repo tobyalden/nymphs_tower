@@ -68,19 +68,19 @@ function Player:initialize(x, y)
 
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     --self.isBufferingShot = false
-    self.hasGun = true
-    self.hasGravityBelt = true
-    self.hasHazardSuit = true
-    self.hasHarmonica = true
+    self.hasGun = false
+    self.hasGravityBelt = false
+    self.hasHazardSuit = false
+    self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
-    self.hasMap = true
-    self.hasCompass = true
-    self.hasCrown = true
+    self.hasMap = false
+    self.hasCompass = false
+    self.hasCrown = false
     self.isLookingAtMap = false
 
-    self.healthUpgrades = 8 --MAX
-    self.fuelUpgrades = 5 -- MAX
+    self.healthUpgrades = 0 --MAX
+    self.fuelUpgrades = 1 -- MAX
     --self.healthUpgrades = 6
     --self.fuelUpgrades = 4
 
@@ -93,7 +93,7 @@ function Player:initialize(x, y)
     ))
     self.knockbackTimer = self:addTween(Alarm:new(Player.KNOCKBACK_TIME))
     self.fuelRecoveryTimer = self:addTween(Alarm:new(Player.FUEL_RECOVERY_DELAY))
-    self.wasOnGround = false
+    self.wasOnGround = true
     self.wasJetpackOn = false
     self.wasInAcid = false
     self.harmonicaDelay = self:addTween(Alarm:new(2.5))
@@ -793,6 +793,12 @@ end
 
 function Player:update(dt)
     if not self.canMove then
+        self:moveBy(
+            0,
+            Player.MAX_FALL_SPEED * dt,
+            Player.SOLIDS
+        )
+        self:animation()
         return
     end
     if self.world.isHardMode then
