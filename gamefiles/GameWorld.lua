@@ -39,9 +39,12 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self.itemIds = {}
     self.level = Level:new(levelStack)
     self:add(self.level)
+    local startX, startY
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
             self.player = entity
+            startX = entity.x
+            startY = entity.y
             if saveData.exists("currentCheckpoint") then
                 self:loadGame()
             end
@@ -109,13 +112,16 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         self.curtain:fadeOut()
     --end), true)
     if saveOnEntry then
+        self.player.x = startX
+        self.player.y = startY
         self:saveGame(self.player.x, self.player.y)
     end
 end
 
 function GameWorld:teleportToSecondTower()
-    clearSave()
     GameWorld.isSecondTower = true
+    self.player:loseItems()
+    self:saveGame(self.player.x, self.player.y)
     ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
 end
 
