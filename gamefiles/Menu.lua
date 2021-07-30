@@ -8,6 +8,8 @@ function Menu:initialize(itemNames)
     self.graphic = Graphiclist:new({})
     self.itemNames = itemNames
 
+    self.hasSaveData = saveData.exists("currentCheckpoint")
+
     for i, itemName in ipairs(itemNames) do
         local item = Text:new(itemName, 24)
         item.offsetY = 32 * (i - 1)
@@ -17,6 +19,9 @@ function Menu:initialize(itemNames)
         end
         if i == 2 then
             self.continueMenuItem = item
+            if not self.hasSaveData then
+                self.continueMenuItem.alpha = 0.5
+            end
         end
     end
 
@@ -43,6 +48,7 @@ function Menu:initialize(itemNames)
         end
         ammo.world = GameWorld:new(tower)
     end))
+    self:loadSfx({"menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
 end
 
 function Menu:update(dt)
@@ -55,17 +61,24 @@ function Menu:update(dt)
                 if self.submenuCursorIsYes then
                     clearSave()
                     self:fadeToGame()
+                    self.sfx["menunew"]:play()
                 else
                     self.isOnSubmenu = false
+                    self.sfx["menuback"]:play()
                 end
             end
             if input.pressed("shoot") then
+                if self.isOnSubmenu then
+                    self.sfx["menuback"]:play()
+                end
                 self.isOnSubmenu = false
             end
             if input.pressed("left") and not self.submenuCursorIsYes then
                 self.submenuCursorIsYes = true
+                self.sfx["menumove"]:play()
             elseif input.pressed("right") and self.submenuCursorIsYes then
                 self.submenuCursorIsYes = false
+                self.sfx["menumove"]:play()
             end
             if self.submenuCursorIsYes then
                 self.cursor.offsetX = 24
@@ -76,7 +89,12 @@ function Menu:update(dt)
         else
             self.submenu.alpha = 0
             self.newGameMenuItem.alpha = 1
-            self.continueMenuItem.alpha = 1
+            if self.hasSaveData then
+                self.continueMenuItem.alpha = 1
+            else
+                self.continueMenuItem.alpha = 0.5
+            end
+            local oldCursorIndex = self.cursorIndex
             if input.pressed("up") then
                 self.cursorIndex = self.cursorIndex - 1
             elseif input.pressed("down") then
@@ -84,14 +102,29 @@ function Menu:update(dt)
             elseif input.pressed("jump") then
                 if self.cursorIndex == 1 then
                     -- NEW GAME
-                    self.isOnSubmenu = true
-                    self.submenuCursorIsYes = false
+                    if self.hasSaveData then
+                        self.isOnSubmenu = true
+                        self.submenuCursorIsYes = false
+                        self.sfx["menumove"]:play()
+                    else
+                        clearSave()
+                        self:fadeToGame()
+                        self.sfx["menunew"]:play()
+                    end
                 elseif self.cursorIndex == 2 then
                     -- CONTINUE
-                    self:fadeToGame()
+                     if self.hasSaveData then
+                        self:fadeToGame()
+                        self.sfx["menucontinue"]:play()
+                    else
+                        self.sfx["menuno"]:play()
+                    end
                 end
             end
             self.cursorIndex = math.clamp(self.cursorIndex, 1, #self.itemNames)
+            if oldCursorIndex ~= self.cursorIndex then
+                self.sfx["menumove"]:play()
+            end
             self.cursor.offsetX = -19
             self.cursor.offsetY = 5 + (self.cursorIndex - 1) * 33
         end
