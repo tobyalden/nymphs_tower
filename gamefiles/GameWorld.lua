@@ -30,9 +30,9 @@ GameWorld.static.FIRST_TOWER = {
     "level_4.json"
 }
 
-GameWorld.static.isSecondTower = false
+GameWorld.static.isSecondTower = nil
 
-function GameWorld:initialize(levelStack)
+function GameWorld:initialize(levelStack, saveOnEntry)
     World.initialize(self)
     self.timer = 0
     self.flags = {}
@@ -41,7 +41,6 @@ function GameWorld:initialize(levelStack)
     self:add(self.level)
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
-            print('player found')
             self.player = entity
             if saveData.exists("currentCheckpoint") then
                 self:loadGame()
@@ -109,25 +108,23 @@ function GameWorld:initialize(levelStack)
     --self.curtain:addTween(Alarm:new(3, function()
         self.curtain:fadeOut()
     --end), true)
+    if saveOnEntry then
+        self:saveGame(self.player.x, self.player.y)
+    end
 end
 
 function GameWorld:teleportToSecondTower()
-    saveData.clear("currentCheckpoint")
-    saveData.clear("currentFlags")
-    saveData.clear("itemIds")
-    saveData.clear("acidLevels")
-    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
-end
-
-function GameWorld:clearSave()
-    saveData.clear("currentCheckpoint")
-    saveData.clear("currentFlags")
-    saveData.clear("itemIds")
-    saveData.clear("acidLevels")
+    clearSave()
+    GameWorld.isSecondTower = true
+    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
 end
 
 function GameWorld:saveGame(saveX, saveY)
     local currentCheckpoint = {}
+    if GameWorld.isSecondTower then
+        currentCheckpoint["isSecondTower"] = "true"
+    end
+
     currentCheckpoint["saveX"] = saveX
     currentCheckpoint["saveY"] = saveY
 
@@ -185,6 +182,7 @@ end
 
 function GameWorld:loadGame()
     local loadedCheckpoint = saveData.load("currentCheckpoint")
+    GameWorld.isSecondTower = loadedCheckpoint["isSecondTower"] == "true"
     self.player.x = loadedCheckpoint["saveX"]
     self.player.y = loadedCheckpoint["saveY"]
     self.player.graphic.flipX = loadedCheckpoint["flipX"]
@@ -305,9 +303,12 @@ function GameWorld:update(dt)
     self:updateSounds(dt)
     self:updateCamera(dt)
     if input.pressed("reset") then
-        self:clearSave()
+        clearSave()
         ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
         --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
+    end
+    if input.pressed("teleport") then
+        self:teleportToSecondTower()
     end
 end
 

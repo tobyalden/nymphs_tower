@@ -1,18 +1,20 @@
 - main menu
-- add ghosts
-- add acid rises to johns level
-- add music to johns level
-- add sfx (and maybe visual fx) for teleporting to second tower
 - save isInSecondTower
-- add bottom of second tower
+- add sfx (and maybe visual fx) for teleporting to second tower
 - add tutorial for jumping and using jetpack
-- add ending screen
 - add toggle for timer
 - move timer to not overlap with boss health
-- add credits
 - make acid cave and hazard suit more lenient
 - cloud layer has visible seam
 - add sfx for when acid levels are changing
-- add all graphics
 - add controller logic into ammo/input.lua
 - toggling fullscreen
+
+- add all graphics
+- add acid rises to johns level
+- add music to johns level
+- add bottom of second tower
+- add ghosts
+
+- add credits
+- add ending screen

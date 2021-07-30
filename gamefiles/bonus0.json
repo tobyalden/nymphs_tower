@@ -271,7 +271,8 @@
           "values": {"add_flag": ""}
         },
         {"name": "map", "id": 569, "_eid": "13820161", "x": 2884, "y": 3224, "originX": 0, "originY": 0},
-        {"name": "health_upgrade", "id": 570, "_eid": "78023010", "x": 1004, "y": 1640, "originX": 0, "originY": 0}
+        {"name": "health_upgrade", "id": 570, "_eid": "78023010", "x": 1004, "y": 1640, "originX": 0, "originY": 0},
+        {"name": "checkpoint", "id": 571, "_eid": "97277017", "x": 1712, "y": 1664, "originX": 0, "originY": 0}
       ]
     },
     {

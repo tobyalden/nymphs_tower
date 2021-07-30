@@ -5,6 +5,14 @@ inspect = require "inspect"
 
 saveData = require("saveData")
 
+function clearSave()
+    GameWorld.isSecondTower = false
+    saveData.clear("currentCheckpoint")
+    saveData.clear("currentFlags")
+    saveData.clear("itemIds")
+    saveData.clear("acidLevels")
+end
+
 require("ammo")
 require("ammo/all")
 require("Boss")
@@ -64,6 +72,7 @@ function love.load()
     input.define("jump", "z")
     input.define("shoot", "x")
     input.define("reset", "r")
+    input.define("teleport", "t")
     input.define("map", "return")
     input.define("quit", "escape")
 
@@ -84,6 +93,6 @@ function love.load()
             {fullscreen = false, pixelperfect = true, resizable = false}
         )
     end
-    -- ammo.world = MainMenu:new()
-    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
+     ammo.world = MainMenu:new()
+    --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
 end

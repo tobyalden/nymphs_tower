@@ -5,11 +5,11 @@ MainMenu = class("MainMenu", World)
 function MainMenu:initialize()
     World.initialize(self)
     --self.menu = Menu:new({"NEW GAME", "CONTINUE", "OPTIONS"})
+    self:addGraphic(Sprite:new("mainmenu.png"))
     self.menu = Menu:new({"NEW GAME", "CONTINUE"})
     self:add(self.menu)
     self.curtain = Curtain:new()
     self:add(self.curtain)
-    self:addGraphic(Sprite:new("mainmenu.png"))
     self.curtain:fadeOut()
 end
 

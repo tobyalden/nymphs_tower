@@ -31,11 +31,16 @@ function Menu:initialize(itemNames)
     self.submenuCursorIsYes = false
     self.graphic:add(self.submenu)
 
-    local tower = GameWorld.FIRST_TOWER
-    if GameWorld.isSecondTower then
-        tower = GameWorld.SECOND_TOWER
-    end
     self.startTimer = self:addTween(Alarm:new(3, function()
+        local tower = GameWorld.FIRST_TOWER
+        if GameWorld.isSecondTower then
+            tower = GameWorld.SECOND_TOWER
+        end
+        if GameWorld.isSecondTower then
+            print('issecondtower')
+        else
+            print('is not secondtower')
+        end
         ammo.world = GameWorld:new(tower)
     end))
 end
@@ -48,8 +53,7 @@ function Menu:update(dt)
             self.continueMenuItem.alpha = 0
             if input.pressed("jump") then
                 if self.submenuCursorIsYes then
-                    saveData.clear("currentCheckpoint")
-                    saveData.clear("currentFlags")
+                    clearSave()
                     self:fadeToGame()
                 else
                     self.isOnSubmenu = false
@@ -96,6 +100,13 @@ function Menu:update(dt)
 end
 
 function Menu:fadeToGame()
+    GameWorld.isSecondTower = false
+    if saveData.exists("currentCheckpoint") then
+        local loadedCheckpoint = saveData.load("currentCheckpoint")
+        if loadedCheckpoint["isSecondTower"] then
+            GameWorld.isSecondTower = true
+        end
+    end
     self.startTimer:start()
     self.world.curtain:fadeIn()
 end

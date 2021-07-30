@@ -272,7 +272,9 @@
           "originX": 0,
           "originY": 0,
           "values": {"acid_id": "", "rise_speed": 0}
-        }
+        },
+        {"name": "player", "id": 613, "_eid": "68256185", "x": 280, "y": 848},
+        {"name": "map", "id": 615, "_eid": "13820161", "x": 1324, "y": 872, "originX": 0, "originY": 0}
       ]
     },
     {

@@ -562,7 +562,6 @@
           "originY": 0,
           "values": {"acid_id": "", "rise_speed": 0}
         },
-        {"name": "player", "id": 614, "_eid": "68256185", "x": 2372, "y": 640},
         {
           "name": "decoration",
           "id": 615,
