@@ -127,7 +127,8 @@ function Entity:collide(checkX, checkY, solidTypes)
         return false
     end
     local items, _ = self.world.bumpWorld:queryRect(
-        checkX, checkY, self.mask.width, self.mask.height, typeFilter
+        checkX + self.mask.offsetX, checkY + self.mask.offsetY, self.mask.width, self.mask.height, typeFilter
+        -- checkX, checkY, self.mask.width, self.mask.height, typeFilter
     )
     local collided = {}
     for _, item in pairs(items) do
@@ -220,8 +221,8 @@ function Entity:_moveBy(x, y, solidTypes)
         end
     end
     if #allCollided > 0 then
-        self.x = actualX
-        self.y = actualY
+        self.x = actualX - self.mask.offsetX
+        self.y = actualY - self.mask.offsetY
     else
         self.x = self.x + x
         self.y = self.y + y
@@ -316,6 +317,7 @@ function Entity:_drawGraphic(graphic)
             drawX = self.x + graphic.frameWidth * graphic.scaleX
         end
         drawX = drawX + graphic.offsetX
+
 
         local drawScaleY = graphic.scaleY
         if graphic.flipY then

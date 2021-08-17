@@ -29,15 +29,17 @@ function Pig:initialize(x, y)
 end
 
 function Pig:update(dt)
+    self:bossUpdate(dt)
     if self.world.currentBoss == self then
         self.graphic:play("run")
         local oldFlipX = self.graphic.flipX
-        if self.velocity.x > 0 then
+        if self.velocity.x > 0.1 then
             self.graphic.flipX = true
-        elseif self.velocity.x < 0 then
+        elseif self.velocity.x < 0.1 then
             self.graphic.flipX = false
         end
         if oldFlipX ~= self.graphic.flipX then
+            print('updating offset')
             if self.graphic.flipX then
                 self.mask:updateOffset(32, 0)
             else
@@ -45,7 +47,6 @@ function Pig:update(dt)
             end
         end
     end
-    self:bossUpdate(dt)
     Entity.update(self, dt)
 end
 

@@ -1,3 +1,4 @@
+- fix bug where pig gets stuck in right wall
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add tutorial for jumping and using jetpack
 - add toggle for timer
