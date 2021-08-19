@@ -1,7 +1,9 @@
 json = require "json"
 Level = class("Level", Entity)
 
-function Level:initialize(paths)
+function Level:initialize(paths, onlyItems)
+    onlyItems = onlyItems or false
+
     Entity.initialize(self, 0, 0)
     self.types = {"walls"}
 
@@ -22,6 +24,10 @@ function Level:initialize(paths)
     self.mask = Grid:new(self, standardWidth, totalHeight, 16, 16)
 
     local uniqueId = 0
+    if string.find(paths[1], "bonus") then
+        uniqueId = 10000
+        print('is bonus level.' .. paths[1] .. 'offseting uniqueIds')
+    end
     heightOffset = 0
 
     for _, path in pairs(paths) do
@@ -35,12 +41,14 @@ function Level:initialize(paths)
                 local columns = math.ceil(jsonData["width"] / 16)
                 local rows = math.ceil(jsonData["height"] / 16)
                 sliceHeight = rows * 16
-                for tileX = 1, columns do
-                    for tileY = 1, rows do
-                        local tileHeightOffset = math.ceil(heightOffset / 16)
-                        self.mask:setTile(
-                            tileX, tileY + tileHeightOffset, layer["grid2D"][tileY][tileX] == "1"
-                        )
+                if not onlyItems then
+                    for tileX = 1, columns do
+                        for tileY = 1, rows do
+                            local tileHeightOffset = math.ceil(heightOffset / 16)
+                            self.mask:setTile(
+                                tileX, tileY + tileHeightOffset, layer["grid2D"][tileY][tileX] == "1"
+                            )
+                        end
                     end
                 end
             end

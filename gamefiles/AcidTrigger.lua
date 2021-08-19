@@ -7,7 +7,7 @@ function AcidTrigger:initialize(x, y, width, height, acidId, riseTo, uniqueId)
     self.riseTo = riseTo
     self.types = {"acid_trigger"}
     self.mask = Hitbox:new(self, width, height)
-    --self.graphic = TiledSprite:new("acidtrigger.png", 16, 16, width, height)
+    self.graphic = TiledSprite:new("acidtrigger.png", 16, 16, width, height)
     self.acidId = acidId
     self.requireAcid = requireAcid
 end

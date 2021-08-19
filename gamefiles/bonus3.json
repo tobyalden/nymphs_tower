@@ -455,7 +455,32 @@
         {"name": "block", "id": 313, "_eid": "78869308", "x": 4056, "y": 2072, "originX": 0, "originY": 0},
         {"name": "block", "id": 316, "_eid": "78869308", "x": 4192, "y": 2072, "originX": 0, "originY": 0},
         {"name": "block", "id": 317, "_eid": "78869308", "x": 4208, "y": 2072, "originX": 0, "originY": 0},
-        {"name": "block", "id": 318, "_eid": "78869308", "x": 4072, "y": 2072, "originX": 0, "originY": 0}
+        {"name": "block", "id": 318, "_eid": "78869308", "x": 4072, "y": 2072, "originX": 0, "originY": 0},
+        {"name": "player", "id": 319, "_eid": "68256185", "x": 376, "y": 2032},
+        {
+          "name": "acid",
+          "id": 320,
+          "_eid": "67689386",
+          "x": 464,
+          "y": 2048,
+          "width": 16,
+          "height": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "1", "rise_speed": 10}
+        },
+        {
+          "name": "acid_trigger",
+          "id": 321,
+          "_eid": "46470011",
+          "x": 424,
+          "y": 2048,
+          "width": 16,
+          "height": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "1", "rise_to": 32}
+        }
       ]
     },
     {

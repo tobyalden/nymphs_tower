@@ -1,25 +1,24 @@
-- fix bug where pig gets stuck in right wall
-- add sfx (and maybe visual fx) for teleporting to second tower
+THINGS I CAN DO RN
+
 - add tutorial for jumping and using jetpack
+- add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer
 - move timer to not overlap with boss health
 - make acid cave and hazard suit more lenient
 - cloud layer has visible seam
 - add sfx for when acid levels are changing
-- add controller logic into ammo/input.lua
 - toggling fullscreen
+- make pickup pause amount consistent
+- add controller logic into ammo/input.lua
+- track item %
+- add credits
+- add ending screen
+- try to improve loading time
 
+THINGS THAT WILL BE EASIER TO DO ONCE I HAVE JOHN'S LEVEL
+- add ghosts
 - add all graphics
 - add acid rises to johns level
 - add music to johns level
+- add outside camera zones
 - add bottom of second tower
-- add ghosts
-
-- add credits
-- add ending screen
-
-------------------------------------------------------------------------------
-
-+ main menu
-+ save isInSecondTower
-+ add sfx to restart, fix restart so you're not moving blind

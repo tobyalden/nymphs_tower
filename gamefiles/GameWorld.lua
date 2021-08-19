@@ -39,6 +39,7 @@ GameWorld.static.isSecondTower = nil
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     World.initialize(self)
+
     self.timer = 0
     self.flags = {}
     self.itemIds = {}
@@ -346,15 +347,22 @@ function GameWorld:update(dt)
             v:stopLoops()
         end
         self.sfx["restart"]:play()
+        local tower = GameWorld.FIRST_TOWER
+        if input.down("shift") then
+            tower = GameWorld.SECOND_TOWER
+        end
         self:doSequence({
             {0.1, function()
-                ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+                ammo.world = GameWorld:new(tower)
             end}
         })
         --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
     if input.pressed("teleport") then
         self:teleportToSecondTower()
+    end
+    if input.pressed("test") then
+        print(inspect(self.itemIds))
     end
 end
 

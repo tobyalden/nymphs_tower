@@ -18,6 +18,7 @@ require("ammo/all")
 require("Boss")
 require("GameWorld")
 require("MainMenu")
+require("EndScreen")
 require("Menu")
 require("Player")
 require("Level")
@@ -53,6 +54,8 @@ require("Map")
 require("Compass")
 require("Decoration")
 
+io.stdout:setvbuf("no")
+
 gameWidth, gameHeight = 320, 180
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
@@ -73,8 +76,10 @@ function love.load()
     input.define("shoot", "x")
     input.define("reset", "r")
     input.define("teleport", "t")
+    input.define("test", "p")
     input.define("map", "return")
     input.define("quit", "escape")
+    input.define("shift", "lshift")
 
     love.window.setTitle("Nymph's Tower")
 
@@ -94,5 +99,6 @@ function love.load()
         )
     end
      --ammo.world = MainMenu:new()
-    ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+     ammo.world = EndScreen:new()
+     --ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
 end

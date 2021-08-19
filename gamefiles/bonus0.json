@@ -29,7 +29,6 @@
         },
         {"name": "spike_ceiling", "id": 491, "_eid": "58248273", "x": 4384, "y": 4768, "width": 64, "originX": 0, "originY": 0},
         {"name": "spike_left", "id": 492, "_eid": "58255772", "x": 4560, "y": 4700, "height": 64, "originX": 0, "originY": 0},
-        {"name": "player", "id": 493, "_eid": "68256185", "x": 1684, "y": 1664},
         {"name": "spike_floor", "id": 494, "_eid": "58243373", "x": 2864, "y": 2960, "width": 64, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 495, "_eid": "58243373", "x": 3264, "y": 3072, "width": 16, "originX": 0, "originY": 0},
         {"name": "spike_right", "id": 496, "_eid": "58259368", "x": 3680, "y": 2864, "height": 16, "originX": 0, "originY": 0},
