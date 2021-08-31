@@ -185,6 +185,17 @@ end
 function Entity:moveCollideY(collided)
 end
 
+function Entity:hasType(typeToCheck)
+    if self.types then
+        for _, _type in pairs(self.types) do
+            if _type == typeToCheck then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function Entity:_moveBy(x, y, solidTypes)
     if not solidTypes or #solidTypes == 0 then
         self.x = self.x + x

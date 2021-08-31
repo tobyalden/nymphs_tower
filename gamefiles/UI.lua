@@ -24,6 +24,7 @@ local mapBorder = 8
 
 function UI:initialize(level)
     Entity.initialize(self)
+    self.types = {"ui"}
     healthBar = Sprite:new("healthbar.png")
     healthText = Text:new("HP", 12)
     fuelBar = Sprite:new("fuelbar.png")

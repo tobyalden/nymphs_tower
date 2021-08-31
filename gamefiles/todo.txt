@@ -1,5 +1,5 @@
 THINGS I CAN DO RN
-
+- make sides of both towers scalable - maybe they should have one side scalable without gravity belt, both with. 2 could have unscalable side just to be mean
 - add tutorial for jumping and using jetpack
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer
