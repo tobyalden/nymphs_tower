@@ -142,6 +142,11 @@ function Level:initialize(paths, onlyItems)
                             entity["values"]["layer"]
                         )
                         table.insert(levelEntities, decoration)
+                    elseif entity["name"] == "boat" then
+                        local boat = Boat:new(entity["x"], entity["y"], false)
+                        table.insert(levelEntities, boat)
+                        local boatBackground = Boat:new(entity["x"], entity["y"], true)
+                        table.insert(levelEntities, boatBackground)
                     elseif entity["name"] == "block" then
                         local block = Block:new(entity["x"], entity["y"])
                         table.insert(levelEntities, block)
@@ -462,7 +467,7 @@ function Level:initialize(paths, onlyItems)
         end
     end
 
-    self.layer = -3
+    self.layer = -4
 end
 
 function generateNonrepeatingSequence(numbersInSequence, length)

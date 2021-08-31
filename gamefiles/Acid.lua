@@ -18,7 +18,7 @@ function Acid:initialize(x, y, width, height, acidId, riseSpeed, uniqueId)
     end
     self.graphic = TiledSprite:new(self.tileset .. ".png", 8, 8, width, height)
     self.mask = Hitbox:new(self, width, height)
-    self.layer = -2
+    self.layer = -3
     self.riseTimer = self:addTween(Alarm:new(1, function()
         self:finishRise()
     end))

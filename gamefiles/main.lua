@@ -53,6 +53,7 @@ require("Crown")
 require("Map")
 require("Compass")
 require("Decoration")
+require("Boat")
 
 io.stdout:setvbuf("no")
 
@@ -99,6 +100,6 @@ function love.load()
         )
     end
      --ammo.world = MainMenu:new()
-     ammo.world = EndScreen:new()
-     --ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+     --ammo.world = EndScreen:new()
+     ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
 end
