@@ -12,7 +12,8 @@ THINGS I CAN DO RN
 - add controller logic into ammo/input.lua
 - track item %
 - add credits
-- add ending screen
+- add boat and transition to end (be sure to save before going from GameWorld to EndScreen)
+- add animation to ending screen
 - try to improve loading time
 
 THINGS THAT WILL BE EASIER TO DO ONCE I HAVE JOHN'S LEVEL

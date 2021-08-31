@@ -436,6 +436,13 @@ function Player:collisions(dt)
         self.layer = -1
     end
 
+    local collidedBoats = self:collide(self.x, self.y + 1, {"boat"})
+    if #collidedBoats > 0 then
+        self.graphic.offsetY = -11 + collidedBoats[1].graphic.offsetY
+    else
+        self.graphic.offsetY = -11
+    end
+
     if self:isInAcid() and not self.hasHazardSuit then
         local acidDamage = Acid.DAMAGE_RATE * dt
         if self.world.isHardMode then
