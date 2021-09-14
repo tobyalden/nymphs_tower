@@ -1,6 +1,10 @@
 THINGS I CAN DO RN
+<<<<<<< HEAD
 
 - tweak spike placement logic so it doesn't always start on the same one AND so it doesn't place edge tiles below spikes
+=======
+- make sides of both towers scalable - maybe they should have one side scalable without gravity belt, both with. 2 could have unscalable side just to be mean
+>>>>>>> e8cd0ab4b68d90e1bf61e92a94102caf9ea98977
 - add tutorial for jumping and using jetpack
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer + reset

@@ -202,6 +202,7 @@ function GameWorld:saveGame(saveX, saveY)
     saveData.save(self.itemIds, "itemIds")
 
     self.player:restoreHealth()
+    self.player:restoreFuel()
 
     local acidLevels = {}
     for _, entity in pairs(self.level.entities) do
@@ -297,7 +298,9 @@ end
 
 function GameWorld:pauseLevel()
     for v in self._updates:iterate() do
-        v.paused = true
+        if v.types and not v:hasType("ui") then 
+            v.paused = true
+        end
     end
 end
 
