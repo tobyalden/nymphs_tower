@@ -25,7 +25,8 @@ GameWorld.static.SECOND_TOWER = {
     "bonus0.json",
     "bonus1.json",
     "bonus2.json",
-    "bonus3.json"
+    "bonus3.json",
+    "bonus4.json"
 }
 
 GameWorld.static.FIRST_TOWER = {
@@ -36,6 +37,8 @@ GameWorld.static.FIRST_TOWER = {
 }
 
 GameWorld.static.isSecondTower = nil
+
+GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     World.initialize(self)
@@ -53,6 +56,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             startX = entity.x
             startY = entity.y
             if saveData.exists("currentCheckpoint") then
+                print('save data found. loading...')
                 isStartOfGame = false
                 self:loadGame()
             end
@@ -162,6 +166,7 @@ function GameWorld:saveGame(saveX, saveY)
 
     currentCheckpoint["saveX"] = saveX
     currentCheckpoint["saveY"] = saveY
+    print('saving player at ' .. saveX .. ', ' .. saveY)
 
     if self.player.graphic.flipX then
         currentCheckpoint["flipX"] = "true"
@@ -220,6 +225,7 @@ function GameWorld:loadGame()
     GameWorld.isSecondTower = loadedCheckpoint["isSecondTower"] == "true"
     self.player.x = loadedCheckpoint["saveX"]
     self.player.y = loadedCheckpoint["saveY"]
+    print('placing player at ' .. self.player.x .. ', ' .. self.player.y)
     self.player.graphic.flipX = loadedCheckpoint["flipX"]
     self.player.hasGun = loadedCheckpoint["hasGun"]
     self.player.healthUpgrades = loadedCheckpoint["healthUpgrades"]
@@ -358,11 +364,16 @@ function GameWorld:update(dt)
         })
         --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
-    if input.pressed("teleport") then
-        self:teleportToSecondTower()
-    end
-    if input.pressed("test") then
-        print(inspect(self.itemIds))
+    if GameWorld.DEBUG_MODE then
+        if input.pressed("debug_print") then
+            print("player coordinates: (" .. self.player.x .. ", " .. self.player.y .. ")")
+        end
+        if input.pressed("debug_teleport") then
+            self:teleportToSecondTower()
+        end
+        if input.pressed("debug_allitems") then
+            self.player:giveAllItems()
+        end
     end
 end
 

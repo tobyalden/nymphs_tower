@@ -269,6 +269,9 @@ function Level:initialize(paths, onlyItems)
                 for _, node in ipairs(entity.nodes) do
                     node.y = node.y + heightOffset
                 end
+                if entity.class == SecretBoss then
+                    entity.highestNodeY = entity.highestNodeY + heightOffset
+                end
             end
             table.insert(self.entities, entity)
         end

@@ -19,7 +19,11 @@ function SecretBoss:initialize(x, y, nodes)
     self.mask = Hitbox:new(self, 40, 50)
     self.layer = 0
     self.nodes = {}
+    self.highestNodeY = nodes[1].y
     for i, node in pairs(nodes) do
+        if node.y < self.highestNodeY then
+            self.highestNodeY = node.y
+        end
         self.nodes[i] = Vector:new(node.x, node.y)
     end
     self.nodeIndex = 1
@@ -47,8 +51,8 @@ function SecretBoss:update(dt)
 end
 
 function SecretBoss:fireBullet()
-    -- TODO: This is gonna break when i move the nodes
-    if self.y == 7864 then
+    print('self.y is ' .. self.y .. ' and self.highestNodeY is ' .. self.highestNodeY)
+    if self.y == self.highestNodeY then
         self:fireSpread()
     else
         self:fireDropShot()
@@ -175,7 +179,7 @@ function SecretBoss:phaseThreeMovement(dt)
 end
 
 function SecretBoss:phaseTwoMovement(dt)
-    self:moveBy(self.velocity.x * dt, self.velocity.y * dt, {"walls"})
+    self:moveBy(self.velocity.x * dt, self.velocity.y * dt, {"walls", "lock"})
 end
 
 function SecretBoss:moveCollideX(collided)

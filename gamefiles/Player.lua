@@ -79,10 +79,10 @@ function Player:initialize(x, y)
     self.hasCrown = false
     self.isLookingAtMap = false
 
-    self.healthUpgrades = 0 --MAX
-    self.fuelUpgrades = 1 -- MAX
-    --self.healthUpgrades = 6
-    --self.fuelUpgrades = 4
+    --self.healthUpgrades = 6 --MAX
+    --self.fuelUpgrades = 4 -- MAX
+    self.healthUpgrades = 10
+    self.fuelUpgrades = 4
 
     self.hitDamage = Player.HIT_DAMAGE
 
@@ -117,6 +117,16 @@ function Player:loseItems()
     self.hasHazardSuit = false
     self.hasMap = false
     self.fuelUpgrades = 0
+end
+
+function Player:giveAllItems()
+    self.hasGun = true
+    self.hasGravityBelt = true
+    self.hasHazardSuit = true
+    self.hasMap = true
+    self.hasCompass = true
+    self.healthUpgrades = 10
+    self.fuelUpgrades = 4
 end
 
 function Player:isInside()
