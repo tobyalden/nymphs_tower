@@ -298,99 +298,99 @@ function Level:initialize(paths, onlyItems)
             if self.mask:getTile(tileX, tileY) then
                 -- tile placing logic
                 if (
-                    not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- standalone 1x1
                     self.graphic:setTile(tileX, tileY, 23)
                 elseif (
-                    self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- left edge of 1-tall
                     self.graphic:setTile(tileX, tileY, 14)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- right edge of 1-tall
                     self.graphic:setTile(tileX, tileY, 16)
                 elseif (
-                    self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- top edge of 1-wide
                     self.graphic:setTile(tileX, tileY, 13)
                 elseif (
-                    self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
                 ) then
                     -- bottom edge of 1-wide
                     self.graphic:setTile(tileX, tileY, 29)
                 elseif (
-                    self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- middle of 1-tall
                     self.graphic:setTile(tileX, tileY, 15)
                 elseif (
-                    not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- middle of 1-wide
                     self.graphic:setTile(tileX, tileY, 21)
                 elseif (
-                    self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- top left corner
                     self.graphic:setTile(tileX, tileY, 1)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- top right corner
                     self.graphic:setTile(tileX, tileY, 4)
                 elseif (
-                    self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
                 ) then
                     -- bottom left corner
                     self.graphic:setTile(tileX, tileY, 25)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
                 ) then
                     -- bottom right corner
                     self.graphic:setTile(tileX, tileY, 28)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX - 1, tileY - 1, {'floor'})
                     and self:getTileOrSpike(tileX + 1, tileY - 1)
                     and self:getTileOrSpike(tileX - 1, tileY + 1)
                     and self:getTileOrSpike(tileX + 1, tileY + 1)
@@ -398,11 +398,11 @@ function Level:initialize(paths, onlyItems)
                     -- top left inner corner
                     self.graphic:setTile(tileX, tileY, 10)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX + 1, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX + 1, tileY - 1, {'floor'})
                     and self:getTileOrSpike(tileX - 1, tileY - 1)
                     and self:getTileOrSpike(tileX - 1, tileY + 1)
                     and self:getTileOrSpike(tileX + 1, tileY + 1)
@@ -410,11 +410,11 @@ function Level:initialize(paths, onlyItems)
                     -- top right inner corner
                     self.graphic:setTile(tileX, tileY, 11)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX - 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX - 1, tileY + 1, {'ceiling'})
                     and self:getTileOrSpike(tileX - 1, tileY - 1)
                     and self:getTileOrSpike(tileX + 1, tileY - 1)
                     and self:getTileOrSpike(tileX + 1, tileY + 1)
@@ -422,11 +422,11 @@ function Level:initialize(paths, onlyItems)
                     -- bottom left inner corner
                     self.graphic:setTile(tileX, tileY, 18)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
-                    and not self:getTileOrSpike(tileX + 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
+                    and not self:getTileOrSpike(tileX + 1, tileY + 1, {'ceiling'})
                     and self:getTileOrSpike(tileX - 1, tileY - 1)
                     and self:getTileOrSpike(tileX + 1, tileY - 1)
                     and self:getTileOrSpike(tileX - 1, tileY + 1)
@@ -434,34 +434,34 @@ function Level:initialize(paths, onlyItems)
                     -- bottom right inner corner
                     self.graphic:setTile(tileX, tileY, 19)
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and not self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and not self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- top edge
                     self.graphic:setTile(tileX, tileY, allTopEdgeTiles[tileX])
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and not self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and not self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- bottom edge
                     self.graphic:setTile(tileX, tileY, allBottomEdgeTiles[tileX])
                 elseif (
-                    not self:getTileOrSpike(tileX - 1, tileY)
-                    and self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- left edge
                     self.graphic:setTile(tileX, tileY, allLeftEdgeTiles[tileY])
                 elseif (
-                    self:getTileOrSpike(tileX - 1, tileY)
-                    and not self:getTileOrSpike(tileX + 1, tileY)
-                    and self:getTileOrSpike(tileX, tileY + 1)
-                    and self:getTileOrSpike(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY, {'right'})
+                    and not self:getTileOrSpike(tileX + 1, tileY, {'left'})
+                    and self:getTileOrSpike(tileX, tileY + 1, {'ceiling'})
+                    and self:getTileOrSpike(tileX, tileY - 1, {'floor'})
                 ) then
                     -- right edge
                     self.graphic:setTile(tileX, tileY, allRightEdgeTiles[tileY])
@@ -477,20 +477,30 @@ function Level:initialize(paths, onlyItems)
 end
 
 function Level:indexSpike(spike)
-    local tileX = math.floor(spike.x / 16)
-    local tileY = math.floor(spike.y / 16)
+    local tileX = math.round(spike.x / 16)
+    local tileY = math.round(spike.y / 16)
     for subX = 1, math.ceil(spike.mask.width / 16) do
         for subY = 1, math.ceil(spike.mask.height / 16) do
-            self.spikeIndex[tostring(tileX + subX) .. '-' .. tostring(tileY + subY)] = true
+            self.spikeIndex[
+                tostring(tileX + subX)
+                .. '-'
+                .. tostring(tileY + subY)
+                .. '-'
+                .. spike.facing
+            ] = true
         end
     end
 end
 
-function Level:getTileOrSpike(tileX, tileY)
+function Level:getTileOrSpike(tileX, tileY, facings)
+    facings = facings or {}
     if self.mask:getTile(tileX, tileY) then
         return true
-    elseif self.spikeIndex[tileX .. '-' .. tileY] then
-        return true
+    end
+    for _, facing in ipairs(facings) do
+        if self.spikeIndex[tileX .. '-' .. tileY .. '-' .. facing] then
+            return true
+        end
     end
     return false
 end
