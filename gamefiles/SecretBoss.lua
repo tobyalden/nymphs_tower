@@ -15,7 +15,10 @@ function SecretBoss:initialize(x, y, nodes)
     self.startingHealth = 20
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("secretboss.png")
+    self.graphic = Sprite:new("king.png", 40, 50)
+    self.graphic:add("idle", {1, 2, 3, 4}, 6)
+    self.graphic:add("idle_alt", {5, 6, 7, 8}, 6)
+    self.graphic:play("idle_alt")
     self.mask = Hitbox:new(self, 40, 50)
     self.layer = 0
     self.nodes = {}
@@ -51,7 +54,6 @@ function SecretBoss:update(dt)
 end
 
 function SecretBoss:fireBullet()
-    print('self.y is ' .. self.y .. ' and self.highestNodeY is ' .. self.highestNodeY)
     if self.y == self.highestNodeY then
         self:fireSpread()
     else
@@ -63,7 +65,7 @@ function SecretBoss:fireFan()
     local offset = math.random() * math.pi * 2
     local numBullets = 8
     if self.world.isHardMode then
-        numBullets = 16
+        numBullets = 12
     end
     local increment = (math.pi * 2) / numBullets
     for i = 1, numBullets do

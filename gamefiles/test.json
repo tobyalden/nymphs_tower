@@ -15,7 +15,11 @@
       "gridCellsX": 80,
       "gridCellsY": 60,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "68256185", "x": 104, "y": 176}
+        {"name": "player", "id": 0, "_eid": "68256185", "x": 104, "y": 176},
+        {"name": "spike_floor", "id": 1, "_eid": "58243373", "x": 176, "y": 192, "width": 16, "originX": 0, "originY": 0},
+        {"name": "spike_ceiling", "id": 2, "_eid": "58248273", "x": 208, "y": 16, "width": 96, "originX": 0, "originY": 0},
+        {"name": "spike_right", "id": 3, "_eid": "58259368", "x": 272, "y": 144, "height": 80, "originX": 0, "originY": 0},
+        {"name": "spike_left", "id": 4, "_eid": "58255772", "x": 32, "y": 48, "height": 40, "originX": 0, "originY": 0}
       ]
     },
     {

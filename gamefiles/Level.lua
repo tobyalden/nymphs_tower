@@ -484,6 +484,3 @@ function generateNonrepeatingSequence(numbersInSequence, length)
     end
     return sequence
 end
-
-function Level:update(dt)
-end

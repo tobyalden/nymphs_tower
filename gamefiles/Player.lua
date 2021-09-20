@@ -310,9 +310,9 @@ function Player:animation()
     else
         self.graphic.alpha = 1
     end
-    if self.velocity.x < 0 then
+    if input.down("left") then
         self.graphic.flipX = true
-    elseif self.velocity.x > 0 then
+    elseif input.down("right") then
         self.graphic.flipX = false
     end
     if self.graphic.flipX then
