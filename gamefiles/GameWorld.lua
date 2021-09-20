@@ -55,11 +55,11 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             self.player = entity
             startX = entity.x
             startY = entity.y
-            if saveData.exists("currentCheckpoint") then
-                print('save data found. loading...')
-                isStartOfGame = false
-                self:loadGame()
-            end
+            --if saveData.exists("currentCheckpoint") then
+                --print('save data found. loading...')
+                --isStartOfGame = false
+                --self:loadGame()
+            --end
             self:add(entity)
         end
     end
@@ -357,7 +357,9 @@ function GameWorld:update(dt)
         end
         self.sfx["restart"]:play()
         local tower = GameWorld.FIRST_TOWER
+        GameWorld.isSecondTower = false
         if input.down("shift") then
+            GameWorld.isSecondTower = true
             tower = GameWorld.SECOND_TOWER
         end
         self:doSequence({

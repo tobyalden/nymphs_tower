@@ -114,5 +114,6 @@ function love.load()
     if GameWorld.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
-    ammo.world = GameWorld:new(tower)
+    --ammo.world = GameWorld:new(tower)
+    ammo.world = GameWorld:new({'test.json'})
 end

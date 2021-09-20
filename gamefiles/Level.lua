@@ -10,6 +10,7 @@ function Level:initialize(paths, onlyItems)
     self.entities = {}
     self.bosses = {}
     self.items = {}
+    self.spikeIndex = {}
 
     -- Figure out total size of map
     local standardWidth
@@ -257,10 +258,11 @@ function Level:initialize(paths, onlyItems)
         end
         for _, entity in ipairs(levelEntities) do
             entity.y = entity.y + heightOffset
-            if entity.class == Acid then
+            if entity.class == Spike then
+                self:indexSpike(entity)
+            elseif entity.class == Acid then
                 entity.originalY = entity.originalY + heightOffset
-            end
-            if (
+            elseif (
                 entity.class == Wizard
                 or entity.class == Miku
                 or entity.class == FinalBoss
@@ -279,6 +281,8 @@ function Level:initialize(paths, onlyItems)
         -- TODO: This may be bugged in how it messes with Acid.y but not Acid.originalY after the fact
     end
 
+    print(inspect(self.spikeIndex))
+
     -- set graphic
     local allTopEdgeTiles = generateNonrepeatingSequence({2, 3, 7}, self.mask.columns)
     local allBottomEdgeTiles = generateNonrepeatingSequence({26, 27, 32}, self.mask.columns)
@@ -294,170 +298,170 @@ function Level:initialize(paths, onlyItems)
             if self.mask:getTile(tileX, tileY) then
                 -- tile placing logic
                 if (
-                    not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- standalone 1x1
                     self.graphic:setTile(tileX, tileY, 23)
                 elseif (
-                    self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- left edge of 1-tall
                     self.graphic:setTile(tileX, tileY, 14)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- right edge of 1-tall
                     self.graphic:setTile(tileX, tileY, 16)
                 elseif (
-                    self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- top edge of 1-wide
                     self.graphic:setTile(tileX, tileY, 13)
                 elseif (
-                    self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
                 ) then
                     -- bottom edge of 1-wide
                     self.graphic:setTile(tileX, tileY, 29)
                 elseif (
-                    self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- middle of 1-tall
                     self.graphic:setTile(tileX, tileY, 15)
                 elseif (
-                    not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- middle of 1-wide
                     self.graphic:setTile(tileX, tileY, 21)
                 elseif (
-                    self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- top left corner
                     self.graphic:setTile(tileX, tileY, 1)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- top right corner
                     self.graphic:setTile(tileX, tileY, 4)
                 elseif (
-                    self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
                 ) then
                     -- bottom left corner
                     self.graphic:setTile(tileX, tileY, 25)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
                 ) then
                     -- bottom right corner
                     self.graphic:setTile(tileX, tileY, 28)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX - 1, tileY - 1)
-                    and self.mask:getTile(tileX + 1, tileY - 1)
-                    and self.mask:getTile(tileX - 1, tileY + 1)
-                    and self.mask:getTile(tileX + 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY - 1)
+                    and self:getTileOrSpike(tileX + 1, tileY - 1)
+                    and self:getTileOrSpike(tileX - 1, tileY + 1)
+                    and self:getTileOrSpike(tileX + 1, tileY + 1)
                 ) then
                     -- top left inner corner
                     self.graphic:setTile(tileX, tileY, 10)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX + 1, tileY - 1)
-                    and self.mask:getTile(tileX - 1, tileY - 1)
-                    and self.mask:getTile(tileX - 1, tileY + 1)
-                    and self.mask:getTile(tileX + 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX + 1, tileY - 1)
+                    and self:getTileOrSpike(tileX - 1, tileY - 1)
+                    and self:getTileOrSpike(tileX - 1, tileY + 1)
+                    and self:getTileOrSpike(tileX + 1, tileY + 1)
                 ) then
                     -- top right inner corner
                     self.graphic:setTile(tileX, tileY, 11)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX - 1, tileY + 1)
-                    and self.mask:getTile(tileX - 1, tileY - 1)
-                    and self.mask:getTile(tileX + 1, tileY - 1)
-                    and self.mask:getTile(tileX + 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX - 1, tileY + 1)
+                    and self:getTileOrSpike(tileX - 1, tileY - 1)
+                    and self:getTileOrSpike(tileX + 1, tileY - 1)
+                    and self:getTileOrSpike(tileX + 1, tileY + 1)
                 ) then
                     -- bottom left inner corner
                     self.graphic:setTile(tileX, tileY, 18)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
-                    and not self.mask:getTile(tileX + 1, tileY + 1)
-                    and self.mask:getTile(tileX - 1, tileY - 1)
-                    and self.mask:getTile(tileX + 1, tileY - 1)
-                    and self.mask:getTile(tileX - 1, tileY + 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
+                    and not self:getTileOrSpike(tileX + 1, tileY + 1)
+                    and self:getTileOrSpike(tileX - 1, tileY - 1)
+                    and self:getTileOrSpike(tileX + 1, tileY - 1)
+                    and self:getTileOrSpike(tileX - 1, tileY + 1)
                 ) then
                     -- bottom right inner corner
                     self.graphic:setTile(tileX, tileY, 19)
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and not self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and not self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- top edge
                     self.graphic:setTile(tileX, tileY, allTopEdgeTiles[tileX])
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and not self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and not self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- bottom edge
                     self.graphic:setTile(tileX, tileY, allBottomEdgeTiles[tileX])
                 elseif (
-                    not self.mask:getTile(tileX - 1, tileY)
-                    and self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
+                    not self:getTileOrSpike(tileX - 1, tileY)
+                    and self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- left edge
                     self.graphic:setTile(tileX, tileY, allLeftEdgeTiles[tileY])
                 elseif (
-                    self.mask:getTile(tileX - 1, tileY)
-                    and not self.mask:getTile(tileX + 1, tileY)
-                    and self.mask:getTile(tileX, tileY + 1)
-                    and self.mask:getTile(tileX, tileY - 1)
+                    self:getTileOrSpike(tileX - 1, tileY)
+                    and not self:getTileOrSpike(tileX + 1, tileY)
+                    and self:getTileOrSpike(tileX, tileY + 1)
+                    and self:getTileOrSpike(tileX, tileY - 1)
                 ) then
                     -- right edge
                     self.graphic:setTile(tileX, tileY, allRightEdgeTiles[tileY])
@@ -469,8 +473,26 @@ function Level:initialize(paths, onlyItems)
             end
         end
     end
-
     self.layer = -4
+end
+
+function Level:indexSpike(spike)
+    local tileX = math.floor(spike.x / 16)
+    local tileY = math.floor(spike.y / 16)
+    for subX = 1, math.ceil(spike.mask.width / 16) do
+        for subY = 1, math.ceil(spike.mask.height / 16) do
+            self.spikeIndex[tostring(tileX + subX) .. '-' .. tostring(tileY + subY)] = true
+        end
+    end
+end
+
+function Level:getTileOrSpike(tileX, tileY)
+    if self.mask:getTile(tileX, tileY) then
+        return true
+    elseif self.spikeIndex[tileX .. '-' .. tileY] then
+        return true
+    end
+    return false
 end
 
 function generateNonrepeatingSequence(numbersInSequence, length)
