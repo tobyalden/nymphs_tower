@@ -8,21 +8,25 @@ function Spike:initialize(x, y, width, height, facing)
     if GameWorld.isSecondTower then
         tileset = "2"
     end
+    local suffix = ""
+    if love.math.random() < 0.5 then
+        suffix = "_alt"
+    end
     if facing == "floor" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. tileset .. ".png", 48, 16, width, height
+            "spike_" .. self.facing .. tileset .. suffix .. ".png", 48, 16, width, height
         )
     elseif facing == "ceiling" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. tileset .. ".png", 48, 16, width, height
+            "spike_" .. self.facing .. tileset .. suffix .. ".png", 48, 16, width, height
         )
     elseif facing == "left" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. tileset .. ".png", 16, 48, width, height
+            "spike_" .. self.facing .. tileset .. suffix .. ".png", 16, 48, width, height
         )
     elseif facing == "right" then
         self.graphic = TiledSprite:new(
-            "spike_" .. self.facing .. tileset .. ".png", 16, 48, width, height
+            "spike_" .. self.facing .. tileset .. suffix .. ".png", 16, 48, width, height
         )
     end
     local safetyBuffer = 2

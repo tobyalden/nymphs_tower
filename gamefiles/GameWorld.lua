@@ -41,6 +41,7 @@ GameWorld.static.isSecondTower = nil
 GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
+    love.math.setRandomSeed(1)
     World.initialize(self)
 
     self.timer = 0
@@ -55,11 +56,11 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             self.player = entity
             startX = entity.x
             startY = entity.y
-            --if saveData.exists("currentCheckpoint") then
-                --print('save data found. loading...')
-                --isStartOfGame = false
-                --self:loadGame()
-            --end
+            if saveData.exists("currentCheckpoint") then
+                print('save data found. loading...')
+                isStartOfGame = false
+                self:loadGame()
+            end
             self:add(entity)
         end
     end

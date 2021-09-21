@@ -49,15 +49,13 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     -- Chop padded image up into frames
     for frameY = 1, self.image:getHeight() / self.frameHeight do
         for frameX = 1, self.image:getWidth() / self.frameWidth do
-            table.insert(
-                self.frames,
-                love.graphics.newQuad(
-                    (frameX - 1) * (self.frameWidth + padding),
-                    (frameY - 1) * (self.frameHeight + padding),
-                    self.frameWidth, self.frameHeight,
-                    self.paddedImage:getWidth(), self.paddedImage:getHeight()
-                )
+            local quad = love.graphics.newQuad(
+                (frameX - 1) * (self.frameWidth + padding),
+                (frameY - 1) * (self.frameHeight + padding),
+                self.frameWidth, self.frameHeight,
+                self.paddedImage:getWidth(), self.paddedImage:getHeight()
             )
+            table.insert(self.frames, quad)
         end
     end
 end
