@@ -104,7 +104,7 @@ function UI:initialize(level)
 
     timerText = Text:new("0.000", 12, "arial.ttf", {0, 1, 1}, 300, "right")
     timerText.offsetX = 15
-    timerText.offsetY = 180 - 19
+    timerText.offsetY = 1
     timerText.alpha = 0.5
 
     map = Tilemap:new("maptiles.png", 1, 1)

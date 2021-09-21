@@ -15,11 +15,18 @@ function SecretBoss:initialize(x, y, nodes)
     self.startingHealth = 20
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("secretboss.png")
+    self.graphic = Sprite:new("king.png", 40, 50)
+    self.graphic:add("idle", {1, 2, 3, 4}, 6)
+    self.graphic:add("idle_alt", {5, 6, 7, 8}, 6)
+    self.graphic:play("idle_alt")
     self.mask = Hitbox:new(self, 40, 50)
     self.layer = 0
     self.nodes = {}
+    self.highestNodeY = nodes[1].y
     for i, node in pairs(nodes) do
+        if node.y < self.highestNodeY then
+            self.highestNodeY = node.y
+        end
         self.nodes[i] = Vector:new(node.x, node.y)
     end
     self.nodeIndex = 1
@@ -47,8 +54,7 @@ function SecretBoss:update(dt)
 end
 
 function SecretBoss:fireBullet()
-    -- TODO: This is gonna break when i move the nodes
-    if self.y == 7864 then
+    if self.y == self.highestNodeY then
         self:fireSpread()
     else
         self:fireDropShot()
@@ -59,7 +65,7 @@ function SecretBoss:fireFan()
     local offset = math.random() * math.pi * 2
     local numBullets = 8
     if self.world.isHardMode then
-        numBullets = 16
+        numBullets = 12
     end
     local increment = (math.pi * 2) / numBullets
     for i = 1, numBullets do
@@ -175,7 +181,7 @@ function SecretBoss:phaseThreeMovement(dt)
 end
 
 function SecretBoss:phaseTwoMovement(dt)
-    self:moveBy(self.velocity.x * dt, self.velocity.y * dt, {"walls"})
+    self:moveBy(self.velocity.x * dt, self.velocity.y * dt, {"walls", "lock"})
 end
 
 function SecretBoss:moveCollideX(collided)

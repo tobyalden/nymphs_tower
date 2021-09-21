@@ -76,8 +76,9 @@ function love.load()
     input.define("jump", "z")
     input.define("shoot", "x")
     input.define("reset", "r")
-    input.define("teleport", "t")
-    input.define("test", "p")
+    input.define("debug_teleport", "t")
+    input.define("debug_allitems", "i")
+    input.define("debug_print", "p")
     input.define("map", "return")
     input.define("quit", "escape")
     input.define("shift", "lshift")
@@ -101,5 +102,18 @@ function love.load()
     end
      --ammo.world = MainMenu:new()
      --ammo.world = EndScreen:new()
-     ammo.world = GameWorld:new(GameWorld.FIRST_TOWER)
+     
+    GameWorld.isSecondTower = false
+    if saveData.exists("currentCheckpoint") then
+        local loadedCheckpoint = saveData.load("currentCheckpoint")
+        if loadedCheckpoint["isSecondTower"] then
+            GameWorld.isSecondTower = true
+        end
+    end
+    local tower = GameWorld.FIRST_TOWER
+    if GameWorld.isSecondTower then
+        tower = GameWorld.SECOND_TOWER
+    end
+    ammo.world = GameWorld:new(tower)
+    -- ammo.world = GameWorld:new({'test.json'})
 end
