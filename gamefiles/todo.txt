@@ -1,3 +1,4 @@
+- add altar that lets you carry an item from the first tower to the second
 - tweak spike placement logic so it doesn't always start on the same one AND so it doesn't place edge tiles below spikes
 - make sides of both towers scalable - maybe they should have one side scalable without gravity belt, both with. 2 could have unscalable side just to be mean
 - add tutorial for jumping and using jetpack

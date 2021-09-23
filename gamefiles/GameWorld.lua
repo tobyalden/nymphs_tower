@@ -102,6 +102,8 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self:add(clouds)
     local fog = Background:new("fog.png", 2, 0.4, 100, false)
     self:add(fog)
+    local fog2 = Background:new("fog.png", 1, 0.2, 70, false)
+    self:add(fog2)
     self:loadSfx({
         -- ambience
         "insideambience.wav", "outsideambience.wav",

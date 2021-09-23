@@ -461,7 +461,7 @@ function Player:collisions(dt)
         self:decreaseHealth(acidDamage)
     end
 
-    local itemChimeTime = 5
+    local itemChimeTime = 3
 
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
@@ -593,7 +593,7 @@ function Player:collisions(dt)
         self.sfx["healthjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
-            {3.8, function()
+            {itemChimeTime, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A HEALTH PACK"
                 })
@@ -611,7 +611,7 @@ function Player:collisions(dt)
         self.sfx["fueljingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
-            {2, function()
+            {itemChimeTime, function()
                 local totalTime = self.world.ui:showMessageSequence({
                     "YOU FOUND A FUEL TANK"
                 })
