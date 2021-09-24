@@ -21,6 +21,7 @@ function Level:initialize(paths, onlyItems)
         standardWidth = jsonData["width"]
         totalHeight = totalHeight + jsonData["height"]
     end
+    print(totalHeight)
 
     self.mask = Grid:new(self, standardWidth, totalHeight, 16, 16)
 

@@ -21,6 +21,7 @@ Player.static.KNOCKBACK_POWER_X = 200
 Player.static.KNOCKBACK_POWER_Y = 200
 Player.static.KNOCKBACK_TIME = 0.25
 Player.static.FUEL_RECOVERY_DELAY = 0.5
+Player.static.DEBUG_SPEED = 500
 
 Player.static.SOLIDS = {"walls", "block", "lock"}
 
@@ -169,6 +170,24 @@ function Player:moveCollideY(collided)
             self:explode(4, 40, 0.5, 12, 0, -13, 1)
         end
     end
+end
+
+function Player:debugMovement(dt)
+    local heading = Vector:new()
+    if input.down("debug_up") then
+        heading.y = -1
+    elseif input.down("debug_down") then
+        heading.y = 1
+    end
+    if input.down("debug_left") then
+        heading.x = -1
+    elseif input.down("debug_right") then
+        heading.x = 1
+    end
+    self:moveBy(
+        heading.x * Player.DEBUG_SPEED * dt,
+        heading.y * Player.DEBUG_SPEED * dt
+    )
 end
 
 function Player:movement(dt)
@@ -822,7 +841,6 @@ function Player:update(dt)
         self.hitDamage = Player.HIT_DAMAGE * 2
     end
     self:shooting()
-    self:collisions(dt)
 
     if (
         input.pressed("up")
@@ -838,7 +856,12 @@ function Player:update(dt)
         end
     end
 
-    self:movement(dt)
+    if GameWorld.DEBUG_MODE and input.down("shift") then
+        self:debugMovement(dt)
+    else
+        self:movement(dt)
+        self:collisions(dt)
+    end
     self:animation()
 
     Entity.update(self, dt)
