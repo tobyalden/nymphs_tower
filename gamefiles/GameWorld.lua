@@ -318,6 +318,7 @@ function GameWorld:getCurrentCameraZone()
         self.player.x, self.player.y, {"camera_zone"}
     )
     local playerCenter = self.player:getMaskCenter()
+    local collidedCameraZones = {}
     for _, cameraZone in pairs(cameraZones) do
         if (
             playerCenter.x >= cameraZone.x
@@ -325,9 +326,16 @@ function GameWorld:getCurrentCameraZone()
             and playerCenter.y >= cameraZone.y
             and playerCenter.y < cameraZone.y + cameraZone.mask.height
         ) then
-            return cameraZone
+            table.insert(collidedCameraZones, cameraZone)
         end
     end
+    local smallestCameraZone = nil
+    for _, cameraZone in pairs(collidedCameraZones) do
+        if not smallestCameraZone or cameraZone:getSize() < smallestCameraZone:getSize() then
+            smallestCameraZone = cameraZone
+        end
+    end
+    return smallestCameraZone
 end
 
 function GameWorld:onDeath()

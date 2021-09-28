@@ -6,3 +6,6 @@ function CameraZone:initialize(x, y, width, height)
     self.mask = Hitbox:new(self, width, height)
 end
 
+function CameraZone:getSize()
+    return self.mask.width * self.mask.height
+end
