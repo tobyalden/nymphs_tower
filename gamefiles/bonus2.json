@@ -432,7 +432,8 @@
         {"name": "camera_zone", "id": 12, "_eid": "71427043", "x": 1632, "y": 672, "width": 720, "height": 436, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 13, "_eid": "71427043", "x": 2352, "y": 928, "width": 320, "height": 484, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 14, "_eid": "71427043", "x": 2032, "y": 1104, "width": 320, "height": 308, "originX": 0, "originY": 0},
-        {"name": "camera_zone", "id": 15, "_eid": "71427043", "x": 544, "y": 1248, "width": 496, "height": 612, "originX": 0, "originY": 0}
+        {"name": "camera_zone", "id": 15, "_eid": "71427043", "x": 544, "y": 1248, "width": 496, "height": 612, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 17, "_eid": "71427043", "x": 348, "y": 0, "width": 704, "height": 1835, "originX": 0, "originY": 0}
       ]
     },
     {
