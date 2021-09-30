@@ -533,7 +533,7 @@
         {"name": "camera_zone", "id": 4, "_eid": "71427043", "x": 3370, "y": 372, "width": 320, "height": 180, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 5, "_eid": "71427043", "x": 3690, "y": 372, "width": 320, "height": 180, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 6, "_eid": "71427043", "x": 4010, "y": 372, "width": 640, "height": 180, "originX": 0, "originY": 0},
-        {"name": "camera_zone", "id": 7, "_eid": "71427043", "x": 532, "y": 0, "width": 3504, "height": 2624, "originX": 0, "originY": 0}
+        {"name": "camera_zone", "id": 7, "_eid": "71427043", "x": 528, "y": 0, "width": 3504, "height": 2624, "originX": 0, "originY": 0}
       ]
     },
     {
@@ -545,7 +545,20 @@
       "gridCellHeight": 16,
       "gridCellsX": 324,
       "gridCellsY": 164,
-      "entities": []
+      "entities": [
+        {
+          "name": "inside",
+          "id": 0,
+          "_eid": "35608956",
+          "x": 416,
+          "y": 48,
+          "width": 4288,
+          "height": 2560,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "explore5"}
+        }
+      ]
     },
     {
       "name": "walls",
