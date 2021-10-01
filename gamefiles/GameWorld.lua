@@ -329,12 +329,14 @@ function GameWorld:getCurrentCameraZone()
             table.insert(collidedCameraZones, cameraZone)
         end
     end
+    -- print('colliding with ' .. #collidedCameraZones .. ' camera zones')
     local smallestCameraZone = nil
     for _, cameraZone in pairs(collidedCameraZones) do
         if not smallestCameraZone or cameraZone:getSize() < smallestCameraZone:getSize() then
             smallestCameraZone = cameraZone
         end
     end
+    -- print('smallest camera zone has size ' .. smallestCameraZone:getSize())
     return smallestCameraZone
 end
 
@@ -498,6 +500,15 @@ function GameWorld:updateCamera(dt)
             cameraZone.y,
             cameraZone.y + cameraZone.mask.height - gameHeight
         )
+        -- print(
+        --     'x is ' .. cameraZone.x ..
+        --     ', y is ' .. cameraZone.y ..
+        --     ', width is ' .. cameraZone.mask.width ..
+        --     ', height is ' .. cameraZone.mask.height .. 
+        --     ', size is ' .. cameraZone:getSize()
+        -- )
+    else
+        -- print('no cam zone found')
     end
 
     self.camera.x = math.round(self.camera.x)
