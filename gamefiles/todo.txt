@@ -15,4 +15,6 @@
 - add all graphics
 - add acid rises to second tower
 - add music to second tower
-- add camera zones to second tower
++ add camera zones to second tower
+- items are behind fog layer
+- spikes are behind acid
