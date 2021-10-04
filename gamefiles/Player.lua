@@ -812,7 +812,7 @@ function Player:handleSfx(dt)
             end
         end
         if self:isInAcid() then
-            if not self.hasAcidSuit then
+            if not self.hasHazardSuit then
                 self.sfx["acid"]:loop()
             end
             if not self.wasInAcid then
