@@ -76,13 +76,13 @@ function Player:initialize(x, y)
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
     self.hasMap = false
-    self.hasCompass = false
+    self.hasCompass = true
     self.hasCrown = false
     self.isLookingAtMap = false
 
     --self.healthUpgrades = 6 --MAX
     --self.fuelUpgrades = 4 -- MAX
-    self.healthUpgrades = 10
+    self.healthUpgrades = 6
     self.fuelUpgrades = 4
 
     self.hitDamage = Player.HIT_DAMAGE

@@ -1,20 +1,17 @@
 - make sides of both towers scalable - maybe they should have one side scalable without gravity belt, both with. 2 could have unscalable side just to be mean
-- add tutorial for jumping and using jetpack
+- add tutorial for jumping and using jetpack (and using map, and shooting...)
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer + reset
 - make acid cave and hazard suit more lenient
 - cloud layer has visible seam
-- add sfx for when acid levels are changing
+- add sfx for when acid levels are changing (if i keep the acid rise...)
 - toggling fullscreen
-- make pickup pause amount consistent
+- make pickup pause amount shorter
 - add controller logic into ammo/input.lua
 - add credits
 - add transition to end (be sure to save before going from GameWorld to EndScreen)
 - add animation to ending screen
 - add ghosts
 - add all graphics
-- add acid rises to second tower
-- add music to second tower
-+ add camera zones to second tower
-- items are behind fog layer
-- spikes are behind acid
+- make sure second tower music is correct
+- going from inside to inside doubles up music..?
