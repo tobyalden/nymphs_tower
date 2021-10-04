@@ -98,11 +98,11 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     if GameWorld.isSecondTower then
         tileset = "2"
     end
-    local clouds = Background:new("clouds" .. tileset .. ".png", 3, 0.2, 50, false)
+    local clouds = Background:new("clouds" .. tileset .. ".png", 30, 0.2, 50, false)
     self:add(clouds)
-    local fog = Background:new("fog.png", 2, 0.4, 100, false)
+    local fog = Background:new("fog.png", 20, 0.4, 100, false)
     self:add(fog)
-    local fog2 = Background:new("fog.png", 1, 0.2, 70, false)
+    local fog2 = Background:new("fog.png", 10, 0.2, 70, false)
     self:add(fog2)
     self:loadSfx({
         -- ambience

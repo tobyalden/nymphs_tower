@@ -31,18 +31,6 @@
         {"name": "spike_floor", "id": 37, "_eid": "58243373", "x": 1008, "y": 2112, "width": 16, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 38, "_eid": "58243373", "x": 1024, "y": 2112, "width": 16, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 39, "_eid": "58243373", "x": 1040, "y": 2112, "width": 16, "originX": 0, "originY": 0},
-        {
-          "name": "acid",
-          "id": 40,
-          "_eid": "67689386",
-          "x": 0,
-          "y": 2088,
-          "width": 5184,
-          "height": 2824,
-          "originX": 0,
-          "originY": 0,
-          "values": {"acid_id": "", "rise_speed": 0}
-        },
         {"name": "checkpoint", "id": 64, "_eid": "97277017", "x": 624, "y": 2032, "originX": 0, "originY": 0},
         {
           "name": "star",
@@ -456,7 +444,43 @@
         {"name": "block", "id": 316, "_eid": "78869308", "x": 4192, "y": 2072, "originX": 0, "originY": 0},
         {"name": "block", "id": 317, "_eid": "78869308", "x": 4208, "y": 2072, "originX": 0, "originY": 0},
         {"name": "block", "id": 318, "_eid": "78869308", "x": 4072, "y": 2072, "originX": 0, "originY": 0},
-        {"name": "player", "id": 319, "_eid": "68256185", "x": 376, "y": 2032}
+        {"name": "player", "id": 319, "_eid": "68256185", "x": 376, "y": 2032},
+        {
+          "name": "acid",
+          "id": 320,
+          "_eid": "67689386",
+          "x": 16,
+          "y": 2072,
+          "width": 356,
+          "height": 200,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 321,
+          "_eid": "67689386",
+          "x": 4768,
+          "y": 2096,
+          "width": 400,
+          "height": 176,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 322,
+          "_eid": "67689386",
+          "x": 4000,
+          "y": 2080,
+          "width": 256,
+          "height": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        }
       ]
     },
     {
@@ -469,7 +493,7 @@
       "gridCellsX": 5184,
       "gridCellsY": 2272,
       "entities": [
-        {"name": "camera_zone", "id": 0, "_eid": "71427043", "x": 532, "y": 1952, "width": 320, "height": 180, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 0, "_eid": "71427043", "x": 528, "y": 1952, "width": 320, "height": 180, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 1, "_eid": "71427043", "x": 848, "y": 1152, "width": 320, "height": 980, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 2, "_eid": "71427043", "x": 1168, "y": 1952, "width": 736, "height": 180, "originX": 0, "originY": 0},
         {"name": "camera_zone", "id": 3, "_eid": "71427043", "x": 1168, "y": 1152, "width": 736, "height": 180, "originX": 0, "originY": 0},
@@ -496,20 +520,7 @@
       "gridCellHeight": 16,
       "gridCellsX": 324,
       "gridCellsY": 142,
-      "entities": [
-        {
-          "name": "inside",
-          "id": 0,
-          "_eid": "35608956",
-          "x": 544,
-          "y": 64,
-          "width": 4032,
-          "height": 2176,
-          "originX": 0,
-          "originY": 0,
-          "values": {"music": "explore1remix"}
-        }
-      ]
+      "entities": []
     },
     {
       "name": "walls",

@@ -35,7 +35,7 @@ function Spike:initialize(x, y, width, height, facing)
     self.y = self.y + safetyBuffer
     self.graphic.offsetX = -safetyBuffer
     self.graphic.offsetY = -safetyBuffer
-    self.layer = -safetyBuffer
+    self.layer = -4
 end
 
 

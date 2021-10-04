@@ -1,4 +1,18 @@
-bonus0
+bonu3s
+        {
+          "name": "inside",
+          "id": 0,
+          "_eid": "35608956",
+          "x": 544,
+          "y": 64,
+          "width": 4032,
+          "height": 2176,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "explore1remix"}
+        }
+
+        bonus4
         {
           "name": "inside",
           "id": 0,

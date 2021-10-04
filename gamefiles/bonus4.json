@@ -15,7 +15,6 @@
       "gridCellsX": 1296,
       "gridCellsY": 660,
       "entities": [
-        {"name": "checkpoint", "id": 0, "_eid": "97277017", "x": 196, "y": 2496, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 1, "_eid": "58243373", "x": 992, "y": 2560, "width": 208, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 2, "_eid": "58243373", "x": 1200, "y": 2512, "width": 16, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 3, "_eid": "58243373", "x": 1216, "y": 2496, "width": 16, "originX": 0, "originY": 0},
@@ -78,7 +77,6 @@
         {"name": "spike_ceiling", "id": 60, "_eid": "58248273", "x": 1456, "y": 1632, "width": 76, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 61, "_eid": "58248273", "x": 1328, "y": 1600, "width": 128, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 62, "_eid": "58243373", "x": 1216, "y": 1600, "width": 32, "originX": 0, "originY": 0},
-        {"name": "checkpoint", "id": 63, "_eid": "97277017", "x": 952, "y": 2496, "originX": 0, "originY": 0},
         {"name": "spike_right", "id": 64, "_eid": "58259368", "x": 1504, "y": 2144, "height": 48, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 65, "_eid": "58248273", "x": 1552, "y": 1600, "width": 44, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 66, "_eid": "58248273", "x": 1600, "y": 1616, "width": 80, "originX": 0, "originY": 0},
@@ -368,7 +366,6 @@
         {"name": "spike_floor", "id": 359, "_eid": "58243373", "x": 3600, "y": 2176, "width": 16, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 360, "_eid": "58243373", "x": 3616, "y": 2192, "width": 32, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 361, "_eid": "58243373", "x": 3648, "y": 2208, "width": 32, "originX": 0, "originY": 0},
-        {"name": "checkpoint", "id": 362, "_eid": "97277017", "x": 3760, "y": 2208, "originX": 0, "originY": 0},
         {"name": "spike_floor", "id": 363, "_eid": "58243373", "x": 3680, "y": 2256, "width": 32, "originX": 0, "originY": 0},
         {"name": "spike_right", "id": 364, "_eid": "58259368", "x": 3520, "y": 1888, "height": 16, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 365, "_eid": "58248273", "x": 3536, "y": 1904, "width": 16, "originX": 0, "originY": 0},
@@ -517,7 +514,164 @@
           "originX": 0,
           "originY": 0,
           "values": {"path": "throne2", "layer": -4}
-        }
+        },
+        {
+          "name": "acid",
+          "id": 462,
+          "_eid": "67689386",
+          "x": 16,
+          "y": 0,
+          "width": 320,
+          "height": 2528,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 463,
+          "_eid": "67689386",
+          "x": 4768,
+          "y": 0,
+          "width": 400,
+          "height": 2240,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 464,
+          "_eid": "67689386",
+          "x": 336,
+          "y": 552,
+          "width": 1400,
+          "height": 2056,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 465,
+          "_eid": "67689386",
+          "x": 1736,
+          "y": 684,
+          "width": 144,
+          "height": 116,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 466,
+          "_eid": "67689386",
+          "x": 1952,
+          "y": 704,
+          "width": 16,
+          "height": 224,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 467,
+          "_eid": "67689386",
+          "x": 1968,
+          "y": 720,
+          "width": 272,
+          "height": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 468,
+          "_eid": "67689386",
+          "x": 2224,
+          "y": 672,
+          "width": 112,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 469,
+          "_eid": "67689386",
+          "x": 2320,
+          "y": 624,
+          "width": 124,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 470,
+          "_eid": "67689386",
+          "x": 2416,
+          "y": 576,
+          "width": 104,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 471,
+          "_eid": "67689386",
+          "x": 2480,
+          "y": 544,
+          "width": 828,
+          "height": 32,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 472,
+          "_eid": "67689386",
+          "x": 3308,
+          "y": 544,
+          "width": 24,
+          "height": 240,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 473,
+          "_eid": "67689386",
+          "x": 1736,
+          "y": 944,
+          "width": 1668,
+          "height": 1412,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {
+          "name": "acid",
+          "id": 474,
+          "_eid": "67689386",
+          "x": 3404,
+          "y": 1100,
+          "width": 1364,
+          "height": 1324,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "", "rise_speed": 0}
+        },
+        {"name": "health_upgrade", "id": 475, "_eid": "78023010", "x": 3652, "y": 1000, "originX": 0, "originY": 0}
       ]
     },
     {
@@ -545,20 +699,7 @@
       "gridCellHeight": 16,
       "gridCellsX": 324,
       "gridCellsY": 165,
-      "entities": [
-        {
-          "name": "inside",
-          "id": 0,
-          "_eid": "35608956",
-          "x": 416,
-          "y": 48,
-          "width": 4288,
-          "height": 2560,
-          "originX": 0,
-          "originY": 0,
-          "values": {"music": "explore5"}
-        }
-      ]
+      "entities": []
     },
     {
       "name": "walls",
