@@ -1,5 +1,6 @@
-- make sides of both towers scalable - maybe they should have one side scalable without gravity belt, both with. 2 could have unscalable side just to be mean
-- add tutorial for jumping and using jetpack (and using map, and shooting...)
+- make sides of both towers scalable (one side scalable without gravity belt, both with)
+- bugfix first boss
+- fix top of tower
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer + reset
 - make acid cave and hazard suit more lenient
@@ -14,5 +15,3 @@
 - add ghosts
 - add all graphics
 - make sure second tower music is correct
-
-+ going from inside to inside doubles up music..?

@@ -338,7 +338,7 @@ end
 
 function UI:showMessage(messageText)
     message.alpha = 1
-    messageBar.alpha = 0.5
+    messageBar.alpha = 1
     message:setText(messageText)
 end
 

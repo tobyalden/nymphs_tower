@@ -2,7 +2,7 @@ Tutorial = class("Tutorial", Entity)
 
 function Tutorial:initialize(x, y, text)
     Entity.initialize(self, x, y)
-    self.layer = -100
+    self.layer = -98
     self.types = {"tutorial"}
     self.graphic = Text:new(text, 10)
     self.glowTimerBackward = false

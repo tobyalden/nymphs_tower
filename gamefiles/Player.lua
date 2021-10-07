@@ -493,8 +493,7 @@ function Player:collisions(dt)
                 table.insert(self.world.itemIds, collidedGuns[1].uniqueId)
                 self.hasGun = true
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND THE RAYGUN",
-                    "PRESS X TO SHOOT",
+                    "YOU FOUND THE RAYGUN"
                 })
             end}
         })
@@ -511,8 +510,7 @@ function Player:collisions(dt)
                 table.insert(self.world.itemIds, collidedGravityBelts[1].uniqueId)
                 self.hasGravityBelt = true
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND THE GRAVITY BELT",
-                    "PRESS UP TO TOGGLE ON AND OFF",
+                    "YOU FOUND THE GRAVITY BELT"
                 })
             end}
         })
@@ -564,8 +562,7 @@ function Player:collisions(dt)
                 table.insert(self.world.itemIds, collidedMaps[1].uniqueId)
                 self.hasMap = true
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND THE MAP",
-                    "PRESS ENTER TO USE",
+                    "YOU FOUND THE MAP"
                 })
             end}
         })
@@ -582,8 +579,7 @@ function Player:collisions(dt)
                 table.insert(self.world.itemIds, collidedCompasses[1].uniqueId)
                 self.hasCompass = true
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND THE COMPASS",
-                    "PRESS ENTER TO USE",
+                    "YOU FOUND THE COMPASS"
                 })
             end}
         })
