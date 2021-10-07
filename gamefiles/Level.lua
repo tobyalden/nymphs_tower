@@ -152,6 +152,9 @@ function Level:initialize(paths, onlyItems)
                     elseif entity["name"] == "block" then
                         local block = Block:new(entity["x"], entity["y"])
                         table.insert(levelEntities, block)
+                    elseif entity["name"] == "tutorial" then
+                        local tutorial = Tutorial:new(entity["x"], entity["y"], entity["values"]["text"])
+                        table.insert(levelEntities, tutorial)
                     elseif entity["name"] == "pig" then
                         local pig = Pig:new(entity["x"], entity["y"] + 5)
                         table.insert(levelEntities, pig)
