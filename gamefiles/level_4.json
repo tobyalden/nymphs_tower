@@ -236,7 +236,6 @@
         },
         {"name": "checkpoint", "id": 487, "_eid": "97277017", "x": 2408, "y": 2208, "originX": 0, "originY": 0},
         {"name": "hazard_suit", "id": 488, "_eid": "44154141", "x": 2612, "y": 2216, "originX": 0, "originY": 0},
-        {"name": "checkpoint", "id": 605, "_eid": "97277017", "x": 344, "y": 848, "originX": 0, "originY": 0},
         {
           "name": "acid",
           "id": 607,
@@ -275,7 +274,68 @@
         },
         {"name": "player", "id": 613, "_eid": "68256185", "x": 280, "y": 848},
         {"name": "map", "id": 615, "_eid": "13820161", "x": 1324, "y": 872, "originX": 0, "originY": 0},
-        {"name": "boat", "id": 616, "_eid": "42874000", "x": 80, "y": 768, "originX": 0, "originY": 0}
+        {"name": "boat", "id": 616, "_eid": "42874000", "x": 80, "y": 768, "originX": 0, "originY": 0},
+        {
+          "name": "tutorial",
+          "id": 617,
+          "_eid": "62868244",
+          "x": 256,
+          "y": 896,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Use the arrow keys to move"}
+        },
+        {
+          "name": "tutorial",
+          "id": 618,
+          "_eid": "62868244",
+          "x": 688,
+          "y": 896,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Press Space or Z to jump"}
+        },
+        {
+          "name": "tutorial",
+          "id": 619,
+          "_eid": "62868244",
+          "x": 1280,
+          "y": 916,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Press Enter to use map"}
+        },
+        {
+          "name": "tutorial",
+          "id": 620,
+          "_eid": "62868244",
+          "x": 1432,
+          "y": 840,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Press and hold jump\nto use jetpack"}
+        },
+        {
+          "name": "tutorial",
+          "id": 621,
+          "_eid": "62868244",
+          "x": 4152,
+          "y": 888,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Press X\nto shoot gun"}
+        },
+        {"name": "checkpoint", "id": 622, "_eid": "97277017", "x": 2080, "y": 848, "originX": 0, "originY": 0},
+        {
+          "name": "tutorial",
+          "id": 623,
+          "_eid": "62868244",
+          "x": 2012,
+          "y": 892,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Press down to save at checkpoints"}
+        }
       ]
     },
     {

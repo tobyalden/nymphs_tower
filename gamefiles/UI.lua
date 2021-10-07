@@ -88,11 +88,11 @@ function UI:initialize(level)
 
     messageBar = Sprite:new("messagebar.png")
     messageBar.offsetX = 10
-    messageBar.offsetY = 180 - 24 - 9
+    messageBar.offsetY = 180 - 24 - 9 + 9
 
-    message = Text:new("YOU GOT THE RAYGUN", 16, "arial.ttf", {1, 1, 1}, 300, "center")
-    message.offsetX = 10
-    message.offsetY = 180 - 24 - 10
+    message = Text:new("YOU GOT THE RAYGUN", 12, "arial.ttf", {1, 1, 1}, 300, "center")
+    message.offsetX = 10 + 3
+    message.offsetY = 180 - 24 - 10 + 9 + 1
 
     bossBar = Sprite:new("bossbar.png")
     bossBar.offsetX = 10
