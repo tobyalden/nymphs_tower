@@ -131,7 +131,19 @@ function Player:giveAllItems()
 end
 
 function Player:isInside()
-    return #self:collide(self.x, self.y, {"inside"}) > 0
+    local collidedInsides = self:collide(self.x, self.y, {"inside"})
+    if #collidedInsides > 0 and collidedInsides[1].musicName ~= "top" then
+        return true
+    end
+    return false
+end
+
+function Player:isAtTop()
+    local collidedInsides = self:collide(self.x, self.y, {"inside"})
+    if #collidedInsides > 0 and collidedInsides[1].musicName == "top" then
+        return true
+    end
+    return false
 end
 
 function Player:isOnGround()

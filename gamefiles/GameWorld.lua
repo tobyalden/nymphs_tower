@@ -425,6 +425,10 @@ function GameWorld:updateSounds(dt)
             self.currentMusic = self.sfx[musicName]
             self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
             self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+        elseif self.player:isAtTop() then
+            self.currentMusic = self.sfx["top"]
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED / 4, 1)
+            self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED / 4)
         else
             self.currentMusic = self.sfx["outside"]
             self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)

@@ -1,9 +1,9 @@
+- fix top of first tower
+- make acid cave and hazard suit more lenient
 - make sides of both towers scalable (one side scalable without gravity belt, both with)
 - bugfix first boss
-- fix top of tower
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer + reset
-- make acid cave and hazard suit more lenient
 - cloud layer has visible seam
 - add sfx for when acid levels are changing (if i keep the acid rise...)
 - toggling fullscreen
