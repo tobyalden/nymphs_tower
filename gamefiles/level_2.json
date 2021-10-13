@@ -539,30 +539,6 @@
         {"name": "harmonica", "id": 602, "_eid": "09203317", "x": 2852, "y": 1624, "originX": 0, "originY": 0},
         {"name": "crown", "id": 603, "_eid": "32237990", "x": 2524, "y": 600, "originX": 0, "originY": 0},
         {
-          "name": "acid",
-          "id": 612,
-          "_eid": "67689386",
-          "x": 2540,
-          "y": 1088,
-          "width": 556,
-          "height": 344,
-          "originX": 0,
-          "originY": 0,
-          "values": {"acid_id": "", "rise_speed": 0}
-        },
-        {
-          "name": "acid",
-          "id": 613,
-          "_eid": "67689386",
-          "x": 2544,
-          "y": 1432,
-          "width": 320,
-          "height": 168,
-          "originX": 0,
-          "originY": 0,
-          "values": {"acid_id": "", "rise_speed": 0}
-        },
-        {
           "name": "decoration",
           "id": 615,
           "_eid": "60345245",

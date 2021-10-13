@@ -1,7 +1,7 @@
-- fix top of first tower
-- make acid cave and hazard suit more lenient
 - make sides of both towers scalable (one side scalable without gravity belt, both with)
 - bugfix first boss
+- fix secret boss (first tower) sprite and add lock to fight
+- move harmonica + add harmonica tutorial
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add toggle for timer + reset
 - cloud layer has visible seam
@@ -15,3 +15,6 @@
 - add ghosts
 - add all graphics
 - make sure second tower music is correct
+
++ fix top of first tower
++ make acid cave and hazard suit more lenient

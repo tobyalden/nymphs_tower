@@ -1,6 +1,6 @@
 Acid = class("Acid", Entity)
 
-Acid.static.DAMAGE_RATE = 12.5
+Acid.static.DAMAGE_RATE = 10
 --Acid.static.DAMAGE_RATE = 0
 
 function Acid:initialize(x, y, width, height, acidId, riseSpeed, uniqueId)
