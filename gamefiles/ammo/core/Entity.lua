@@ -90,7 +90,8 @@ end
 
 function Entity:getMaskCenter()
     return Vector:new(
-        self.x + self.mask.width / 2, (self.y + self.mask.height / 2)
+        self.x + self.mask.offsetX + self.mask.width / 2,
+        self.y + self.mask.offsetY + self.mask.height / 2
     )
 end
 

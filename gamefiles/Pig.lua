@@ -33,9 +33,9 @@ function Pig:update(dt)
     if self.world.currentBoss == self then
         self.graphic:play("run")
         local oldFlipX = self.graphic.flipX
-        if self.velocity.x > 0.1 then
+        if self.velocity.x > 3 then
             self.graphic.flipX = true
-        elseif self.velocity.x < 0.1 then
+        elseif self.velocity.x < 3 then
             self.graphic.flipX = false
         end
         if oldFlipX ~= self.graphic.flipX then
@@ -55,9 +55,9 @@ function Pig:movement(dt)
     if self.world.isHardMode then
         accel = accel * 2
     end
-    if self.x < self.world.player.x then
+    if self.x + 32 <= self.world.player:getMaskCenter().x then
         self.accel.x = accel
-    elseif self.x > self.world.player.x then
+    elseif self.x + 32 > self.world.player:getMaskCenter().x then
         self.accel.x = -accel
     end
     self.velocity.x = self.velocity.x + self.accel.x * dt

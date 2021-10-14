@@ -15,12 +15,17 @@ function SecretBoss:initialize(x, y, nodes)
     self.startingHealth = 20
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("king.png", 40, 50)
-    self.graphic:add("idle", {1, 2, 3, 4}, 6)
-    self.graphic:add("idle_alt", {5, 6, 7, 8}, 6)
-    self.graphic:play("idle_alt")
+    if GameWorld.isSecondTower then
+        self.graphic = Sprite:new("king.png", 40, 50)
+        self.graphic:add("idle_alt", {5, 6, 7, 8}, 6)
+        self.graphic:play("idle_alt")
+    else
+        self.graphic = Sprite:new("queen.png", 40, 50)
+        self.graphic:add("idle", {1, 2, 3, 2}, 6)
+        self.graphic:play("idle")
+    end
     self.mask = Hitbox:new(self, 40, 50)
-    self.layer = 0
+    self.layer = -5
     self.nodes = {}
     self.highestNodeY = nodes[1].y
     for i, node in pairs(nodes) do

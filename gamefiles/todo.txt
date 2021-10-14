@@ -1,20 +1,19 @@
-- make sides of both towers scalable (one side scalable without gravity belt, both with)
+- add toggle for timer + reset
+- add controller logic into ammo/input.lua
+- toggling fullscreen
+
 - bugfix first boss
 - fix secret boss (first tower) sprite and add lock to fight
 - move harmonica + add harmonica tutorial
-- add sfx (and maybe visual fx) for teleporting to second tower
-- add toggle for timer + reset
 - cloud layer has visible seam
+- add sfx (and maybe visual fx) for teleporting to second tower
+- add all graphics (including player walk cycle)
+- add ghosts
+
+- make sides of both towers scalable (one side scalable without gravity belt, both with)
 - add sfx for when acid levels are changing (if i keep the acid rise...)
-- toggling fullscreen
-- make pickup pause amount shorter
-- add controller logic into ammo/input.lua
+- make sure second tower music is correct
+
 - add credits
 - add transition to end (be sure to save before going from GameWorld to EndScreen)
 - add animation to ending screen
-- add ghosts
-- add all graphics
-- make sure second tower music is correct
-
-+ fix top of first tower
-+ make acid cave and hazard suit more lenient
