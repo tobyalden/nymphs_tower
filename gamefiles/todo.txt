@@ -2,9 +2,6 @@
 - add controller logic into ammo/input.lua
 - toggling fullscreen
 
-- bugfix first boss
-- fix secret boss (first tower) sprite and add lock to fight
-- move harmonica + add harmonica tutorial
 - cloud layer has visible seam
 - add sfx (and maybe visual fx) for teleporting to second tower
 - add all graphics (including player walk cycle)

@@ -548,6 +548,16 @@
           "originX": 0,
           "originY": 0,
           "values": {"path": "throne", "layer": -4}
+        },
+        {
+          "name": "tutorial",
+          "id": 616,
+          "_eid": "62868244",
+          "x": 2768,
+          "y": 2344,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "PLAY   OUR  SONG\n   FROM   THE  TOP\n   OF   THE TOWER", "require_flag": "secret_boss_defeated"}
         }
       ]
     },

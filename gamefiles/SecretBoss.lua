@@ -12,8 +12,8 @@ function SecretBoss:initialize(x, y, nodes)
     self.displayName = "NYMPH"
     self.flag = "secret_boss"
     self.types = {"enemy"}
-    self.startingHealth = 20
-    --self.startingHealth = 1
+    -- self.startingHealth = 20
+    self.startingHealth = 1
     self.health = self.startingHealth
     if GameWorld.isSecondTower then
         self.graphic = Sprite:new("king.png", 40, 50)

@@ -1247,7 +1247,8 @@
       "nodeGhost": true,
       "tags": [],
       "values": [
-        {"name": "text", "definition": "Text", "defaults": ""}
+        {"name": "text", "definition": "Text", "defaults": ""},
+        {"name": "require_flag", "definition": "String", "defaults": "", "maxLength": 0, "trimWhitespace": true}
       ],
       "texture": "tutorial.png",
       "textureImage": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADvSURBVEhL7Y5rEsQgCIN7/8P0Hj2Vi8ZNKSj25eyfzWQ6AoGvS1q3qf4Dhm4DluVaP/BhQfaH0vkzfu1Pe74POPkTvwDIZrDMUZDRbgNMR/sFQGzcle90gG4GvgMIrvvRZUDsiQCcngWQu5QdmfqkzaFcplTujwAIUbrjY7rsArz8GMu6v4++bwKgPcZXrY+Hcllk+nC+5GQzti4J5spKFTrauXlk+5irS0K++gExQ9fBcwAfIsToZlO7sYCveXAKmQ5LbztDmmt8aOumnxqPxp39gqgyI+PBOHYlhIxHAHEl9BlPAXDAeAcQeDJg3T7EF3dUt5fHZwAAAABJRU5ErkJggg=="

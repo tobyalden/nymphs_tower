@@ -754,6 +754,16 @@
           "originX": 0,
           "originY": 0,
           "values": {"flag": "secret_boss"}
+        },
+        {
+          "name": "tutorial",
+          "id": 605,
+          "_eid": "62868244",
+          "x": 3140,
+          "y": 1076,
+          "originX": 0,
+          "originY": 0,
+          "values": {"text": "Hold down\nto play\nharmonica"}
         }
       ]
     },
