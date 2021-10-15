@@ -37,6 +37,7 @@ GameWorld.static.FIRST_TOWER = {
 }
 
 GameWorld.static.isSecondTower = nil
+GameWorld.static.isSpeedrunMode = nil
 
 GameWorld.static.DEBUG_MODE = true
 

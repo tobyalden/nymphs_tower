@@ -21,14 +21,12 @@ function Level:initialize(paths, onlyItems)
         standardWidth = jsonData["width"]
         totalHeight = totalHeight + jsonData["height"]
     end
-    print(totalHeight)
 
     self.mask = Grid:new(self, standardWidth, totalHeight, 16, 16)
 
     local uniqueId = 0
     if string.find(paths[1], "bonus") then
         uniqueId = 10000
-        print('is bonus level.' .. paths[1] .. 'offseting uniqueIds')
     end
     heightOffset = 0
 
@@ -288,8 +286,6 @@ function Level:initialize(paths, onlyItems)
         heightOffset = heightOffset + sliceHeight
         -- TODO: This may be bugged in how it messes with Acid.y but not Acid.originalY after the fact
     end
-
-    print(inspect(self.spikeIndex))
 
     -- set graphic
     local allTopEdgeTiles = generateNonrepeatingSequence({2, 3, 7}, self.mask.columns)

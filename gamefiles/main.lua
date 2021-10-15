@@ -55,13 +55,16 @@ require("Compass")
 require("Decoration")
 require("Boat")
 require("Tutorial")
+require("Options")
+require("OptionsMenu")
 
 io.stdout:setvbuf("no")
 
 gameWidth, gameHeight = 320, 180
+windowedScale = 2
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 local fullscreen = false
-local windowedScale = 2
+GameWorld.isSpeedrunMode = false
 
 function love.globalUpdate()
     if input.pressed("quit") then
@@ -106,7 +109,8 @@ function love.load()
             {fullscreen = false, pixelperfect = true, resizable = false}
         )
     end
-     --ammo.world = MainMenu:new()
+     ammo.world = Options:new()
+     -- ammo.world = MainMenu:new()
      --ammo.world = EndScreen:new()
      
     GameWorld.isSecondTower = false
@@ -120,6 +124,6 @@ function love.load()
     if GameWorld.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
-    ammo.world = GameWorld:new(tower)
+    -- ammo.world = GameWorld:new(tower)
     -- ammo.world = GameWorld:new({'test.json'})
 end
