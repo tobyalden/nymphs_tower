@@ -117,7 +117,7 @@ function love.load()
         )
     end
      -- ammo.world = Options:new()
-     ammo.world = MainMenu:new()
+     -- ammo.world = MainMenu:new()
      --ammo.world = EndScreen:new()
      
     GameWorld.isSecondTower = false
@@ -131,6 +131,6 @@ function love.load()
     if GameWorld.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
-    -- ammo.world = GameWorld:new(tower)
+    ammo.world = GameWorld:new(tower)
     -- ammo.world = GameWorld:new({'test.json'})
 end

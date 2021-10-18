@@ -1,8 +1,8 @@
 - add controller logic into ammo/input.lua
 
+- add all graphics (including player walk cycle)
 - cloud layer has visible seam
 - add sfx (and maybe visual fx) for teleporting to second tower
-- add all graphics (including player walk cycle)
 - add ghosts
 
 - make sides of both towers scalable (one side scalable without gravity belt, both with)

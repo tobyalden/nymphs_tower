@@ -42,15 +42,14 @@ function Player:initialize(x, y)
 
     self.graphic = Sprite:new("player.png", 16, 32)
     self.graphic:add("idle", {1})
-    self.graphic:add("run", {2, 3, 4}, 6)
-    self.graphic:add("jump", {4})
-    self.graphic:add("jetpack", {5})
-    self.graphic:add("idle_gun", {6}, 4)
-    self.graphic:add("jetpack", {5})
-    self.graphic:add("run_gun", {7, 8, 9}, 6)
-    self.graphic:add("jump_gun", {9})
-    self.graphic:add("harmonica", {10})
-    self.graphic:add("jetpack_gun", {11})
+    self.graphic:add("run", {2, 3, 4, 5, 6, 7}, 12)
+    self.graphic:add("jump", {7})
+    self.graphic:add("jetpack", {8})
+    self.graphic:add("idle_gun", {9}, 4)
+    self.graphic:add("run_gun", {10, 11, 12, 13, 14, 15}, 12)
+    self.graphic:add("jump_gun", {15})
+    self.graphic:add("harmonica", {16})
+    self.graphic:add("jetpack_gun", {17})
     self.graphic.offsetX = -5
     self.graphic.offsetY = -11
     self.graphic.flipX = true
