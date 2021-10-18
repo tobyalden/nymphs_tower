@@ -105,7 +105,11 @@ function UI:initialize(level)
     timerText = Text:new("0.000", 12, "arial.ttf", {0, 1, 1}, 300, "right")
     timerText.offsetX = 15
     timerText.offsetY = 1
-    timerText.alpha = 0.5
+    if GameWorld.isSpeedrunMode then
+        timerText.alpha = 0.5
+    else
+        timerText.alpha = 0
+    end
 
     map = Tilemap:new("maptiles.png", 1, 1)
     for tileY = 1, level.mask.rows + mapBorder * 2 do

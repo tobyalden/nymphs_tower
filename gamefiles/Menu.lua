@@ -48,11 +48,16 @@ function Menu:initialize(itemNames)
         end
         ammo.world = GameWorld:new(tower)
     end))
+
+    self.optionsTimer = self:addTween(Alarm:new(2, function()
+        ammo.world = Options:new()
+    end))
+
     self:loadSfx({"menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
 end
 
 function Menu:update(dt)
-    if not self.startTimer.active then
+    if not self.startTimer.active and not self.optionsTimer.active then
         if self.isOnSubmenu then
             self.submenu.alpha = 1
             self.newGameMenuItem.alpha = 0
@@ -119,6 +124,9 @@ function Menu:update(dt)
                     else
                         self.sfx["menuno"]:play()
                     end
+                elseif self.cursorIndex == 3 then
+                    self.sfx["menumove"]:play()
+                    self:fadeToOptions()
                 end
             end
             self.cursorIndex = math.clamp(self.cursorIndex, 1, #self.itemNames)
@@ -141,5 +149,10 @@ function Menu:fadeToGame()
         end
     end
     self.startTimer:start()
+    self.world.curtain:fadeIn()
+end
+
+function Menu:fadeToOptions()
+    self.optionsTimer:start()
     self.world.curtain:fadeIn()
 end

@@ -1,6 +1,4 @@
-- add toggle for timer + reset
 - add controller logic into ammo/input.lua
-- toggling fullscreen
 
 - cloud layer has visible seam
 - add sfx (and maybe visual fx) for teleporting to second tower

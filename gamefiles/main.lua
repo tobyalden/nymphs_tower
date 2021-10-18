@@ -63,7 +63,6 @@ io.stdout:setvbuf("no")
 gameWidth, gameHeight = 320, 180
 windowedScale = 2
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
-local fullscreen = false
 GameWorld.isSpeedrunMode = false
 
 function love.globalUpdate()
@@ -97,6 +96,14 @@ function love.load()
     tick.framerate = -1
     tick.rate = 1 / 60
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
+
+    local fullscreen = false
+    if saveData.exists("options") then
+        local loadedOptions = saveData.load("options")
+        fullscreen = loadedOptions["isFullscreen"] == "true"
+        GameWorld.isSpeedrunMode = loadedOptions["isSpeedrunMode"] == "true"
+    end
+
     if fullscreen then
         push:setupScreen(
             gameWidth, gameHeight, windowWidth, windowHeight,
@@ -109,8 +116,8 @@ function love.load()
             {fullscreen = false, pixelperfect = true, resizable = false}
         )
     end
-     ammo.world = Options:new()
-     -- ammo.world = MainMenu:new()
+     -- ammo.world = Options:new()
+     ammo.world = MainMenu:new()
      --ammo.world = EndScreen:new()
      
     GameWorld.isSecondTower = false

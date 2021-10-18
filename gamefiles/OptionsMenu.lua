@@ -30,7 +30,7 @@ function OptionsMenu:initialize(itemNames)
     self.message.offsetY = -self.y + 140
     self.graphic:add(self.message)
 
-    self.startTimer = self:addTween(Alarm:new(3, function()
+    self.startTimer = self:addTween(Alarm:new(2, function()
         ammo.world = MainMenu:new()
     end))
 
@@ -49,10 +49,12 @@ function OptionsMenu:update(dt)
 	        	-- FULLSCREEN
 		        self.sfx["menumove"]:play()
 		        push:switchFullscreen(gameWidth * windowedScale, gameHeight * windowedScale)
+                self:saveOptions()
 	        elseif self.cursorIndex == 2 then
 	        	-- SPEEDRUN MODE
 		        self.sfx["menumove"]:play()
 		        GameWorld.isSpeedrunMode = not GameWorld.isSpeedrunMode
+                self:saveOptions()
 	        elseif self.cursorIndex == 3 then
 	        	-- BACK
 	        	self:fadeToMainMenu()
@@ -93,6 +95,17 @@ function OptionsMenu:update(dt)
 	end
 
     Entity.update(self, dt)
+end
+
+function OptionsMenu:saveOptions()
+    local savedOptions = {}
+    if push:isFullscreen() then
+        savedOptions["isFullscreen"] = "true"
+    end
+    if GameWorld.isSpeedrunMode then
+        savedOptions["isSpeedrunMode"] = "true"
+    end
+    saveData.save(savedOptions, "options")
 end
 
 function OptionsMenu:fadeToMainMenu()

@@ -70,20 +70,20 @@ function Player:initialize(x, y)
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     --self.isBufferingShot = false
     self.hasGun = false
-    self.hasGravityBelt = true
+    self.hasGravityBelt = false
     self.hasHazardSuit = false
     self.hasHarmonica = false
     self.isGravityBeltEquipped = false
     self.isPlayingHarmonica = false
     self.hasMap = false
-    self.hasCompass = true
+    self.hasCompass = false
     self.hasCrown = false
     self.isLookingAtMap = false
 
     --self.healthUpgrades = 6 --MAX
     --self.fuelUpgrades = 4 -- MAX
-    self.healthUpgrades = 6 - 1
-    self.fuelUpgrades = 4
+    self.healthUpgrades = 0
+    self.fuelUpgrades = 1
 
     self.hitDamage = Player.HIT_DAMAGE
 

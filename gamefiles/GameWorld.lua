@@ -36,8 +36,7 @@ GameWorld.static.FIRST_TOWER = {
     "level_4.json"
 }
 
-GameWorld.static.isSecondTower = nil
-GameWorld.static.isSpeedrunMode = nil
+GameWorld.static.isSecondTower = false
 
 GameWorld.static.DEBUG_MODE = true
 
@@ -355,7 +354,7 @@ function GameWorld:update(dt)
     World.update(self, dt)
     self:updateSounds(dt)
     self:updateCamera(dt)
-    if input.pressed("reset") then
+    if input.pressed("reset") and GameWorld.isSpeedrunMode then
         self.curtain:fadeIn()
         self.curtain.graphic.alpha = 1
         clearSave()
@@ -365,7 +364,7 @@ function GameWorld:update(dt)
         self.sfx["restart"]:play()
         local tower = GameWorld.FIRST_TOWER
         GameWorld.isSecondTower = false
-        if input.down("shift") then
+        if input.down("shift") and GameWorld.DEBUG_MODE then
             GameWorld.isSecondTower = true
             tower = GameWorld.SECOND_TOWER
         end
@@ -374,7 +373,6 @@ function GameWorld:update(dt)
                 ammo.world = GameWorld:new(tower)
             end}
         })
-        --ammo.world = GameWorld:new(GameWorld.SECOND_TOWER)
     end
     if GameWorld.DEBUG_MODE then
         if input.pressed("debug_print") then
