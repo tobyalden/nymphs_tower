@@ -64,10 +64,18 @@ gameWidth, gameHeight = 320, 180
 windowedScale = 2
 local windowWidth, windowHeight = love.window.getDesktopDimensions()
 GameWorld.isSpeedrunMode = false
+joystick = nil
 
 function love.globalUpdate()
     if input.pressed("quit") then
         love.event.quit()
+    end
+end
+
+function love.joystickadded(newJoystick)
+    print('joystick connected')
+    if not joystick then
+        joystick = newJoystick
     end
 end
 
@@ -81,8 +89,8 @@ function love.load()
     input.define("reset", "r")
     input.define("map", "return")
     input.define("quit", "escape")
-    input.define("shift", "lshift")
     
+    input.define("shift", "lshift")
     input.define("debug_teleport", "t")
     input.define("debug_allitems", "i")
     input.define("debug_print", "p")
@@ -90,6 +98,9 @@ function love.load()
     input.define("debug_down", "s")
     input.define("debug_left", "a")
     input.define("debug_right", "d")
+
+    local joysticks = love.joystick.getJoysticks()
+    joystick = joysticks[1]
 
     love.window.setTitle("Nymph's Tower")
 
@@ -103,6 +114,8 @@ function love.load()
         fullscreen = loadedOptions["isFullscreen"] == "true"
         GameWorld.isSpeedrunMode = loadedOptions["isSpeedrunMode"] == "true"
     end
+
+    fullscreen = false -- just for testing
 
     if fullscreen then
         push:setupScreen(

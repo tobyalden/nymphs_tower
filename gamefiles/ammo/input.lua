@@ -7,6 +7,10 @@ input._maps = {}
 local key = input.key
 local mouse = input.mouse
 local wheel = input.wheel
+local horizontalDeadZone = 0.5
+local verticalDeadZone = 0.75
+local previousVerticalAxis = 0
+local previousButtons = {}
 
 function input.define(t, ...)
     if type(t) == "string" then
@@ -19,14 +23,53 @@ function input.define(t, ...)
 end
 
 function input.pressed(name)
+    if joystick then
+        if name == "jump" and joystick:isGamepadDown("a") and not previousButtons["jump"] then
+            return true
+        elseif name == "shoot" and joystick:isGamepadDown("x") and not previousButtons["shoot"] then
+            return true
+        elseif name == "map" and joystick:isGamepadDown("back") and not previousButtons["map"] then
+            return true
+        elseif name == "up" and (
+            joystick:isGamepadDown("dpup")
+            or (joystick:getGamepadAxis("lefty") < -verticalDeadZone and previousVerticalAxis > -verticalDeadZone)
+        ) then
+            return true
+        elseif name == "down" and (
+            joystick:isGamepadDown("dpdown")
+            or (joystick:getGamepadAxis("lefty") > verticalDeadZone and previousVerticalAxis < verticalDeadZone)
+        ) then
+            return true
+        end
+    end
     return input.check(name, "pressed")
 end
 
 function input.down(name)
+    if joystick then
+        if name == "left" and (joystick:isGamepadDown("dpleft") or joystick:getGamepadAxis("leftx") < -horizontalDeadZone) then
+            return true
+        elseif name == "right" and (joystick:isGamepadDown("dpright") or joystick:getGamepadAxis("leftx") > horizontalDeadZone) then
+            return true
+        elseif name == "up" and (joystick:isGamepadDown("dpup") or joystick:getGamepadAxis("lefty") < -verticalDeadZone) then
+            return true
+        elseif name == "down" and (joystick:isGamepadDown("dpdown") or joystick:getGamepadAxis("lefty") > verticalDeadZone) then
+            return true
+        elseif name == "jump" and joystick:isGamepadDown("a") then
+            return true
+        elseif name == "shoot" and joystick:isGamepadDown("x") then
+            return true
+        end
+    end
     return input.check(name, "down")
 end
 
 function input.released(name)
+    if joystick then
+        if name == "jump" and not joystick:isGamepadDown("a") and previousButtons["jump"] then
+            return true
+        end
+    end
     return input.check(name, "released")
 end
 
@@ -69,6 +112,14 @@ function input.checkAxis(negative, positive, type)
 end
 
 function input.update()
+    if joystick then
+        previousVerticalAxis = joystick:getGamepadAxis("lefty")
+        previousButtons = {
+            jump = joystick:isGamepadDown("a"),
+            shoot = joystick:isGamepadDown("x"),
+            map = joystick:isGamepadDown("back")
+        }
+    end
     key.pressed = { count = 0 }
     key.released = { count = 0 }
     mouse.pressed = { count = 0 }

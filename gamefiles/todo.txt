@@ -1,5 +1,3 @@
-- add controller logic into ammo/input.lua
-
 - add all graphics (including player walk cycle)
 - cloud layer has visible seam
 - add sfx (and maybe visual fx) for teleporting to second tower
