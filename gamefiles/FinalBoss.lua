@@ -19,9 +19,15 @@ function FinalBoss:initialize(x, y, nodes)
     self.startingHealth = 50
     --self.startingHealth = 1
     self.health = self.startingHealth
-    self.graphic = Sprite:new("finalboss.png")
+    self.graphic = Sprite:new("keeper.png", 192, 160)
+    if GameWorld.isSecondTower then
+        self.graphic:add("idle", {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, 5)
+    else
+        self.graphic:add("idle", {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 5)
+    end
+    self.graphic:play("idle")
     self.mask = Hitbox:new(self, 192, 160)
-    self.layer = 0
+    self.layer = -5
     self.nodes = {}
     for i, node in pairs(nodes) do
         self.nodes[i] = Vector:new(node.x, node.y)
