@@ -2,16 +2,19 @@ EndScreen = class("EndScreen", World)
 
 --MainMenu.static.CAMERA_SPEED = 1.5
 
+local endAnimation
+
 function EndScreen:initialize()
     World.initialize(self)
-    local level1, level2 = Level:new(GameWorld.FIRST_TOWER, true), Level:new(GameWorld.SECOND_TOWER, true)
-    local totalNumberOfItems = #level1.items + #level2.items
+    -- local level1, level2 = Level:new(GameWorld.FIRST_TOWER, true), Level:new(GameWorld.SECOND_TOWER, true)
+    -- local totalNumberOfItems = #level1.items + #level2.items
+    local totalNumberOfItems = 1
     local collectedItems = 0
     local totalTime = 0
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")
         totalTime = loadedCheckpoint["time"]
-        totalTime = 13231.3124
+        -- totalTime = 13231.3124
         collectedItems = #saveData.load("itemIds")
     end
     local completionPercentage = tostring(math.floor(collectedItems / totalNumberOfItems * 100)) .. "%"
@@ -19,7 +22,18 @@ function EndScreen:initialize()
         "\n\nTime: " .. self:formatTotalTime(totalTime) .. "\nCompletion: " .. completionPercentage, 16, "arial.ttf", {1, 1, 1}, 320, "center"
     )
     --timerText:setText(string.format("%.2f", self.world.timer))
-    self:addGraphic(Sprite:new("endscreen.png"))
+    endAnimation = Sprite:new("endscreenanimation.png", 320, 180)
+    endAnimation:add("sink", {
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
+        33, 33, 33, 33, 33, 33, 33, 33, 33, 33
+    }, 10, false, function()
+        endAnimation:play("idle")
+    end)
+    endAnimation:add("idle", {34, 35}, 1)
+    endAnimation:play("sink")
+    self:addGraphic(endAnimation)
     self:addGraphic(message)
     self.curtain = Curtain:new()
     self:add(self.curtain)

@@ -12,7 +12,7 @@ function Sprite:initialize(path, frameWidth, frameHeight)
     self.scaleY = 1
     self.frames = {}
     self.animations = {}
-    self.currentAnimation = {frames = {1}, fps = 1, loop = false}
+    self.currentAnimation = {frames = {1}, fps = 1, loop = false, complete = nil}
     self.currentAnimationIndex = 1
     self.elapsed = 0
 
@@ -63,11 +63,12 @@ end
 function Sprite:add(
         animationName, animationFrames, animationFps, loopAnimation, complete
     )
-    self.complete = complete
     local animationFps = animationFps or 1
-    local loopAnimation = loopAnimation or true
+    if loopAnimation == nil then
+        loopAnimation = true
+    end
     self.animations[animationName] = {
-        frames = animationFrames, fps = animationFps, loop = loopAnimation
+        frames = animationFrames, fps = animationFps, loop = loopAnimation, complete = complete
     }
 end
 
@@ -91,8 +92,8 @@ function Sprite:update(dt)
             else
                 self.currentAnimationIndex = self.currentAnimationIndex - 1
             end
-            if self.complete then
-                self.complete()
+            if self.currentAnimation.complete then
+                self.currentAnimation.complete()
             end
         end
     end
