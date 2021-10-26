@@ -18,15 +18,3 @@ level1
 bonu3s
 
         bonus4
-        {
-          "name": "inside",
-          "id": 0,
-          "_eid": "35608956",
-          "x": 416,
-          "y": 48,
-          "width": 4288,
-          "height": 2560,
-          "originX": 0,
-          "originY": 0,
-          "values": {"music": "explore5"}
-        }
