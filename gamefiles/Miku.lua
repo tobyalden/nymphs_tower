@@ -13,7 +13,7 @@ function Miku:initialize(x, y, nodes)
     --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("bee.png", 80, 100)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic:add("fly", {9, 10, 11, 12, 13, 14, 15, 16}, 10)
     else
         self.graphic:add("fly", {1, 2, 3, 4, 5, 6, 7, 8}, 10)
@@ -38,7 +38,7 @@ function Miku:initialize(x, y, nodes)
 end 
 
 function Miku:update(dt)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic.flipX = (
             self.world.player:getMaskCenter().x > self:getMaskCenter().x
         )

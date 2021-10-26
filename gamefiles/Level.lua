@@ -293,7 +293,7 @@ function Level:initialize(paths, onlyItems)
     local allLeftEdgeTiles = generateNonrepeatingSequence({9, 17, 6}, self.mask.rows)
     local allRightEdgeTiles = generateNonrepeatingSequence({12, 20, 8}, self.mask.rows)
     local tileset = "tiles.png"
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         tileset = "tiles2.png"
     end
     self.graphic = Tilemap:new(tileset, 16, 16)

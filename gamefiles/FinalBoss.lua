@@ -9,7 +9,7 @@ FinalBoss.static.MAX_SPEED_HARD_MODE = 150.25
 
 function FinalBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.displayName = "KEEPER"
     else
         self.displayName = "WOUNDED KEEPER"
@@ -20,7 +20,7 @@ function FinalBoss:initialize(x, y, nodes)
     --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("keeper.png", 192, 160)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic:add("idle", {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, 5)
     else
         self.graphic:add("idle", {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 5)

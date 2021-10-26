@@ -90,12 +90,17 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     end
     self.ui = UI:new(self.level)
     self:add(self.ui)
-    local cave = Background:new("background_light.png", 3, 1, 0, true)
+    local cave
+    if GameWorld.static.isSecondTower then
+        cave = Background:new("background_light2.png", 3, 1, 0, true)
+    else
+        cave = Background:new("background_light.png", 3, 1, 0, true)
+    end
     self:add(cave)
     local light = Background:new("shadows.png", 2, 0.6, 2, true)
     self:add(light)
     local tileset = ""
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         tileset = "2"
     end
     local clouds = Background:new("clouds" .. tileset .. ".png", 30, 0.2, 50, false)
@@ -114,7 +119,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         -- boss music
         "boss1.ogg", "boss2.ogg", "boss3andintro.ogg", "boss4.ogg", "boss1remix.ogg", "boss2remix.ogg", "boss3remix.ogg",
         -- outside
-        "outside.ogg", "outsideremix.ogg",
+        "outside.ogg", "outside_remix.ogg",
         -- misc
         "silence.wav", "restart.wav"
     })
@@ -128,7 +133,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self.previousCameraZone = nil
     self.currentBoss = nil
     self.currentMusic = nil
-    self.isHardMode = GameWorld.isSecondTower
+    self.isHardMode = GameWorld.static.isSecondTower
     self.curtain = Curtain:new()
     self:add(self.curtain)
     self.curtain:addTween(Alarm:new(3, function()
@@ -148,15 +153,20 @@ function GameWorld:initialize(levelStack, saveOnEntry)
 end
 
 function GameWorld:teleportToSecondTower()
-    GameWorld.isSecondTower = true
+    GameWorld.static.isSecondTower = true
+    print('we are about to teleport. isSecondTower is')
+    print(GameWorld.static.isSecondTower)
     self.player:loseItems()
     self:saveGame(self.player.x, self.player.y)
     ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
+    print('we have created a new world. is second tower is')
+    print(GameWorld.static.isSecondTower)
 end
 
 function GameWorld:saveGame(saveX, saveY)
     local currentCheckpoint = {}
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower == true then
+        print('its second tower. saving...')
         currentCheckpoint["isSecondTower"] = "true"
     end
 
@@ -219,7 +229,9 @@ end
 
 function GameWorld:loadGame()
     local loadedCheckpoint = saveData.load("currentCheckpoint")
-    GameWorld.isSecondTower = loadedCheckpoint["isSecondTower"] == "true"
+    GameWorld.static.isSecondTower = loadedCheckpoint["isSecondTower"] == "true"
+    print('is it second tower ?')
+    print(GameWorld.static.isSecondTower)
     self.player.x = loadedCheckpoint["saveX"]
     self.player.y = loadedCheckpoint["saveY"]
     print('placing player at ' .. self.player.x .. ', ' .. self.player.y)
@@ -336,7 +348,7 @@ end
 function GameWorld:onDeath()
     self.curtain:fadeOut()
     local tower = GameWorld.FIRST_TOWER
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
     self:doSequence({
@@ -363,9 +375,9 @@ function GameWorld:update(dt)
         end
         self.sfx["restart"]:play()
         local tower = GameWorld.FIRST_TOWER
-        GameWorld.isSecondTower = false
+        GameWorld.static.isSecondTower = false
         if input.down("shift") and GameWorld.DEBUG_MODE then
-            GameWorld.isSecondTower = true
+            GameWorld.static.isSecondTower = true
             tower = GameWorld.SECOND_TOWER
         end
         self:doSequence({
@@ -393,6 +405,11 @@ function GameWorld:update(dt)
 end
 
 function GameWorld:updateSounds(dt)
+    local towerSuffix = ""
+    if GameWorld.static.isSecondTower then
+        towerSuffix = "_remix"
+    end
+
     -- update ambience
     if self.player:isInside() then
         self.sfx["insideambience"]:fadeIn(dt)
@@ -408,13 +425,9 @@ function GameWorld:updateSounds(dt)
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then
-        local towerSuffix = ""
-        if GameWorld.isSecondTower then
-            towerSuffix = "_remix"
-        end
         self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag .. towerSuffix]]
         self.currentMusic:fadeIn(dt, 1)
-        self.sfx["outside"]:fadeOut(dt)
+        self.sfx["outside" .. towerSuffix]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
         end
@@ -428,13 +441,13 @@ function GameWorld:updateSounds(dt)
             )[1].musicName
             self.currentMusic = self.sfx[musicName]
             self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
-            self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.sfx["outside" .. towerSuffix]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
         elseif self.player:isAtTop() then
             self.currentMusic = self.sfx["top"]
             self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED / 4, 1)
-            self.sfx["outside"]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED / 4)
+            self.sfx["outside" .. towerSuffix]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED / 4)
         else
-            self.currentMusic = self.sfx["outside"]
+            self.currentMusic = self.sfx["outside" .. towerSuffix]
             self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
             for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
                 self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)

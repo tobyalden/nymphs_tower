@@ -38,10 +38,10 @@ function Menu:initialize(itemNames)
 
     self.startTimer = self:addTween(Alarm:new(3, function()
         local tower = GameWorld.FIRST_TOWER
-        if GameWorld.isSecondTower then
+        if GameWorld.static.isSecondTower then
             tower = GameWorld.SECOND_TOWER
         end
-        if GameWorld.isSecondTower then
+        if GameWorld.static.isSecondTower then
             print('issecondtower')
         else
             print('is not secondtower')
@@ -141,11 +141,11 @@ function Menu:update(dt)
 end
 
 function Menu:fadeToGame()
-    GameWorld.isSecondTower = false
+    GameWorld.static.isSecondTower = false
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")
         if loadedCheckpoint["isSecondTower"] then
-            GameWorld.isSecondTower = true
+            GameWorld.static.isSecondTower = true
         end
     end
     self.startTimer:start()

@@ -13,7 +13,7 @@ function Wizard:initialize(x, y, nodes)
     --self.startingHealth = 1
     self.health = self.startingHealth
     self.graphic = Sprite:new("wizard_kai.png", 48, 48)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic:add("idle", {5})
         self.graphic:add("fly", {5, 6, 7, 8}, 5)
     else

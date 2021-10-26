@@ -6,7 +6,7 @@ inspect = require "inspect"
 saveData = require("saveData")
 
 function clearSave()
-    GameWorld.isSecondTower = false
+    GameWorld.static.isSecondTower = false
     saveData.clear("currentCheckpoint")
     saveData.clear("currentFlags")
     saveData.clear("itemIds")
@@ -133,15 +133,14 @@ function love.load()
      -- ammo.world = MainMenu:new()
      -- ammo.world = EndScreen:new()
      
-    GameWorld.isSecondTower = false
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")
         if loadedCheckpoint["isSecondTower"] then
-            GameWorld.isSecondTower = true
+            GameWorld.static.isSecondTower = true
         end
     end
     local tower = GameWorld.FIRST_TOWER
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
     ammo.world = GameWorld:new(tower)

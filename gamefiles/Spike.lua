@@ -5,7 +5,7 @@ function Spike:initialize(x, y, width, height, facing)
     self.facing = facing
     self.types = {"spike"}
     local tileset = ""
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         tileset = "2"
     end
     local suffix = ""

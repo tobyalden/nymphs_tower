@@ -13,7 +13,7 @@ function Acid:initialize(x, y, width, height, acidId, riseSpeed, uniqueId)
     self.riseTo = height
     self.types = {"acid"}
     self.tileset = "acid"
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.tileset = "acid2"
     end
     self.graphic = TiledSprite:new(self.tileset .. ".png", 8, 8, width, height)

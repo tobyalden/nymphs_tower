@@ -114,7 +114,7 @@ function UI:initialize(level)
     map = Tilemap:new("maptiles.png", 1, 1)
     for tileY = 1, level.mask.rows + mapBorder * 2 do
         for tileX = 1, level.mask.columns + mapBorder * 2 do
-            if GameWorld.isSecondTower then
+            if GameWorld.static.isSecondTower then
                 if self:isTileOnTornMap(level, tileX, tileY) then
                     map:setTile(tileX, tileY, 1)
                 end
@@ -125,7 +125,7 @@ function UI:initialize(level)
     end
     for tileY = 1, level.mask.rows do
         for tileX = 1, level.mask.columns do
-            if not GameWorld.isSecondTower or self:isTileOnTornMap(level, tileX + mapBorder, tileY + mapBorder) then
+            if not GameWorld.static.isSecondTower or self:isTileOnTornMap(level, tileX + mapBorder, tileY + mapBorder) then
                 if level.mask:getTile(tileX, tileY) then
                     map:setTile(tileX + mapBorder, tileY + mapBorder, 1)
                 else

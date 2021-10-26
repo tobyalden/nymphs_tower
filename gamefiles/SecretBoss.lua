@@ -15,7 +15,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.startingHealth = 20
     --self.startingHealth = 1
     self.health = self.startingHealth
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic = Sprite:new("king.png", 40, 50)
         self.graphic:add("idle_alt", {5, 6, 7, 8}, 6)
         self.graphic:play("idle_alt")

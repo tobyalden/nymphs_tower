@@ -14,7 +14,7 @@ function Pig:initialize(x, y)
     self.graphic = Sprite:new("larva.png", 64, 64)
     self.graphic.offsetY = -5
     self.mask = Hitbox:new(self, 32, 59)
-    if GameWorld.isSecondTower then
+    if GameWorld.static.isSecondTower then
         self.graphic:add("idle", {4})
         self.graphic:add("run", {4, 5, 6, 5}, 6)
     else
