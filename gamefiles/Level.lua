@@ -472,7 +472,7 @@ function Level:initialize(paths, onlyItems)
                 else
                     -- center
                     local allCenterTiles = {5, 5, 5, 5, 22, 30, 31}
-                    if GameWorld.static.isSecondTower and (tileY % 7 == 3 or tileX % 7 == 4) then
+                    if GameWorld.static.isSecondTower and (tileY % 7 > 3 or tileX % 7 < 4) then
                         allCenterTiles = {
                             33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
                         }
