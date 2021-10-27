@@ -1,20 +1,17 @@
-level1
-
+bonus0
         {
           "name": "inside",
           "id": 0,
           "_eid": "35608956",
-          "x": 0,
-          "y": 0,
-          "width": 5184,
-          "height": 4288,
+          "x": 400,
+          "y": 2800,
+          "width": 3584,
+          "height": 3120,
           "originX": 0,
           "originY": 0,
-          "values": {"music": "silence"}
+          "values": {"music": "explore4"}
         }
-
-
-
-bonu3s
-
-        bonus4
+        
+        {"name": "camera_zone", "id": 34, "_eid": "71427043", "x": 16, "y": 0, "width": 512, "height": 16336, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 528, "y": 0, "width": 3504, "height": 2832, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 4032, "y": 0, "width": 1136, "height": 16336, "originX": 0, "originY": 0}

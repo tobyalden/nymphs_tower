@@ -52,6 +52,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self:add(self.level)
     local startX, startY
     local isStartOfGame = true
+    self.isTeleporting = false
     for name, entity in pairs(self.level.entities) do
         if name == "player" then
             self.player = entity
@@ -114,14 +115,14 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         "insideambience.wav", "outsideambience.wav",
         -- inside music
         "explore1.ogg", "explore2.ogg", "explore3.ogg", "explore4.ogg", "explore5.ogg",
-            "explore1remix.ogg", "explore2remix.ogg", "explore3remix.ogg", "silence.ogg",
-            "toxic_waste.ogg", "top.ogg",
+        "explore1remix.ogg", "explore2remix.ogg", "explore3remix.ogg", "silence.ogg",
+        "toxic_waste.ogg", "top.ogg",
         -- boss music
         "boss1.ogg", "boss2.ogg", "boss3andintro.ogg", "boss4.ogg", "boss1remix.ogg", "boss2remix.ogg", "boss3remix.ogg",
         -- outside
         "outside.ogg", "outside_remix.ogg",
         -- misc
-        "silence.wav", "restart.wav"
+        "silence.wav", "restart.wav", "teleport.wav"
     })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
@@ -154,11 +155,13 @@ function GameWorld:initialize(levelStack, saveOnEntry)
 end
 
 function GameWorld:teleportToSecondTower()
+    self.isTeleporting = true
     self.curtain:setMessage("TRAVELING TO HOME WORLD...")
     self.player.canMove = false
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
         {4, function()
+            self.sfx["teleport"]:play()
             GameWorld.static.isSecondTower = true
             self.player:loseItems()
             self:saveGame(self.player.x, self.player.y)
@@ -414,7 +417,7 @@ function GameWorld:updateSounds(dt)
     end
 
     -- update music
-    if self.player.isDead then
+    if self.player.isDead or self.isTeleporting then
         for _, v in pairs(self.sfx) do
             v:stopLoops()
         end
