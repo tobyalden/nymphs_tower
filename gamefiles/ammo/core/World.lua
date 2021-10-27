@@ -30,7 +30,6 @@ function World:__newindex(key, value)
 end
 
 function World:initialize()
-    print('creating new world')
     self.bumpWorld = bump.newWorld()
 
     self.active = true

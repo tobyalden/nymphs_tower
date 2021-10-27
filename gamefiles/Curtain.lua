@@ -1,12 +1,23 @@
 Curtain = class("Curtain", Entity)
 
+local blackScreen
+local curtainMessage
+
 function Curtain:initialize()
     Entity.initialize(self)
-    self.graphic = Backdrop:new("curtain.png")
-    self.graphic.scroll = 0
+    blackScreen = Backdrop:new("curtain.png")
+    curtainMessage = Text:new("", 12, "arial.ttf", {1, 1, 1}, 320, "center")
+    curtainMessage.offsetY = 80
+    self.graphic = Graphiclist:new({blackScreen, curtainMessage})
     self.layer = -999
-    self.graphic.alpha = 1
+    blackScreen.alpha = 1
+    curtainMessage.alpha = 1
+    self.graphic.scroll = 0
     self.isFadingOut = false
+end
+
+function Curtain:setMessage(message)
+    curtainMessage:setText(message)
 end
 
 function Curtain:fadeOut()
@@ -17,12 +28,21 @@ function Curtain:fadeIn()
     self.isFadingOut = false
 end
 
+function Curtain:fadeInInstantly()
+    self.isFadingOut = false
+    blackScreen.alpha = 1
+    curtainMessage.alpha = 1
+end
+
 function Curtain:update(dt)
     if self.isFadingOut then
-        self.graphic.alpha = self.graphic.alpha - 0.5 * dt
+        blackScreen.alpha = blackScreen.alpha - 0.5 * dt
+        curtainMessage.alpha = curtainMessage.alpha - 0.5 * dt
     else
-        self.graphic.alpha = self.graphic.alpha + 0.5 * dt
+        blackScreen.alpha = blackScreen.alpha + 0.5 * dt
+        curtainMessage.alpha = curtainMessage.alpha + 0.5 * dt
     end
-    self.graphic.alpha = math.clamp(self.graphic.alpha, 0, 1)
+    blackScreen.alpha = math.clamp(blackScreen.alpha, 0, 1)
+    curtainMessage.alpha = math.clamp(curtainMessage.alpha, 0, 1)
     Entity.update(self, dt)
 end

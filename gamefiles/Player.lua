@@ -340,10 +340,12 @@ function Player:animation()
     else
         self.graphic.alpha = 1
     end
-    if input.down("left") then
-        self.graphic.flipX = true
-    elseif input.down("right") then
-        self.graphic.flipX = false
+    if self.canMove then
+        if input.down("left") then
+            self.graphic.flipX = true
+        elseif input.down("right") then
+            self.graphic.flipX = false
+        end
     end
     if self.graphic.flipX then
         self.graphic.offsetX = -3

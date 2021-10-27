@@ -41,6 +41,7 @@ GameWorld.static.isSecondTower = false
 GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
+    pauseTweens = true
     love.math.setRandomSeed(1)
     World.initialize(self)
 
@@ -57,7 +58,6 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             startX = entity.x
             startY = entity.y
             if saveData.exists("currentCheckpoint") then
-                print('save data found. loading...')
                 isStartOfGame = false
                 self:loadGame()
             end
@@ -150,29 +150,31 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         self.player.y = startY
         self:saveGame(self.player.x, self.player.y)
     end
+    pauseTweens = false
 end
 
 function GameWorld:teleportToSecondTower()
-    GameWorld.static.isSecondTower = true
-    print('we are about to teleport. isSecondTower is')
-    print(GameWorld.static.isSecondTower)
-    self.player:loseItems()
-    self:saveGame(self.player.x, self.player.y)
-    ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
-    print('we have created a new world. is second tower is')
-    print(GameWorld.static.isSecondTower)
+    self.curtain:setMessage("TRAVELING TO HOME WORLD...")
+    self.player.canMove = false
+    self:doSequence({
+        {1, function() self.curtain:fadeIn() end},
+        {4, function()
+            GameWorld.static.isSecondTower = true
+            self.player:loseItems()
+            self:saveGame(self.player.x, self.player.y)
+            ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
+        end}
+    })
 end
 
 function GameWorld:saveGame(saveX, saveY)
     local currentCheckpoint = {}
     if GameWorld.static.isSecondTower == true then
-        print('its second tower. saving...')
         currentCheckpoint["isSecondTower"] = "true"
     end
 
     currentCheckpoint["saveX"] = saveX
     currentCheckpoint["saveY"] = saveY
-    print('saving player at ' .. saveX .. ', ' .. saveY)
 
     if self.player.graphic.flipX then
         currentCheckpoint["flipX"] = "true"
@@ -223,18 +225,14 @@ function GameWorld:saveGame(saveX, saveY)
             acidLevels[entity.uniqueId] = entity.riseTo
         end
     end
-    --print('saving acid levels: '..inspect(acidLevels))
     saveData.save(acidLevels, "acidLevels")
 end
 
 function GameWorld:loadGame()
     local loadedCheckpoint = saveData.load("currentCheckpoint")
     GameWorld.static.isSecondTower = loadedCheckpoint["isSecondTower"] == "true"
-    print('is it second tower ?')
-    print(GameWorld.static.isSecondTower)
     self.player.x = loadedCheckpoint["saveX"]
     self.player.y = loadedCheckpoint["saveY"]
-    print('placing player at ' .. self.player.x .. ', ' .. self.player.y)
     self.player.graphic.flipX = loadedCheckpoint["flipX"]
     self.player.hasGun = loadedCheckpoint["hasGun"]
     self.player.healthUpgrades = loadedCheckpoint["healthUpgrades"]
@@ -255,10 +253,8 @@ function GameWorld:loadGame()
     end
 
     self.itemIds = saveData.load("itemIds")
-    --print('loaded itemIds: ' .. inspect(self.itemIds))
 
     local acidLevels = saveData.load("acidLevels")
-    --print('loading acid levels: '..inspect(acidLevels))
     for _, entity in pairs(self.level.entities) do
         local isAcid = false
         for _, entityType in pairs(entity.types) do
@@ -294,12 +290,10 @@ end
 
 function GameWorld:addFlag(flag)
     if flag == "" then return end
-    print('adding flag ' .. flag)
     self.flags[flag] = true
 end
 
 function GameWorld:removeFlag(flag)
-    print('removing flag ' .. flag)
     local element = self.flags[flag]
     self.flags[flag] = nil
 end
@@ -334,25 +328,25 @@ function GameWorld:getCurrentCameraZone()
             table.insert(collidedCameraZones, cameraZone)
         end
     end
-    -- print('colliding with ' .. #collidedCameraZones .. ' camera zones')
     local smallestCameraZone = nil
     for _, cameraZone in pairs(collidedCameraZones) do
         if not smallestCameraZone or cameraZone:getSize() < smallestCameraZone:getSize() then
             smallestCameraZone = cameraZone
         end
     end
-    -- print('smallest camera zone has size ' .. smallestCameraZone:getSize())
     return smallestCameraZone
 end
 
 function GameWorld:onDeath()
-    self.curtain:fadeOut()
     local tower = GameWorld.FIRST_TOWER
     if GameWorld.static.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
     self:doSequence({
-        {1, function() self.curtain:fadeIn() end},
+        {1, function()
+            self.curtain:setMessage("RETURNING TO CHECKPOINT...")
+            self.curtain:fadeIn()
+        end},
         {4, function() ammo.world = GameWorld:new(tower) end}
     })
 end
@@ -367,8 +361,8 @@ function GameWorld:update(dt)
     self:updateSounds(dt)
     self:updateCamera(dt)
     if input.pressed("reset") and GameWorld.isSpeedrunMode then
-        self.curtain:fadeIn()
-        self.curtain.graphic.alpha = 1
+        self.curtain:setMessage("RESETTING...")
+        self.curtain:fadeInInstantly()
         clearSave()
         for _, v in pairs(self.sfx) do
             v:stopLoops()

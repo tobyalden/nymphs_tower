@@ -1,8 +1,6 @@
-- add all graphics (including player walk cycle)
-- cloud layer has visible seam
-- add sfx (and maybe visual fx) for teleporting to second tower
-- add ghosts
 - don't fade out curtain until level is loaded
+- add sfx (and maybe visual fx) for teleporting to second tower
+- add teleport back to first tower
 
 - make sides of both towers scalable (one side scalable without gravity belt, both with)
 - add sfx for when acid levels are changing (if i keep the acid rise...)
