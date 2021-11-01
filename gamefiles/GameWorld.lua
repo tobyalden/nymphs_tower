@@ -62,6 +62,11 @@ function GameWorld:initialize(levelStack, saveOnEntry)
                 isStartOfGame = false
                 self:loadGame()
             end
+            if self:hasFlag("teleporting_back") then
+                self:removeFlag("teleporting_back")
+                startX = 2530
+                startY = 4891
+            end
             self:add(entity)
         end
     end
@@ -166,6 +171,24 @@ function GameWorld:teleportToSecondTower()
             self.player:loseItems()
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
+        end}
+    })
+end
+
+function GameWorld:teleportToFirstTower()
+    self.isTeleporting = true
+    self.curtain:setMessage("TRAVELING TO OUTPOST...")
+    self.player.canMove = false
+    self:doSequence({
+        {1, function() self.curtain:fadeIn() end},
+        {4, function()
+            self.sfx["teleport"]:play()
+            GameWorld.static.isSecondTower = false
+            self.player.hasHarmonica = false
+            self:addFlag("harmonica_broken")
+            self:addFlag("teleporting_back")
+            self:saveGame(self.player.x, self.player.y)
+            ammo.world = GameWorld:new(GameWorld.FIRST_TOWER, true)
         end}
     })
 end

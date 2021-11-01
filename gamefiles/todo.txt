@@ -1,8 +1,6 @@
 - add teleport back to first tower (ruin first tower?)
 - take harmonica away when you teleport so you can't go back to second tower
 
-- add gravity belt to second tower
-- make sides of both towers scalable (one side scalable without gravity belt, both with)
 - add sfx for when acid levels are changing (if i keep the acid rise...)
 - make sure second tower music is correct
 

@@ -121,6 +121,7 @@ end
 
 function Player:giveAllItems()
     self.hasGun = true
+    self.hasHarmonica = true
     self.hasGravityBelt = true
     self.hasHazardSuit = true
     self.hasMap = true
@@ -783,7 +784,8 @@ function Player:handleSfx(dt)
 
         local harmonicaSfxName = "harmonica"
         -- TODO: Remove hardcoded value here
-        if self.y == 1499 then
+        local collidedDecorations = self:collide(self.x, self.y, {"decoration"})
+        if self.y == 1499 or (self.y == 14171 and #collidedDecorations > 0) then
             harmonicaSfxName = "harmonica_angel"
         end
         if self.isPlayingHarmonica then
@@ -796,7 +798,11 @@ function Player:handleSfx(dt)
                 self.harmonicaTimer > 5
                 and harmonicaSfxName == "harmonica_angel"
             ) then
-                self.world:teleportToSecondTower()
+                if GameWorld.static.isSecondTower then
+                    self.world:teleportToFirstTower()
+                else
+                    self.world:teleportToSecondTower()
+                end
             end
         else
             self.harmonicaTimer = 0
