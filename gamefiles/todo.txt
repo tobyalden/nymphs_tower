@@ -1,8 +1,5 @@
-- add teleport back to first tower (ruin first tower?)
-- take harmonica away when you teleport so you can't go back to second tower
-
 - add sfx for when acid levels are changing (if i keep the acid rise...)
-- make sure second tower music is correct
+- adjust music levels
 
 - add transition to end (be sure to save before going from GameWorld to EndScreen)
 - tie sinking animation on end to end condition

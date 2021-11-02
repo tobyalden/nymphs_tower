@@ -159,6 +159,18 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     pauseTweens = false
 end
 
+function GameWorld:goToEndScreen()
+    self.curtain:setMessage("SAILING AWAY...")
+    self.player.canMove = false
+    self:doSequence({
+        {1, function() self.curtain:fadeIn() end},
+        {6, function()
+            self:saveGame(self.player.x, self.player.y)
+             ammo.world = EndScreen:new()
+        end}
+    })
+end
+
 function GameWorld:teleportToSecondTower()
     self.isTeleporting = true
     self.curtain:setMessage("TRAVELING TO HOME WORLD...")

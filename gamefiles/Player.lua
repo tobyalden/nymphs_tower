@@ -121,6 +121,7 @@ end
 
 function Player:giveAllItems()
     self.hasGun = true
+    self.hasCrown = true
     self.hasHarmonica = true
     self.hasGravityBelt = true
     self.hasHazardSuit = true
@@ -341,7 +342,7 @@ function Player:animation()
     else
         self.graphic.alpha = 1
     end
-    if self.canMove then
+    if self.canMove and not self.isPlayingHarmonica then
         if input.down("left") then
             self.graphic.flipX = true
         elseif input.down("right") then
@@ -363,7 +364,7 @@ function Player:animation()
     if self.isPlayingHarmonica then
         self.graphic:play("harmonica")
     elseif self:isOnGround() then
-        if self.velocity.x ~= 0 then
+        if self.velocity.x ~= 0 and self.canMove then
             self.graphic:play("run"  ..  animationSuffix)
         else
             self.graphic:play("idle"  ..  animationSuffix)
@@ -482,6 +483,9 @@ function Player:collisions(dt)
     local collidedBoats = self:collide(self.x, self.y + 1, {"boat"})
     if #collidedBoats > 0 then
         self.graphic.offsetY = -11 + collidedBoats[1].graphic.offsetY
+        if self.hasCrown then
+            self.world:goToEndScreen()
+        end
     else
         self.graphic.offsetY = -11
     end
@@ -850,6 +854,7 @@ function Player:update(dt)
             Player.MAX_FALL_SPEED * dt,
             Player.SOLIDS
         )
+        self:collisions(dt)
         self:animation()
         return
     end
