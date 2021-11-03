@@ -37,8 +37,11 @@ function EndScreen:initialize(isTrueEnd)
     end)
     endAnimation:add("idle", {1, 36}, 1)
     endAnimation:add("sink_idle", {34, 35}, 1)
+    self:loadSfx({"ocean.wav", "towersink.wav"})
+    self.sfx["ocean"]:loop(0)
     if isTrueEnd then
         endAnimation:play("sink")
+        self.sfx["towersink"]:play()
     else
         endAnimation:play("idle")
     end
@@ -51,7 +54,7 @@ function EndScreen:initialize(isTrueEnd)
     self.curtain:addTween(Alarm:new(3, function()
         self.canReturnToMainMenu = true
     end), true)
-    self.mainMenuTimer = self.curtain:addTween(Alarm:new(2, function()
+    self.mainMenuTimer = self.curtain:addTween(Alarm:new(5, function()
         ammo.world = MainMenu:new()
     end))
 end
@@ -72,6 +75,11 @@ function EndScreen:formatTotalTime(totalTime)
 end
 
 function EndScreen:update(dt)
+    if self.mainMenuTimer.active then
+        self.sfx["ocean"]:fadeOut(dt)
+    else
+        self.sfx["ocean"]:fadeIn(dt)
+    end
     if input.pressed("jump") and self.canReturnToMainMenu and not self.mainMenuTimer.active then
         print('exit')
         self:fadeToMainMenu()
