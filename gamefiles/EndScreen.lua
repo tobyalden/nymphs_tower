@@ -4,7 +4,7 @@ EndScreen = class("EndScreen", World)
 
 local endAnimation
 
-function EndScreen:initialize()
+function EndScreen:initialize(isTrueEnd)
     World.initialize(self)
     -- local level1, level2 = Level:new(GameWorld.FIRST_TOWER, true), Level:new(GameWorld.SECOND_TOWER, true)
     -- local totalNumberOfItems = #level1.items + #level2.items
@@ -33,10 +33,15 @@ function EndScreen:initialize()
         32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
         33, 33, 33, 33, 33, 33, 33, 33, 33, 33
     }, 10, false, function()
-        endAnimation:play("idle")
+        endAnimation:play("sink_idle")
     end)
-    endAnimation:add("idle", {34, 35}, 1)
-    endAnimation:play("sink")
+    endAnimation:add("idle", {1, 36}, 1)
+    endAnimation:add("sink_idle", {34, 35}, 1)
+    if isTrueEnd then
+        endAnimation:play("sink")
+    else
+        endAnimation:play("idle")
+    end
     self:addGraphic(endAnimation)
     self:addGraphic(message)
     self.curtain = Curtain:new()

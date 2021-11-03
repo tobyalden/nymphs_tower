@@ -130,8 +130,8 @@ function love.load()
         )
     end
      -- ammo.world = Options:new()
-     -- ammo.world = MainMenu:new()
-     ammo.world = EndScreen:new()
+     ammo.world = MainMenu:new()
+     -- ammo.world = EndScreen:new()
      
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")

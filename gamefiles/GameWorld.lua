@@ -64,8 +64,8 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             end
             if self:hasFlag("teleporting_back") then
                 self:removeFlag("teleporting_back")
-                startX = 2530
-                startY = 4891
+                startX = 2400
+                startY = 4939
             end
             self:add(entity)
         end
@@ -166,7 +166,7 @@ function GameWorld:goToEndScreen()
         {1, function() self.curtain:fadeIn() end},
         {6, function()
             self:saveGame(285, 10187)
-            ammo.world = EndScreen:new()
+            ammo.world = EndScreen:new(self:hasFlag("harmonica_broken"))
         end}
     })
 end

@@ -559,17 +559,7 @@
           "originY": 0,
           "values": {"text": "PLAY   OUR  SONG\n   FROM   THE  TOP\n   OF   THE TOWER", "require_flag": "secret_boss_defeated"}
         },
-        {"name": "compass", "id": 618, "_eid": "13830997", "x": 276, "y": 2136, "originX": 0, "originY": 0},
-        {
-          "name": "tutorial",
-          "id": 619,
-          "_eid": "62868244",
-          "x": 2324,
-          "y": 676,
-          "originX": 0,
-          "originY": 0,
-          "values": {"text": "Your harmonica has broken", "require_flag": "harmonica_broken"}
-        }
+        {"name": "compass", "id": 618, "_eid": "13830997", "x": 276, "y": 2136, "originX": 0, "originY": 0}
       ]
     },
     {
