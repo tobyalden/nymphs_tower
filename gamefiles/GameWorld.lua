@@ -165,8 +165,8 @@ function GameWorld:goToEndScreen()
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
         {6, function()
-            self:saveGame(self.player.x, self.player.y)
-             ammo.world = EndScreen:new()
+            self:saveGame(285, 10187)
+            ammo.world = EndScreen:new()
         end}
     })
 end

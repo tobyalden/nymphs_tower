@@ -25,6 +25,10 @@ function EndScreen:initialize()
     endAnimation = Sprite:new("endscreenanimation.png", 320, 180)
     endAnimation:add("sink", {
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        36, 36, 36, 36, 36, 36, 36, 36, 36, 36,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        36, 36, 36, 36, 36, 36, 36, 36, 36, 36,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
         32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
         33, 33, 33, 33, 33, 33, 33, 33, 33, 33
@@ -38,6 +42,13 @@ function EndScreen:initialize()
     self.curtain = Curtain:new()
     self:add(self.curtain)
     self.curtain:fadeOut()
+    self.canReturnToMainMenu = false
+    self.curtain:addTween(Alarm:new(3, function()
+        self.canReturnToMainMenu = true
+    end), true)
+    self.mainMenuTimer = self.curtain:addTween(Alarm:new(2, function()
+        ammo.world = MainMenu:new()
+    end))
 end
 
 function EndScreen:formatTotalTime(totalTime)
@@ -56,5 +67,14 @@ function EndScreen:formatTotalTime(totalTime)
 end
 
 function EndScreen:update(dt)
+    if input.pressed("jump") and self.canReturnToMainMenu and not self.mainMenuTimer.active then
+        print('exit')
+        self:fadeToMainMenu()
+    end
     World.update(self, dt)
+end
+
+function EndScreen:fadeToMainMenu()
+    self.curtain:fadeIn()
+    self.mainMenuTimer:start()
 end

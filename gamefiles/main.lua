@@ -84,7 +84,7 @@ function love.load()
     input.define("down", "down")
     input.define("left", "left", "[")
     input.define("right", "right", "]")
-    input.define("jump", "z", "space")
+    input.define("jump", "z", "space", "enter")
     input.define("shoot", "x")
     input.define("reset", "r")
     input.define("map", "return")
@@ -131,7 +131,7 @@ function love.load()
     end
      -- ammo.world = Options:new()
      -- ammo.world = MainMenu:new()
-     -- ammo.world = EndScreen:new()
+     ammo.world = EndScreen:new()
      
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")
@@ -143,6 +143,6 @@ function love.load()
     if GameWorld.static.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
-    ammo.world = GameWorld:new(tower)
+    -- ammo.world = GameWorld:new(tower)
     -- ammo.world = GameWorld:new({'test.json'})
 end

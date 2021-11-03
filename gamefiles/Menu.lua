@@ -3,7 +3,7 @@ Menu = class("Menu", Entity)
 function Menu:initialize(itemNames)
     Entity.initialize(self)
     self.x = 30
-    self.y = 50
+    self.y = 70
 
     self.graphic = Graphiclist:new({})
     self.itemNames = itemNames
