@@ -41,7 +41,6 @@ GameWorld.static.isSecondTower = false
 GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
-    pauseTweens = true
     love.math.setRandomSeed(1)
     World.initialize(self)
 
@@ -156,7 +155,6 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         self.player.y = startY
         self:saveGame(self.player.x, self.player.y)
     end
-    pauseTweens = false
 end
 
 function GameWorld:goToEndScreen()
@@ -444,21 +442,26 @@ function GameWorld:updateSounds(dt)
 
     -- update ambience
     if self.player:isInside() then
-        self.sfx["insideambience"]:fadeIn(dt)
-        self.sfx["outsideambience"]:fadeOut(dt)
+        self.sfx["insideambience"]:fadeIn(dt, nil, 1)
+        self.sfx["outsideambience"]:fadeOut(dt, nil, 1)
     else
-        self.sfx["insideambience"]:fadeOut(dt)
-        self.sfx["outsideambience"]:fadeIn(dt)
+        self.sfx["insideambience"]:fadeOut(dt, nil, 1)
+        self.sfx["outsideambience"]:fadeIn(dt, nil, 1)
     end
 
     -- update music
+    local maxMusicVolume = 0.75
+    if self.currentMusic then
+        -- print(self.currentMusic:getVolume())
+    end
+
     if self.player.isDead or self.isTeleporting then
         for _, v in pairs(self.sfx) do
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then
         self.currentMusic = self.sfx[GameWorld.ALL_BOSS_MUSIC[self.currentBoss.flag .. towerSuffix]]
-        self.currentMusic:fadeIn(dt, 1)
+        self.currentMusic:fadeIn(dt, 1, maxMusicVolume)
         self.sfx["outside" .. towerSuffix]:fadeOut(dt)
         for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
             self.sfx[v]:fadeOut(dt)
@@ -472,15 +475,15 @@ function GameWorld:updateSounds(dt)
                 self.player.x, self.player.y, {"inside"}
             )[1].musicName
             self.currentMusic = self.sfx[musicName]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1)
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1, maxMusicVolume)
             self.sfx["outside" .. towerSuffix]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
         elseif self.player:isAtTop() then
             self.currentMusic = self.sfx["top"]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED / 4, 1)
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED / 4, 1, maxMusicVolume)
             self.sfx["outside" .. towerSuffix]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED / 4)
         else
             self.currentMusic = self.sfx["outside" .. towerSuffix]
-            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED)
+            self.currentMusic:fadeIn(dt * GameWorld.MUSIC_FADE_SPEED, 1, maxMusicVolume)
             for _, v in ipairs(GameWorld.ALL_INDOORS_MUSIC) do
                 self.sfx[v]:fadeOut(dt * GameWorld.MUSIC_FADE_SPEED)
             end

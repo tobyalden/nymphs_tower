@@ -460,8 +460,8 @@ function Player:shooting()
             end
             self.world:add(bullet)
             local choices = {1, 2, 3}
-            --self.sfx['shoot' .. math.random(#choices)]:play()
-            self.sfx['shoot1']:play()
+            self.sfx['shoot' .. math.random(#choices)]:play(0.7)
+            -- self.sfx['shoot1']:play()
             self.shotCooldown:start()
             --self.isBufferingShot = false
         end
@@ -703,7 +703,7 @@ function Player:collisions(dt)
         end
     end
 
-    if input.pressed("down") and not self.isLookingAtMap then
+    if self.canMove and input.pressed("down") and not self.isLookingAtMap then
         local collidedCheckpoints = self:collide(self.x, self.y, {"checkpoint"})
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()
@@ -780,8 +780,9 @@ function Player:handleSfx(dt)
             self.sfx["land"]:play()
             self:explode(4, 40, 1, 12, 0, 10, 1)
         end
-        if self:isOnGround() and self.velocity.x ~= 0 then
-            self.sfx["jetpack"]:loop()
+
+        if self.canMove and self:isOnGround() and self.velocity.x ~= 0 then
+            self.sfx["run"]:loop()
         else
             self.sfx["run"]:stop()
         end
@@ -891,10 +892,4 @@ function Player:update(dt)
     self.wasOnGround = self:isOnGround()
     self.wasJetpackOn = isJetpackOn
     self.wasInAcid = self:isInAcid()
-
-    --if self.velocity.x ~= 0 or self.velocity.y ~= 0 then
-        --self.sfx["run"]:loop()
-    --else
-        --self.sfx["run"]:stop()
-    --end
 end

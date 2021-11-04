@@ -22,7 +22,7 @@ function EnemyBullet:initialize(parent, x, y, heading, speed, shouldFall, isSmal
     end
     self.velocity = heading
     self.velocity:normalize(speed)
-    self.layer = -1
+    self.layer = -10
 end
 
 function EnemyBullet:update(dt)
