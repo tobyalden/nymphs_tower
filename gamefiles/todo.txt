@@ -1,7 +1,2 @@
-- add sfx for when acid levels are changing (if i keep the acid rise...)
-- add sound to end screen
-- adjust music levels
-- add graphic to main menu
-
 player coordinates while on second throne: (4496, 14171)
 player coordinates while on first throne: (2530, 4891)

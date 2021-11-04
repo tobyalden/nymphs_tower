@@ -78,7 +78,7 @@ function EndScreen:update(dt)
     if self.mainMenuTimer.active then
         self.sfx["ocean"]:fadeOut(dt)
     else
-        self.sfx["ocean"]:fadeIn(dt)
+        self.sfx["ocean"]:fadeIn(dt, nil, 1)
     end
     if input.pressed("jump") and self.canReturnToMainMenu and not self.mainMenuTimer.active then
         print('exit')

@@ -80,11 +80,13 @@ function love.joystickadded(newJoystick)
 end
 
 function love.load()
+    love.mouse.setVisible(false)
+
     input.define("up", "up")
     input.define("down", "down")
     input.define("left", "left", "[")
     input.define("right", "right", "]")
-    input.define("jump", "z", "space", "enter")
+    input.define("jump", "z", "space", "return")
     input.define("shoot", "x")
     input.define("reset", "r")
     input.define("map", "return")
@@ -131,7 +133,7 @@ function love.load()
     end
      -- ammo.world = Options:new()
      -- ammo.world = MainMenu:new()
-     -- ammo.world = EndScreen:new(true)
+     ammo.world = EndScreen:new(true)
      
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")
@@ -143,6 +145,6 @@ function love.load()
     if GameWorld.static.isSecondTower then
         tower = GameWorld.SECOND_TOWER
     end
-    ammo.world = GameWorld:new(tower)
+    -- ammo.world = GameWorld:new(tower)
     -- ammo.world = GameWorld:new({'test.json'})
 end

@@ -9,7 +9,11 @@ SecretBoss.static.PAUSE_TIME = 0.5
 
 function SecretBoss:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
-    self.displayName = "NYMPH"
+    if GameWorld.static.isSecondTower then
+        self.displayName = "KING"
+    else
+        self.displayName = "NYMPH"
+    end
     self.flag = "secret_boss"
     self.types = {"enemy"}
     self.startingHealth = 20
@@ -47,7 +51,7 @@ function SecretBoss:initialize(x, y, nodes)
     self.phaseNumber = 1
     -- TODO: Should this pick a random direction?
     self.velocity = Vector:new(-1, 1)
-    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav", "enemyshotbig.wav", "enemyshotsmall.wav"})
 end 
 
 function SecretBoss:update(dt)
@@ -86,6 +90,7 @@ function SecretBoss:fireFan()
         )
         self.world:add(bullet)
     end
+    self.sfx["enemyshotsmall"]:play()
 end
 
 function SecretBoss:fireDropShot()
@@ -104,6 +109,7 @@ function SecretBoss:fireDropShot()
         150 + love.math.random() * 20, true
     )
     self.world:add(bullet)
+    self.sfx["enemyshotbig"]:play()
 end
 
 function SecretBoss:fireSpread()
@@ -146,6 +152,7 @@ function SecretBoss:fireSpread()
         false, true
     )
     self.world:add(sideBullet2)
+    self.sfx["enemyshotsmall"]:play()
 end
 
 function SecretBoss:movement(dt)
@@ -277,10 +284,18 @@ function SecretBoss:die()
         })
         self.phaseNumber = self.phaseNumber + 1
         self.health = self.startingHealth
-        if self.phaseNumber == 2 then
-            self.displayName = "NYMPH (WILD)"
+        if GameWorld.static.isSecondTower then
+            if self.phaseNumber == 2 then
+                self.displayName = "KING (WILD)"
+            else
+                self.displayName = "KING (UNDONE)"
+            end
         else
-            self.displayName = "NYMPH (UNDONE)"
+            if self.phaseNumber == 2 then
+                self.displayName = "NYMPH (WILD)"
+            else
+                self.displayName = "NYMPH (UNDONE)"
+            end
         end
     end
 end

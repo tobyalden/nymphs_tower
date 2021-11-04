@@ -97,8 +97,9 @@ function UI:initialize(level)
     bossBar = Sprite:new("bossbar.png")
     bossBar.offsetX = 10
     bossBar.offsetY = 180 - 16
+    bossBar.alpha = 0.5
 
-    bossName = Text:new("BOSS", 12, "arial.ttf", {0, 1, 1}, 300, "left")
+    bossName = Text:new("BOSS", 12, "arial.ttf", {1, 1, 1}, 300, "left")
     bossName.offsetX = 10
     bossName.offsetY = 180 - 19
 
@@ -207,7 +208,7 @@ function UI:update(dt)
     end
 
     if self.world.currentBoss then
-        bossBar.alpha = 1
+        bossBar.alpha = 0.75
         bossName.alpha = 1
         bossBar.scaleX = (
             self.world.currentBoss.health / self.world.currentBoss.startingHealth

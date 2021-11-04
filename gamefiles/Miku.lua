@@ -6,7 +6,7 @@ Miku.static.MAX_SPEED = 50
 
 function Miku:initialize(x, y, nodes)
     Entity.initialize(self, x, y)
-    self.displayName = "VESSEL"
+    self.displayName = "WASP"
     self.flag = "miku"
     self.types = {"enemy"}
     self.startingHealth = 18
@@ -34,7 +34,7 @@ function Miku:initialize(x, y, nodes)
         end,
         "looping"
     ))
-    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
+    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav", "enemyshotbig.wav"})
 end 
 
 function Miku:update(dt)
@@ -68,6 +68,7 @@ function Miku:fireBullet()
         150 + love.math.random() * 20, true
     )
     self.world:add(bullet)
+    self.sfx["enemyshotbig"]:play()
 end
 
 function Miku:movement(dt)

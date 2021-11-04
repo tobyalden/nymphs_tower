@@ -6,13 +6,13 @@ Pig.static.ACCEL = 100
 
 function Pig:initialize(x, y)
     Entity.initialize(self, x, y)
-    self.displayName = "PIG"
+    self.displayName = "LARVA"
     self.flag = "pig"
     self.types = {"enemy"}
     self.startingHealth = 12
     self.health = self.startingHealth
     self.graphic = Sprite:new("larva.png", 64, 64)
-    self.graphic.offsetY = -5
+    self.graphic.offsetY = -3
     self.mask = Hitbox:new(self, 32, 59)
     if GameWorld.static.isSecondTower then
         self.graphic:add("idle", {4})
@@ -22,7 +22,7 @@ function Pig:initialize(x, y)
         self.graphic:add("run", {1, 2, 3, 2}, 6)
     end
     self.graphic:play("idle")
-    self.layer = 0
+    self.layer = -10
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
     self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
