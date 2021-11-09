@@ -493,7 +493,6 @@ function Player:collisions(dt)
     if self:isInAcid() and not self.hasHazardSuit then
         local acidDamage = Acid.DAMAGE_RATE * dt
         if self.world.isHardMode then
-            print('doubling acid damage')
             acidDamage = acidDamage * 2
         end
         self:decreaseHealth(acidDamage)

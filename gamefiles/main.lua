@@ -117,8 +117,6 @@ function love.load()
         GameWorld.isSpeedrunMode = loadedOptions["isSpeedrunMode"] == "true"
     end
 
-    fullscreen = false -- just for testing
-
     if fullscreen then
         push:setupScreen(
             gameWidth, gameHeight, windowWidth, windowHeight,
@@ -132,8 +130,8 @@ function love.load()
         )
     end
      -- ammo.world = Options:new()
-     -- ammo.world = MainMenu:new()
-     ammo.world = EndScreen:new(true)
+     ammo.world = MainMenu:new()
+     -- ammo.world = EndScreen:new(true)
      
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")

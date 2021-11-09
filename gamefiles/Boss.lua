@@ -1,7 +1,14 @@
 Boss = {
     bossUpdate = function(self, dt)
-        if self.world:hasFlag(self.flag .. '_defeated') then
+        local defeatedFlag
+        if GameWorld.static.isSecondTower then
+            defeatedFlag = self.flag .. '_defeated_again'
+        else
+            defeatedFlag = self.flag .. '_defeated'
+        end
+        if self.world:hasFlag(defeatedFlag) then
             self.world:remove(self)
+            print('removing ' .. defeatedFlag)
         elseif self.world:hasFlag(self.flag) then
             self.world.currentBoss = self
             self:movement(dt)
@@ -18,7 +25,11 @@ Boss = {
     end,
     bossDie = function(self)
         self.world:removeFlag(self.flag)
-        self.world:addFlag(self.flag .. '_defeated')
+        if GameWorld.static.isSecondTower then
+            self.world:addFlag(self.flag .. '_defeated_again')
+        else
+            self.world:addFlag(self.flag .. '_defeated')
+        end
         self.world.currentBoss = nil
         self.sfx["bosspredeath"]:play()
         self:explode(80, 150, 5, 1, 0, 0, -99, true, true)

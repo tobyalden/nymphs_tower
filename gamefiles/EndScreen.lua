@@ -6,9 +6,9 @@ local endAnimation
 
 function EndScreen:initialize(isTrueEnd)
     World.initialize(self)
-    -- local level1, level2 = Level:new(GameWorld.FIRST_TOWER, true), Level:new(GameWorld.SECOND_TOWER, true)
-    -- local totalNumberOfItems = #level1.items + #level2.items
-    local totalNumberOfItems = 1
+    local level1, level2 = Level:new(GameWorld.FIRST_TOWER, true), Level:new(GameWorld.SECOND_TOWER, true)
+    local totalNumberOfItems = #level1.items + #level2.items
+    -- local totalNumberOfItems = 1
     local collectedItems = 0
     local totalTime = 0
     if saveData.exists("currentCheckpoint") then

@@ -39,7 +39,6 @@ function Pig:update(dt)
             self.graphic.flipX = false
         end
         if oldFlipX ~= self.graphic.flipX then
-            print('updating offset')
             if self.graphic.flipX then
                 self.mask:updateOffset(32, 0)
             else

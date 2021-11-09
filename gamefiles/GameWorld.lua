@@ -69,6 +69,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
             self:add(entity)
         end
     end
+    print(inspect(self.flags))
     for name, entity in pairs(self.level.entities) do
         if name ~= "player" then
             if not entity.uniqueId then
@@ -159,6 +160,7 @@ end
 
 function GameWorld:goToEndScreen()
     self.curtain:setMessage("SAILING AWAY...")
+    self.isTeleporting = true
     self.player.canMove = false
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
@@ -230,6 +232,15 @@ function GameWorld:saveGame(saveX, saveY)
     if self.player.hasHazardSuit then
         currentCheckpoint["hasHazardSuit"] = "true"
     end
+    if self.player.hasMap then
+        currentCheckpoint["hasMap"] = "true"
+    end
+    if self.player.hasCompass then
+        currentCheckpoint["hasCompass"] = "true"
+    end
+    if self.player.hasCrown then
+        currentCheckpoint["hasCrown"] = "true"
+    end
 
     currentCheckpoint["time"] = self.timer
 
@@ -280,6 +291,9 @@ function GameWorld:loadGame()
     self.player.hasGun = loadedCheckpoint["hasGun"] == "true"
     self.player.hasHarmonica = loadedCheckpoint["hasHarmonica"] == "true"
     self.player.hasHazardSuit = loadedCheckpoint["hasHazardSuit"] == "true"
+    self.player.hasMap = loadedCheckpoint["hasMap"] == "true"
+    self.player.hasCompass = loadedCheckpoint["hasCompass"] == "true"
+    self.player.hasCrown = loadedCheckpoint["hasCrown"] == "true"
 
     self.timer = loadedCheckpoint["time"]
 
@@ -335,6 +349,9 @@ function GameWorld:removeFlag(flag)
 end
 
 function GameWorld:pauseLevel()
+    for _, v in pairs(self.player.sfx) do
+        v:stopLoops()
+    end
     for v in self._updates:iterate() do
         if v.types and not v:hasType("ui") then 
             v.paused = true
@@ -457,6 +474,9 @@ function GameWorld:updateSounds(dt)
 
     if self.player.isDead or self.isTeleporting then
         for _, v in pairs(self.sfx) do
+            v:stopLoops()
+        end
+        for _, v in pairs(self.player.sfx) do
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then
