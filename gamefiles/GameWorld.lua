@@ -435,12 +435,8 @@ function GameWorld:update(dt)
     end
     if GameWorld.DEBUG_MODE then
         if input.pressed("debug_print") then
-            if self.isHardMode then
-                print('is hard mode')
-            else
-                print("is not hard mode")
-            end
             print("player coordinates: (" .. self.player.x .. ", " .. self.player.y .. ")")
+            print("flags: " .. inspect(self.flags))
         end
         if input.pressed("debug_teleport") then
             self:teleportToSecondTower()

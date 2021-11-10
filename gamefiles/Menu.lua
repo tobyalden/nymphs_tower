@@ -27,6 +27,9 @@ function Menu:initialize(itemNames)
 
     self.cursor = Sprite:new("cursor.png")
     self.cursorIndex = 1
+    if self.hasSaveData then
+        self.cursorIndex = 2
+    end
     self.cursor.offsetX = -16
     self.cursor.offsetY = 5 + (self.cursorIndex - 1) * 32
     self.graphic:add(self.cursor)

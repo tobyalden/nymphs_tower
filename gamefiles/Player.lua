@@ -621,7 +621,7 @@ function Player:collisions(dt)
         })
     end
 
-    local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
+local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
     if #collidedHealthUpgrades > 0 then
         self.sfx["healthjingle"]:play()
         self.world:pauseLevel()
@@ -780,7 +780,7 @@ function Player:handleSfx(dt)
             self:explode(4, 40, 1, 12, 0, 10, 1)
         end
 
-        if self.canMove and self:isOnGround() and self.velocity.x ~= 0 then
+        if self.canMove and self:isOnGround() and self.velocity.x ~= 0 and not self.paused then
             self.sfx["run"]:loop()
         else
             self.sfx["run"]:stop()
@@ -799,7 +799,7 @@ function Player:handleSfx(dt)
             end
             self.harmonicaTimer = self.harmonicaTimer + dt
             if (
-                self.harmonicaTimer > 5
+                self.harmonicaTimer > 10
                 and harmonicaSfxName == "harmonica_angel"
             ) then
                 if GameWorld.static.isSecondTower then
@@ -818,7 +818,7 @@ function Player:handleSfx(dt)
             end
             self.sfx[harmonicaSfxName]:stop()
         end
-        if isJetpackOn then
+        if isJetpackOn and not self.paused then
             self.sfx["jetpack"]:loop()
             self.jetpackParticleTimer.active = true
             if not self.wasJetpackOn then

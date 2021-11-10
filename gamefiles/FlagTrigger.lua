@@ -10,6 +10,7 @@ function FlagTrigger:initialize(x, y, width, height, flag, requireFlag)
 end
 
 function FlagTrigger:trigger()
+    print('triggered flag: ' .. self.flag)
     if self.requireFlag == "" or self.world:hasFlag(self.requireFlag) then
         self.world:addFlag(self.flag)
         self.world:remove(self)

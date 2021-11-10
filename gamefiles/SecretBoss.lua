@@ -276,6 +276,7 @@ function SecretBoss:die()
     if self.phaseNumber == 3 then
         self:bossDie()
     else
+        self.sfx["bosspredeath"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {1, function()

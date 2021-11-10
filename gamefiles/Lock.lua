@@ -14,9 +14,15 @@ function Lock:initialize(x, y, width, height, flag)
 end
 
 function Lock:update(dt)
+    local defeatedFlag
+    if GameWorld.static.isSecondTower then
+        defeatedFlag = self.flag .. '_defeated_again'
+    else
+        defeatedFlag = self.flag .. '_defeated'
+    end
     local isSolid = (
         self.world:hasFlag(self.flag)
-        and not self.world:hasFlag(self.flag .. '_defeated')
+        and not self.world:hasFlag(defeatedFlag)
     )
     self.visible = isSolid
     self.collidable = isSolid
