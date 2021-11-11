@@ -303,6 +303,7 @@ function GameWorld:loadGame()
     end
 
     self.itemIds = saveData.load("itemIds")
+    print('loaded item ids: ' .. inspect(self.itemIds))
 
     local acidLevels = saveData.load("acidLevels")
     for _, entity in pairs(self.level.entities) do
@@ -437,6 +438,10 @@ function GameWorld:update(dt)
         if input.pressed("debug_print") then
             print("player coordinates: (" .. self.player.x .. ", " .. self.player.y .. ")")
             print("flags: " .. inspect(self.flags))
+            self.itemIds = {
+                75, 62, 63, 64, 23, 30, 32, 68, 38, 43, 51, 22, 4, 12, 15, 0, 71,
+                54, 10025, 10026, 10028, 10027, 10024, 10023, 10016, 10015, 10021, 10011
+            }
         end
         if input.pressed("debug_teleport") then
             self:teleportToSecondTower()

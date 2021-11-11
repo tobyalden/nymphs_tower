@@ -10,6 +10,7 @@ function AcidTrigger:initialize(x, y, width, height, acidId, riseTo, uniqueId)
     self.graphic = TiledSprite:new("acidtrigger.png", 16, 16, width, height)
     self.acidId = acidId
     self.requireAcid = requireAcid
+    print('unique id for trigger is ' .. uniqueId)
 end
 
 function AcidTrigger:trigger()
