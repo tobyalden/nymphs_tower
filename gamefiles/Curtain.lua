@@ -35,12 +35,13 @@ function Curtain:fadeInInstantly()
 end
 
 function Curtain:update(dt)
+    local curtainSpeed = 0.5
     if self.isFadingOut then
-        blackScreen.alpha = blackScreen.alpha - 0.5 * dt
-        curtainMessage.alpha = curtainMessage.alpha - 0.5 * dt
+        blackScreen.alpha = blackScreen.alpha - curtainSpeed * dt
+        curtainMessage.alpha = curtainMessage.alpha - curtainSpeed * dt
     else
-        blackScreen.alpha = blackScreen.alpha + 0.5 * dt
-        curtainMessage.alpha = curtainMessage.alpha + 0.5 * dt
+        blackScreen.alpha = blackScreen.alpha + curtainSpeed * dt
+        curtainMessage.alpha = curtainMessage.alpha + curtainSpeed * dt
     end
     blackScreen.alpha = math.clamp(blackScreen.alpha, 0, 1)
     curtainMessage.alpha = math.clamp(curtainMessage.alpha, 0, 1)

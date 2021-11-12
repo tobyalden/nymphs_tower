@@ -80,6 +80,7 @@ function love.joystickadded(newJoystick)
 end
 
 function love.load()
+    collectgarbage("stop")
     love.mouse.setVisible(false)
 
     input.define("up", "up")

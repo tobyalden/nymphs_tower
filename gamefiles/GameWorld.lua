@@ -41,6 +41,7 @@ GameWorld.static.isSecondTower = false
 GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
+    collectgarbage()
     love.math.setRandomSeed(1)
     World.initialize(self)
 
