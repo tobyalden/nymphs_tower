@@ -38,7 +38,7 @@ GameWorld.static.FIRST_TOWER = {
 
 GameWorld.static.isSecondTower = false
 
-GameWorld.static.DEBUG_MODE = true
+GameWorld.static.DEBUG_MODE = false
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     collectgarbage()
