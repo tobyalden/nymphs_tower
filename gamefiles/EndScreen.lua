@@ -15,7 +15,7 @@ function EndScreen:initialize(isTrueEnd)
         local loadedCheckpoint = saveData.load("currentCheckpoint")
         totalTime = loadedCheckpoint["time"]
         -- totalTime = 13231.3124
-        collectedItems = #saveData.load("itemIds")
+        collectedItems = #saveData.load("itemIds") - 1 --subtract one b/c of the acid trigger
     end
     local completionPercentage = tostring(math.floor(collectedItems / totalNumberOfItems * 100)) .. "%"
     local message = Text:new(
@@ -51,7 +51,7 @@ function EndScreen:initialize(isTrueEnd)
     self:add(self.curtain)
     self.curtain:fadeOut()
     self.canReturnToMainMenu = false
-    self.curtain:addTween(Alarm:new(3, function()
+    self.curtain:addTween(Alarm:new(4, function()
         self.canReturnToMainMenu = true
     end), true)
     self.mainMenuTimer = self.curtain:addTween(Alarm:new(5, function()

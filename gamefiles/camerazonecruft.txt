@@ -12,6 +12,3 @@ bonus 0
           "values": {"music": "explore4"}
         }
         
-        {"name": "camera_zone", "id": 34, "_eid": "71427043", "x": 16, "y": 0, "width": 512, "height": 16336, "originX": 0, "originY": 0},
-        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 528, "y": 0, "width": 3504, "height": 2832, "originX": 0, "originY": 0},
-        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 4032, "y": 0, "width": 1136, "height": 16336, "originX": 0, "originY": 0}

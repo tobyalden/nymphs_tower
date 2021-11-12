@@ -139,7 +139,7 @@
           "height": 116,
           "originX": 0,
           "originY": 0,
-          "values": {"acid_id": "1", "rise_to": 3324}
+          "values": {"acid_id": "1", "rise_to": 2764}
         },
         {"name": "spike_ceiling", "id": 520, "_eid": "58248273", "x": 1680, "y": 5200, "width": 32, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 521, "_eid": "58248273", "x": 1792, "y": 5264, "width": 96, "originX": 0, "originY": 0},
@@ -271,7 +271,36 @@
           "originX": 0,
           "originY": 0,
           "values": {"acid_id": "", "rise_speed": 0}
-        }
+        },
+        {
+          "name": "acid",
+          "id": 573,
+          "_eid": "67689386",
+          "x": 616,
+          "y": 5832,
+          "width": 1676,
+          "height": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"acid_id": "1", "rise_speed": 20}
+        },
+        {"name": "block", "id": 575, "_eid": "78869308", "x": 1376, "y": 3248, "originX": 0, "originY": 0},
+        {"name": "block", "id": 576, "_eid": "78869308", "x": 1360, "y": 3248, "originX": 0, "originY": 0},
+        {"name": "block", "id": 577, "_eid": "78869308", "x": 1360, "y": 3264, "originX": 0, "originY": 0},
+        {"name": "block", "id": 578, "_eid": "78869308", "x": 1392, "y": 3264, "originX": 0, "originY": 0},
+        {"name": "block", "id": 579, "_eid": "78869308", "x": 1192, "y": 4064, "originX": 0, "originY": 0},
+        {"name": "block", "id": 580, "_eid": "78869308", "x": 1208, "y": 4080, "originX": 0, "originY": 0},
+        {"name": "block", "id": 581, "_eid": "78869308", "x": 1192, "y": 4096, "originX": 0, "originY": 0},
+        {"name": "block", "id": 582, "_eid": "78869308", "x": 1208, "y": 4096, "originX": 0, "originY": 0},
+        {"name": "block", "id": 583, "_eid": "78869308", "x": 1208, "y": 4112, "originX": 0, "originY": 0},
+        {"name": "block", "id": 584, "_eid": "78869308", "x": 1192, "y": 4112, "originX": 0, "originY": 0},
+        {"name": "block", "id": 585, "_eid": "78869308", "x": 1192, "y": 4080, "originX": 0, "originY": 0},
+        {"name": "block", "id": 586, "_eid": "78869308", "x": 1176, "y": 4096, "originX": 0, "originY": 0},
+        {"name": "block", "id": 587, "_eid": "78869308", "x": 1176, "y": 4112, "originX": 0, "originY": 0},
+        {"name": "block", "id": 588, "_eid": "78869308", "x": 1160, "y": 4112, "originX": 0, "originY": 0},
+        {"name": "block", "id": 589, "_eid": "78869308", "x": 1224, "y": 4112, "originX": 0, "originY": 0},
+        {"name": "block", "id": 590, "_eid": "78869308", "x": 1296, "y": 4128, "originX": 0, "originY": 0},
+        {"name": "block", "id": 591, "_eid": "78869308", "x": 1312, "y": 4128, "originX": 0, "originY": 0}
       ]
     },
     {
@@ -284,6 +313,9 @@
       "gridCellsX": 5184,
       "gridCellsY": 5936,
       "entities": [
+        {"name": "camera_zone", "id": 34, "_eid": "71427043", "x": 16, "y": 0, "width": 512, "height": 16336, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 528, "y": 0, "width": 3504, "height": 2832, "originX": 0, "originY": 0},
+        {"name": "camera_zone", "id": 35, "_eid": "71427043", "x": 4032, "y": 0, "width": 1136, "height": 16336, "originX": 0, "originY": 0}
       ]
     },
     {
@@ -296,6 +328,18 @@
       "gridCellsX": 324,
       "gridCellsY": 371,
       "entities": [
+        {
+          "name": "inside",
+          "id": 0,
+          "_eid": "35608956",
+          "x": 400,
+          "y": 2800,
+          "width": 3584,
+          "height": 3120,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "explore4"}
+        }
       ]
     },
     {
