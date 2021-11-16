@@ -121,10 +121,10 @@ end
 
 function Player:giveAllItems()
     self.hasGun = true
-    -- self.hasCrown = true
+    self.hasCrown = true
     self.hasHarmonica = true
     self.hasGravityBelt = true
-    -- self.hasHazardSuit = true
+    self.hasHazardSuit = true
     self.hasMap = true
     self.hasCompass = true
     self.healthUpgrades = 9

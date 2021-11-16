@@ -41,7 +41,6 @@ GameWorld.static.isSecondTower = false
 GameWorld.static.DEBUG_MODE = false
 
 function GameWorld:initialize(levelStack, saveOnEntry)
-    collectgarbage()
     love.math.setRandomSeed(1)
     World.initialize(self)
 
@@ -143,7 +142,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     self.isHardMode = GameWorld.static.isSecondTower
     self.curtain = Curtain:new()
     self:add(self.curtain)
-    self.curtain:addTween(Alarm:new(3, function()
+    self.curtain:addTween(Alarm:new(5, function()
         self.curtain:fadeOut()
         self.curtain:addTween(Alarm:new(2, function()
             self.player.canMove = true
@@ -184,6 +183,7 @@ function GameWorld:teleportToSecondTower()
             self.player:loseItems()
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
+            collectgarbage("collect")
         end}
     })
 end
@@ -202,6 +202,7 @@ function GameWorld:teleportToFirstTower()
             self:addFlag("teleporting_back")
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.FIRST_TOWER, true)
+            collectgarbage("collect")
         end}
     })
 end
@@ -402,11 +403,15 @@ function GameWorld:onDeath()
             self.curtain:setMessage("RETURNING TO CHECKPOINT...")
             self.curtain:fadeIn()
         end},
-        {4, function() ammo.world = GameWorld:new(tower) end}
+        {4, function() 
+            ammo.world = GameWorld:new(tower)
+            collectgarbage("collect")
+        end}
     })
 end
 
 function GameWorld:update(dt)
+    collectgarbage("step")
     if self.player.canMove then
         self.timer = self.timer + dt
     end
@@ -432,6 +437,7 @@ function GameWorld:update(dt)
         self:doSequence({
             {0.1, function()
                 ammo.world = GameWorld:new(tower)
+                collectgarbage("collect")
             end}
         })
     end

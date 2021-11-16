@@ -111,7 +111,7 @@ function love.load()
     tick.rate = 1 / 60
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
 
-    local fullscreen = false
+    local fullscreen = true
     if saveData.exists("options") then
         local loadedOptions = saveData.load("options")
         fullscreen = loadedOptions["isFullscreen"] == "true"
