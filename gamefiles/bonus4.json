@@ -820,11 +820,11 @@
           "name": "tutorial",
           "id": 488,
           "_eid": "62868244",
-          "x": 4400,
+          "x": 4368,
           "y": 532,
           "originX": 0,
           "originY": 0,
-          "values": {"text": "PLAY OUR SONG ON THE SEAT OF POWER", "require_flag": ""}
+          "values": {"text": "P  AY   OU    S NG   ON   T  E   SE  T    OF P  WER", "require_flag": ""}
         }
       ]
     },
