@@ -38,7 +38,7 @@ GameWorld.static.FIRST_TOWER = {
 
 GameWorld.static.isSecondTower = false
 
-GameWorld.static.DEBUG_MODE = false
+GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     love.math.setRandomSeed(1)

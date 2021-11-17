@@ -128,7 +128,7 @@ function Player:giveAllItems()
     self.hasMap = true
     self.hasCompass = true
     self.healthUpgrades = 9
-    self.fuelUpgrades = 3
+    self.fuelUpgrades = 4
 end
 
 function Player:isInside()
