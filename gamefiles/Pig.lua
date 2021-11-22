@@ -17,12 +17,13 @@ function Pig:initialize(x, y)
     if GameWorld.static.isSecondTower then
         self.graphic:add("idle", {4})
         self.graphic:add("run", {4, 5, 6, 5}, 6)
+        self.layer = -2
     else
         self.graphic:add("idle", {1})
         self.graphic:add("run", {1, 2, 3, 2}, 6)
+        self.layer = -10
     end
     self.graphic:play("idle")
-    self.layer = -10
     self.velocity = Vector:new(0, 0)
     self.accel = Vector:new(0, 0)
     self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav"})
