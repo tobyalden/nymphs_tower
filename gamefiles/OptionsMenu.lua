@@ -73,7 +73,7 @@ function OptionsMenu:update(dt)
     	self.message:setText("TOGGLE FULLSCREEN")
     elseif self.cursorIndex == 2 then
     	-- SPEEDRUN MODE
-    	self.message:setText("ENABLES ONSCREEN TIMER AND RESET BUTTON")
+    	self.message:setText("ENABLES ONSCREEN TIMER AND RESET BUTTON (R)")
     elseif self.cursorIndex == 3 then
     	self.message:setText("RETURN TO MAIN MENU")
     	-- BACK

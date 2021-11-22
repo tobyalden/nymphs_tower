@@ -127,7 +127,7 @@ function Player:giveAllItems()
     self.hasHazardSuit = false
     self.hasMap = true
     self.hasCompass = true
-    self.healthUpgrades = 9
+    self.healthUpgrades = 5
     self.fuelUpgrades = 4
 end
 

@@ -183,6 +183,9 @@ function SecretBoss:phaseThreeMovement(dt)
     if not self.world.isHardMode then
         maxSpeed = maxSpeed / 2
     end
+    if GameWorld.static.isSecondTower then
+        maxSpeed = maxSpeed * 1.5
+    end
     towardsPlayer:normalize(maxSpeed / 25)
     self.velocity.x = self.velocity.x + towardsPlayer.x
     self.velocity.y = self.velocity.y + towardsPlayer.y
