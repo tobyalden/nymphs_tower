@@ -124,7 +124,7 @@ function Player:giveAllItems()
     self.hasCrown = true
     self.hasHarmonica = true
     self.hasGravityBelt = true
-    self.hasHazardSuit = true
+    self.hasHazardSuit = false
     self.hasMap = true
     self.hasCompass = true
     self.healthUpgrades = 9
@@ -498,7 +498,7 @@ function Player:collisions(dt)
         self:decreaseHealth(acidDamage)
     end
 
-    local itemChimeTime = 3
+    local itemChimeTime = 1.5
 
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then

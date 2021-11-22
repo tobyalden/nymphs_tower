@@ -53,10 +53,12 @@ function Menu:initialize(itemNames)
     end))
 
     self.optionsTimer = self:addTween(Alarm:new(2, function()
+        self.sfx["mainmenu"]:stop()
         ammo.world = Options:new()
     end))
 
-    self:loadSfx({"menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
+    self:loadSfx({"mainmenu.ogg", "menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
+    self.sfx["mainmenu"]:loop()
 end
 
 function Menu:update(dt)
@@ -144,6 +146,7 @@ function Menu:update(dt)
 end
 
 function Menu:fadeToGame()
+    self.sfx["mainmenu"]:stop()
     GameWorld.static.isSecondTower = false
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")

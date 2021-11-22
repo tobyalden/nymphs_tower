@@ -139,7 +139,7 @@
           "height": 116,
           "originX": 0,
           "originY": 0,
-          "values": {"acid_id": "1", "rise_to": 2764}
+          "values": {"acid_id": "1", "rise_to": 3072}
         },
         {"name": "spike_ceiling", "id": 520, "_eid": "58248273", "x": 1680, "y": 5200, "width": 32, "originX": 0, "originY": 0},
         {"name": "spike_ceiling", "id": 521, "_eid": "58248273", "x": 1792, "y": 5264, "width": 96, "originX": 0, "originY": 0},
@@ -270,7 +270,7 @@
           "height": 48,
           "originX": 0,
           "originY": 0,
-          "values": {"acid_id": "1", "rise_speed": 20}
+          "values": {"acid_id": "1", "rise_speed": 30}
         },
         {"name": "block", "id": 575, "_eid": "78869308", "x": 1376, "y": 3248, "originX": 0, "originY": 0},
         {"name": "block", "id": 576, "_eid": "78869308", "x": 1360, "y": 3248, "originX": 0, "originY": 0},

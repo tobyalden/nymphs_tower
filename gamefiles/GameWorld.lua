@@ -38,7 +38,7 @@ GameWorld.static.FIRST_TOWER = {
 
 GameWorld.static.isSecondTower = false
 
-GameWorld.static.DEBUG_MODE = false
+GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     love.math.setRandomSeed(1)
@@ -127,7 +127,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         -- outside
         "outside.ogg", "outside_remix.ogg",
         -- misc
-        "silence.wav", "restart.wav", "teleport.wav"
+        "silence.ogg", "restart.wav", "teleport.wav"
     })
     self.sfx["insideambience"]:loop()
     self.sfx["outsideambience"]:loop()
@@ -181,6 +181,11 @@ function GameWorld:teleportToSecondTower()
             self.sfx["teleport"]:play()
             GameWorld.static.isSecondTower = true
             self.player:loseItems()
+            self:removeFlag('pig')
+            self:removeFlag('wizard')
+            self:removeFlag('miku')
+            self:removeFlag('finalboss')
+            self:removeFlag('secret_boss')
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
             collectgarbage("collect")
