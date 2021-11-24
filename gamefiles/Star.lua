@@ -21,11 +21,14 @@ function Star:update(dt)
     local isSolid = not self.world:hasFlag('finalboss')
     self.visible = isSolid
     self.collidable = isSolid
-    self:moveBy(
-        self.velocity.x * dt,
-        self.velocity.y * dt,
-        {"walls", "block"}
-    )
+    local distanceFromPlayer = self:distanceFrom(self.world.player)
+    if distanceFromPlayer < 300 then
+        self:moveBy(
+            self.velocity.x * dt,
+            self.velocity.y * dt,
+            {"walls", "block"}
+        )
+    end
     Entity.update(self, dt)
 end
 
