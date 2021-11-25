@@ -552,8 +552,7 @@ function Player:collisions(dt)
                 table.insert(self.world.itemIds, collidedHarmonicas[1].uniqueId)
                 self.hasHarmonica = true
                 local totalTime = self.world.ui:showMessageSequence({
-                    "YOU FOUND THE HARMONICA",
-                    "HOLD DOWN TO USE",
+                    "YOU FOUND THE HARMONICA"
                 })
             end}
         })
