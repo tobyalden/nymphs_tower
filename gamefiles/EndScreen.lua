@@ -37,11 +37,10 @@ function EndScreen:initialize(isTrueEnd)
     end)
     endAnimation:add("idle", {1, 36}, 1)
     endAnimation:add("sink_idle", {34, 35}, 1)
-    self:loadSfx({"ocean.wav", "towersink.wav"})
-    self.sfx["ocean"]:loop(0)
+    globalSfx["ocean"]:loop(0)
     if isTrueEnd then
         endAnimation:play("sink")
-        self.sfx["towersink"]:play()
+        globalSfx["towersink"]:play()
     else
         endAnimation:play("idle")
     end
@@ -76,9 +75,9 @@ end
 
 function EndScreen:update(dt)
     if self.mainMenuTimer.active then
-        self.sfx["ocean"]:fadeOut(dt)
+        globalSfx["ocean"]:fadeOut(dt)
     else
-        self.sfx["ocean"]:fadeIn(dt, nil, 1)
+        globalSfx["ocean"]:fadeIn(dt, nil, 1)
     end
     if input.pressed("jump") and self.canReturnToMainMenu and not self.mainMenuTimer.active then
         print('exit')

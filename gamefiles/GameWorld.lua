@@ -38,7 +38,7 @@ GameWorld.static.FIRST_TOWER = {
 
 GameWorld.static.isSecondTower = false
 
-GameWorld.static.DEBUG_MODE = false
+GameWorld.static.DEBUG_MODE = true
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     love.math.setRandomSeed(1)
@@ -116,8 +116,6 @@ function GameWorld:initialize(levelStack, saveOnEntry)
     local fog2 = Background:new("fog.png", 10, 0.2, 70, false)
     self:add(fog2)
     self:loadSfx({
-        -- ambience
-        "insideambience.wav", "outsideambience.wav",
         -- inside music
         "explore1.ogg", "explore2.ogg", "explore3.ogg", "explore4.ogg", "explore5.ogg",
         "explore1remix.ogg", "explore2remix.ogg", "explore3remix.ogg", "silence.ogg",
@@ -127,10 +125,10 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         -- outside
         "outside.ogg", "outside_remix.ogg",
         -- misc
-        "silence.ogg", "restart.wav", "teleport.wav"
+        "silence.ogg"
     })
-    self.sfx["insideambience"]:loop()
-    self.sfx["outsideambience"]:loop()
+    globalSfx["insideambience"]:loop()
+    globalSfx["outsideambience"]:loop()
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     self.cameraStartX = self.camera.x
@@ -178,7 +176,7 @@ function GameWorld:teleportToSecondTower()
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
         {4, function()
-            self.sfx["teleport"]:play()
+            globalSfx["teleport"]:play()
             GameWorld.static.isSecondTower = true
             self.player:loseItems()
             self:removeFlag('pig')
@@ -188,7 +186,6 @@ function GameWorld:teleportToSecondTower()
             self:removeFlag('secret_boss')
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.SECOND_TOWER, true)
-            collectgarbage("collect")
         end}
     })
 end
@@ -200,14 +197,13 @@ function GameWorld:teleportToFirstTower()
     self:doSequence({
         {1, function() self.curtain:fadeIn() end},
         {4, function()
-            self.sfx["teleport"]:play()
+            globalSfx["teleport"]:play()
             GameWorld.static.isSecondTower = false
             self.player.hasHarmonica = false
             self:addFlag("harmonica_broken")
             self:addFlag("teleporting_back")
             self:saveGame(self.player.x, self.player.y)
             ammo.world = GameWorld:new(GameWorld.FIRST_TOWER, true)
-            collectgarbage("collect")
         end}
     })
 end
@@ -357,7 +353,7 @@ function GameWorld:removeFlag(flag)
 end
 
 function GameWorld:pauseLevel()
-    for _, v in pairs(self.player.sfx) do
+    for _, v in pairs(globalSfx) do
         v:stopLoops()
     end
     for v in self._updates:iterate() do
@@ -410,13 +406,11 @@ function GameWorld:onDeath()
         end},
         {4, function() 
             ammo.world = GameWorld:new(tower)
-            collectgarbage("collect")
         end}
     })
 end
 
 function GameWorld:update(dt)
-    collectgarbage("step")
     if self.player.canMove then
         self.timer = self.timer + dt
     end
@@ -429,10 +423,13 @@ function GameWorld:update(dt)
         self.curtain:setMessage("RESETTING...")
         self.curtain:fadeInInstantly()
         clearSave()
+        for _, v in pairs(globalSfx) do
+            v:stopLoops()
+        end
         for _, v in pairs(self.sfx) do
             v:stopLoops()
         end
-        self.sfx["restart"]:play()
+        globalSfx["restart"]:play()
         local tower = GameWorld.FIRST_TOWER
         GameWorld.static.isSecondTower = false
         if input.down("shift") and GameWorld.DEBUG_MODE then
@@ -442,7 +439,6 @@ function GameWorld:update(dt)
         self:doSequence({
             {0.1, function()
                 ammo.world = GameWorld:new(tower)
-                collectgarbage("collect")
             end}
         })
     end
@@ -472,11 +468,11 @@ function GameWorld:updateSounds(dt)
 
     -- update ambience
     if self.player:isInside() then
-        self.sfx["insideambience"]:fadeIn(dt, nil, 1)
-        self.sfx["outsideambience"]:fadeOut(dt, nil, 1)
+        globalSfx["insideambience"]:fadeIn(dt, nil, 1)
+        globalSfx["outsideambience"]:fadeOut(dt, nil, 1)
     else
-        self.sfx["insideambience"]:fadeOut(dt, nil, 1)
-        self.sfx["outsideambience"]:fadeIn(dt, nil, 1)
+        globalSfx["insideambience"]:fadeOut(dt, nil, 1)
+        globalSfx["outsideambience"]:fadeIn(dt, nil, 1)
     end
 
     -- update music
@@ -486,10 +482,10 @@ function GameWorld:updateSounds(dt)
     end
 
     if self.player.isDead or self.isTeleporting then
-        for _, v in pairs(self.sfx) do
+        for _, v in pairs(globalSfx) do
             v:stopLoops()
         end
-        for _, v in pairs(self.player.sfx) do
+        for _, v in pairs(self.sfx) do
             v:stopLoops()
         end
     elseif self.currentBoss ~= nil then

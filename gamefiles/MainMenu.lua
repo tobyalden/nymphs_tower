@@ -15,7 +15,6 @@ function MainMenu:initialize()
     self.curtain = Curtain:new()
     self:add(self.curtain)
     self.curtain:fadeOut()
-    collectgarbage("collect")
 end
 
 function MainMenu:update(dt)

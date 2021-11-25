@@ -45,7 +45,6 @@ function Wizard:initialize(x, y, nodes)
         end,
         "looping"
     ))
-    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav", "enemyshotbig.wav"})
 end 
 
 function Wizard:update(dt)
@@ -71,7 +70,7 @@ function Wizard:fireBullet()
         towardsPlayer
     )
     self.world:add(bullet)
-    self.sfx["enemyshotbig"]:play()
+    globalSfx["enemyshotbig"]:play()
 end
 
 function Wizard:movement(dt)

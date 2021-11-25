@@ -56,16 +56,6 @@ function Player:initialize(x, y)
     self.layer = -1
     self.harmonicaTimer = 0
 
-    self:loadSfx({
-        "jump.wav", "run.wav", "land.wav", "jetpack.wav", "jetpackoff.wav",
-        "bumphead.wav", "jetpackon.wav", "save.wav", "shoot1.wav",
-        "shoot2.wav", "shoot3.wav", "playerhit.wav", "acid.wav",
-        "acidland.wav", "acidout.wav", "playerdeath.wav", "playerpredeath.wav",
-        "fueljingle.wav", "healthjingle.wav", "itemjingle.wav",
-        "harmonica.wav", "harmonica_stop.wav", "harmonica_angel.wav",
-        "equip.wav", "unequip.wav", "highjump.wav", "mapopen.wav", "mapclose.wav"
-    })
-
     self.shotCooldown = self:addTween(Alarm:new(Player.SHOT_COOLDOWN))
     --self.isBufferingShot = false
     self.hasGun = false
@@ -179,7 +169,7 @@ function Player:moveCollideY(collided)
             else
                 self.velocity.y = -self.velocity.y / 1.25
             end
-            self.sfx["bumphead"]:play()
+            globalSfx["bumphead"]:play()
             self:explode(4, 40, 0.5, 12, 0, -13, 1)
         end
     end
@@ -215,9 +205,9 @@ function Player:movement(dt)
         self.velocity.x = 0
         self.isLookingAtMap = not self.isLookingAtMap
         if self.isLookingAtMap then
-            self.sfx["mapopen"]:play()
+            globalSfx["mapopen"]:play()
         else
-            self.sfx["mapclose"]:play()
+            globalSfx["mapclose"]:play()
         end
     end
 
@@ -276,10 +266,10 @@ function Player:movement(dt)
         if input.pressed("jump") then
             if self.isGravityBeltEquipped then
                 self.velocity.y = -Player.JUMP_POWER * 1.25
-                self.sfx["highjump"]:play()
+                globalSfx["highjump"]:play()
             else
                 self.velocity.y = -Player.JUMP_POWER
-                self.sfx["jump"]:play()
+                globalSfx["jump"]:play()
             end
             self:explode(4, 40, 1, 12, 0, 10, 1)
             releasedJump = false
@@ -388,10 +378,10 @@ end
 function Player:takeHit(damage)
     self:decreaseHealth(damage)
     if self.health > 0 then
-        self.sfx["playerhit"]:play()
+        globalSfx["playerhit"]:play()
         self.invincibleTimer:start()
     else
-        self.sfx["playerpredeath"]:play()
+        globalSfx["playerpredeath"]:play()
     end
 end
 
@@ -405,7 +395,7 @@ function Player:die()
     self.world:doSequence({
         {0.5, function()
             self.world:unpauseLevel()
-            self.sfx["playerdeath"]:play()
+            globalSfx["playerdeath"]:play()
             self.visible = false
             self.active = false
         end},
@@ -416,16 +406,16 @@ function Player:die()
     --self:explode(30, 250, 2, 2, 0, 0, -99, false)
     --self:explode(20, 180, 1.5, 2, 0, 0, -99, false)
     --self:explode(10, 150, 1, 2, 0, 0, -99, false)
-    --self.sfx["playerdeath"]:play()
+    --globalSfx["playerdeath"]:play()
     --self.visible = false
     --self.active = false
     --self.world:doSequence({
         --{1, function() self.world:onDeath() end}
     --})
 
-    self.sfx["jetpack"]:stop()
-    self.sfx["acid"]:stop()
-    self.sfx["run"]:stop()
+    globalSfx["jetpack"]:stop()
+    globalSfx["acid"]:stop()
+    globalSfx["run"]:stop()
 end
 
 function Player:shooting()
@@ -460,8 +450,8 @@ function Player:shooting()
             end
             self.world:add(bullet)
             local choices = {1, 2, 3}
-            self.sfx['shoot' .. math.random(#choices)]:play(0.7)
-            -- self.sfx['shoot1']:play()
+            globalSfx['shoot' .. math.random(#choices)]:play(0.7)
+            -- globalSfx['shoot1']:play()
             self.shotCooldown:start()
             --self.isBufferingShot = false
         end
@@ -502,7 +492,7 @@ function Player:collisions(dt)
 
     local collidedGuns = self:collide(self.x, self.y, {"gun"})
     if #collidedGuns > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -519,7 +509,7 @@ function Player:collisions(dt)
 
     local collidedGravityBelts = self:collide(self.x, self.y, {"gravity_belt"})
     if #collidedGravityBelts > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -536,7 +526,7 @@ function Player:collisions(dt)
 
     local collidedHazardSuits = self:collide(self.x, self.y, {"hazard_suit"})
     if #collidedHazardSuits > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -553,7 +543,7 @@ function Player:collisions(dt)
 
     local collidedHarmonicas = self:collide(self.x, self.y, {"harmonica"})
     if #collidedHarmonicas > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -571,7 +561,7 @@ function Player:collisions(dt)
 
     local collidedMaps = self:collide(self.x, self.y, {"map"})
     if #collidedMaps > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -588,7 +578,7 @@ function Player:collisions(dt)
 
     local collidedCompasses = self:collide(self.x, self.y, {"compass"})
     if #collidedCompasses > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -605,7 +595,7 @@ function Player:collisions(dt)
 
     local collidedCrowns = self:collide(self.x, self.y, {"crown"})
     if #collidedCrowns > 0 then
-        self.sfx["itemjingle"]:play()
+        globalSfx["itemjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -623,7 +613,7 @@ function Player:collisions(dt)
 
 local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
     if #collidedHealthUpgrades > 0 then
-        self.sfx["healthjingle"]:play()
+        globalSfx["healthjingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -641,7 +631,7 @@ local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
 
     local collidedFuelUpgrades = self:collide(self.x, self.y, {"fuel_upgrade"})
     if #collidedFuelUpgrades > 0 then
-        self.sfx["fueljingle"]:play()
+        globalSfx["fueljingle"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {itemChimeTime, function()
@@ -707,7 +697,7 @@ local collidedHealthUpgrades = self:collide(self.x, self.y, {"health_upgrade"})
         if #collidedCheckpoints > 0 then
             collidedCheckpoints[1]:flash()
             self.world:saveGame(collidedCheckpoints[1].x + 3, collidedCheckpoints[1].y)
-            self.sfx["save"]:play()
+            globalSfx["save"]:play()
             self.world.ui:showMessageSequence({ "GAME SAVED" }, 1)
         end
     end
@@ -769,21 +759,21 @@ end
 
 function Player:handleSfx(dt)
     if self.isDead then
-        self.sfx["run"]:stop()
-        self.sfx["acid"]:stop()
-        self.sfx["jetpack"]:stop()
-        self.sfx["harmonica"]:stop()
-        self.sfx["harmonica_angel"]:stop()
+        globalSfx["run"]:stop()
+        globalSfx["acid"]:stop()
+        globalSfx["jetpack"]:stop()
+        globalSfx["harmonica"]:stop()
+        globalSfx["harmonica_angel"]:stop()
     else
         if not self.wasOnGround and self:isOnGround() then
-            self.sfx["land"]:play()
+            globalSfx["land"]:play()
             self:explode(4, 40, 1, 12, 0, 10, 1)
         end
 
         if self.canMove and self:isOnGround() and self.velocity.x ~= 0 and not self.paused then
-            self.sfx["run"]:loop()
+            globalSfx["run"]:loop()
         else
-            self.sfx["run"]:stop()
+            globalSfx["run"]:stop()
         end
 
         local harmonicaSfxName = "harmonica"
@@ -793,9 +783,9 @@ function Player:handleSfx(dt)
             harmonicaSfxName = "harmonica_angel"
         end
         if self.isPlayingHarmonica then
-            if not self.sfx[harmonicaSfxName]:isPlaying() then
+            if not globalSfx[harmonicaSfxName]:isPlaying() then
                 self.harmonicaDelay:start()
-                self.sfx[harmonicaSfxName]:loop()
+                globalSfx[harmonicaSfxName]:loop()
             end
             self.harmonicaTimer = self.harmonicaTimer + dt
             if (
@@ -811,38 +801,38 @@ function Player:handleSfx(dt)
         else
             self.harmonicaTimer = 0
             if (
-                self.sfx[harmonicaSfxName]:isPlaying()
+                globalSfx[harmonicaSfxName]:isPlaying()
                 and not self.harmonicaDelay.active
             ) then
-                self.sfx["harmonica_stop"]:play()
+                globalSfx["harmonica_stop"]:play()
             end
-            self.sfx[harmonicaSfxName]:stop()
+            globalSfx[harmonicaSfxName]:stop()
         end
         if isJetpackOn and not self.paused then
-            self.sfx["jetpack"]:loop()
+            globalSfx["jetpack"]:loop()
             self.jetpackParticleTimer.active = true
             if not self.wasJetpackOn then
-                self.sfx["jetpackon"]:play()
+                globalSfx["jetpackon"]:play()
             end
         else
-            self.sfx["jetpack"]:stop()
+            globalSfx["jetpack"]:stop()
             self.jetpackParticleTimer.active = false
             if self.wasJetpackOn then
-                self.sfx["jetpackoff"]:play()
+                globalSfx["jetpackoff"]:play()
             end
         end
         if self:isInAcid() then
             if not self.hasHazardSuit then
-                self.sfx["acid"]:loop()
+                globalSfx["acid"]:loop()
             end
             if not self.wasInAcid then
-                self.sfx["acidland"]:play()
+                globalSfx["acidland"]:play()
             end
         else
             if self.wasInAcid then
-                self.sfx["acidout"]:play()
+                globalSfx["acidout"]:play()
             end
-            self.sfx["acid"]:stop()
+            globalSfx["acid"]:stop()
         end
     end
 end
@@ -871,9 +861,9 @@ function Player:update(dt)
     ) then
         self.isGravityBeltEquipped = not self.isGravityBeltEquipped
         if self.isGravityBeltEquipped then
-            self.sfx["equip"]:play()
+            globalSfx["equip"]:play()
         else
-            self.sfx["unequip"]:play()
+            globalSfx["unequip"]:play()
         end
     end
 

@@ -51,7 +51,6 @@ function SecretBoss:initialize(x, y, nodes)
     self.phaseNumber = 1
     -- TODO: Should this pick a random direction?
     self.velocity = Vector:new(-1, 1)
-    self:loadSfx({"bosshit.wav", "bossdeath.wav", "bosspredeath.wav", "enemyshotbig.wav", "enemyshotsmall.wav"})
 end 
 
 function SecretBoss:update(dt)
@@ -90,7 +89,7 @@ function SecretBoss:fireFan()
         )
         self.world:add(bullet)
     end
-    self.sfx["enemyshotsmall"]:play()
+    globalSfx["enemyshotsmall"]:play()
 end
 
 function SecretBoss:fireDropShot()
@@ -109,7 +108,7 @@ function SecretBoss:fireDropShot()
         150 + love.math.random() * 20, true
     )
     self.world:add(bullet)
-    self.sfx["enemyshotbig"]:play()
+    globalSfx["enemyshotbig"]:play()
 end
 
 function SecretBoss:fireSpread()
@@ -152,7 +151,7 @@ function SecretBoss:fireSpread()
         false, true
     )
     self.world:add(sideBullet2)
-    self.sfx["enemyshotsmall"]:play()
+    globalSfx["enemyshotsmall"]:play()
 end
 
 function SecretBoss:movement(dt)
@@ -279,7 +278,7 @@ function SecretBoss:die()
     if self.phaseNumber == 3 then
         self:bossDie()
     else
-        self.sfx["bosspredeath"]:play()
+        globalSfx["bosspredeath"]:play()
         self.world:pauseLevel()
         self.world:doSequence({
             {1, function()

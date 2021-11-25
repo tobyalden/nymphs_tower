@@ -14,7 +14,6 @@ function Star:initialize(x, y, headingX, headingY)
     self.velocity = Vector:new(headingX, headingY)
     self.velocity:normalize(Star.MOVE_SPEED)
     self.layer = -1
-    self:loadSfx({"bounce.wav"})
 end
 
 function Star:update(dt)
@@ -38,7 +37,7 @@ function Star:playBounceSound()
         return
     end
     local volume = math.min(100 / distanceFromPlayer, 1)
-    self.sfx["bounce"]:play(true, volume)
+    globalSfx["bounce"]:play(true, volume)
 end
 
 function Star:moveCollideX(collided)

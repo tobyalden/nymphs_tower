@@ -33,8 +33,6 @@ function OptionsMenu:initialize(itemNames)
     self.startTimer = self:addTween(Alarm:new(2, function()
         ammo.world = MainMenu:new()
     end))
-
-    self:loadSfx({"menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
 end
 
 function OptionsMenu:update(dt)
@@ -47,25 +45,25 @@ function OptionsMenu:update(dt)
 	    elseif input.pressed("jump") then
 	        if self.cursorIndex == 1 then
 	        	-- FULLSCREEN
-		        self.sfx["menumove"]:play()
+		        globalSfx["menumove"]:play()
 		        push:switchFullscreen(gameWidth * windowedScale, gameHeight * windowedScale)
                 self:saveOptions()
 	        elseif self.cursorIndex == 2 then
 	        	-- SPEEDRUN MODE
-		        self.sfx["menumove"]:play()
+		        globalSfx["menumove"]:play()
 		        GameWorld.isSpeedrunMode = not GameWorld.isSpeedrunMode
                 self:saveOptions()
 	        elseif self.cursorIndex == 3 then
 	        	-- BACK
 	        	self:fadeToMainMenu()
-		        self.sfx["menuback"]:play()
+		        globalSfx["menuback"]:play()
 	        end
 	    end
 	end
 
     self.cursorIndex = math.clamp(self.cursorIndex, 1, #self.itemNames)
     if oldCursorIndex ~= self.cursorIndex then
-        self.sfx["menumove"]:play()
+        globalSfx["menumove"]:play()
     end
 
     if self.cursorIndex == 1 then

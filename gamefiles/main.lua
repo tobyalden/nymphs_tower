@@ -80,7 +80,6 @@ function love.joystickadded(newJoystick)
 end
 
 function love.load()
-    collectgarbage("stop")
     love.mouse.setVisible(false)
 
     input.define("up", "up")
@@ -110,6 +109,17 @@ function love.load()
     tick.framerate = -1
     tick.rate = 1 / 60
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
+
+    globalSfx = {}
+
+    local dir = ""
+    local files = love.filesystem.getDirectoryItems(dir)
+    for k, file in ipairs(files) do
+        local sfxName = string.sub(file, 1, string.len(file) - 4)
+        if string.sub(file, -4) == '.wav' then
+            globalSfx[sfxName] = Sound:new(file)
+        end
+    end
 
     local fullscreen = true
     if saveData.exists("options") then

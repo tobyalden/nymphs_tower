@@ -20,7 +20,7 @@ Boss = {
         if self.health <= 0 then
             self:die()
         else
-            self.sfx["bosshit"]:play()
+            globalSfx["bosshit"]:play()
         end
     end,
     bossDie = function(self)
@@ -31,7 +31,7 @@ Boss = {
             self.world:addFlag(self.flag .. '_defeated')
         end
         self.world.currentBoss = nil
-        self.sfx["bosspredeath"]:play()
+        globalSfx["bosspredeath"]:play()
         self:explode(80, 150, 5, 1, 0, 0, -99, true, true)
         self:explode(60, 150, 4, 1, 0, 0, -99, true, true)
         self:explode(30, 80, 3, 1, 0, 0, -99, true, true)
@@ -41,7 +41,7 @@ Boss = {
         self.world:doSequence({
             {0.5, function()
                 self.world:unpauseLevel()
-                self.sfx["bossdeath"]:play()
+                globalSfx["bossdeath"]:play()
                 self.visible = false
                 self.active = false
                 self.world:remove(self)

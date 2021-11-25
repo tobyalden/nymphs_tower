@@ -111,6 +111,9 @@ function World:stop()
         self.bumpWorld:remove(v)
     end
     -- Stop all sounds
+    for _, v in pairs(globalSfx) do
+        v:stopLoops()
+    end
     for _, v in pairs(self.sfx) do
         v:stopLoops()
     end

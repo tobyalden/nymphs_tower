@@ -57,7 +57,7 @@ function Menu:initialize(itemNames)
         ammo.world = Options:new()
     end))
 
-    self:loadSfx({"mainmenu.ogg", "menunew.wav", "menumove.wav", "menuback.wav", "menucontinue.wav", "menuno.wav"})
+    self:loadSfx({"mainmenu.ogg"})
     self.sfx["mainmenu"]:loop()
 end
 
@@ -71,24 +71,24 @@ function Menu:update(dt)
                 if self.submenuCursorIsYes then
                     clearSave()
                     self:fadeToGame()
-                    self.sfx["menunew"]:play()
+                    globalSfx["menunew"]:play()
                 else
                     self.isOnSubmenu = false
-                    self.sfx["menuback"]:play()
+                    globalSfx["menuback"]:play()
                 end
             end
             if input.pressed("shoot") then
                 if self.isOnSubmenu then
-                    self.sfx["menuback"]:play()
+                    globalSfx["menuback"]:play()
                 end
                 self.isOnSubmenu = false
             end
             if input.pressed("left") and not self.submenuCursorIsYes then
                 self.submenuCursorIsYes = true
-                self.sfx["menumove"]:play()
+                globalSfx["menumove"]:play()
             elseif input.pressed("right") and self.submenuCursorIsYes then
                 self.submenuCursorIsYes = false
-                self.sfx["menumove"]:play()
+                globalSfx["menumove"]:play()
             end
             if self.submenuCursorIsYes then
                 self.cursor.offsetX = 24
@@ -115,28 +115,28 @@ function Menu:update(dt)
                     if self.hasSaveData then
                         self.isOnSubmenu = true
                         self.submenuCursorIsYes = false
-                        self.sfx["menumove"]:play()
+                        globalSfx["menumove"]:play()
                     else
                         clearSave()
                         self:fadeToGame()
-                        self.sfx["menunew"]:play()
+                        globalSfx["menunew"]:play()
                     end
                 elseif self.cursorIndex == 2 then
                     -- CONTINUE
                      if self.hasSaveData then
                         self:fadeToGame()
-                        self.sfx["menucontinue"]:play()
+                        globalSfx["menucontinue"]:play()
                     else
-                        self.sfx["menuno"]:play()
+                        globalSfx["menuno"]:play()
                     end
                 elseif self.cursorIndex == 3 then
-                    self.sfx["menumove"]:play()
+                    globalSfx["menumove"]:play()
                     self:fadeToOptions()
                 end
             end
             self.cursorIndex = math.clamp(self.cursorIndex, 1, #self.itemNames)
             if oldCursorIndex ~= self.cursorIndex then
-                self.sfx["menumove"]:play()
+                globalSfx["menumove"]:play()
             end
             self.cursor.offsetX = -19
             self.cursor.offsetY = 5 + (self.cursorIndex - 1) * 33
