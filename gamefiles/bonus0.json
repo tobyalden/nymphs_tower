@@ -327,6 +327,18 @@
           "originX": 0,
           "originY": 0,
           "values": {"music": "explore4"}
+        },
+        {
+          "name": "inside",
+          "id": 1,
+          "_eid": "35608956",
+          "x": 16,
+          "y": 0,
+          "width": 5152,
+          "height": 1952,
+          "originX": 0,
+          "originY": 0,
+          "values": {"music": "top"}
         }
       ]
     },
