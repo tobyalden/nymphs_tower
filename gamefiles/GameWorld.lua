@@ -127,8 +127,8 @@ function GameWorld:initialize(levelStack, saveOnEntry)
         -- misc
         "silence.ogg"
     })
-    globalSfx["insideambience"]:loop()
-    globalSfx["outsideambience"]:loop()
+    globalSfx["insideambience"]:loop(0)
+    globalSfx["outsideambience"]:loop(0)
     self.cameraVelocity = Vector:new(0, 0)
     self.camera.x = self.player.x + self.player.mask.width / 2 - gameWidth / 4
     self.cameraStartX = self.camera.x
@@ -429,6 +429,7 @@ function GameWorld:update(dt)
         for _, v in pairs(self.sfx) do
             v:stopLoops()
         end
+        self.player.canMove = false
         globalSfx["restart"]:play()
         local tower = GameWorld.FIRST_TOWER
         GameWorld.static.isSecondTower = false
