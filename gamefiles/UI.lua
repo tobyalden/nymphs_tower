@@ -283,7 +283,13 @@ function UI:updateCompass()
     for i = 1, 5 do
         if self.world.level.bosses[i] then
             local boss = self.world.level.bosses[i]
-            if self.world:hasFlag(boss.flag .. '_defeated') then
+            local defeatedFlag
+            if GameWorld.static.isSecondTower then
+                defeatedFlag = boss.flag .. '_defeated_again'
+            else
+                defeatedFlag = boss.flag .. '_defeated'
+            end
+            if self.world:hasFlag(defeatedFlag) then
                 bossPings[i].alpha = 0
             else
                 bossPings[i].alpha = 1 - self.pingTimer:getPercentComplete()
