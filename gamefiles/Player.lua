@@ -376,6 +376,7 @@ function Player:decreaseHealth(damage)
 end
 
 function Player:takeHit(damage)
+    self.isLookingAtMap = false
     self:decreaseHealth(damage)
     if self.health > 0 then
         globalSfx["playerhit"]:play()
