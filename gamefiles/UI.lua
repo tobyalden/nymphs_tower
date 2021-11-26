@@ -224,7 +224,8 @@ function UI:update(dt)
     healthBar.scaleX = (
         self.world.player.health / Player.STARTING_HEALTH
     ) / 2
-    timerText:setText(string.format("%.2f", self.world.timer))
+    --timerText:setText(string.format("%.2f", self.world.timer))
+    timerText:setText(formatTime(self.world.timer))
 
     for _, v in pairs(allPings) do
         v.alpha = map.alpha
@@ -351,4 +352,3 @@ function UI:hideMessage(messageText)
     message.alpha = 0
     messageBar.alpha = 0
 end
-

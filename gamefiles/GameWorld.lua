@@ -38,7 +38,7 @@ GameWorld.static.FIRST_TOWER = {
 
 GameWorld.static.isSecondTower = false
 
-GameWorld.static.DEBUG_MODE = true
+GameWorld.static.DEBUG_MODE = false
 
 function GameWorld:initialize(levelStack, saveOnEntry)
     love.math.setRandomSeed(1)
@@ -157,6 +157,7 @@ function GameWorld:initialize(levelStack, saveOnEntry)
 end
 
 function GameWorld:goToEndScreen()
+    collectgarbage("stop")
     self.curtain:setMessage("SAILING AWAY...")
     self.isTeleporting = true
     self.player.canMove = false
@@ -245,11 +246,13 @@ function GameWorld:saveGame(saveX, saveY)
         currentCheckpoint["hasCrown"] = "true"
     end
 
-    currentCheckpoint["time"] = self.timer
-
     currentCheckpoint["healthUpgrades"] = self.player.healthUpgrades
     currentCheckpoint["fuelUpgrades"] = self.player.fuelUpgrades
     saveData.save(currentCheckpoint, "currentCheckpoint")
+
+    local totalTime = {}
+    totalTime["time"] = self.timer
+    saveData.save(totalTime, "totalTime")
 
     local currentFlags = {}
     for flag, _ in pairs(self.flags) do
@@ -298,7 +301,8 @@ function GameWorld:loadGame()
     self.player.hasCompass = loadedCheckpoint["hasCompass"] == "true"
     self.player.hasCrown = loadedCheckpoint["hasCrown"] == "true"
 
-    self.timer = loadedCheckpoint["time"]
+    local totalTime = saveData.load("totalTime")
+    self.timer = totalTime["time"]
 
     self.flags = {}
     for _, flag in pairs(saveData.load("currentFlags")) do
@@ -405,13 +409,16 @@ function GameWorld:onDeath()
             self.curtain:fadeIn()
         end},
         {4, function() 
+            local totalTime = {}
+            totalTime["time"] = self.timer
+            saveData.save(totalTime, "totalTime")
             ammo.world = GameWorld:new(tower)
         end}
     })
 end
 
 function GameWorld:update(dt)
-    if self.player.canMove then
+    if self.player.canMove and not self.player.isDead then
         self.timer = self.timer + dt
     end
     self.previousPlayerFlipX = self.player.graphic.flipX
@@ -447,10 +454,7 @@ function GameWorld:update(dt)
         if input.pressed("debug_print") then
             print("player coordinates: (" .. self.player.x .. ", " .. self.player.y .. ")")
             print("flags: " .. inspect(self.flags))
-            self.itemIds = {
-                75, 62, 63, 64, 23, 30, 32, 68, 38, 43, 51, 22, 4, 12, 15, 0, 71,
-                54, 10025, 10026, 10028, 10027, 10024, 10023, 10016, 10015, 10021, 10011
-            }
+            self.timer = self.timer + 60 * 60 * 3
         end
         if input.pressed("debug_teleport") then
             self:teleportToSecondTower()

@@ -11,7 +11,33 @@ function clearSave()
     saveData.clear("currentFlags")
     saveData.clear("itemIds")
     saveData.clear("acidLevels")
+    saveData.clear("totalTime")
 end
+
+function formatTime(totalTime)
+    local hours = 0
+    local minutes = 0
+    while totalTime >= 60 * 60 do
+        hours = hours + 1
+        totalTime = totalTime - 60 * 60
+    end
+    while totalTime >= 60 do
+        minutes = minutes + 1
+        totalTime = totalTime - 60
+    end
+    local displaySeconds = string.format("%04.2f", totalTime)
+    if string.len(displaySeconds) == 4 then
+        displaySeconds = '0' .. displaySeconds
+    end
+    local displayTime
+    if hours > 0 then
+        displayTime = hours .. ":" .. string.format("%02d", minutes) .. ":" .. displaySeconds
+    else
+        displayTime =  minutes .. ":" .. displaySeconds
+    end
+    return displayTime
+end
+
 
 require("ammo")
 require("ammo/all")
@@ -142,7 +168,7 @@ function love.load()
     end
      -- ammo.world = Options:new()
      ammo.world = MainMenu:new()
-     -- ammo.world = EndScreen:new(true)
+      --ammo.world = EndScreen:new(true)
      
     if saveData.exists("currentCheckpoint") then
         local loadedCheckpoint = saveData.load("currentCheckpoint")

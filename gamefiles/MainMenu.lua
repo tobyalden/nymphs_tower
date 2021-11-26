@@ -3,6 +3,7 @@ MainMenu = class("MainMenu", World)
 --MainMenu.static.CAMERA_SPEED = 1.5
 
 function MainMenu:initialize()
+    collectgarbage("restart")
     World.initialize(self)
     self.menu = Menu:new({"NEW GAME", "CONTINUE", "OPTIONS"})
     self:addGraphic(Sprite:new("mainmenu.png"))
