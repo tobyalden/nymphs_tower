@@ -8,7 +8,8 @@ local key = input.key
 local mouse = input.mouse
 local wheel = input.wheel
 local horizontalDeadZone = 0.5
-local verticalDeadZone = 0.75
+local verticalDeadZone = 0.9
+local previousHorizontalAxis = 0
 local previousVerticalAxis = 0
 local previousButtons = {}
 
@@ -28,16 +29,26 @@ function input.pressed(name)
             return true
         elseif name == "shoot" and joystick:isGamepadDown("x") and not previousButtons["shoot"] then
             return true
-        elseif name == "map" and joystick:isGamepadDown("back") and not previousButtons["map"] then
+        elseif name == "map" and joystick:isGamepadDown("y") and not previousButtons["map"] then
             return true
         elseif name == "up" and (
-            joystick:isGamepadDown("dpup")
+            (joystick:isGamepadDown("dpup") and not previousButtons["dpup"])
             or (joystick:getGamepadAxis("lefty") < -verticalDeadZone and previousVerticalAxis > -verticalDeadZone)
         ) then
             return true
         elseif name == "down" and (
-            joystick:isGamepadDown("dpdown")
+            (joystick:isGamepadDown("dpdown") and not previousButtons["dpdown"])
             or (joystick:getGamepadAxis("lefty") > verticalDeadZone and previousVerticalAxis < verticalDeadZone)
+        ) then
+            return true
+        elseif name == "left" and (
+            (joystick:isGamepadDown("dpleft") and not previousButtons["dpleft"])
+            or (joystick:getGamepadAxis("leftx") < -horizontalDeadZone and previousHorizontalAxis > -horizontalDeadZone)
+        ) then
+            return true
+        elseif name == "right" and (
+            (joystick:isGamepadDown("dpright") and not previousButtons["dpright"])
+            or (joystick:getGamepadAxis("leftx") > horizontalDeadZone and previousHorizontalAxis < horizontalDeadZone)
         ) then
             return true
         end
@@ -113,11 +124,16 @@ end
 
 function input.update()
     if joystick then
+        previousHorizontalAxis = joystick:getGamepadAxis("leftx")
         previousVerticalAxis = joystick:getGamepadAxis("lefty")
         previousButtons = {
+            dpup = joystick:isGamepadDown("dpup"),
+            dpdown = joystick:isGamepadDown("dpdown"),
+            dpleft = joystick:isGamepadDown("dpleft"),
+            dpright = joystick:isGamepadDown("dpright"),
             jump = joystick:isGamepadDown("a"),
             shoot = joystick:isGamepadDown("x"),
-            map = joystick:isGamepadDown("back")
+            map = joystick:isGamepadDown("y")
         }
     end
     key.pressed = { count = 0 }
