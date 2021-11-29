@@ -262,6 +262,13 @@ function UI:update(dt)
         end
         map.alpha = 0
         self.pingTimer.active = false
+        playerPing.alpha = 0
+        for i = 1, 5 do
+            bossPings[i].alpha = 0
+        end
+        for i = 1, 50 do
+            itemPings[i].alpha = 0
+        end
     end
 
     Entity.update(self, dt)

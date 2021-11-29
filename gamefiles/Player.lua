@@ -332,7 +332,7 @@ function Player:animation()
     else
         self.graphic.alpha = 1
     end
-    if self.canMove and not self.isPlayingHarmonica then
+    if self.canMove and not self.isPlayingHarmonica and not self.isLookingAtMap then
         if input.down("left") then
             self.graphic.flipX = true
         elseif input.down("right") then
