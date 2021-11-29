@@ -41,7 +41,7 @@ function EndScreen:initialize(isTrueEnd)
     self:add(self.curtain)
     self.canReturnToMainMenu = false
     self.mainMenuTimer = self.curtain:addTween(Alarm:new(5, function()
-        ammo.world = MainMenu:new()
+        ammo.world = Credits:new()
     end))
 
     self:doSequence({

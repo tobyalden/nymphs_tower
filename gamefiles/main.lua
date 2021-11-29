@@ -83,6 +83,7 @@ require("Boat")
 require("Tutorial")
 require("Options")
 require("OptionsMenu")
+require("Credits")
 
 io.stdout:setvbuf("no")
 
@@ -169,17 +170,18 @@ function love.load()
      -- ammo.world = Options:new()
      ammo.world = MainMenu:new()
       --ammo.world = EndScreen:new(true)
+      --ammo.world = Credits:new()
      
-    if saveData.exists("currentCheckpoint") then
-        local loadedCheckpoint = saveData.load("currentCheckpoint")
-        if loadedCheckpoint["isSecondTower"] then
-            GameWorld.static.isSecondTower = true
-        end
-    end
-    local tower = GameWorld.FIRST_TOWER
-    if GameWorld.static.isSecondTower then
-        tower = GameWorld.SECOND_TOWER
-    end
-    -- ammo.world = GameWorld:new(tower)
+    --if saveData.exists("currentCheckpoint") then
+        --local loadedCheckpoint = saveData.load("currentCheckpoint")
+        --if loadedCheckpoint["isSecondTower"] then
+            --GameWorld.static.isSecondTower = true
+        --end
+    --end
+    --local tower = GameWorld.FIRST_TOWER
+    --if GameWorld.static.isSecondTower then
+        --tower = GameWorld.SECOND_TOWER
+    --end
+     --ammo.world = GameWorld:new(tower)
     -- ammo.world = GameWorld:new({'test.json'})
 end

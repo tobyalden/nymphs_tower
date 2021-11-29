@@ -7,7 +7,7 @@ function MainMenu:initialize()
     World.initialize(self)
     self.menu = Menu:new({"NEW GAME", "CONTINUE", "OPTIONS"})
     self:addGraphic(Sprite:new("mainmenu.png"))
-    local versionNumber = Text:new("v.1.4", 9)
+    local versionNumber = Text:new("v.1.5", 9)
     versionNumber.offsetX = 2
     versionNumber.offsetY = 168
     self:addGraphic(versionNumber)
