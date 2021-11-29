@@ -234,21 +234,35 @@ function World:_updateLists()
                 if v.mask.class == Hitbox then
                     self.bumpWorld:add(v.mask, v.x + v.mask.offsetX, v.y + v.mask.offsetY, v.mask.width, v.mask.height)
                 elseif v.mask.class == Grid then
+                    --local colliderCount = 0
                     for tileX = 1, v.mask.columns do
                         for tileY = 1, v.mask.rows do
-                            -- TODO: This could be optimized by adding groups
-                            -- of tiles instead of individual tiles
                             if(v.mask:getTile(tileX, tileY)) then
-                                self.bumpWorld:add(
-                                    v.mask.data[tileY][tileX],
-                                    v.x + (tileX - 1) * v.mask.tileWidth,
-                                    v.y + (tileY - 1) * v.mask.tileHeight,
-                                    v.mask.tileWidth,
-                                    v.mask.tileHeight
-                                )
+                                local addCollider = true
+                                if tileX > 1 and tileY > 1 and tileX < v.mask.columns and tileY < v.mask.rows then
+                                    if (
+                                        v.mask:getTile(tileX - 1, tileY)
+                                        and v.mask:getTile(tileX + 1, tileY)
+                                        and v.mask:getTile(tileX, tileY - 1)
+                                        and v.mask:getTile(tileX, tileY + 1)
+                                    ) then
+                                        addCollider = false
+                                    end
+                                end
+                                if addCollider then
+                                    self.bumpWorld:add(
+                                        v.mask.data[tileY][tileX],
+                                        v.x + (tileX - 1) * v.mask.tileWidth,
+                                        v.y + (tileY - 1) * v.mask.tileHeight,
+                                        v.mask.tileWidth,
+                                        v.mask.tileHeight
+                                    )
+                                    --colliderCount = colliderCount + 1
+                                end
                             end
                         end
                     end
+                    --print('collider count: ' .. colliderCount)
                 end
             end
             if v._layer then self:_setLayer(v) end
