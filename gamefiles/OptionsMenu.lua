@@ -3,7 +3,7 @@ OptionsMenu = class("OptionsMenu", Entity)
 function OptionsMenu:initialize(itemNames)
     Entity.initialize(self)
     self.x = 30
-    self.y = 25
+    self.y = 15
 
     self.graphic = Graphiclist:new({})
     self.itemNames = itemNames
@@ -16,6 +16,8 @@ function OptionsMenu:initialize(itemNames)
             self.fullscreenMenuItem = item
         elseif i == 2 then
             self.speedrunMenuItem = item
+        elseif i == 3 then
+            self.vsyncMenuItem = item
         end
     end
 
@@ -27,7 +29,7 @@ function OptionsMenu:initialize(itemNames)
 
     self.message = Text:new("", 10, "arial.ttf", {1, 1, 1}, 320, "center")
     self.message.offsetX = -self.x
-    self.message.offsetY = -self.y + 140
+    self.message.offsetY = -self.y + 150
     self.graphic:add(self.message)
 
     self.startTimer = self:addTween(Alarm:new(2, function()
@@ -54,6 +56,15 @@ function OptionsMenu:update(dt)
 		        GameWorld.isSpeedrunMode = not GameWorld.isSpeedrunMode
                 self:saveOptions()
 	        elseif self.cursorIndex == 3 then
+	        	-- VSYNC
+                if love.window.getVSync() == 0 then
+                    love.window.setVSync(1)
+                else
+                    love.window.setVSync(0)
+                end
+                self:saveOptions()
+		        globalSfx["menumove"]:play()
+	        elseif self.cursorIndex == 4 then
 	        	-- BACK
 	        	self:fadeToMainMenu()
 		        globalSfx["menuback"]:play()
@@ -73,8 +84,11 @@ function OptionsMenu:update(dt)
     	-- SPEEDRUN MODE
     	self.message:setText("ENABLES ONSCREEN TIMER AND RESET BUTTON (R)")
     elseif self.cursorIndex == 3 then
-    	self.message:setText("RETURN TO MAIN MENU")
+    	-- VSYNC
+    	self.message:setText("TOGGLE VERTICAL SYNC")
+    elseif self.cursorIndex == 4 then
     	-- BACK
+    	self.message:setText("RETURN TO MAIN MENU")
     end
 
     self.cursor.offsetX = -19
@@ -92,6 +106,12 @@ function OptionsMenu:update(dt)
 	    self.speedrunMenuItem:setText("SPEEDRUN MODE: OFF")
 	end
 
+    if love.window.getVSync() == 1 then
+	    self.vsyncMenuItem:setText("VSYNC: ON")
+	else
+	    self.vsyncMenuItem:setText("VSYNC: OFF")
+	end
+
     Entity.update(self, dt)
 end
 
@@ -103,6 +123,7 @@ function OptionsMenu:saveOptions()
     if GameWorld.isSpeedrunMode then
         savedOptions["isSpeedrunMode"] = "true"
     end
+    savedOptions["vsync"] = love.window.getVSync()
     saveData.save(savedOptions, "options")
 end
 

@@ -153,6 +153,9 @@ function love.load()
         local loadedOptions = saveData.load("options")
         fullscreen = loadedOptions["isFullscreen"] == "true"
         GameWorld.isSpeedrunMode = loadedOptions["isSpeedrunMode"] == "true"
+        if loadedOptions["vsync"] then
+            love.window.setVSync(loadedOptions["vsync"])
+        end
     end
 
     if fullscreen then

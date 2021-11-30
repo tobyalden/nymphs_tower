@@ -2,7 +2,7 @@ Options = class("Options", World)
 
 function Options:initialize()
     World.initialize(self)
-    self.menu = OptionsMenu:new({"FULLSCREEN", "SPEEDRUN MODE", "BACK"})
+    self.menu = OptionsMenu:new({"FULLSCREEN", "SPEEDRUN MODE", "VSYNC", "BACK"})
     self:addGraphic(Sprite:new("optionsmenu.png"))
     self:add(self.menu)
     self.curtain = Curtain:new()
