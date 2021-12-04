@@ -7,7 +7,7 @@ function MainMenu:initialize()
     World.initialize(self)
     self.menu = Menu:new({"NEW GAME", "CONTINUE", "OPTIONS"})
     self:addGraphic(Sprite:new("mainmenu.png"))
-    local versionNumber = Text:new("v.1.6", 9)
+    local versionNumber = Text:new("v.1.7", 9)
     versionNumber.offsetX = 2
     versionNumber.offsetY = 168
     self:addGraphic(versionNumber)
@@ -16,6 +16,11 @@ function MainMenu:initialize()
     self.curtain = Curtain:new()
     self:add(self.curtain)
     self.curtain:fadeOut()
+
+    self.message = Text:new("PRESS SPACE TO SELECT", 10, "arial.ttf", {1, 1, 1}, 320, "center")
+    self.message.offsetX = -40
+    self.message.offsetY = 157
+    self:addGraphic(self.message)
 end
 
 function MainMenu:update(dt)
