@@ -20,7 +20,7 @@ function Checkpoint:flash()
 end
 
 function Checkpoint:update(dt)
-    local isSolid = not self.world:hasFlag('finalboss')
+    local isSolid = not self.world:hasFlag('finalboss') and #self:collide(self.x, self.y, {"acid"}) == 0
     self.visible = isSolid
     self.collidable = isSolid
     Entity.update(self, dt)
